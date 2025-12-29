@@ -5,6 +5,9 @@
     ./hardware-configuration.nix
   ];
 
+  # Kernel Version
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -13,6 +16,14 @@
 
   # Storage Optimization
   nix.settings.auto-optimise-store = true;
+
+  # Graphics
+  boot.kernelParams = [ "split_lock_detect=off" ];
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true; # Necessary for Steam/Proton
+  };
+  hardware.amdgpu.initrd.enable = true;
 
   # Bootloader
   boot.loader.systemd-boot.enable = pkgs.lib.mkForce false;
