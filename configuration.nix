@@ -8,6 +8,9 @@
   # Kernel Version
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Power Management
+  powerManagement.cpuFreqGovernor = "powersave";
+
   # Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
