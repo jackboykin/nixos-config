@@ -89,11 +89,7 @@
     isNormalUser = true;
     description = "jack";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      kdePackages.kate
-      spotify
-    #  thunderbird
-    ];
+    packages = with pkgs; [];
   };
 
   # Install firefox.

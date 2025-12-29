@@ -5,6 +5,13 @@
   home.homeDirectory = "/home/jack";
   home.stateVersion = "25.11";
 
+  # General packages here
+  home.packages = with pkgs; [
+    #jellyfin-media-player
+    spotify
+    kdePackages.kate
+  ];
+
   programs.mpv = {
     enable = true;
 
