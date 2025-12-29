@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -15,8 +15,8 @@
   services.power-profiles-daemon.enable = false;
   powerManagement.cpuFreqGovernor = "schedutil";
   systemd.tmpfiles.rules = [
-  "w /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference - - - - balance_performance"
-];
+    "w /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference - - - - balance_performance"
+  ];
 
 
   # Flakes
@@ -38,13 +38,15 @@
   hardware.enableRedistributableFirmware = true;
 
   # Bootloader
-  boot.loader.systemd-boot.enable = pkgs.lib.mkForce false;
-  boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.lanzaboote = {
     enable = true;
     pkiBundle = "/etc/secureboot";
   };
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Systemd in initrd
+  boot.initrd.systemd.enable = true;
 
   # Swap
   zramSwap.enable = true;
@@ -98,26 +100,12 @@
   time.timeZone = "America/Chicago";
   time.hardwareClockInLocalTime = true;
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
 
   # Desktop Environment
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+  services.xserver.xkb.layout = "us";
 
   # Sound and Printing
   services.printing.enable = true;
@@ -134,7 +122,6 @@
     isNormalUser = true;
     description = "jack";
     extraGroups = [ "networkmanager" "wheel" "video" ];
-  #  packages = with pkgs; [];
   };
 
   # Nixpkgs Config
@@ -174,8 +161,6 @@
     clean.extraArgs = "--keep-since 4d --keep 3";
     flake = "/home/jack/nixos-config";
   };
-
-  environment.variables.NH_FLAKE = "/home/jack/nixos-config";
 
   system.stateVersion = "25.11";
 }
