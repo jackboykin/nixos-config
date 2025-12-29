@@ -1,4 +1,4 @@
-{ _config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home.username = "jack";
@@ -16,6 +16,8 @@
     opencode
     gemini-cli
   ];
+
+  programs.firefox.enable = true;
 
   programs.mpv = {
     enable = true;
