@@ -45,9 +45,14 @@
 
   # Networking
   networking.hostName = "nixos-orion";
-  networking.networkmanager.enable = true;
-  networking.networkmanager.dns = "systemd-resolved";
-  networking.nameservers = [ "76.76.2.11#p2.freedns.controld.com" "2606:1a40::11#p2.freedns.controld.com" ];
+  networking.networkmanager = {
+    enable = true;
+    dns = "systemd-resolved";
+  connectionConfig = {
+      "ipv4.ignore-auto-dns" = true;
+      "ipv6.ignore-auto-dns" = true;
+    };
+  };
   networking.enableIPv6 = true;
   services.tailscale.enable = true;
 
@@ -56,8 +61,10 @@
     enable = true;
     dnssec = "true";
     dnsovertls = "true";
-    domains = [ "~." ];
     fallbackDns = [ ];
+    extraConfig = ''
+    DNS=76.76.2.11#p2.freedns.controld.com 2606:1a40::11#p2.freedns.controld.com
+  '';
   };
 
   # Localization
