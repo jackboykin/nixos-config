@@ -5,7 +5,7 @@
   home.homeDirectory = "/home/jack";
   home.stateVersion = "25.11";
 
-  # General packages here
+  # General packages
   home.packages = with pkgs; [
     spotify
     kdePackages.kate
@@ -49,7 +49,7 @@
       screenshot-png-compression = 3;
     };
 
-    # Keeping your scripts from earlier
+    # Scripts
     scripts = with pkgs.mpvScripts; [
       uosc
       mpris
@@ -68,6 +68,6 @@
     '';
   };
 
-  # Let Home Manager manage itself
+  # Home Manager Manage
   programs.home-manager.enable = true;
 }
