@@ -48,25 +48,37 @@
   networking.networkmanager = {
     enable = true;
     dns = "systemd-resolved";
-  connectionConfig = {
+    connectionConfig = {
       "ipv4.ignore-auto-dns" = true;
       "ipv6.ignore-auto-dns" = true;
     };
   };
-  networking.enableIPv6 = true;
-  services.tailscale.enable = true;
 
-  # Custom DNS
+  services.dnscrypt-proxy2 = {
+    enable = true;
+    settings = {
+      listen_addresses = [ "127.0.0.1:53000" "[::1]:53000" ];
+      server_names = [ "cloudflare" "quad9-dnscrypt-ip4-filter-pri" ];
+      ipv4_servers = true;
+      ipv6_servers = true;
+      dnscrypt_servers = true;
+      doh_servers = true;
+      require_dnssec = true;
+    };
+  };
+
   services.resolved = {
     enable = true;
     dnssec = "false";
-    dnsovertls = "true";
+    dnsovertls = "false";
     fallbackDns = [ ];
     extraConfig = ''
-      DNS=1.1.1.2#security.cloudflare-dns.com 1.0.0.2#security.cloudflare-dns.com 2606:4700:4700::1112#security.cloudflare-dns.com 2606:4700:4700::1002#security.cloudflare-dns.com
-      DNS=9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
+      DNS=127.0.0.1:53000
+      DNSStubListener=yes
     '';
   };
+
+  services.tailscale.enable = true;
 
   # Localization
   time.timeZone = "America/Chicago";
