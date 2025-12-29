@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ _config, pkgs, ... }:
 
 {
   imports =
@@ -15,13 +15,6 @@
 
   # Storage Optimization
    nix.settings.auto-optimise-store = true;
-
-  # Garbage Collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -99,6 +92,7 @@
     packages = with pkgs; [
       kdePackages.kate
       spotify
+      mpv
     #  thunderbird
     ];
   };
