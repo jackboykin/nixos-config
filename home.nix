@@ -10,6 +10,7 @@
     spotify
     kdePackages.kate
     remmina
+    jellyfin-media-player
   ];
 
   programs.mpv = {
