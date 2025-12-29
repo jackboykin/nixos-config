@@ -11,6 +11,7 @@
     spotify
     kdePackages.kate
     remmina
+    jellytui
   ];
 
   programs.mpv = {
