@@ -111,10 +111,16 @@
   nixpkgs.config.allowUnfree = true;
 
   # Fonts
- fonts.packages = with pkgs; [
-    # 1 (NixOS 24.05+)
+  fonts.packages = with pkgs; [
+    # Nerd Fonts
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
+
+    # Manual Google Sans Installation
+    (runCommand "google-sans-manual" {} ''
+      mkdir -p $out/share/fonts/truetype
+      cp ${/home/jack/Documents/fonts/Google_Sans}/*.ttf $out/share/fonts/truetype
+    '')
 
     # Standard Web & UI Fonts
     noto-fonts
@@ -124,9 +130,9 @@
     roboto
     inter
 
-    # Microsoft Core Fonts (Requires nixpkgs.config.allowUnfree = true)
+    # Microsoft Core Fonts
     corefonts
- ];
+  ];
 
   # System Packages
   environment.systemPackages = with pkgs; [
