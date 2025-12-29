@@ -19,7 +19,6 @@
 
   home.shellAliases = {
     gemini = "gemini --model gemini-3-flash";
-    gemini-cli = "gemini --model gemini-3-flash";
   };
 
   home.sessionVariables = {
