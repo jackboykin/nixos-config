@@ -115,6 +115,7 @@
   git
   btop
   fastfetch
+  nil
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
   ];
@@ -137,6 +138,14 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+    # NH (Nix Helper) Configuration
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/home/jack/nixos-config"; # Points NH to your home config folder
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
