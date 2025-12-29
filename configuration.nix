@@ -37,6 +37,9 @@
   # Set your time zone.
   time.timeZone = "America/Chicago";
 
+  # Fix for Windows Dual Boot time desync
+  time.hardwareClockInLocalTime = true;
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
