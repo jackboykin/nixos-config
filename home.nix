@@ -21,8 +21,6 @@
     config = {
       profile = "high-quality";
 
-      scripts = "~/.config/mpv/scripts";
-
       # UI and Window settings
       geometry = "60%";
       volume = 80;

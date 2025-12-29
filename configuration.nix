@@ -13,7 +13,7 @@
 
   # Power Management
   services.power-profiles-daemon.enable = false;
-  powerManagement.cpuFreqGovernor = "powersave";
+  powerManagement.cpuFreqGovernor = "schedutil";
   systemd.tmpfiles.rules = [
   "w /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference - - - - balance_performance"
 ];
@@ -107,7 +107,7 @@
   };
 
   # Desktop Environment
-  services.xserver.enable = true;
+  services.xserver.enable = false;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
   services.xserver.xkb = {
