@@ -1,4 +1,4 @@
-{ _config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -8,7 +8,7 @@
   # Kernel Version
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # Boot Paramaters
+  # Boot Parameters
   boot.kernelParams = [ "split_lock_detect=off" "amd_pstate=active" ];
 
   # Power Management
@@ -42,6 +42,16 @@
     pkiBundle = "/etc/secureboot";
   };
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Swap
+  zramSwap.enable = true;
+
+  # Firewall
+  networking.firewall = {
+    enable = true;
+    trustedInterfaces = [ "tailscale0" ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
 
   # Networking
   networking.hostName = "nixos-orion";
