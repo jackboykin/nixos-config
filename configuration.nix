@@ -101,11 +101,22 @@
   nixpkgs.config.allowUnfree = true;
 
   # Fonts
-  fonts.packages = with pkgs; [
+ fonts.packages = with pkgs; [
+    # Modern Nerd Fonts Syntax (NixOS 24.05+)
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
+
+    # Standard Web & UI Fonts
     noto-fonts
-  ];
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    liberation_ttf
+    roboto
+    inter
+
+    # Microsoft Core Fonts (Requires nixpkgs.config.allowUnfree = true)
+    corefonts
+ ];
 
   # System Packages
   environment.systemPackages = with pkgs; [
