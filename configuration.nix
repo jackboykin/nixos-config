@@ -8,6 +8,9 @@
   # Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # SSD Trim
+  services.fstrim.enable = true;
+
   # Storage Optimization
   nix.settings.auto-optimise-store = true;
 
@@ -61,6 +64,9 @@
     layout = "us";
     variant = "";
   };
+
+  # Improve audio compatibility
+  services.pipewire.jack.enable = true;
 
   # Sound and Printing
   services.printing.enable = true;
