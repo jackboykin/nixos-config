@@ -140,6 +140,7 @@
     btop
     fastfetch
     nil
+    ladybird
   ];
 
   programs.firefox.enable = true;
