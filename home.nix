@@ -17,6 +17,15 @@
     gemini-cli
   ];
 
+  home.shellAliases = {
+    gemini = "gemini --model gemini-3-flash";
+    gemini-cli = "gemini --model gemini-3-flash";
+  };
+
+  home.sessionVariables = {
+    GEMINI_MODEL = "gemini-3-flash";
+  };
+
   programs.firefox.enable = true;
 
   programs.mpv = {
