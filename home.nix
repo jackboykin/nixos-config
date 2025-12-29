@@ -39,7 +39,7 @@
       # Graphics API and Rendering
       vo = "gpu-next";
       gpu-api = "vulkan";
-      hwdec = "auto-safe";
+      hwdec = "vulkan";
       video-sync = "display-resample";
       cache = true;
 
