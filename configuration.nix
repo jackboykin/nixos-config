@@ -119,7 +119,7 @@
     # Manual Google Sans Installation
     (runCommand "google-sans-manual" {} ''
       mkdir -p $out/share/fonts/truetype
-      cp ${/home/jack/Documents/fonts/Google_Sans}/*.ttf $out/share/fonts/truetype
+      cp ${./fonts/Google_Sans}/*.ttf $out/share/fonts/truetype
     '')
 
     # Standard Web & UI Fonts
