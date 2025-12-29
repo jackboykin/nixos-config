@@ -21,6 +21,7 @@
 
   # Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "root" "@wheel" ];
 
   # SSD Trim
   services.fstrim.enable = true;
@@ -34,9 +35,11 @@
     enable32Bit = true;
   };
   hardware.amdgpu.initrd.enable = true;
+  hardware.enableRedistributableFirmware = true;
 
   # Bootloader
   boot.loader.systemd-boot.enable = pkgs.lib.mkForce false;
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.lanzaboote = {
     enable = true;
     pkiBundle = "/etc/secureboot";
@@ -79,6 +82,7 @@
 
   services.resolved = {
     enable = true;
+    # DNSSEC is handled by dnscrypt-proxy
     dnssec = "false";
     dnsovertls = "false";
     fallbackDns = [ ];
@@ -162,8 +166,6 @@
     nil
     nix-output-monitor
   ];
-
-  programs.firefox.enable = true;
 
   # Nix Helper
   programs.nh = {
