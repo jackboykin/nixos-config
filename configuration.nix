@@ -134,6 +134,15 @@
     corefonts
   ];
 
+  # Font config
+  fonts.fontconfig = {
+    defaultFonts = {
+      sansSerif = [ "Google Sans" "Noto Sans" ];
+      serif = [ "Noto Serif" ];
+      monospace = [ "JetBrainsMono Nerd Font" ];
+    };
+  };
+
   # System Packages
   environment.systemPackages = with pkgs; [
     git
