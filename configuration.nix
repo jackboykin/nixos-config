@@ -92,7 +92,6 @@
     packages = with pkgs; [
       kdePackages.kate
       spotify
-      mpv
     #  thunderbird
     ];
   };
