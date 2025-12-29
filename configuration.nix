@@ -143,7 +143,6 @@
     btop
     fastfetch
     nil
-    ladybird
     nix-output-monitor
   ];
 
