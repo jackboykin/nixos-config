@@ -8,8 +8,16 @@
   # Kernel Version
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Boot Paramaters
+  boot.kernelParams = [ "split_lock_detect=off" "amd_pstate=active" ];
+
   # Power Management
+  #kdeoverride services.power-profiles-daemon.enable = false;
   powerManagement.cpuFreqGovernor = "powersave";
+  systemd.tmpfiles.rules = [
+  "w /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference - - - - balance_performance"
+];
+
 
   # Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -21,7 +29,6 @@
   nix.settings.auto-optimise-store = true;
 
   # Graphics
-  boot.kernelParams = [ "split_lock_detect=off" ];
   hardware.graphics = {
     enable = true;
     enable32Bit = true; # Necessary for Steam/Proton
