@@ -144,7 +144,7 @@
 
   programs.firefox.enable = true;
 
-  # NH (Nix Helper)
+  # Nix Helper
   programs.nh = {
     enable = true;
     clean.enable = true;
