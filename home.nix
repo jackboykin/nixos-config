@@ -11,6 +11,7 @@
     kdePackages.kate
     remmina
     jellyfin-media-player
+    antigravity
   ];
 
   programs.mpv = {
