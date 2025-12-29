@@ -56,6 +56,16 @@
     ];
   };
 
+  programs.git = {
+  enable = true;
+  settings = {
+    user = {
+      name = "Jack Boykin";
+      email = "jtboykin.jb@gmail.com";
+    };
+  };
+};
+
   # symlinks
   home.file = {
     ".config/mpv/scripts/uosc".source = "${pkgs.mpvScripts.uosc}/share/mpv/scripts/uosc";
