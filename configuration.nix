@@ -47,18 +47,17 @@
   networking.hostName = "nixos-orion";
   networking.networkmanager.enable = true;
   networking.networkmanager.dns = "systemd-resolved";
-  networking.nameservers = [ "1.1.1.1#cloudflare-dns.com" "9.9.9.9#dns.quad9.net" ];
+  networking.nameservers = [ "76.76.2.11#p2.freedns.controld.com" "2606:1a40::11#p2.freedns.controld.com" ];
+  networking.enableIPv6 = true;
   services.tailscale.enable = true;
 
   # Custom DNS
   services.resolved = {
     enable = true;
     dnssec = "true";
+    dnsovertls = "true";
     domains = [ "~." ];
-    fallbackDns = [ "1.1.1.1#cloudflare-dns.com" "9.9.9.9#dns.quad9.net" ];
-    extraConfig = ''
-      DNSOverTLS=yes
-    '';
+    fallbackDns = [ ];
   };
 
   # Localization
@@ -85,9 +84,6 @@
     layout = "us";
     variant = "";
   };
-
-  # Improve audio compatibility
-  services.pipewire.jack.enable = true;
 
   # Sound and Printing
   services.printing.enable = true;
@@ -141,6 +137,7 @@
     fastfetch
     nil
     ladybird
+    nix-output-monitor
   ];
 
   programs.firefox.enable = true;
