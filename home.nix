@@ -14,16 +14,15 @@
     antigravity
     code-cursor
     opencode
-    gemini-cli
+    nodejs
+    (writeShellApplication {
+      name = "gemini";
+      runtimeInputs = [ nodejs ];
+      text = ''
+        exec npx -y @google/gemini-cli "$@"
+      '';
+    })
   ];
-
-  home.shellAliases = {
-    gemini = "gemini --model gemini-3-flash";
-  };
-
-  home.sessionVariables = {
-    GEMINI_MODEL = "gemini-3-flash";
-  };
 
   programs.firefox.enable = true;
 
