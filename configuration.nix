@@ -142,12 +142,6 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
 
-    # Manual Google Sans Installation
-    (runCommand "google-sans-manual" {} ''
-      mkdir -p $out/share/fonts/truetype
-      cp ${./fonts/Google_Sans}/*.ttf $out/share/fonts/truetype
-    '')
-
     # Standard Web & UI Fonts
     noto-fonts
     noto-fonts-cjk-sans
