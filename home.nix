@@ -12,6 +12,9 @@
     remmina
     jellyfin-media-player
     antigravity
+    code-cursor
+    opencode
+    gemini-cli
   ];
 
   programs.mpv = {
