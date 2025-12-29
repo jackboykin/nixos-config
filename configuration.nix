@@ -76,7 +76,7 @@
   users.users.jack = {
     isNormalUser = true;
     description = "jack";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
   #  packages = with pkgs; [];
   };
 
