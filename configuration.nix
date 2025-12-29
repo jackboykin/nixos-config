@@ -35,6 +35,7 @@
   networking.networkmanager.enable = true;
   networking.networkmanager.dns = "systemd-resolved";
   networking.nameservers = [ "1.1.1.1#cloudflare-dns.com" "9.9.9.9#dns.quad9.net" ];
+  services.tailscale.enable = true;
 
   # Custom DNS
   services.resolved = {
@@ -117,6 +118,13 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Fonts
+  fonts.packages = with pkgs; [
+  nerd-fonts.jetbrains-mono
+  nerd-fonts.fira-code
+  noto-fonts
+];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
