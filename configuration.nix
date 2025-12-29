@@ -31,7 +31,7 @@
   # Graphics
   hardware.graphics = {
     enable = true;
-    enable32Bit = true; # Necessary for Steam/Proton
+    enable32Bit = true;
   };
   hardware.amdgpu.initrd.enable = true;
 
