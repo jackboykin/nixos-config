@@ -55,23 +55,26 @@
       uosc
       mpris
     ];
+
+    # Script options
+    scriptOpts = {
+      uosc = {
+        progress = "never";
+        controls = "menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,open-conf,stats,console";
+      };
+    };
+
   };
 
   programs.git = {
-  enable = true;
-  settings = {
-    user = {
-      name = "Jack Boykin";
-      email = "jtboykin.jb@gmail.com";
+    enable = true;
+    settings = {
+      user = {
+        name = "Jack Boykin";
+        email = "jtboykin.jb@gmail.com";
+      };
     };
   };
-};
-
-  # uosc options
-  home.file.".config/mpv/script-opts/uosc.conf".text = ''
-    progress_bar=unfocused
-    controls=menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,open-conf,stats,console
-  '';
 
   # Home Manager Manage
   programs.home-manager.enable = true;
