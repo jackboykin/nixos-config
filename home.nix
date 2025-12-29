@@ -68,17 +68,11 @@
   };
 };
 
-  # symlinks
-  home.file = {
-    ".config/mpv/scripts/uosc".source = "${pkgs.mpvScripts.uosc}/share/mpv/scripts/uosc";
-    ".config/mpv/scripts/mpris.lua".source = "${pkgs.mpvScripts.mpris}/share/mpv/scripts/mpris.lua";
-    ".config/mpv/fonts".source = "${pkgs.mpvScripts.uosc}/share/mpv/fonts";
-
-    ".config/mpv/script-opts/uosc.conf".text = ''
-      progress_bar=unfocused
-      controls=menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,open-conf,stats,console
-    '';
-  };
+  # uosc options
+  home.file.".config/mpv/script-opts/uosc.conf".text = ''
+    progress_bar=unfocused
+    controls=menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,open-conf,stats,console
+  '';
 
   # Home Manager Manage
   programs.home-manager.enable = true;
