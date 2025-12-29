@@ -59,12 +59,13 @@
   # Custom DNS
   services.resolved = {
     enable = true;
-    dnssec = "true";
+    dnssec = "false";
     dnsovertls = "true";
     fallbackDns = [ ];
     extraConfig = ''
-    DNS=76.76.2.11#p2.freedns.controld.com 2606:1a40::11#p2.freedns.controld.com
-  '';
+      DNS=1.1.1.2#security.cloudflare-dns.com 1.0.0.2#security.cloudflare-dns.com 2606:4700:4700::1112#security.cloudflare-dns.com 2606:4700:4700::1002#security.cloudflare-dns.com
+      DNS=9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
+    '';
   };
 
   # Localization
