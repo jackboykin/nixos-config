@@ -26,6 +26,7 @@
       volume = 80;
       volume-max = 180;
       audio-channels = "auto-safe";
+      audio-exclusive = "yes";
       osd-bar = false;
       osc = false;
       border = false;
