@@ -141,6 +141,9 @@
     flake = "/home/jack/nixos-config"; # Points NH to your home config folder
   };
 
+  # Add this line here to make 'nh os switch' work without arguments
+   environment.variables.NH_FLAKE = "/home/jack/nixos-config";
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
