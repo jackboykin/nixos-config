@@ -12,7 +12,7 @@
   boot.kernelParams = [ "split_lock_detect=off" "amd_pstate=active" ];
 
   # Power Management
-  #kdeoverride services.power-profiles-daemon.enable = false;
+  services.power-profiles-daemon.enable = false;
   powerManagement.cpuFreqGovernor = "powersave";
   systemd.tmpfiles.rules = [
   "w /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference - - - - balance_performance"
