@@ -105,7 +105,6 @@
     # 1 (NixOS 24.05+)
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
-    material-design-icons
 
     # Standard Web & UI Fonts
     noto-fonts
