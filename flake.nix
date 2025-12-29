@@ -16,7 +16,7 @@
       inputs.rust-overlay.follows = "rust-overlay";
     };
 
-    # Added Home Manager input (matching your 25.11 version)
+    # Added Home Manager input
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,7 +35,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          # This tells Home Manager to use a file named home.nix for user 'jack'
+          # home.nix for user
           home-manager.users.jack = import ./home.nix;
         }
       ];
