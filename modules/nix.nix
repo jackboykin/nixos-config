@@ -8,15 +8,15 @@ _: {
       "root"
       "@wheel"
     ];
-    # Hard-link duplicate files in the store to save space
+    # optimize store
     auto-optimise-store = true;
 
-    # Build parallelism: auto = number of CPUs
+    # parallelism
     max-jobs = "auto";
-    # Cores per build job: 0 = use all available cores
+    # cores (0=all)
     cores = 0;
 
-    # Binary caches - download pre-built packages instead of compiling
+    # binary caches
     substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
@@ -25,7 +25,7 @@ _: {
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
-    # Let remote builders use these caches too
+    # remote builder substitutes
     builders-use-substitutes = true;
   };
 

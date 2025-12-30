@@ -2,12 +2,10 @@
   pkgs,
   theme,
   ...
-}:
-let
+}: let
   c = theme.colors;
   ui = theme.ui;
-in
-{
+in {
   programs.bat = {
     enable = true;
     config = {
@@ -118,7 +116,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.orange}</string>
+              <string>${c.cream}</string>
             </dict>
           </dict>
           <dict>
@@ -160,7 +158,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.yellow}</string>
+              <string>${c.periwinkle}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -217,7 +215,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.yellow}</string>
+              <string>${c.periwinkle}</string>
             </dict>
           </dict>
           <dict>
