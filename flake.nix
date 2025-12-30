@@ -1,44 +1,86 @@
 {
-  description = "My NixOS Flake Configuration";
+  description = "Modular NixOS Configuration";
 
   inputs = {
-    # Pin to the 25.11 release
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
+      # Use the same nixpkgs as the main flake to avoid duplicates
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Secure boot
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
     };
 
-    # Added Home Manager input
+    # Manage dotfiles and user packages
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Nix User Repository - extra packages and Firefox extensions
+    nur = {
+      url = "github:nix-community/NUR";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, lanzaboote, ... }@inputs: {
-    nixosConfigurations.nixos-orion = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    lanzaboote,
+    nur,
+    ...
+  }: let
+    username = "jack";
+    system = "x86_64-linux";
+    hostname = "nixos-orion";
+
+    inherit (nixpkgs) lib;
+    theme = import ./lib/theme.nix {inherit lib;};
+
+    # Variables passed to all modules
+    specialArgs =
+      inputs
+      // {
+        inherit
+          username
+          hostname
+          system
+          theme
+          ;
+      };
+  in {
+    nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+      inherit system specialArgs;
       modules = [
-        ./configuration.nix
+        ./hosts/nixos-orion/host.nix
+        ./modules/modules.nix
+
+        # Make NUR packages available as pkgs.nur.*
+        {nixpkgs.overlays = [nur.overlays.default];}
 
         lanzaboote.nixosModules.lanzaboote
+
         home-manager.nixosModules.home-manager
         {
+          # Use system nixpkgs instead of home-manager's own
           home-manager.useGlobalPkgs = true;
+          # Install packages to /etc/profiles instead of ~/.nix-profile
           home-manager.useUserPackages = true;
-          # home.nix for user
-          home-manager.users.jack = import ./home.nix;
+          # Rename conflicting files instead of failing
+          home-manager.backupFileExtension = "backup";
+          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.users.${username} = import ./users/${username}/user.nix;
         }
       ];
     };
+
+    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
   };
 }
