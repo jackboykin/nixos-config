@@ -2,11 +2,9 @@
   pkgs,
   theme,
   ...
-}:
-let
+}: let
   c = theme.colors;
-in
-{
+in {
   programs.neovim = {
     enable = true;
     defaultEditor = true;

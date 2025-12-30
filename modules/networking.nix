@@ -3,7 +3,7 @@
     enable = true;
     dns = "systemd-resolved";
     connectionConfig = {
-      # Ignore DNS servers from DHCP - we use our own (dnscrypt-proxy)
+      # ignore dhcp dns
       "ipv4.ignore-auto-dns" = true;
       "ipv6.ignore-auto-dns" = true;
     };
@@ -11,7 +11,7 @@
 
   networking.firewall = {
     enable = true;
-    # Trust Tailscale
+    # tailscale
     trustedInterfaces = ["tailscale0"];
     allowedUDPPorts = [config.services.tailscale.port];
   };

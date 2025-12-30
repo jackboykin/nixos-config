@@ -1,8 +1,6 @@
-{ theme, ... }:
-let
+{theme, ...}: let
   c = theme.colors;
-in
-{
+in {
   programs.btop = {
     enable = true;
     settings = {
@@ -34,7 +32,7 @@ in
     theme[div_line]="${c.overlay0}"
 
     theme[temp_start]="${c.green}"
-    theme[temp_mid]="${c.yellow}"
+    theme[temp_mid]="${c.periwinkle}"
     theme[temp_end]="${c.red}"
 
     theme[cpu_start]="${c.green}"
@@ -47,10 +45,10 @@ in
 
     theme[cached_start]="${c.cyan}"
     theme[cached_mid]="${c.blue}"
-    theme[cached_end]="${c.purple}"
+    theme[cached_end]="${c.maroon}"
 
     theme[available_start]="${c.amber}"
-    theme[available_mid]="${c.yellow}"
+    theme[available_mid]="${c.periwinkle}"
     theme[available_end]="${c.amber}"
 
     theme[used_start]="${c.green}"
@@ -58,7 +56,7 @@ in
     theme[used_end]="${c.cyan}"
 
     theme[download_start]="${c.amber}"
-    theme[download_mid]="${c.orange}"
+    theme[download_mid]="${c.cream}"
     theme[download_end]="${c.red}"
 
     theme[upload_start]="${c.green}"
@@ -66,7 +64,7 @@ in
     theme[upload_end]="${c.cyan}"
 
     theme[process_start]="${c.cyan}"
-    theme[process_mid]="${c.purple}"
+    theme[process_mid]="${c.maroon}"
     theme[process_end]="${c.magenta}"
   '';
 }

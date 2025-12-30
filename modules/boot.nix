@@ -5,15 +5,15 @@
     "amd_pstate=active"
   ];
 
-  # Using lanzaboote for secure boot instead of systemd-boot
+  # lanzaboote for secure boot
   boot.loader.systemd-boot.enable = false;
   boot.lanzaboote = {
     enable = true;
-    # Directory containing secure boot keys
+    # secure boot keys
     pkiBundle = "/etc/secureboot";
   };
 
   boot.loader.efi.canTouchEfiVariables = true;
-  # Use systemd in initrd for faster boot and better Plymouth support
+  # initrd systemd
   boot.initrd.systemd.enable = true;
 }

@@ -1,8 +1,10 @@
-{ theme, config, ... }:
-let
-  c = theme.colors;
-in
 {
+  theme,
+  config,
+  ...
+}: let
+  c = theme.colors;
+in {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -26,7 +28,7 @@ in
       zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
       zstyle ':completion:*:descriptions' format '[%d]'
 
-      # Tokyo Night Syntax Highlighting Colors
+      # Wombat Syntax Highlighting Colors
       typeset -A ZSH_HIGHLIGHT_STYLES
       ZSH_HIGHLIGHT_STYLES[command]='fg=${c.green}'
       ZSH_HIGHLIGHT_STYLES[alias]='fg=${c.cyan}'
@@ -37,7 +39,7 @@ in
       ZSH_HIGHLIGHT_STYLES[comment]='fg=${c.overlay0},italic'
       ZSH_HIGHLIGHT_STYLES[error]='fg=${c.red}'
       ZSH_HIGHLIGHT_STYLES[path]='fg=${c.cyan}'
-      ZSH_HIGHLIGHT_STYLES[parameter]='fg=${c.yellow}'
+      ZSH_HIGHLIGHT_STYLES[parameter]='fg=${c.periwinkle}'
 
       bindkey '^[h' backward-word
       bindkey '^[l' forward-word

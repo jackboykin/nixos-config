@@ -1,8 +1,6 @@
-{ theme, ... }:
-let
+{theme, ...}: let
   c = theme.colors;
-in
-{
+in {
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -21,6 +19,6 @@ in
       "hl+" = c.red;
       "selected-bg" = c.surface1;
     };
-    defaultOptions = [ "--multi" ];
+    defaultOptions = ["--multi"];
   };
 }

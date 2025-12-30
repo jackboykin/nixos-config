@@ -2,11 +2,9 @@
   pkgs,
   theme,
   ...
-}:
-let
+}: let
   c = theme.colors;
-in
-{
+in {
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish";
@@ -32,10 +30,10 @@ in
       set -g renumber-windows on
       set -g repeat-time 1000
 
-      # Restore C-l to clear screen (prefix + C-l)
+      # prefix + C-l to clear
       bind C-l send-keys 'C-l'
 
-      # Smart pane switching with awareness of Vim splits.
+      # Smart pane switching (Vim aware)
       is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
           | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'"
       bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
@@ -66,7 +64,7 @@ in
 
       set -g window-status-separator " "
       set -g window-status-format "#[fg=#{?#{==:#I,1},${c.red},#{?#{==:#I,2},${c.magenta},#{?#{==:#I,3},${c.blue},${c.teal}}}}]●"
-      set -g window-status-current-format "#[fg=${c.yellow},bold]●"
+      set -g window-status-current-format "#[fg=${c.periwinkle},bold]●"
 
       set -g pane-border-lines single
       set -g pane-border-style "fg=${c.surface1}"

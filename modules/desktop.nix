@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
@@ -7,7 +6,7 @@
 
   services.printing.enable = true;
 
-  # RTKit gives PipeWire realtime priority for low-latency audio
+  # pipewire low-latency
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
