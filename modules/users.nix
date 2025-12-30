@@ -18,5 +18,5 @@
   # User-level config in home-manager handles personal settings
   programs.zsh.enable = true;
   programs.fish.enable = true;
-  users.defaultUserShell = pkgs.bash;
+  users.defaultUserShell = pkgs.zsh;
 }
