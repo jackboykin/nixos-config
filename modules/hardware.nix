@@ -3,7 +3,6 @@ _: {
   services.fstrim.enable = true;
   # Compressed RAM swap
   zramSwap.enable = true;
-
   hardware.graphics = {
     enable = true;
     # 32-bit support for Steam and older games
