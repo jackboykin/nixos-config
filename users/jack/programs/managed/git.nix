@@ -31,7 +31,7 @@ in
     enableGitIntegration = true;
     options = {
       line-numbers = true;
-      syntax-theme = "edo";
+      syntax-theme = "saiph";
       blame-palette = lib.concatStringsSep " " [
         c.base
         c.mantle

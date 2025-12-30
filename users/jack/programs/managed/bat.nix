@@ -11,19 +11,19 @@ in
   programs.bat = {
     enable = true;
     config = {
-      theme = "edo";
+      theme = "saiph";
     };
   };
 
-  xdg.configFile."bat/themes/edo.tmTheme".text = ''
+  xdg.configFile."bat/themes/saiph.tmTheme".text = ''
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
       <dict>
         <key>name</key>
-        <string>edo</string>
+        <string>saiph</string>
         <key>semanticClass</key>
-        <string>theme.dark.edo</string>
+        <string>theme.dark.saiph</string>
         <key>uuid</key>
         <string>627ce890-fabb-4d39-9819-7be71f4bdca7</string>
         <key>author</key>

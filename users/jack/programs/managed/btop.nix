@@ -6,7 +6,7 @@ in
   programs.btop = {
     enable = true;
     settings = {
-      color_theme = "edo";
+      color_theme = "saiph";
       theme_background = true;
       update_ms = 100;
       proc_sorting = "memory";
@@ -15,51 +15,51 @@ in
     };
   };
 
-  xdg.configFile."btop/themes/edo.theme".text = ''
+  xdg.configFile."btop/themes/saiph.theme".text = ''
     theme[main_bg]="${c.base}"
     theme[main_fg]="${c.text}"
     theme[title]="${c.text}"
     theme[hi_fg]="${c.blue}"
-    theme[selected_bg]="${c.surface1}"
-    theme[selected_fg]="${c.blue}"
+    theme[selected_bg]="${c.surface2}"
+    theme[selected_fg]="${c.text}"
     theme[inactive_fg]="${c.surface1}"
-    theme[graph_text]="${c.pink}"
+    theme[graph_text]="${c.subtext1}"
     theme[meter_bg]="${c.surface1}"
     theme[proc_misc]="${c.surface1}"
 
-    theme[cpu_box]="${c.magenta}"
-    theme[mem_box]="${c.green}"
-    theme[net_box]="${c.orange}"
-    theme[proc_box]="${c.blue}"
+    theme[cpu_box]="${c.mint}"
+    theme[mem_box]="${c.sky}"
+    theme[net_box]="${c.amber}"
+    theme[proc_box]="${c.magenta}"
     theme[div_line]="${c.overlay0}"
 
     theme[temp_start]="${c.green}"
     theme[temp_mid]="${c.yellow}"
     theme[temp_end]="${c.red}"
 
-    theme[cpu_start]="${c.teal}"
-    theme[cpu_mid]="${c.cyan}"
-    theme[cpu_end]="${c.purple}"
+    theme[cpu_start]="${c.green}"
+    theme[cpu_mid]="${c.amber}"
+    theme[cpu_end]="${c.red}"
 
-    theme[free_start]="${c.magenta}"
-    theme[free_mid]="${c.purple}"
-    theme[free_end]="${c.blue}"
+    theme[free_start]="${c.sky}"
+    theme[free_mid]="${c.blue}"
+    theme[free_end]="${c.magenta}"
 
     theme[cached_start]="${c.cyan}"
     theme[cached_mid]="${c.blue}"
     theme[cached_end]="${c.purple}"
 
-    theme[available_start]="${c.orange}"
-    theme[available_mid]="${c.red}"
-    theme[available_end]="${c.pink}"
+    theme[available_start]="${c.amber}"
+    theme[available_mid]="${c.yellow}"
+    theme[available_end]="${c.amber}"
 
     theme[used_start]="${c.green}"
     theme[used_mid]="${c.darkGreen}"
     theme[used_end]="${c.cyan}"
 
-    theme[download_start]="${c.orange}"
-    theme[download_mid]="${c.red}"
-    theme[download_end]="${c.magenta}"
+    theme[download_start]="${c.amber}"
+    theme[download_mid]="${c.orange}"
+    theme[download_end]="${c.red}"
 
     theme[upload_start]="${c.green}"
     theme[upload_mid]="${c.darkGreen}"
