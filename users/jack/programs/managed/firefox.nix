@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.firefox = {
     enable = true;
 
@@ -10,11 +11,11 @@
       PasswordManagerEnabled = false;
 
       FirefoxSuggest = {
-        WebSuggestions = false;
+        WebSuggestions = true;
         SponsoredSuggestions = false;
         ImproveSuggest = false;
       };
-      SearchSuggestEnabled = false;
+      SearchSuggestEnabled = true;
 
       FirefoxHome = {
         Search = true;
@@ -76,9 +77,9 @@
         "app.normandy.enabled" = true;
         "browser.tabs.crashReporting.sendReport" = true;
 
-        "browser.search.suggest.enabled" = false;
-        "browser.urlbar.suggest.searches" = false;
-        "browser.urlbar.showSearchSuggestionsFirst" = false;
+        "browser.search.suggest.enabled" = true;
+        "browser.urlbar.suggest.searches" = true;
+        "browser.urlbar.showSearchSuggestionsFirst" = true;
         "browser.urlbar.quicksuggest.enabled" = false;
         "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
         "browser.urlbar.suggest.quicksuggest.sponsored" = false;
