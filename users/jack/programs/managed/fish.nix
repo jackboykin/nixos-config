@@ -1,7 +1,9 @@
-{theme, ...}: let
+{ theme, ... }:
+let
   c = theme.colors;
   strip = theme.rawHexValue;
-in {
+in
+{
   programs.fish = {
     enable = true;
 
@@ -11,12 +13,12 @@ in {
       set -l selection  ${strip c.surface1}
       set -l comment    ${strip c.overlay0}
       set -l red        ${strip c.red}
-      set -l orange     ${strip c.peach}
+      set -l orange     ${strip c.orange}
       set -l yellow     ${strip c.yellow}
       set -l green      ${strip c.green}
-      set -l purple     ${strip c.mauve}
-      set -l cyan       ${strip c.sky}
-      set -l pink       ${strip c.pink}
+      set -l purple     ${strip c.purple}
+      set -l cyan       ${strip c.cyan}
+      set -l pink       ${strip c.magenta}
 
       set -g fish_color_normal $foreground
       set -g fish_color_command $green

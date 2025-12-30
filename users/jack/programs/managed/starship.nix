@@ -1,7 +1,8 @@
-{theme, ...}: let
+{ theme, lib, ... }:
+let
   c = theme.colors;
-  mixedColor = theme.mixColors c.base c.green 0.8;
-in {
+in
+{
   programs.starship = {
     enable = true;
 
@@ -10,54 +11,94 @@ in {
     enableFishIntegration = true;
 
     settings = {
-      format = "$shell$directory$git_branch$git_status$character";
+      # Premium Tokyo Night Style
+      format = lib.concatStrings [
+        "[](${c.blue})"
+        "$directory"
+        "[ ](fg:${c.blue} bg:${c.surface2})"
+        "$git_branch"
+        "$git_status"
+        "[ ](fg:${c.surface2} bg:${c.surface1})"
+        "$nodejs"
+        "$rust"
+        "$golang"
+        "$python"
+        "$nix_shell"
+        "[ ](fg:${c.surface1} bg:${c.surface0})"
+        "$time"
+        "[ ](fg:${c.surface0})\n"
+        "$character"
+      ];
 
       directory = {
-        style = "blue";
-        format = "[$path ]($style)";
-        truncation_length = 99;
+        style = "fg:${c.base} bg:${c.blue} bold";
+        format = "[ $path ]($style)";
+        truncation_length = 3;
         truncation_symbol = "…/";
-        truncate_to_repo = false;
+        substitutions = {
+          "Documents" = "󰈙 ";
+          "Downloads" = "󰉍 ";
+          "Music" = "󰎆 ";
+          "Pictures" = "󰉏 ";
+          "Videos" = "󰉏 ";
+          "Projects" = "󱔗 ";
+          "Desktop" = "󰇄 ";
+          "nixos-config" = "󱄅 nixos-config";
+        };
       };
 
       git_branch = {
         symbol = "󰘬";
-        format = "[ [$symbol](bold green bg:${mixedColor}) $branch ](bg:${mixedColor} green)";
+        style = "fg:${c.blue} bg:${c.surface2} bold";
+        format = "[[ $symbol $branch ]($style)]($style)";
       };
 
       git_status = {
+        style = "fg:${c.blue} bg:${c.surface2}";
+        format = "[[($all_status$ahead_behind )]($style)]($style)";
+      };
+
+      nodejs = {
+        symbol = "󰎙";
+        style = "fg:${c.blue} bg:${c.surface1}";
+        format = "[[ $symbol ($version) ]($style)]($style)";
+      };
+
+      rust = {
+        symbol = "󱘗";
+        style = "fg:${c.blue} bg:${c.surface1}";
+        format = "[[ $symbol ($version) ]($style)]($style)";
+      };
+
+      golang = {
+        symbol = "󰟓";
+        style = "fg:${c.blue} bg:${c.surface1}";
+        format = "[[ $symbol ($version) ]($style)]($style)";
+      };
+
+      python = {
+        symbol = "󰌠";
+        style = "fg:${c.blue} bg:${c.surface1}";
+        format = "[[ $symbol ($version) ]($style)]($style)";
+      };
+
+      nix_shell = {
+        symbol = "󱄅";
+        style = "fg:${c.blue} bg:${c.surface1}";
+        format = "[[ $symbol $state ]($style)]($style)";
+      };
+
+      time = {
         disabled = false;
-        ignore_submodules = false;
-        ahead = "[↑ ($count) ](blue)";
-        behind = "[↓ ($count) ](yellow)";
-        deleted = "[✗ ($count) ](red)";
-        diverged = "[⇕ ($count) ](red)";
-        format = "[ $all_status$ahead_behind]()";
-        modified = "[● ($count) ](yellow)";
-        renamed = "[» ($count) ](purple)";
-        staged = "[+ ($count) ](cyan)";
-        stashed = "[⚑ ($count) ](blue)";
+        time_format = "%R";
+        style = "fg:${c.subtext1} bg:${c.surface0}";
+        format = "[[ 󱑎 $time ]($style)]($style)";
       };
 
       character = {
-        disabled = false;
-        success_symbol = "[❯](green)";
-        error_symbol = "[❯](red)";
-      };
-
-      shell = {
-        zsh_indicator = " zsh";
-        fish_indicator = "";
-        bash_indicator = " bash";
-        unknown_indicator = "";
-        style = "yellow";
-        disabled = false;
-      };
-
-      hostname = {
-        ssh_only = false;
-        format = "[$hostname]($style)";
-        style = "bold cyan";
+        success_symbol = "[ ❯](bold ${c.blue})";
+        error_symbol = "[ ❯](bold ${c.red})";
+        vimcmd_symbol = "[ ❮](bold ${c.green})";
       };
     };
   };

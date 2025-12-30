@@ -2,10 +2,12 @@
   pkgs,
   theme,
   ...
-}: let
+}:
+let
   c = theme.colors;
   ui = theme.ui;
-in {
+in
+{
   programs.bat = {
     enable = true;
     config = {
@@ -38,13 +40,13 @@ in {
               <key>foreground</key>
               <string>${c.text}</string>
               <key>caret</key>
-              <string>${c.rosewater}</string>
+              <string>${c.pink}</string>
               <key>lineHighlight</key>
               <string>${c.surface0}</string>
               <key>misspelling</key>
               <string>${c.red}</string>
               <key>accent</key>
-              <string>${c.mauve}</string>
+              <string>${c.magenta}</string>
               <key>selection</key>
               <string>${c.overlay2}40</string>
               <key>activeGuide</key>
@@ -116,7 +118,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.peach}</string>
+              <string>${c.orange}</string>
             </dict>
           </dict>
           <dict>
@@ -125,7 +127,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.mauve}</string>
+              <string>${c.magenta}</string>
             </dict>
           </dict>
           <dict>
@@ -169,7 +171,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.maroon}</string>
+              <string>${c.red}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
