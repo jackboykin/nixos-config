@@ -1,4 +1,5 @@
-# Tokyo Night color theme - https://github.com/enkia/tokyo-night-vscode-theme
+# Wombat Base24 color theme by FredHappyface
+# https://github.com/fredHappyface
 { lib }:
 with lib;
 let
@@ -58,52 +59,87 @@ let
     in
     rgbToHex mix;
 
-  # Official Tokyo Night color palette
+  # Wombat Base24 palette (dark variant)
   colors = {
-    # Accent colors
-    red = "#f7768e";
-    orange = "#ff9e64";
-    yellow = "#e0af68";
-    green = "#9ece6a";
-    teal = "#73daca";
-    cyan = "#7dcfff";
-    blue = "#7aa2f7";
-    magenta = "#bb9af7";
-    pink = "#ff007c";
+    # Base24 core palette
+    base00 = "#0f0c0c"; # Default Background
+    base01 = "#000000"; # Lighter Background
+    base02 = "#313131"; # Selection Background
+    base03 = "#5c5b58"; # Comments, Invisibles
+    base04 = "#87857f"; # Dark Foreground
+    base05 = "#b2afa6"; # Default Foreground
+    base06 = "#ded9ce"; # Light Foreground
+    base07 = "#fefffe"; # Light Background
+    base08 = "#ff605a"; # Red (Variables)
+    base09 = "#ead89c"; # Orange (Integers, Constants)
+    base0A = "#a5c7ff"; # Yellow (Classes)
+    base0B = "#b1e869"; # Green (Strings)
+    base0C = "#82fff6"; # Cyan (Support, Regex)
+    base0D = "#5da9f6"; # Blue (Functions, Methods)
+    base0E = "#e86aff"; # Magenta (Keywords)
+    base0F = "#7f302d"; # Brown (Deprecated)
+
+    # Semantic accent mappings
+    red = "#ff605a";
+    orange = "#ead89c";
+    yellow = "#a5c7ff";
+    green = "#b1e869";
+    teal = "#82fff6";
+    cyan = "#82fff6";
+    blue = "#5da9f6";
+    magenta = "#e86aff";
+    pink = "#e86aff";
+    purple = "#7f302d";
 
     # Semantic colors
-    error = "#f7768e";
-    warning = "#e0af68";
-    info = "#7dcfff";
-    hint = "#73daca";
+    error = "#ff605a";
+    warning = "#ead89c";
+    info = "#5da9f6";
+    hint = "#82fff6";
 
     # Foreground colors
-    text = "#c0caf5";
-    subtext1 = "#a9b1d6";
-    subtext0 = "#9aa5ce";
-    overlay2 = "#787c99";
-    overlay1 = "#6b7089";
-    overlay0 = "#545c7e";
+    text = "#b2afa6";
+    subtext1 = "#87857f";
+    subtext0 = "#5c5b58";
+    overlay2 = "#87857f";
+    overlay1 = "#5c5b58";
+    overlay0 = "#313131";
 
     # Background colors
-    surface2 = "#3b4261";
-    surface1 = "#292e42";
-    surface0 = "#24283b";
-    base = "#1a1b26";
-    mantle = "#16161e";
-    crust = "#13131a";
+    surface2 = "#5c5b58";
+    surface1 = "#313131";
+    surface0 = "#000000";
+    base = "#0f0c0c";
+    mantle = "#0d0d0d";
+    crust = "#000000";
 
     # Git colors
-    gitAdded = "#449dab";
-    gitModified = "#6183bb";
-    gitDeleted = "#914c54";
+    gitAdded = "#b1e869";
+    gitModified = "#ead89c";
+    gitDeleted = "#ff605a";
 
-    # Additional Tokyo Night accent colors
-    purple = "#9d7cd8";
-    darkBlue = "#3d59a1";
-    lightBlue = "#89ddff";
-    darkCyan = "#2ac3de";
-    darkGreen = "#41a6b5";
+    # Additional accent colors (legacy mapping compatibility)
+    darkBlue = "#3d7ac4";
+    lightBlue = "#5da9f6";
+    darkCyan = "#52ccc4";
+    darkGreen = "#8fba54";
+
+    # Contrast accents
+    mint = "#82fff6";
+    sky = "#a5c7ff";
+    amber = "#ead89c";
+    vibrantPurple = "#e86aff";
+
+    # Highlight color for search/matches
+    highlight = "#fefffe";
+
+    # Legacy compatibility aliases
+    darkMagenta = "#e86aff";
+    deepPink = "#ff605a";
+    blushPop = "#ded9ce";
+    oldRose = "#87857f";
+    blackberryCream = "#313131";
+    darkGrown = "#0f0c0c";
   };
 in
 {
@@ -124,9 +160,9 @@ in
   };
 
   ui = {
-    findHighlight = mixColors colors.base colors.cyan 0.5;
-    selection = colors.surface1;
-    cursor = colors.text;
-    activeBorder = colors.darkBlue;
+    findHighlight = mixColors colors.base colors.highlight 0.4;
+    selection = mixColors colors.surface1 colors.magenta 0.3;
+    cursor = colors.blushPop;
+    activeBorder = colors.vibrantPurple;
   };
 }

@@ -15,5 +15,6 @@ _: {
     ./zoxide.nix
     ./zsh.nix
     ./bash.nix
+    ./konsole.nix
   ];
 }
