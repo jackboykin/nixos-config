@@ -2,10 +2,12 @@
   theme,
   lib,
   ...
-}: let
+}:
+let
   c = theme.colors;
   d = theme.diff;
-in {
+in
+{
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -49,15 +51,15 @@ in {
       line-numbers-plus-style = "bold ${c.green}";
       line-numbers-right-style = c.overlay0;
       line-numbers-zero-style = c.overlay0;
-      minus-emph-style = "bold syntax ${d.minusEmph}";
-      minus-style = "syntax ${d.minus}";
-      plus-emph-style = "bold syntax ${d.plusEmph}";
-      plus-style = "syntax ${d.plus}";
+      minus-emph-style = "bold syntax bg:${d.minusEmph}";
+      minus-style = "syntax bg:${d.minus}";
+      plus-emph-style = "bold syntax bg:${d.plusEmph}";
+      plus-style = "syntax bg:${d.plus}";
       map-styles = lib.concatStringsSep " " [
-        "bold purple => syntax ${d.purple}"
-        "bold blue => syntax ${d.blue}"
-        "bold cyan => syntax ${d.cyan}"
-        "bold yellow => syntax ${d.yellow}"
+        "bold purple => bold syntax bg:${d.purple}"
+        "bold blue => bold syntax bg:${d.blue}"
+        "bold cyan => bold syntax bg:${d.cyan}"
+        "bold yellow => bold syntax bg:${d.yellow}"
       ];
     };
   };

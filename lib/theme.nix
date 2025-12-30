@@ -1,3 +1,4 @@
+# Tokyo Night color theme - https://github.com/enkia/tokyo-night-vscode-theme
 { lib }:
 with lib;
 let
@@ -57,33 +58,52 @@ let
     in
     rgbToHex mix;
 
+  # Official Tokyo Night color palette
   colors = {
-    rosewater = "#de9d9d";
-    flamingo = "#dea89d";
-    pink = "#b294bb";
-    mauve = "#9d8bb8";
-    red = "#cc6666";
-    maroon = "#c67d7d";
-    peach = "#de935f";
-    yellow = "#f0c674";
-    green = "#b5bd68";
-    teal = "#8abeb7";
-    sky = "#95b3c9";
-    sapphire = "#7ea9b8";
-    blue = "#81a2be";
-    lavender = "#9db5c9";
-    text = "#c5c8c6";
-    subtext1 = "#a8aba9";
-    subtext0 = "#8b8d8b";
-    overlay2 = "#6f7271";
-    overlay1 = "#5a5c5b";
-    overlay0 = "#4d5057";
-    surface2 = "#3a3c3f";
-    surface1 = "#373b41";
-    surface0 = "#282a2e";
-    base = "#1d1f21";
-    mantle = "#161719";
-    crust = "#0f1011";
+    # Accent colors
+    red = "#f7768e";
+    orange = "#ff9e64";
+    yellow = "#e0af68";
+    green = "#9ece6a";
+    teal = "#73daca";
+    cyan = "#7dcfff";
+    blue = "#7aa2f7";
+    magenta = "#bb9af7";
+    pink = "#ff007c";
+
+    # Semantic colors
+    error = "#f7768e";
+    warning = "#e0af68";
+    info = "#7dcfff";
+    hint = "#73daca";
+
+    # Foreground colors
+    text = "#c0caf5";
+    subtext1 = "#a9b1d6";
+    subtext0 = "#9aa5ce";
+    overlay2 = "#787c99";
+    overlay1 = "#6b7089";
+    overlay0 = "#545c7e";
+
+    # Background colors
+    surface2 = "#3b4261";
+    surface1 = "#292e42";
+    surface0 = "#24283b";
+    base = "#1a1b26";
+    mantle = "#16161e";
+    crust = "#13131a";
+
+    # Git colors
+    gitAdded = "#449dab";
+    gitModified = "#6183bb";
+    gitDeleted = "#914c54";
+
+    # Additional Tokyo Night accent colors
+    purple = "#9d7cd8";
+    darkBlue = "#3d59a1";
+    lightBlue = "#89ddff";
+    darkCyan = "#2ac3de";
+    darkGreen = "#41a6b5";
   };
 in
 {
@@ -92,18 +112,21 @@ in
   inherit colors mixColors;
 
   diff = {
-    hunkHeader = mixColors colors.base colors.mauve 0.8;
+    hunkHeader = mixColors colors.base colors.magenta 0.8;
     minusEmph = mixColors colors.base colors.red 0.6;
     minus = mixColors colors.base colors.red 0.8;
     plusEmph = mixColors colors.base colors.green 0.6;
     plus = mixColors colors.base colors.green 0.8;
-    purple = mixColors colors.base colors.mauve 0.6;
+    purple = mixColors colors.base colors.purple 0.6;
     blue = mixColors colors.base colors.blue 0.6;
-    cyan = mixColors colors.base colors.teal 0.6;
+    cyan = mixColors colors.base colors.cyan 0.6;
     yellow = mixColors colors.base colors.yellow 0.6;
   };
 
   ui = {
-    findHighlight = mixColors colors.base colors.sky 0.5;
+    findHighlight = mixColors colors.base colors.cyan 0.5;
+    selection = colors.surface1;
+    cursor = colors.text;
+    activeBorder = colors.darkBlue;
   };
 }

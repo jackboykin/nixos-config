@@ -1,24 +1,26 @@
-{theme, ...}: let
+{ theme, ... }:
+let
   c = theme.colors;
-in {
+in
+{
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
     enableFishIntegration = true;
     colors = {
       "bg+" = c.surface0;
-      spinner = c.rosewater;
+      spinner = c.magenta;
       hl = c.red;
       fg = c.text;
       header = c.red;
-      info = c.mauve;
-      pointer = c.rosewater;
-      marker = c.lavender;
+      info = c.magenta;
+      pointer = c.magenta;
+      marker = c.blue;
       "fg+" = c.text;
-      prompt = c.mauve;
+      prompt = c.magenta;
       "hl+" = c.red;
       "selected-bg" = c.surface1;
     };
-    defaultOptions = ["--multi"];
+    defaultOptions = [ "--multi" ];
   };
 }
