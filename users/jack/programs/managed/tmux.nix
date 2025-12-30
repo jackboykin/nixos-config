@@ -11,6 +11,7 @@ in
     enable = true;
     shell = "${pkgs.fish}/bin/fish";
     terminal = "tmux-256color";
+    prefix = "C-Space";
     escapeTime = 0;
     baseIndex = 1;
     keyMode = "vi";
@@ -31,10 +32,21 @@ in
       set -g renumber-windows on
       set -g repeat-time 1000
 
-      bind-key h select-pane -L
-      bind-key j select-pane -D
-      bind-key k select-pane -U
-      bind-key l select-pane -R
+      # Restore C-l to clear screen (prefix + C-l)
+      bind C-l send-keys 'C-l'
+
+      # Smart pane switching with awareness of Vim splits.
+      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+          | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'"
+      bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
+      bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
+      bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
+      bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
+
+      bind-key -T copy-mode-vi 'C-h' select-pane -L
+      bind-key -T copy-mode-vi 'C-j' select-pane -D
+      bind-key -T copy-mode-vi 'C-k' select-pane -U
+      bind-key -T copy-mode-vi 'C-l' select-pane -R
 
       bind-key "|" split-window -h -c "#{pane_current_path}"
       bind-key "\\" split-window -fh -c "#{pane_current_path}"
