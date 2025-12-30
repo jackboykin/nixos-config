@@ -105,6 +105,7 @@
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+  services.desktopManager.gnome.enable = true;
   services.xserver.xkb.layout = "us";
 
   # Sound and Printing
@@ -116,6 +117,9 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  # Resolve conflict between KDE and GNOME
+  programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
 
   # User Account
   users.users.jack = {
