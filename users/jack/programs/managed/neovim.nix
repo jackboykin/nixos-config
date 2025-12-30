@@ -223,14 +223,18 @@ in
           config = function()
             require("neodev").setup()
 
-            local lspconfig = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-            local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " " }
-            for type, icon in pairs(signs) do
-              local hl = "DiagnosticSign" .. type
-              vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-            end
+            vim.diagnostic.config({
+              signs = {
+                text = {
+                  [vim.diagnostic.severity.ERROR] = " ",
+                  [vim.diagnostic.severity.WARN] = " ",
+                  [vim.diagnostic.severity.HINT] = "󰌵 ",
+                  [vim.diagnostic.severity.INFO] = " ",
+                },
+              },
+            })
 
             vim.api.nvim_create_autocmd("LspAttach", {
               callback = function(args)
@@ -251,19 +255,26 @@ in
               end,
             })
 
-            lspconfig.nil_ls.setup({ capabilities = capabilities })
-            lspconfig.lua_ls.setup({
-              capabilities = capabilities,
-              settings = {
-                Lua = {
-                  workspace = { checkThirdParty = false },
-                  telemetry = { enable = false },
+            local servers = {
+              nil_ls = {},
+              lua_ls = {
+                settings = {
+                  Lua = {
+                    workspace = { checkThirdParty = false },
+                    telemetry = { enable = false },
+                  },
                 },
               },
-            })
-            lspconfig.ts_ls.setup({ capabilities = capabilities })
-            lspconfig.cssls.setup({ capabilities = capabilities })
-            lspconfig.html.setup({ capabilities = capabilities })
+              ts_ls = {},
+              cssls = {},
+              html = {},
+            }
+
+            for name, config in pairs(servers) do
+              config.capabilities = capabilities
+              vim.lsp.config(name, config)
+              vim.lsp.enable(name)
+            end
           end,
         },
       }
@@ -342,7 +353,7 @@ in
         build = ":TSUpdate",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
-          require("nvim-treesitter.configs").setup({
+          require("nvim-treesitter").setup({
             ensure_installed = {
               "bash",
               "c",
