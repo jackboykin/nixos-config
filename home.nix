@@ -4,7 +4,7 @@
   home.username = "jack";
   home.homeDirectory = "/home/jack";
   home.stateVersion = "25.11";
-
+  
   # General packages
   home.packages = with pkgs; [
     spotify
