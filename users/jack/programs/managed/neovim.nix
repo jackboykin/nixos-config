@@ -2,9 +2,11 @@
   pkgs,
   theme,
   ...
-}: let
+}:
+let
   c = theme.colors;
-in {
+in
+{
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -149,7 +151,7 @@ in {
 
     "nvim/lua/lazy-bootstrap.lua".text = ''
       local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-      if not vim.loop.fs_stat(lazypath) then
+      if not vim.uv.fs_stat(lazypath) then
         vim.fn.system({
           "git",
           "clone",
