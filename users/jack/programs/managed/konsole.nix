@@ -1,19 +1,21 @@
-{theme, ...}: let
+{ theme, ... }:
+let
   c = theme.colors;
   # Konsole colorscheme expects "R,G,B"
-  toRGB = hex: let
-    # Remove # if present
-    h =
-      if builtins.substring 0 1 hex == "#"
-      then builtins.substring 1 6 hex
-      else hex;
-    r = builtins.substring 0 2 h;
-    g = builtins.substring 2 2 h;
-    b = builtins.substring 4 2 h;
-    # Convert hex to decimal using the same TOML trick as theme.nix
-    dec = s: (builtins.fromTOML "a = 0x${s}").a;
-  in "${toString (dec r)},${toString (dec g)},${toString (dec b)}";
-in {
+  toRGB =
+    hex:
+    let
+      # Remove # if present
+      h = if builtins.substring 0 1 hex == "#" then builtins.substring 1 6 hex else hex;
+      r = builtins.substring 0 2 h;
+      g = builtins.substring 2 2 h;
+      b = builtins.substring 4 2 h;
+      # Convert hex to decimal using the same TOML trick as theme.nix
+      dec = s: (builtins.fromTOML "a = 0x${s}").a;
+    in
+    "${toString (dec r)},${toString (dec g)},${toString (dec b)}";
+in
+{
   # Custom Color Scheme
   xdg.dataFile."konsole/Saiph.colorscheme".text = ''
     [General]
@@ -90,6 +92,6 @@ in {
 
     [Appearance]
     ColorScheme=Saiph
-    Font=Fira Code,9,-1,5,50,0,0,0,0,0
+    Font=JetBrainsMono Nerd Font Mono,10,-1,5,50,0,0,0,0,0
   '';
 }
