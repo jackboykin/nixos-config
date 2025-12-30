@@ -1,4 +1,4 @@
-{...}: {
+_: {
   imports = [
     ./bat.nix
     ./btop.nix
@@ -7,7 +7,6 @@
     ./firefox.nix
     ./fish.nix
     ./fzf.nix
-    ./ghostty.nix
     ./git.nix
     ./lazygit.nix
     ./mpv.nix

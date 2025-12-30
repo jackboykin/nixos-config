@@ -1,4 +1,4 @@
-{...}: {
+_: {
   # SSD Trim
   services.fstrim.enable = true;
   # Compressed RAM swap

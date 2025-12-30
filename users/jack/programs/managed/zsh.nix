@@ -1,7 +1,9 @@
-{config, ...}: {
+{ config, ... }:
+{
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    # Store zsh config in XDG config directory
     dotDir = "${config.xdg.configHome}/zsh";
     autosuggestion.enable = true;
     historySubstringSearch.enable = true;
