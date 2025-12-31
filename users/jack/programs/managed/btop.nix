@@ -1,10 +1,12 @@
-{theme, ...}: let
+{ theme, ... }:
+let
   c = theme.colors;
-in {
+in
+{
   programs.btop = {
     enable = true;
     settings = {
-      color_theme = "saiph";
+      color_theme = "blackberry-aquamarine";
       theme_background = true;
       update_ms = 100;
       proc_sorting = "memory";
@@ -13,7 +15,7 @@ in {
     };
   };
 
-  xdg.configFile."btop/themes/saiph.theme".text = ''
+  xdg.configFile."btop/themes/blackberry-aquamarine.theme".text = ''
     theme[main_bg]="${c.base}"
     theme[main_fg]="${c.text}"
     theme[title]="${c.text}"
@@ -25,46 +27,46 @@ in {
     theme[meter_bg]="${c.surface1}"
     theme[proc_misc]="${c.surface1}"
 
-    theme[cpu_box]="${c.mint}"
+    theme[cpu_box]="${c.teal}"
     theme[mem_box]="${c.sky}"
-    theme[net_box]="${c.amber}"
-    theme[proc_box]="${c.magenta}"
+    theme[net_box]="${c.orange}"
+    theme[proc_box]="${c.purple}"
     theme[div_line]="${c.overlay0}"
 
     theme[temp_start]="${c.green}"
-    theme[temp_mid]="${c.periwinkle}"
+    theme[temp_mid]="${c.yellow}"
     theme[temp_end]="${c.red}"
 
     theme[cpu_start]="${c.green}"
-    theme[cpu_mid]="${c.amber}"
+    theme[cpu_mid]="${c.orange}"
     theme[cpu_end]="${c.red}"
 
     theme[free_start]="${c.sky}"
     theme[free_mid]="${c.blue}"
-    theme[free_end]="${c.magenta}"
+    theme[free_end]="${c.purple}"
 
     theme[cached_start]="${c.cyan}"
     theme[cached_mid]="${c.blue}"
     theme[cached_end]="${c.maroon}"
 
-    theme[available_start]="${c.amber}"
-    theme[available_mid]="${c.periwinkle}"
-    theme[available_end]="${c.amber}"
+    theme[available_start]="${c.orange}"
+    theme[available_mid]="${c.yellow}"
+    theme[available_end]="${c.orange}"
 
     theme[used_start]="${c.green}"
-    theme[used_mid]="${c.darkGreen}"
+    theme[used_mid]="${c.green}"
     theme[used_end]="${c.cyan}"
 
-    theme[download_start]="${c.amber}"
-    theme[download_mid]="${c.cream}"
+    theme[download_start]="${c.orange}"
+    theme[download_mid]="${c.orange}"
     theme[download_end]="${c.red}"
 
     theme[upload_start]="${c.green}"
-    theme[upload_mid]="${c.darkGreen}"
+    theme[upload_mid]="${c.green}"
     theme[upload_end]="${c.cyan}"
 
     theme[process_start]="${c.cyan}"
     theme[process_mid]="${c.maroon}"
-    theme[process_end]="${c.magenta}"
+    theme[process_end]="${c.purple}"
   '';
 }

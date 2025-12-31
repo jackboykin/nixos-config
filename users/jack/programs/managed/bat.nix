@@ -2,26 +2,28 @@
   pkgs,
   theme,
   ...
-}: let
+}:
+let
   c = theme.colors;
   ui = theme.ui;
-in {
+in
+{
   programs.bat = {
     enable = true;
     config = {
-      theme = "saiph";
+      theme = "blackberry-aquamarine";
     };
   };
 
-  xdg.configFile."bat/themes/saiph.tmTheme".text = ''
+  xdg.configFile."bat/themes/blackberry-aquamarine.tmTheme".text = ''
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
       <dict>
         <key>name</key>
-        <string>saiph</string>
+        <string>blackberry-aquamarine</string>
         <key>semanticClass</key>
-        <string>theme.dark.saiph</string>
+        <string>theme.dark.blackberry-aquamarine</string>
         <key>uuid</key>
         <string>627ce890-fabb-4d39-9819-7be71f4bdca7</string>
         <key>author</key>
@@ -38,21 +40,21 @@ in {
               <key>foreground</key>
               <string>${c.text}</string>
               <key>caret</key>
-              <string>${c.pink}</string>
+              <string>${c.purple}</string>
               <key>lineHighlight</key>
-              <string>${c.surface0}</string>
+              <string>${c.surface1}</string>
               <key>misspelling</key>
               <string>${c.red}</string>
               <key>accent</key>
-              <string>${c.magenta}</string>
+              <string>${c.purple}</string>
               <key>selection</key>
-              <string>${c.overlay2}40</string>
+              <string>${c.overlay1}40</string>
               <key>activeGuide</key>
-              <string>${c.surface1}</string>
+              <string>${c.surface2}</string>
               <key>findHighlight</key>
               <string>${ui.findHighlight}</string>
               <key>gutterForeground</key>
-              <string>${c.teal}</string>
+              <string>${c.subtext1}</string>
             </dict>
           </dict>
           <dict>
@@ -74,7 +76,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.overlay2}</string>
+              <string>${c.subtext0}</string>
             </dict>
           </dict>
           <dict>
@@ -105,7 +107,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.pink}</string>
+              <string>${c.purple}</string>
             </dict>
           </dict>
           <dict>
@@ -116,7 +118,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.cream}</string>
+              <string>${c.orange}</string>
             </dict>
           </dict>
           <dict>
@@ -125,7 +127,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.magenta}</string>
+              <string>${c.purple}</string>
             </dict>
           </dict>
           <dict>
@@ -136,7 +138,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.teal}</string>
+              <string>${c.cyan}</string>
             </dict>
           </dict>
           <dict>
@@ -158,7 +160,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.periwinkle}</string>
+              <string>${c.yellow}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -215,7 +217,7 @@ in {
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.periwinkle}</string>
+              <string>${c.yellow}</string>
             </dict>
           </dict>
           <dict>

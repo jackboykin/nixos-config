@@ -2,10 +2,12 @@
   theme,
   lib,
   ...
-}: let
+}:
+let
   c = theme.colors;
   d = theme.diff;
-in {
+in
+{
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -29,7 +31,7 @@ in {
     enableGitIntegration = true;
     options = {
       line-numbers = true;
-      syntax-theme = "saiph";
+      syntax-theme = "blackberry-aquamarine";
       blame-palette = lib.concatStringsSep " " [
         c.base
         c.mantle
@@ -57,7 +59,7 @@ in {
         "bold purple => bold syntax bg:${d.maroon}"
         "bold blue => bold syntax bg:${d.blue}"
         "bold cyan => bold syntax bg:${d.cyan}"
-        "bold yellow => bold syntax bg:${d.periwinkle}"
+        "bold yellow => bold syntax bg:${d.yellow}"
       ];
     };
   };

@@ -17,9 +17,9 @@ let
 in
 {
   # Custom Color Scheme
-  xdg.dataFile."konsole/Saiph.colorscheme".text = ''
+  xdg.dataFile."konsole/BlackberryAquamarine.colorscheme".text = ''
     [General]
-    Description=Saiph
+    Description=Blackberry Aquamarine
     Opacity=1
     Wallpaper=
 
@@ -27,7 +27,7 @@ in
     Color=${toRGB c.base}
 
     [BackgroundIntense]
-    Color=${toRGB c.surface0}
+    Color=${toRGB c.surface1}
 
     [Foreground]
     Color=${toRGB c.text}
@@ -45,19 +45,19 @@ in
     Color=${toRGB c.red}
 
     [Color1Intense]
-    Color=${toRGB c.magenta}
+    Color=${toRGB c.purple}
 
     [Color2]
     Color=${toRGB c.green}
 
     [Color2Intense]
-    Color=${toRGB c.mint}
+    Color=${toRGB c.teal}
 
     [Color3]
-    Color=${toRGB c.periwinkle}
+    Color=${toRGB c.yellow}
 
     [Color3Intense]
-    Color=${toRGB c.amber}
+    Color=${toRGB c.orange}
 
     [Color4]
     Color=${toRGB c.blue}
@@ -69,7 +69,7 @@ in
     Color=${toRGB c.maroon}
 
     [Color5Intense]
-    Color=${toRGB c.vibrantPurple}
+    Color=${toRGB c.purple}
 
     [Color6]
     Color=${toRGB c.cyan}
@@ -85,13 +85,13 @@ in
   '';
 
   # Custom Profile
-  xdg.dataFile."konsole/Saiph.profile".text = ''
+  xdg.dataFile."konsole/BlackberryAquamarine.profile".text = ''
     [General]
-    Name=Saiph
+    Name=BlackberryAquamarine
     Parent=FALLBACK/
 
     [Appearance]
-    ColorScheme=Saiph
+    ColorScheme=BlackberryAquamarine
     Font=JetBrainsMono Nerd Font Mono,10,-1,5,50,0,0,0,0,0
   '';
 }

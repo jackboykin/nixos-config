@@ -2,9 +2,11 @@
   pkgs,
   theme,
   ...
-}: let
+}:
+let
   c = theme.colors;
-in {
+in
+{
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish";
@@ -63,15 +65,15 @@ in {
       set -g status-style "bg=default"
 
       set -g window-status-separator " "
-      set -g window-status-format "#[fg=#{?#{==:#I,1},${c.red},#{?#{==:#I,2},${c.magenta},#{?#{==:#I,3},${c.blue},${c.teal}}}}]●"
-      set -g window-status-current-format "#[fg=${c.periwinkle},bold]●"
+      set -g window-status-format "#[fg=#{?#{==:#I,1},${c.red},#{?#{==:#I,2},${c.purple},#{?#{==:#I,3},${c.blue},${c.cyan}}}}]●"
+      set -g window-status-current-format "#[fg=${c.yellow},bold]●"
 
       set -g pane-border-lines single
       set -g pane-border-style "fg=${c.surface1}"
-      set -g pane-active-border-style "fg=${c.magenta}"
+      set -g pane-active-border-style "fg=${c.purple}"
 
-      set -g message-style "bg=${c.surface0},fg=${c.text}"
-      set -g message-command-style "bg=${c.surface0},fg=${c.text}"
+      set -g message-style "bg=${c.base},fg=${c.text}"
+      set -g message-command-style "bg=${c.base},fg=${c.text}"
       set -g mode-style "bg=${c.surface1},fg=${c.text}"
     '';
   };
