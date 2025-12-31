@@ -18,5 +18,7 @@
     alejandra
     nixfmt-rfc-style
     yazi
+    typescript
+    typescript-language-server
   ];
 }
