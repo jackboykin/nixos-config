@@ -1,6 +1,6 @@
 { theme, ... }:
 let
-  c = theme.colors;
+  colors = theme.colors;
 in
 {
   programs.fzf = {
@@ -8,18 +8,18 @@ in
     enableZshIntegration = true;
     enableFishIntegration = true;
     colors = {
-      "bg+" = c.base;
-      spinner = c.purple;
-      hl = c.red;
-      fg = c.text;
-      header = c.red;
-      info = c.purple;
-      pointer = c.purple;
-      marker = c.blue;
-      "fg+" = c.text;
-      prompt = c.purple;
-      "hl+" = c.red;
-      "selected-bg" = c.surface1;
+      "bg+" = colors.base;
+      spinner = colors.purple;
+      hl = colors.red;
+      fg = colors.text;
+      header = colors.red;
+      info = colors.purple;
+      pointer = colors.purple;
+      marker = colors.blue;
+      "fg+" = colors.text;
+      prompt = colors.purple;
+      "hl+" = colors.red;
+      "selected-bg" = colors.surface1;
     };
     defaultOptions = [ "--multi" ];
   };

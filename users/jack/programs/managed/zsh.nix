@@ -4,7 +4,7 @@
   ...
 }:
 let
-  c = theme.colors;
+  colors = theme.colors;
 in
 {
   programs.zsh = {
@@ -30,18 +30,18 @@ in
       zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
       zstyle ':completion:*:descriptions' format '[%d]'
 
-      # Blackberry Aquamarine Syntax Highlighting Colors
+      # Atelier Dune Light Syntax Highlighting Colors
       typeset -A ZSH_HIGHLIGHT_STYLES
-      ZSH_HIGHLIGHT_STYLES[command]='fg=${c.green}'
-      ZSH_HIGHLIGHT_STYLES[alias]='fg=${c.cyan}'
-      ZSH_HIGHLIGHT_STYLES[builtin]='fg=${c.purple}'
-      ZSH_HIGHLIGHT_STYLES[function]='fg=${c.blue}'
-      ZSH_HIGHLIGHT_STYLES[keyword]='fg=${c.purple}'
-      ZSH_HIGHLIGHT_STYLES[string]='fg=${c.yellow}'
-      ZSH_HIGHLIGHT_STYLES[comment]='fg=${c.subtext0},italic'
-      ZSH_HIGHLIGHT_STYLES[error]='fg=${c.red}'
-      ZSH_HIGHLIGHT_STYLES[path]='fg=${c.cyan}'
-      ZSH_HIGHLIGHT_STYLES[parameter]='fg=${c.yellow}'
+      ZSH_HIGHLIGHT_STYLES[command]='fg=${colors.green}'
+      ZSH_HIGHLIGHT_STYLES[alias]='fg=${colors.cyan}'
+      ZSH_HIGHLIGHT_STYLES[builtin]='fg=${colors.purple}'
+      ZSH_HIGHLIGHT_STYLES[function]='fg=${colors.blue}'
+      ZSH_HIGHLIGHT_STYLES[keyword]='fg=${colors.purple}'
+      ZSH_HIGHLIGHT_STYLES[string]='fg=${colors.yellow}'
+      ZSH_HIGHLIGHT_STYLES[comment]='fg=${colors.subtext0},italic'
+      ZSH_HIGHLIGHT_STYLES[error]='fg=${colors.red}'
+      ZSH_HIGHLIGHT_STYLES[path]='fg=${colors.cyan}'
+      ZSH_HIGHLIGHT_STYLES[parameter]='fg=${colors.yellow}'
 
       bindkey '^[h' backward-word
       bindkey '^[l' forward-word

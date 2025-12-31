@@ -57,29 +57,29 @@ let
     in
     rgbToHex mix;
 
-  # Blackberry Aquamarine theme (Custom)
-  # Based on: Black (#070707), Blackberry Cream (#553555), Mauve Shadow (#755b69), Muted Teal (#96c5b0), Aquamarine (#adf1d2)
-  # System: base16, Slug: blackberry-aquamarine, Variant: dark
+  # Colors theme
+  # Author: mrmrs (http://clrs.cc)
+  # System: base16, Slug: colors, Variant: dark
   colors = rec {
     # Neutral Base
-    base00 = "#070707"; # Background
-    base01 = "#151515"; # Mantle
-    base02 = "#2b1b2b"; # Surface / Selection (Derived from Blackberry Cream)
-    base03 = "#553555"; # Overlay / Comments (Blackberry Cream)
-    base04 = "#755b69"; # Muted Text (Mauve Shadow)
-    base05 = "#96c5b0"; # Main Text (Muted Teal)
-    base06 = "#adf1d2"; # Bright Text (Aquamarine)
-    base07 = "#e0fdf0"; # Highlights
+    base00 = "#111111"; # Background
+    base01 = "#333333"; # Mantle
+    base02 = "#555555"; # Surface / Selection
+    base03 = "#777777"; # Overlay / Comments
+    base04 = "#999999"; # Muted Text
+    base05 = "#bbbbbb"; # Main Text
+    base06 = "#dddddd"; # Bright Text
+    base07 = "#ffffff"; # Highlights
 
     # Accents
-    red = "#ff6b8b"; # base08 (Vibrant Pink/Red)
-    orange = "#d9a650"; # base09 (Gold)
-    yellow = "#dae37a"; # base0A (Limey Yellow)
-    green = "#adf1d2"; # base0B (Aquamarine)
-    cyan = "#7fdbca"; # base0C
-    blue = "#78a9ff"; # base0D
-    magenta = "#c678dd"; # base0E
-    maroon = "#755b69"; # base0F (Mauve Shadow)
+    red = "#ff4136"; # base08
+    orange = "#ff851b"; # base09
+    yellow = "#ffdc00"; # base0A
+    green = "#2ecc40"; # base0B
+    cyan = "#7fdbff"; # base0C
+    blue = "#0074d9"; # base0D
+    magenta = "#b10dc9"; # base0E
+    maroon = "#85144b"; # base0F
 
     # Explicit Descriptive Names
     sky = blue;
@@ -87,16 +87,16 @@ let
     pink = red;
     purple = magenta;
     tan = base04;
-    cream = base06;
+    cream = base07;
 
-    # Functional UI Roles
+    # Functional UI Roles (Dark Theme)
     base = base00;
     mantle = base01;
-    crust = "#000000"; # Pure black for this theme
+    crust = "#080808";
     surface0 = base01;
-    surface1 = "#3a253a"; # Mid-selection
-    surface2 = base02;
-    overlay0 = "#3a253a";
+    surface1 = base02;
+    surface2 = base03;
+    overlay0 = base01;
     overlay1 = base02;
     overlay2 = base03;
 
@@ -116,12 +116,12 @@ let
     gitDeleted = red;
 
     # Extended Brights
-    brightRed = "#ff8fa3";
-    brightOrange = "#e8bd7d";
-    brightGreen = base06;
-    brightCyan = "#9eeade";
-    brightBlue = "#a3c7ff";
-    brightPurple = "#d9a1e9";
+    brightRed = red;
+    brightOrange = orange;
+    brightGreen = green;
+    brightCyan = cyan;
+    brightBlue = blue;
+    brightPurple = magenta;
 
     highlight = base07;
   };

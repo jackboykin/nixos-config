@@ -4,7 +4,7 @@
   ...
 }:
 let
-  c = theme.colors;
+  colors = theme.colors;
 in
 {
   programs.lazygit = {
@@ -31,28 +31,28 @@ in
             "cyan"
             "bold"
           ];
-          inactiveBorderColor = [ c.overlay1 ];
+          inactiveBorderColor = [ colors.overlay1 ];
           optionsTextColor = [ "yellow" ];
-          selectedLineBgColor = [ c.surface1 ];
-          cherryPickedCommitBgColor = [ c.surface1 ];
-          cherryPickedCommitFgColor = [ c.purple ];
-          unstagedChangesColor = [ c.red ];
-          defaultFgColor = [ c.text ];
-          searchingActiveBorderColor = [ c.purple ];
+          selectedLineBgColor = [ colors.surface1 ];
+          cherryPickedCommitBgColor = [ colors.surface1 ];
+          cherryPickedCommitFgColor = [ colors.purple ];
+          unstagedChangesColor = [ colors.red ];
+          defaultFgColor = [ colors.text ];
+          searchingActiveBorderColor = [ colors.purple ];
         };
         authorColors = {
-          "Jack Boykin" = c.cyan;
+          "Jack Boykin" = colors.cyan;
         };
         unspecifiedAuthorColors = [
-          c.red
-          c.orange
-          c.purple
-          c.yellow
-          c.green
-          c.cyan
-          c.blue
-          c.maroon
-          c.purple
+          colors.red
+          colors.orange
+          colors.purple
+          colors.yellow
+          colors.green
+          colors.cyan
+          colors.blue
+          colors.maroon
+          colors.purple
         ];
       };
     };

@@ -63,61 +63,67 @@ in
     '';
 
     "nvim/lua/core/theme.lua".text = ''
-      -- Inject system theme colors using 0.11 idiomatic Lua
-      local function setup_theme()
-        vim.cmd.colorscheme("tokyonight-storm")
+      vim.opt.background = "dark"
+      vim.cmd.colorscheme("colors")
+    '';
 
-        local highlights = {
-          -- Base UI
-          Normal = { bg = "${colors.base}", fg = "${colors.text}" },
-          NormalFloat = { bg = "${colors.mantle}", fg = "${colors.text}" },
-          FloatBorder = { fg = "${colors.blue}", bg = "${colors.mantle}" },
-          CursorLine = { bg = "${colors.surface2}" },
-          LineNr = { fg = "${colors.subtext0}" },
-          CursorLineNr = { fg = "${colors.orange}", bold = true },
-          Visual = { bg = "${colors.surface1}" },
-          Search = { bg = "${colors.overlay2}", fg = "${colors.text}" },
-          IncSearch = { bg = "${colors.purple}", fg = "${colors.base}" },
-          WinSeparator = { fg = "${colors.surface2}", bold = true },
+    "nvim/colors/colors.lua".text = ''
+      vim.g.colors_name = "colors"
 
-          -- Syntax Highlighting
-          Comment = { fg = "${colors.subtext0}", italic = true },
-          Keyword = { fg = "${colors.purple}" },
-          Function = { fg = "${colors.blue}" },
-          String = { fg = "${colors.green}" },
-          Constant = { fg = "${colors.orange}" },
-          Number = { fg = "${colors.orange}" },
-          Type = { fg = "${colors.yellow}" },
-          PreProc = { fg = "${colors.cyan}" },
-          Operator = { fg = "${colors.cyan}" },
-          Identifier = { fg = "${colors.text}" },
-          Statement = { fg = "${colors.purple}" },
-          Special = { fg = "${colors.pink}" },
-
-          -- Treesitter
-          ["@variable"] = { fg = "${colors.text}" },
-          ["@function"] = { fg = "${colors.blue}" },
-          ["@keyword"] = { fg = "${colors.purple}" },
-          ["@string"] = { fg = "${colors.green}" },
-          ["@type"] = { fg = "${colors.yellow}" },
-          ["@constant"] = { fg = "${colors.orange}" },
-          ["@property"] = { fg = "${colors.blue}" },
-          ["@field"] = { fg = "${colors.blue}" },
-          ["@parameter"] = { fg = "${colors.text}" },
-
-          -- Diagnostics
-          DiagnosticError = { fg = "${colors.red}" },
-          DiagnosticWarn = { fg = "${colors.orange}" },
-          DiagnosticInfo = { fg = "${colors.blue}" },
-          DiagnosticHint = { fg = "${colors.cyan}" },
-        }
-
-        vim.iter(highlights):each(function(name, val)
-          vim.api.nvim_set_hl(0, name, val)
-        end)
+      -- Clear existing highlights
+      vim.cmd.highlight("clear")
+      if vim.fn.exists("syntax_on") then
+        vim.cmd.syntax("reset")
       end
 
-      setup_theme()
+      local highlights = {
+        -- Base UI
+        Normal = { bg = "${colors.base}", fg = "${colors.text}" },
+        NormalFloat = { bg = "${colors.mantle}", fg = "${colors.text}" },
+        FloatBorder = { fg = "${colors.blue}", bg = "${colors.mantle}" },
+        CursorLine = { bg = "${colors.surface0}" },
+        LineNr = { fg = "${colors.subtext0}" },
+        CursorLineNr = { fg = "${colors.orange}", bold = true },
+        Visual = { bg = "${colors.surface1}" },
+        Search = { bg = "${colors.overlay2}", fg = "${colors.text}" },
+        IncSearch = { bg = "${colors.purple}", fg = "${colors.base}" },
+        WinSeparator = { fg = "${colors.surface2}", bold = true },
+
+        -- Syntax Highlighting
+        Comment = { fg = "${colors.subtext0}", italic = true },
+        Keyword = { fg = "${colors.purple}" },
+        Function = { fg = "${colors.blue}" },
+        String = { fg = "${colors.green}" },
+        Constant = { fg = "${colors.orange}" },
+        Number = { fg = "${colors.orange}" },
+        Type = { fg = "${colors.yellow}" },
+        PreProc = { fg = "${colors.cyan}" },
+        Operator = { fg = "${colors.cyan}" },
+        Identifier = { fg = "${colors.text}" },
+        Statement = { fg = "${colors.purple}" },
+        Special = { fg = "${colors.pink}" },
+
+        -- Treesitter
+        ["@variable"] = { fg = "${colors.text}" },
+        ["@function"] = { fg = "${colors.blue}" },
+        ["@keyword"] = { fg = "${colors.purple}" },
+        ["@string"] = { fg = "${colors.green}" },
+        ["@type"] = { fg = "${colors.yellow}" },
+        ["@constant"] = { fg = "${colors.orange}" },
+        ["@property"] = { fg = "${colors.blue}" },
+        ["@field"] = { fg = "${colors.blue}" },
+        ["@parameter"] = { fg = "${colors.text}" },
+
+        -- Diagnostics
+        DiagnosticError = { fg = "${colors.red}" },
+        DiagnosticWarn = { fg = "${colors.orange}" },
+        DiagnosticInfo = { fg = "${colors.blue}" },
+        DiagnosticHint = { fg = "${colors.cyan}" },
+      }
+
+      for name, val in pairs(highlights) do
+        vim.api.nvim_set_hl(0, name, val)
+      end
     '';
 
     "nvim/lua/core/options.lua".text = ''
@@ -304,21 +310,7 @@ in
     '';
 
     "nvim/lua/plugins/colorscheme.lua".text = ''
-      return {
-        "folke/tokyonight.nvim",
-        lazy = false,
-        priority = 1000,
-        opts = {
-          style = "storm",
-          transparent = true,
-          styles = {
-            comments = { italic = true },
-            keywords = { italic = false },
-            sidebars = "transparent",
-            floats = "transparent",
-          },
-        },
-      }
+      return {}
     '';
 
     "nvim/lua/plugins/lsp.lua".text = ''
@@ -433,9 +425,30 @@ in
           dependencies = { "nvim-tree/nvim-web-devicons" },
           event = "VeryLazy",
           config = function()
+            local theme = {
+              normal = {
+                a = { bg = "${colors.blue}", fg = "${colors.base}", bold = true },
+                b = { bg = "${colors.surface1}", fg = "${colors.text}" },
+                c = { bg = "${colors.mantle}", fg = "${colors.subtext1}" },
+              },
+              insert = {
+                a = { bg = "${colors.green}", fg = "${colors.base}", bold = true },
+              },
+              visual = {
+                a = { bg = "${colors.purple}", fg = "${colors.base}", bold = true },
+              },
+              replace = {
+                a = { bg = "${colors.red}", fg = "${colors.base}", bold = true },
+              },
+              inactive = {
+                a = { bg = "${colors.mantle}", fg = "${colors.subtext0}" },
+                b = { bg = "${colors.mantle}", fg = "${colors.subtext0}" },
+                c = { bg = "${colors.mantle}", fg = "${colors.subtext0}" },
+              },
+            }
             require("lualine").setup({
               options = {
-                theme = "tokyonight",
+                theme = theme,
                 component_separators = { left = "", right = "" },
                 section_separators = { left = "", right = "" },
                 globalstatus = true,
