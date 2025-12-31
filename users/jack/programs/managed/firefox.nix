@@ -19,7 +19,7 @@
 
       FirefoxHome = {
         Search = true;
-        TopSites = false;
+        TopSites = true;
         SponsoredTopSites = false;
         Highlights = false;
         Pocket = false;
@@ -84,7 +84,7 @@
         "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
         "browser.urlbar.suggest.quicksuggest.sponsored" = false;
         "browser.urlbar.suggest.engines" = false;
-        "browser.urlbar.suggest.topsites" = false;
+        "browser.urlbar.suggest.topsites" = true;
         "browser.urlbar.trending.featureGate" = false;
 
         "network.http.speculative-parallel-limit" = 0;
