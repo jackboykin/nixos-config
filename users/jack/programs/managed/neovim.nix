@@ -2,9 +2,11 @@
   pkgs,
   theme,
   ...
-}: let
-  c = theme.colors;
-in {
+}:
+let
+  colors = theme.colors;
+in
+{
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -14,25 +16,114 @@ in {
 
     extraPackages = with pkgs; [
       lua-language-server
+      nil # Nix LSP
       nodePackages.typescript-language-server
       nodePackages.vscode-langservers-extracted
       gcc
+
+      # Formatters
+      stylua
+      nodePackages.prettier
+      nixfmt-rfc-style
+    ];
+
+    # Use the newer Treesitter management
+    plugins = with pkgs.vimPlugins; [
+      # Treesitter with grammars
+      (nvim-treesitter.withPlugins (
+        p: with p; [
+          bash
+          c
+          css
+          html
+          javascript
+          json
+          lua
+          markdown
+          nix
+          python
+          rust
+          toml
+          typescript
+          vim
+          yaml
+        ]
+      ))
+      # UI/Editor utilities are handled by lazy.nvim to avoid bootstrap issues
     ];
   };
 
   xdg.configFile = {
     "nvim/init.lua".text = ''
-      require("core")
+      require("core.options") -- Set leader first
       require("lazy-bootstrap")
-    '';
-
-    "nvim/lua/core/init.lua".text = ''
-      require("core.options")
       require("core.keymaps")
       require("core.autocmds")
+      require("core.theme")
+    '';
+
+    "nvim/lua/core/theme.lua".text = ''
+      -- Inject system theme colors using 0.11 idiomatic Lua
+      local function setup_theme()
+        vim.cmd.colorscheme("tokyonight-storm")
+
+        local highlights = {
+          -- Base UI
+          Normal = { bg = "${colors.base}", fg = "${colors.text}" },
+          NormalFloat = { bg = "${colors.mantle}", fg = "${colors.text}" },
+          FloatBorder = { fg = "${colors.blue}", bg = "${colors.mantle}" },
+          CursorLine = { bg = "${colors.surface2}" },
+          LineNr = { fg = "${colors.subtext0}" },
+          CursorLineNr = { fg = "${colors.orange}", bold = true },
+          Visual = { bg = "${colors.surface1}" },
+          Search = { bg = "${colors.overlay2}", fg = "${colors.text}" },
+          IncSearch = { bg = "${colors.purple}", fg = "${colors.base}" },
+          WinSeparator = { fg = "${colors.surface2}", bold = true },
+
+          -- Syntax Highlighting
+          Comment = { fg = "${colors.subtext0}", italic = true },
+          Keyword = { fg = "${colors.purple}" },
+          Function = { fg = "${colors.blue}" },
+          String = { fg = "${colors.green}" },
+          Constant = { fg = "${colors.orange}" },
+          Number = { fg = "${colors.orange}" },
+          Type = { fg = "${colors.yellow}" },
+          PreProc = { fg = "${colors.cyan}" },
+          Operator = { fg = "${colors.cyan}" },
+          Identifier = { fg = "${colors.text}" },
+          Statement = { fg = "${colors.purple}" },
+          Special = { fg = "${colors.pink}" },
+
+          -- Treesitter
+          ["@variable"] = { fg = "${colors.text}" },
+          ["@function"] = { fg = "${colors.blue}" },
+          ["@keyword"] = { fg = "${colors.purple}" },
+          ["@string"] = { fg = "${colors.green}" },
+          ["@type"] = { fg = "${colors.yellow}" },
+          ["@constant"] = { fg = "${colors.orange}" },
+          ["@property"] = { fg = "${colors.blue}" },
+          ["@field"] = { fg = "${colors.blue}" },
+          ["@parameter"] = { fg = "${colors.text}" },
+
+          -- Diagnostics
+          DiagnosticError = { fg = "${colors.red}" },
+          DiagnosticWarn = { fg = "${colors.orange}" },
+          DiagnosticInfo = { fg = "${colors.blue}" },
+          DiagnosticHint = { fg = "${colors.cyan}" },
+        }
+
+        vim.iter(highlights):each(function(name, val)
+          vim.api.nvim_set_hl(0, name, val)
+        end)
+      end
+
+      setup_theme()
     '';
 
     "nvim/lua/core/options.lua".text = ''
+      vim.g.mapleader = " "
+      vim.g.maplocalleader = " "
+
       local opt = vim.opt
 
       opt.number = true
@@ -44,7 +135,6 @@ in {
       opt.softtabstop = 2
       opt.shiftwidth = 2
       opt.expandtab = true
-      opt.smartindent = true
       opt.wrap = false
 
       opt.ignorecase = true
@@ -52,7 +142,6 @@ in {
       opt.hlsearch = false
       opt.incsearch = true
 
-      opt.termguicolors = true
       opt.cursorline = true
       opt.scrolloff = 8
       opt.sidescrolloff = 8
@@ -69,17 +158,17 @@ in {
       opt.updatetime = 250
       opt.timeoutlen = 300
       opt.completeopt = "menuone,noselect"
-
-      vim.g.loaded_netrw = 1
-      vim.g.loaded_netrwPlugin = 1
     '';
 
     "nvim/lua/core/keymaps.lua".text = ''
-      vim.g.mapleader = " "
-      vim.g.maplocalleader = " "
-
       local map = vim.keymap.set
       local opts = { noremap = true, silent = true }
+
+      -- Window management (matches vim-tmux-navigator)
+      map("n", "<C-h>", "<C-w>h", opts)
+      map("n", "<C-j>", "<C-w>j", opts)
+      map("n", "<C-k>", "<C-w>k", opts)
+      map("n", "<C-l>", "<C-w>l", opts)
 
       map("n", "<C-Up>", ":resize +2<CR>", opts)
       map("n", "<C-Down>", ":resize -2<CR>", opts)
@@ -88,7 +177,6 @@ in {
 
       map("n", "<S-h>", ":bprevious<CR>", opts)
       map("n", "<S-l>", ":bnext<CR>", opts)
-      map("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 
       map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
       map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
@@ -103,7 +191,10 @@ in {
       map("n", "<leader>w", ":w<CR>", { desc = "Save" })
       map("n", "<leader>q", ":q<CR>", { desc = "Quit" })
 
-      map("n", "<Esc>", ":noh<CR>", opts)
+      -- Trouble & Todo
+      map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
+      map("n", "<leader>xl", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
+      map("n", "<leader>xt", "<cmd>TodoTrouble<cr>", { desc = "Todo (Trouble)" })
     '';
 
     "nvim/lua/core/autocmds.lua".text = ''
@@ -113,14 +204,8 @@ in {
       autocmd("TextYankPost", {
         group = augroup("highlight_yank", { clear = true }),
         callback = function()
-          vim.highlight.on_yank({ higroup = "IncSearch", timeout = 150 })
+          vim.hl.on_yank({ higroup = "IncSearch", timeout = 150 })
         end,
-      })
-
-      autocmd("BufWritePre", {
-        group = augroup("trim_whitespace", { clear = true }),
-        pattern = "*",
-        command = [[%s/\s\+$//e]],
       })
 
       autocmd("BufReadPost", {
@@ -137,7 +222,9 @@ in {
       autocmd("VimResized", {
         group = augroup("resize_splits", { clear = true }),
         callback = function()
+          local current_tab = vim.api.nvim_get_current_tabpage()
           vim.cmd("tabdo wincmd =")
+          vim.api.nvim_set_current_tabpage(current_tab)
         end,
       })
     '';
@@ -178,29 +265,59 @@ in {
       })
     '';
 
+    "nvim/lua/plugins/formatting.lua".text = ''
+      return {
+        "stevearc/conform.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        cmd = { "ConformInfo" },
+        keys = {
+          {
+            "<leader>f",
+            function()
+              require("conform").format({ async = true, lsp_format = "fallback" })
+            end,
+            mode = "",
+            desc = "Format buffer",
+          },
+        },
+        opts = {
+          formatters_by_ft = {
+            lua = { "stylua" },
+            javascript = { "prettier" },
+            typescript = { "prettier" },
+            javascriptreact = { "prettier" },
+            typescriptreact = { "prettier" },
+            css = { "prettier" },
+            html = { "prettier" },
+            json = { "prettier" },
+            yaml = { "prettier" },
+            markdown = { "prettier" },
+            nix = { "nixfmt" },
+            ["*"] = { "trim_whitespace", "trim_newlines" },
+          },
+          format_on_save = {
+            timeout_ms = 500,
+            lsp_format = "fallback",
+          },
+        },
+      }
+    '';
+
     "nvim/lua/plugins/colorscheme.lua".text = ''
       return {
         "folke/tokyonight.nvim",
         lazy = false,
         priority = 1000,
-        config = function()
-          require("tokyonight").setup({
-            style = "storm",
-            transparent = true,
-            styles = {
-              comments = { italic = true },
-              keywords = { italic = false },
-              sidebars = "transparent",
-              floats = "transparent",
-            },
-            on_highlights = function(hl, colors)
-              hl.CursorLine = { bg = colors.bg_highlight }
-              hl.LineNr = { fg = colors.dark3 }
-              hl.CursorLineNr = { fg = colors.orange, bold = true }
-            end,
-          })
-          vim.cmd.colorscheme("tokyonight-storm")
-        end,
+        opts = {
+          style = "storm",
+          transparent = true,
+          styles = {
+            comments = { italic = true },
+            keywords = { italic = false },
+            sidebars = "transparent",
+            floats = "transparent",
+          },
+        },
       }
     '';
 
@@ -210,14 +327,10 @@ in {
           "neovim/nvim-lspconfig",
           event = { "BufReadPre", "BufNewFile" },
           dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "folke/neodev.nvim",
+            "saghen/blink.cmp",
+            { "folke/lazydev.nvim", opts = {} },
           },
           config = function()
-            require("neodev").setup()
-
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
             vim.diagnostic.config({
               signs = {
                 text = {
@@ -227,12 +340,14 @@ in {
                   [vim.diagnostic.severity.INFO] = " ",
                 },
               },
+              float = { border = "rounded" },
             })
 
             vim.api.nvim_create_autocmd("LspAttach", {
-              callback = function(args)
+              group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+              callback = function(ev)
                 local map = function(mode, lhs, rhs, desc)
-                  vim.keymap.set(mode, lhs, rhs, { buffer = args.buf, desc = desc })
+                  vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, desc = "LSP: " .. desc })
                 end
 
                 map("n", "gd", vim.lsp.buf.definition, "Go to definition")
@@ -243,10 +358,12 @@ in {
                 map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
                 map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
                 map("n", "<leader>D", vim.lsp.buf.type_definition, "Type definition")
-                map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
-                map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
+                map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, "Previous diagnostic")
+                map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, "Next diagnostic")
               end,
             })
+
+            local capabilities = require('blink.cmp').get_lsp_capabilities()
 
             local servers = {
               nil_ls = {},
@@ -255,6 +372,7 @@ in {
                   Lua = {
                     workspace = { checkThirdParty = false },
                     telemetry = { enable = false },
+                    completion = { callSnippet = "Replace" },
                   },
                 },
               },
@@ -276,110 +394,35 @@ in {
     "nvim/lua/plugins/completions.lua".text = ''
       return {
         {
-          "hrsh7th/nvim-cmp",
-          event = "InsertEnter",
-          dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "L3MON4D3/LuaSnip",
-            "saadparwaiz1/cmp_luasnip",
-            "rafamadriz/friendly-snippets",
+          "saghen/blink.cmp",
+          dependencies = "rafamadriz/friendly-snippets",
+          version = "*",
+          opts = {
+            keymap = { preset = "default" },
+            appearance = {
+              use_nvim_cmp_as_default = true,
+              nerd_font_variant = "mono",
+            },
+            sources = {
+              default = { "lsp", "path", "snippets", "buffer" },
+            },
+            signature = { enabled = true },
           },
-          config = function()
-            local cmp = require("cmp")
-            local luasnip = require("luasnip")
-
-            require("luasnip.loaders.from_vscode").lazy_load()
-
-            cmp.setup({
-              snippet = {
-                expand = function(args)
-                  luasnip.lsp_expand(args.body)
-                end,
-              },
-              window = {
-                completion = cmp.config.window.bordered(),
-                documentation = cmp.config.window.bordered(),
-              },
-              mapping = cmp.mapping.preset.insert({
-                ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                ["<C-Space>"] = cmp.mapping.complete(),
-                ["<C-e>"] = cmp.mapping.abort(),
-                ["<CR>"] = cmp.mapping.confirm({ select = true }),
-                ["<Tab>"] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                    cmp.select_next_item()
-                  elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                  else
-                    fallback()
-                  end
-                end, { "i", "s" }),
-                ["<S-Tab>"] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                    cmp.select_prev_item()
-                  elseif luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
-                  else
-                    fallback()
-                  end
-                end, { "i", "s" }),
-              }),
-              sources = cmp.config.sources({
-                { name = "nvim_lsp" },
-                { name = "luasnip" },
-                { name = "path" },
-              }, {
-                { name = "buffer" },
-              }),
-            })
-          end,
+          opts_extend = { "sources.default" },
         },
       }
     '';
 
     "nvim/lua/plugins/treesitter.lua".text = ''
+      -- Grammars are pre-installed via Nix; just enable built-in features
       return {
         "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
         event = { "BufReadPre", "BufNewFile" },
-        config = function()
-          require("nvim-treesitter").setup({
-            ensure_installed = {
-              "bash",
-              "c",
-              "css",
-              "html",
-              "javascript",
-              "json",
-              "lua",
-              "markdown",
-              "markdown_inline",
-              "nix",
-              "python",
-              "rust",
-              "toml",
-              "typescript",
-              "vim",
-              "vimdoc",
-              "yaml",
-            },
-            auto_install = true,
-            highlight = { enable = true },
-            indent = { enable = true },
-            incremental_selection = {
-              enable = true,
-              keymaps = {
-                init_selection = "<C-space>",
-                node_incremental = "<C-space>",
-                scope_incremental = false,
-                node_decremental = "<bs>",
-              },
-            },
-          })
-        end,
+        main = "nvim-treesitter",
+        opts = {
+          highlight = { enable = true },
+          indent = { enable = true },
+        },
       }
     '';
 
@@ -410,12 +453,40 @@ in {
         },
 
         {
-          "lukas-reineke/indent-blankline.nvim",
-          event = { "BufReadPre", "BufNewFile" },
-          main = "ibl",
+          "folke/snacks.nvim",
+          priority = 1000,
+          lazy = false,
           opts = {
-            indent = { char = "│" },
-            scope = { enabled = false },
+            bigfile = { enabled = true },
+            dashboard = { enabled = true },
+            indent = { enabled = true },
+            input = { enabled = true },
+            notifier = { enabled = true },
+            picker = { enabled = true },
+            quickfile = { enabled = true },
+            scroll = { enabled = false },
+            statuscolumn = { enabled = true },
+            words = { enabled = true },
+          },
+          keys = {
+            { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Pad" },
+            { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Pad" },
+            { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
+            { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+            { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
+            { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
+            { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
+            { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
+            { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+            { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (CWD)" },
+            { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+            -- Picker keymaps
+            { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+            { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
+            { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+            { "<leader>fh", function() Snacks.picker.help() end, desc = "Help Tags" },
+            { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent Files" },
+            { "<leader><leader>", function() Snacks.picker.buffers() end, desc = "Buffers" },
           },
         },
 
@@ -443,17 +514,17 @@ in {
         {
           "folke/noice.nvim",
           event = "VeryLazy",
-          dependencies = {
-            "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify",
-          },
+          dependencies = { "MunifTanjim/nui.nvim" },
           opts = {
+            -- Disable notifications (snacks.notifier handles these)
+            messages = { enabled = false },
+            notify = { enabled = false },
             lsp = {
               override = {
                 ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
                 ["vim.lsp.util.stylize_markdown"] = true,
-                ["cmp.entry.get_documentation"] = true,
               },
+              progress = { enabled = false }, -- snacks handles this
             },
             presets = {
               bottom_search = true,
@@ -462,6 +533,7 @@ in {
             },
           },
         },
+
       }
     '';
 
@@ -482,34 +554,6 @@ in {
               },
             })
             vim.keymap.set("n", "-", require("oil").toggle_float, { desc = "Open file explorer" })
-          end,
-        },
-
-        {
-          "nvim-telescope/telescope.nvim",
-          dependencies = {
-            "nvim-lua/plenary.nvim",
-            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-          },
-          cmd = "Telescope",
-          keys = {
-            { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
-            { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
-            { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-            { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
-            { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
-            { "<leader><leader>", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-          },
-          config = function()
-            local telescope = require("telescope")
-            telescope.setup({
-              defaults = {
-                file_ignore_patterns = { "node_modules", ".git/" },
-                layout_config = { prompt_position = "top" },
-                sorting_strategy = "ascending",
-              },
-            })
-            telescope.load_extension("fzf")
           end,
         },
 
@@ -539,15 +583,12 @@ in {
           },
         },
 
+        { "folke/trouble.nvim", opts = {} },
+        { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
         { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
         { "kylechui/nvim-surround", event = "VeryLazy", config = true },
-        { "numToStr/Comment.nvim", event = { "BufReadPre", "BufNewFile" }, config = true },
+        -- Comment.nvim removed: Neovim 0.11 has built-in gc/gcc commenting
         { "christoomey/vim-tmux-navigator", lazy = false },
-        {
-          "kdheepak/lazygit.nvim",
-          cmd = "LazyGit",
-          keys = { { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" } },
-        },
       }
     '';
   };
