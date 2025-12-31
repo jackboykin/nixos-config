@@ -30,7 +30,7 @@ in
       zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
       zstyle ':completion:*:descriptions' format '[%d]'
 
-      # Atelier Dune Light Syntax Highlighting Colors
+      # Bellatrix Syntax Highlighting Colors
       typeset -A ZSH_HIGHLIGHT_STYLES
       ZSH_HIGHLIGHT_STYLES[command]='fg=${colors.green}'
       ZSH_HIGHLIGHT_STYLES[alias]='fg=${colors.cyan}'

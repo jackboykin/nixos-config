@@ -31,7 +31,7 @@ in
     enableGitIntegration = true;
     options = {
       line-numbers = true;
-      syntax-theme = "colors";
+      syntax-theme = "bellatrix";
       blame-palette = lib.concatStringsSep " " (
         map (c: "'${c}'") [
           colors.base

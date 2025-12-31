@@ -57,34 +57,33 @@ let
     in
     rgbToHex mix;
 
-  # Colors theme
-  # Author: mrmrs (http://clrs.cc)
-  # System: base16, Slug: colors, Variant: dark
+  # Bellatrix theme (v4 - Updated)
+  # System: base16, Slug: bellatrix, Variant: dark
   colors = rec {
     # Neutral Base
-    base00 = "#111111"; # Background
-    base01 = "#333333"; # Mantle
-    base02 = "#555555"; # Surface / Selection
-    base03 = "#777777"; # Overlay / Comments
-    base04 = "#999999"; # Muted Text
-    base05 = "#bbbbbb"; # Main Text
-    base06 = "#dddddd"; # Bright Text
-    base07 = "#ffffff"; # Highlights
+    base00 = "#0b0a09"; # Background
+    base01 = "#1a1716"; # Mantle
+    base02 = "#2d2624"; # Surface / Selection
+    base03 = "#9a8b94"; # Overlay / Comments
+    base04 = "#7b6562"; # Muted Text
+    base05 = "#dae4e4"; # Main Text
+    base06 = "#e5e9ef"; # Bright Text
+    base07 = "#fce4f0"; # Highlights
 
     # Accents
-    red = "#ff4136"; # base08
-    orange = "#ff851b"; # base09
-    yellow = "#ffdc00"; # base0A
-    green = "#2ecc40"; # base0B
-    cyan = "#7fdbff"; # base0C
-    blue = "#0074d9"; # base0D
-    magenta = "#b10dc9"; # base0E
-    maroon = "#85144b"; # base0F
+    red = "#ee0606"; # base08
+    orange = "#ff5500"; # base09
+    yellow = "#ff9000"; # base0A
+    green = "#35de4f"; # base0B
+    cyan = "#00ffff"; # base0C
+    blue = "#0000ff"; # base0D
+    magenta = "#e52195"; # base0E
+    maroon = "#be5046"; # base0F
 
     # Explicit Descriptive Names
     sky = blue;
     teal = cyan;
-    pink = red;
+    pink = magenta;
     purple = magenta;
     tan = base04;
     cream = base07;
@@ -92,7 +91,7 @@ let
     # Functional UI Roles (Dark Theme)
     base = base00;
     mantle = base01;
-    crust = "#080808";
+    crust = "#050403";
     surface0 = base01;
     surface1 = base02;
     surface2 = base03;
@@ -116,12 +115,13 @@ let
     gitDeleted = red;
 
     # Extended Brights
-    brightRed = red;
+    brightRed = "#ff5500";
     brightOrange = orange;
-    brightGreen = green;
-    brightCyan = cyan;
-    brightBlue = blue;
-    brightPurple = magenta;
+    brightYellow = "#ffaf2f";
+    brightGreen = "#7ed37d";
+    brightCyan = "#2bb7c8";
+    brightBlue = "#3c2dec";
+    brightPurple = "#ec8cc5";
 
     highlight = base07;
   };

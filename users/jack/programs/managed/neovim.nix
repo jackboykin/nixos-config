@@ -64,11 +64,11 @@ in
 
     "nvim/lua/core/theme.lua".text = ''
       vim.opt.background = "dark"
-      vim.cmd.colorscheme("colors")
+      vim.cmd.colorscheme("bellatrix")
     '';
 
-    "nvim/colors/colors.lua".text = ''
-      vim.g.colors_name = "colors"
+    "nvim/colors/bellatrix.lua".text = ''
+      vim.g.colors_name = "bellatrix"
 
       -- Clear existing highlights
       vim.cmd.highlight("clear")

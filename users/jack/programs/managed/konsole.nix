@@ -17,9 +17,9 @@ let
 in
 {
   # Custom Color Scheme
-  xdg.dataFile."konsole/Colors.colorscheme".text = ''
+  xdg.dataFile."konsole/Bellatrix.colorscheme".text = ''
     [General]
-    Description=Colors
+    Description=Bellatrix
     Opacity=1
     Wallpaper=
 
@@ -85,14 +85,14 @@ in
   '';
 
   # Custom Profile
-  xdg.dataFile."konsole/Colors.profile".text = ''
+  xdg.dataFile."konsole/Bellatrix.profile".text = ''
     [General]
     Command=${pkgs.fish}/bin/fish
-    Name=Colors
+    Name=Bellatrix
     Parent=FALLBACK/
 
     [Appearance]
-    ColorScheme=Colors
+    ColorScheme=Bellatrix
     Font=JetBrainsMono Nerd Font Mono,10,-1,5,50,0,0,0,0,0
   '';
 }
