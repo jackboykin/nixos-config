@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     spotify
     kdePackages.kate
@@ -16,5 +17,6 @@
     nil
     alejandra
     nixfmt-rfc-style
+    yazi
   ];
 }
