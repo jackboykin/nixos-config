@@ -1,12 +1,12 @@
 { theme, ... }:
 let
-  c = theme.colors;
+  colors = theme.colors;
 in
 {
   programs.btop = {
     enable = true;
     settings = {
-      color_theme = "blackberry-aquamarine";
+      color_theme = "colors";
       theme_background = true;
       update_ms = 100;
       proc_sorting = "memory";
@@ -15,58 +15,58 @@ in
     };
   };
 
-  xdg.configFile."btop/themes/blackberry-aquamarine.theme".text = ''
-    theme[main_bg]="${c.base}"
-    theme[main_fg]="${c.text}"
-    theme[title]="${c.text}"
-    theme[hi_fg]="${c.blue}"
-    theme[selected_bg]="${c.surface2}"
-    theme[selected_fg]="${c.text}"
-    theme[inactive_fg]="${c.surface1}"
-    theme[graph_text]="${c.subtext1}"
-    theme[meter_bg]="${c.surface1}"
-    theme[proc_misc]="${c.surface1}"
+  xdg.configFile."btop/themes/colors.theme".text = ''
+    theme[main_bg]="${colors.base}"
+    theme[main_fg]="${colors.text}"
+    theme[title]="${colors.text}"
+    theme[hi_fg]="${colors.blue}"
+    theme[selected_bg]="${colors.surface2}"
+    theme[selected_fg]="${colors.text}"
+    theme[inactive_fg]="${colors.surface1}"
+    theme[graph_text]="${colors.subtext1}"
+    theme[meter_bg]="${colors.surface1}"
+    theme[proc_misc]="${colors.surface1}"
 
-    theme[cpu_box]="${c.teal}"
-    theme[mem_box]="${c.sky}"
-    theme[net_box]="${c.orange}"
-    theme[proc_box]="${c.purple}"
-    theme[div_line]="${c.overlay0}"
+    theme[cpu_box]="${colors.teal}"
+    theme[mem_box]="${colors.sky}"
+    theme[net_box]="${colors.orange}"
+    theme[proc_box]="${colors.purple}"
+    theme[div_line]="${colors.overlay0}"
 
-    theme[temp_start]="${c.green}"
-    theme[temp_mid]="${c.yellow}"
-    theme[temp_end]="${c.red}"
+    theme[temp_start]="${colors.green}"
+    theme[temp_mid]="${colors.yellow}"
+    theme[temp_end]="${colors.red}"
 
-    theme[cpu_start]="${c.green}"
-    theme[cpu_mid]="${c.orange}"
-    theme[cpu_end]="${c.red}"
+    theme[cpu_start]="${colors.green}"
+    theme[cpu_mid]="${colors.orange}"
+    theme[cpu_end]="${colors.red}"
 
-    theme[free_start]="${c.sky}"
-    theme[free_mid]="${c.blue}"
-    theme[free_end]="${c.purple}"
+    theme[free_start]="${colors.sky}"
+    theme[free_mid]="${colors.blue}"
+    theme[free_end]="${colors.purple}"
 
-    theme[cached_start]="${c.cyan}"
-    theme[cached_mid]="${c.blue}"
-    theme[cached_end]="${c.maroon}"
+    theme[cached_start]="${colors.cyan}"
+    theme[cached_mid]="${colors.blue}"
+    theme[cached_end]="${colors.maroon}"
 
-    theme[available_start]="${c.orange}"
-    theme[available_mid]="${c.yellow}"
-    theme[available_end]="${c.orange}"
+    theme[available_start]="${colors.orange}"
+    theme[available_mid]="${colors.yellow}"
+    theme[available_end]="${colors.orange}"
 
-    theme[used_start]="${c.green}"
-    theme[used_mid]="${c.green}"
-    theme[used_end]="${c.cyan}"
+    theme[used_start]="${colors.green}"
+    theme[used_mid]="${colors.green}"
+    theme[used_end]="${colors.cyan}"
 
-    theme[download_start]="${c.orange}"
-    theme[download_mid]="${c.orange}"
-    theme[download_end]="${c.red}"
+    theme[download_start]="${colors.orange}"
+    theme[download_mid]="${colors.orange}"
+    theme[download_end]="${colors.red}"
 
-    theme[upload_start]="${c.green}"
-    theme[upload_mid]="${c.green}"
-    theme[upload_end]="${c.cyan}"
+    theme[upload_start]="${colors.green}"
+    theme[upload_mid]="${colors.green}"
+    theme[upload_end]="${colors.cyan}"
 
-    theme[process_start]="${c.cyan}"
-    theme[process_mid]="${c.maroon}"
-    theme[process_end]="${c.purple}"
+    theme[process_start]="${colors.cyan}"
+    theme[process_mid]="${colors.maroon}"
+    theme[process_end]="${colors.purple}"
   '';
 }

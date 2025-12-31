@@ -4,26 +4,26 @@
   ...
 }:
 let
-  c = theme.colors;
+  colors = theme.colors;
   ui = theme.ui;
 in
 {
   programs.bat = {
     enable = true;
     config = {
-      theme = "blackberry-aquamarine";
+      theme = "colors";
     };
   };
 
-  xdg.configFile."bat/themes/blackberry-aquamarine.tmTheme".text = ''
+  xdg.configFile."bat/themes/colors.tmTheme".text = ''
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
       <dict>
         <key>name</key>
-        <string>blackberry-aquamarine</string>
+        <string>colors</string>
         <key>semanticClass</key>
-        <string>theme.dark.blackberry-aquamarine</string>
+        <string>theme.dark.colors</string>
         <key>uuid</key>
         <string>627ce890-fabb-4d39-9819-7be71f4bdca7</string>
         <key>author</key>
@@ -36,25 +36,25 @@ in
             <key>settings</key>
             <dict>
               <key>background</key>
-              <string>${c.base}</string>
+              <string>${colors.base}</string>
               <key>foreground</key>
-              <string>${c.text}</string>
+              <string>${colors.text}</string>
               <key>caret</key>
-              <string>${c.purple}</string>
+              <string>${colors.purple}</string>
               <key>lineHighlight</key>
-              <string>${c.surface1}</string>
+              <string>${colors.surface1}</string>
               <key>misspelling</key>
-              <string>${c.red}</string>
+              <string>${colors.red}</string>
               <key>accent</key>
-              <string>${c.purple}</string>
+              <string>${colors.purple}</string>
               <key>selection</key>
-              <string>${c.overlay1}40</string>
+              <string>${colors.overlay1}40</string>
               <key>activeGuide</key>
-              <string>${c.surface2}</string>
+              <string>${colors.surface2}</string>
               <key>findHighlight</key>
               <string>${ui.findHighlight}</string>
               <key>gutterForeground</key>
-              <string>${c.subtext1}</string>
+              <string>${colors.subtext1}</string>
             </dict>
           </dict>
           <dict>
@@ -65,7 +65,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.text}</string>
+              <string>${colors.text}</string>
             </dict>
           </dict>
           <dict>
@@ -76,7 +76,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.subtext0}</string>
+              <string>${colors.subtext0}</string>
             </dict>
           </dict>
           <dict>
@@ -87,7 +87,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.overlay0}</string>
+              <string>${colors.overlay0}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -98,7 +98,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.green}</string>
+              <string>${colors.green}</string>
             </dict>
           </dict>
           <dict>
@@ -107,7 +107,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.purple}</string>
+              <string>${colors.purple}</string>
             </dict>
           </dict>
           <dict>
@@ -118,7 +118,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.orange}</string>
+              <string>${colors.orange}</string>
             </dict>
           </dict>
           <dict>
@@ -127,7 +127,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.purple}</string>
+              <string>${colors.purple}</string>
             </dict>
           </dict>
           <dict>
@@ -138,7 +138,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.cyan}</string>
+              <string>${colors.cyan}</string>
             </dict>
           </dict>
           <dict>
@@ -147,7 +147,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.blue}</string>
+              <string>${colors.blue}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -160,7 +160,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.yellow}</string>
+              <string>${colors.yellow}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -171,7 +171,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.red}</string>
+              <string>${colors.red}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -184,7 +184,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.red}</string>
+              <string>${colors.red}</string>
             </dict>
           </dict>
           <dict>
@@ -195,7 +195,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.blue}</string>
+              <string>${colors.blue}</string>
             </dict>
           </dict>
           <dict>
@@ -206,7 +206,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.blue}</string>
+              <string>${colors.blue}</string>
             </dict>
           </dict>
           <dict>
@@ -217,7 +217,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.yellow}</string>
+              <string>${colors.yellow}</string>
             </dict>
           </dict>
           <dict>
@@ -226,7 +226,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.red}</string>
+              <string>${colors.red}</string>
               <key>fontStyle</key>
               <string>bold</string>
             </dict>
@@ -237,7 +237,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.red}</string>
+              <string>${colors.red}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -250,7 +250,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.green}</string>
+              <string>${colors.green}</string>
             </dict>
           </dict>
           <dict>
@@ -261,7 +261,7 @@ in
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>${c.red}</string>
+              <string>${colors.red}</string>
             </dict>
           </dict>
         </array>

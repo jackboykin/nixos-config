@@ -1,6 +1,6 @@
-{ theme, ... }:
+{ pkgs, theme, ... }:
 let
-  c = theme.colors;
+  colors = theme.colors;
   # Konsole colorscheme expects "R,G,B"
   toRGB =
     hex:
@@ -17,81 +17,82 @@ let
 in
 {
   # Custom Color Scheme
-  xdg.dataFile."konsole/BlackberryAquamarine.colorscheme".text = ''
+  xdg.dataFile."konsole/Colors.colorscheme".text = ''
     [General]
-    Description=Blackberry Aquamarine
+    Description=Colors
     Opacity=1
     Wallpaper=
 
     [Background]
-    Color=${toRGB c.base}
+    Color=${toRGB colors.base}
 
     [BackgroundIntense]
-    Color=${toRGB c.surface1}
+    Color=${toRGB colors.surface1}
 
     [Foreground]
-    Color=${toRGB c.text}
+    Color=${toRGB colors.text}
 
     [ForegroundIntense]
-    Color=${toRGB c.text}
+    Color=${toRGB colors.text}
 
     [Color0]
-    Color=${toRGB c.base}
+    Color=${toRGB colors.base}
 
     [Color0Intense]
-    Color=${toRGB c.overlay0}
+    Color=${toRGB colors.overlay0}
 
     [Color1]
-    Color=${toRGB c.red}
+    Color=${toRGB colors.red}
 
     [Color1Intense]
-    Color=${toRGB c.purple}
+    Color=${toRGB colors.purple}
 
     [Color2]
-    Color=${toRGB c.green}
+    Color=${toRGB colors.green}
 
     [Color2Intense]
-    Color=${toRGB c.teal}
+    Color=${toRGB colors.teal}
 
     [Color3]
-    Color=${toRGB c.yellow}
+    Color=${toRGB colors.yellow}
 
     [Color3Intense]
-    Color=${toRGB c.orange}
+    Color=${toRGB colors.orange}
 
     [Color4]
-    Color=${toRGB c.blue}
+    Color=${toRGB colors.blue}
 
     [Color4Intense]
-    Color=${toRGB c.sky}
+    Color=${toRGB colors.sky}
 
     [Color5]
-    Color=${toRGB c.maroon}
+    Color=${toRGB colors.maroon}
 
     [Color5Intense]
-    Color=${toRGB c.purple}
+    Color=${toRGB colors.purple}
 
     [Color6]
-    Color=${toRGB c.cyan}
+    Color=${toRGB colors.cyan}
 
     [Color6Intense]
-    Color=${toRGB c.cyan}
+    Color=${toRGB colors.cyan}
 
     [Color7]
-    Color=${toRGB c.text}
+    Color=${toRGB colors.text}
 
     [Color7Intense]
-    Color=${toRGB c.text}
+    Color=${toRGB colors.text}
   '';
 
   # Custom Profile
-  xdg.dataFile."konsole/BlackberryAquamarine.profile".text = ''
+  xdg.dataFile."konsole/Colors.profile".text = ''
     [General]
-    Name=BlackberryAquamarine
+    Command=${pkgs.fish}/bin/fish
+    Name=Colors
     Parent=FALLBACK/
 
     [Appearance]
-    ColorScheme=BlackberryAquamarine
+    ColorScheme=Colors
     Font=JetBrainsMono Nerd Font Mono,10,-1,5,50,0,0,0,0,0
   '';
 }

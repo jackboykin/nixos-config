@@ -1,24 +1,32 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    spotify
+    # GUI Applications
+    antigravity
+    code-cursor
+    jellyfin-media-player
     kdePackages.kate
     remmina
-    jellyfin-media-player
-    code-cursor
-    opencode
-    antigravity
-    gemini-cli
-    ripgrep
-    fd
-    jq
+    spotify
+    vesktop
+
+    # CLI Tools
     fastfetch
-    nodejs
-    nil
-    alejandra
-    nixfmt-rfc-style
+    fd
+    gemini-cli
+    jq
+    opencode
+    ripgrep
     yazi
+
+    # Development
+    nodejs
     typescript
     typescript-language-server
+
+    # Nix Tooling
+    alejandra
+    nil
+    nixfmt-rfc-style
   ];
 }

@@ -4,7 +4,7 @@
   ...
 }:
 let
-  c = theme.colors;
+  colors = theme.colors;
 in
 {
   programs.tmux = {
@@ -61,20 +61,20 @@ in
       set -g status-position bottom
       set -g status-justify left
       set -g status-left " "
-      set -g status-right "#[fg=${c.subtext0}]%H:%M "
+      set -g status-right "#[fg=${colors.subtext0}]%H:%M "
       set -g status-style "bg=default"
 
       set -g window-status-separator " "
-      set -g window-status-format "#[fg=#{?#{==:#I,1},${c.red},#{?#{==:#I,2},${c.purple},#{?#{==:#I,3},${c.blue},${c.cyan}}}}]●"
-      set -g window-status-current-format "#[fg=${c.yellow},bold]●"
+      set -g window-status-format "#[fg=#{?#{==:#I,1},${colors.red},#{?#{==:#I,2},${colors.purple},#{?#{==:#I,3},${colors.blue},${colors.cyan}}}}]●"
+      set -g window-status-current-format "#[fg=${colors.yellow},bold]●"
 
       set -g pane-border-lines single
-      set -g pane-border-style "fg=${c.surface1}"
-      set -g pane-active-border-style "fg=${c.purple}"
+      set -g pane-border-style "fg=${colors.surface1}"
+      set -g pane-active-border-style "fg=${colors.purple}"
 
-      set -g message-style "bg=${c.base},fg=${c.text}"
-      set -g message-command-style "bg=${c.base},fg=${c.text}"
-      set -g mode-style "bg=${c.surface1},fg=${c.text}"
+      set -g message-style "bg=${colors.base},fg=${colors.text}"
+      set -g message-command-style "bg=${colors.base},fg=${colors.text}"
+      set -g mode-style "bg=${colors.surface1},fg=${colors.text}"
     '';
   };
 }

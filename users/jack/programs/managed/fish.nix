@@ -1,6 +1,6 @@
 { theme, ... }:
 let
-  c = theme.colors;
+  colors = theme.colors;
   strip = theme.rawHexValue;
 in
 {
@@ -9,16 +9,16 @@ in
 
     interactiveShellInit = ''
 
-      set -l foreground ${strip c.text}
-      set -l selection  ${strip c.surface1}
-      set -l comment    ${strip c.subtext0}
-      set -l red        ${strip c.red}
-      set -l orange     ${strip c.orange}
-      set -l yellow     ${strip c.yellow}
-      set -l green      ${strip c.green}
-      set -l maroon     ${strip c.maroon}
-      set -l cyan       ${strip c.cyan}
-      set -l purple     ${strip c.purple}
+      set -l foreground ${strip colors.text}
+      set -l selection  ${strip colors.surface1}
+      set -l comment    ${strip colors.subtext0}
+      set -l red        ${strip colors.red}
+      set -l orange     ${strip colors.orange}
+      set -l yellow     ${strip colors.yellow}
+      set -l green      ${strip colors.green}
+      set -l maroon     ${strip colors.maroon}
+      set -l cyan       ${strip colors.cyan}
+      set -l purple     ${strip colors.purple}
 
       set -g fish_color_normal $foreground
       set -g fish_color_command $green
