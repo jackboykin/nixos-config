@@ -6,7 +6,7 @@ in
   programs.btop = {
     enable = true;
     settings = {
-      color_theme = "colors";
+      color_theme = "bellatrix";
       theme_background = true;
       update_ms = 100;
       proc_sorting = "memory";
@@ -15,7 +15,7 @@ in
     };
   };
 
-  xdg.configFile."btop/themes/colors.theme".text = ''
+  xdg.configFile."btop/themes/bellatrix.theme".text = ''
     theme[main_bg]="${colors.base}"
     theme[main_fg]="${colors.text}"
     theme[title]="${colors.text}"

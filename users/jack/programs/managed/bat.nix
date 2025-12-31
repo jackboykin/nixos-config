@@ -11,19 +11,19 @@ in
   programs.bat = {
     enable = true;
     config = {
-      theme = "colors";
+      theme = "bellatrix";
     };
   };
 
-  xdg.configFile."bat/themes/colors.tmTheme".text = ''
+  xdg.configFile."bat/themes/bellatrix.tmTheme".text = ''
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
       <dict>
         <key>name</key>
-        <string>colors</string>
+        <string>bellatrix</string>
         <key>semanticClass</key>
-        <string>theme.dark.colors</string>
+        <string>theme.dark.bellatrix</string>
         <key>uuid</key>
         <string>627ce890-fabb-4d39-9819-7be71f4bdca7</string>
         <key>author</key>
