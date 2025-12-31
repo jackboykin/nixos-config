@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   networking.networkmanager = {
     enable = true;
     dns = "systemd-resolved";
@@ -13,13 +12,13 @@
   networking.firewall = {
     enable = true;
     # tailscale
-    trustedInterfaces = [ "tailscale0" ];
-    allowedUDPPorts = [ config.services.tailscale.port ];
+    trustedInterfaces = ["tailscale0"];
+    allowedUDPPorts = [config.services.tailscale.port];
   };
 
   networking.interfaces.enp16s0.wakeOnLan = {
     enable = true;
-    policy = [ "magic" ];
+    policy = ["magic"];
   };
 
   services.tailscale.enable = true;
@@ -48,7 +47,7 @@
     enable = true;
     dnssec = "false";
     dnsovertls = "false";
-    fallbackDns = [ ];
+    fallbackDns = [];
     extraConfig = ''
       DNS=127.0.0.1:53000
       DNSStubListener=yes

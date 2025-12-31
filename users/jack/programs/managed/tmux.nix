@@ -2,11 +2,9 @@
   pkgs,
   theme,
   ...
-}:
-let
+}: let
   colors = theme.colors;
-in
-{
+in {
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish";
