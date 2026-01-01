@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.firefox = {
     enable = true;
 
@@ -71,6 +72,17 @@
         "security.tls.enable_0rtt_data" = false;
         "signon.management.page.enabled" = false;
         "signon.rememberSignons" = false;
+
+        # Font Rendering Improvements
+        "font.name.sans-serif.x-western" = "Inter";
+        "font.name.serif.x-western" = "Noto Serif";
+        "font.name.monospace.x-western" = "JetBrainsMono Nerd Font";
+        "font.size.variable.x-western" = 16;
+        "font.default.x-western" = "sans-serif"; # Use Inter as the default proportional font
+        "gfx.webrender.all" = true;
+        "gfx.canvas.accelerated" = true;
+        "gfx.font_rendering.fontconfig.max_generic_substitutions" = 127; # Better font fallback
+        "browser.display.use_document_fonts" = 1; # Allow pages to use their own fonts
       };
     };
   };
