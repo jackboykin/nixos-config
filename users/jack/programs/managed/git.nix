@@ -2,12 +2,10 @@
   theme,
   lib,
   ...
-}:
-let
+}: let
   colors = theme.colors;
   d = theme.diff;
-in
-{
+in {
   programs.git = {
     enable = true;
     lfs.enable = true;

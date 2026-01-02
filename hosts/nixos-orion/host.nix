@@ -1,5 +1,8 @@
-{ hostname, lib, ... }:
 {
+  hostname,
+  lib,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
