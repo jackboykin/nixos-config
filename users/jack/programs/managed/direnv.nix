@@ -1,5 +1,6 @@
 # Direnv: automatically loads environment when entering directories with .envrc
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.direnv = {
     enable = true;
     # Don't print messages when loading/unloading

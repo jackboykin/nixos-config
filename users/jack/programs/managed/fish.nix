@@ -1,7 +1,9 @@
-{theme, ...}: let
+{ theme, ... }:
+let
   colors = theme.colors;
   strip = theme.rawHexValue;
-in {
+in
+{
   programs.fish = {
     enable = true;
 

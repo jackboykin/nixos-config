@@ -2,10 +2,12 @@
   pkgs,
   theme,
   ...
-}: let
+}:
+let
   colors = theme.colors;
   ui = theme.ui;
-in {
+in
+{
   programs.bat = {
     enable = true;
     config = {
