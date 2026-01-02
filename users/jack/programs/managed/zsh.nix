@@ -2,11 +2,9 @@
   theme,
   config,
   ...
-}:
-let
+}: let
   colors = theme.colors;
-in
-{
+in {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
