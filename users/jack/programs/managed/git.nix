@@ -2,10 +2,12 @@
   theme,
   lib,
   ...
-}: let
+}:
+let
   colors = theme.colors;
   d = theme.diff;
-in {
+in
+{
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -51,15 +53,15 @@ in {
       line-numbers-plus-style = "bold '${colors.green}'";
       line-numbers-right-style = "'${colors.overlay0}'";
       line-numbers-zero-style = "'${colors.overlay0}'";
-      minus-emph-style = "bold syntax \"bg:${d.minusEmph}\"";
-      minus-style = "syntax \"bg:${d.minus}\"";
-      plus-emph-style = "bold syntax \"bg:${d.plusEmph}\"";
-      plus-style = "syntax \"bg:${d.plus}\"";
-      map-styles = lib.concatStringsSep " " [
-        "\"bold purple => bold syntax bg:${d.maroon}\""
-        "\"bold blue => bold syntax bg:${d.blue}\""
-        "\"bold cyan => bold syntax bg:${d.cyan}\""
-        "\"bold yellow => bold syntax bg:${d.yellow}\""
+      minus-emph-style = "bold syntax ${d.minusEmph}";
+      minus-style = "syntax ${d.minus}";
+      plus-emph-style = "bold syntax ${d.plusEmph}";
+      plus-style = "syntax ${d.plus}";
+      map-styles = lib.concatStringsSep "," [
+        "bold purple => bold syntax ${d.maroon}"
+        "bold blue => bold syntax ${d.blue}"
+        "bold cyan => bold syntax ${d.cyan}"
+        "bold yellow => bold syntax ${d.yellow}"
       ];
     };
   };

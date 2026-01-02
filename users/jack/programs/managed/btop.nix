@@ -1,6 +1,8 @@
-{theme, ...}: let
+{ theme, ... }:
+let
   colors = theme.colors;
-in {
+in
+{
   programs.btop = {
     enable = true;
     settings = {

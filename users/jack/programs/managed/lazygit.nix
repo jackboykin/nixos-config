@@ -2,9 +2,11 @@
   pkgs,
   theme,
   ...
-}: let
+}:
+let
   colors = theme.colors;
-in {
+in
+{
   programs.lazygit = {
     enable = true;
     settings = {
@@ -29,14 +31,14 @@ in {
             "cyan"
             "bold"
           ];
-          inactiveBorderColor = [colors.overlay1];
-          optionsTextColor = ["yellow"];
-          selectedLineBgColor = [colors.surface1];
-          cherryPickedCommitBgColor = [colors.surface1];
-          cherryPickedCommitFgColor = [colors.purple];
-          unstagedChangesColor = [colors.red];
-          defaultFgColor = [colors.text];
-          searchingActiveBorderColor = [colors.purple];
+          inactiveBorderColor = [ colors.overlay1 ];
+          optionsTextColor = [ "yellow" ];
+          selectedLineBgColor = [ colors.surface1 ];
+          cherryPickedCommitBgColor = [ colors.surface1 ];
+          cherryPickedCommitFgColor = [ colors.purple ];
+          unstagedChangesColor = [ colors.red ];
+          defaultFgColor = [ colors.text ];
+          searchingActiveBorderColor = [ colors.purple ];
         };
         authorColors = {
           "Jack Boykin" = colors.cyan;

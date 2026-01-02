@@ -22,10 +22,13 @@
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
+    noto-fonts-lgc-plus
+    lexend
     liberation_ttf
     roboto
     inter
     corefonts
+    vista-fonts
     googlesans-code
   ];
 
@@ -46,6 +49,7 @@
         "Liberation Serif"
       ];
       sansSerif = [
+        "Lexend"
         "Inter"
         "Noto Sans"
       ];
@@ -60,9 +64,4 @@
     };
   };
 
-  # Fix for thin/jagged fonts: Enable Stem Darkening
-  # This makes fonts look slightly "thicker" and more legible on Linux
-  environment.variables = {
-    FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
-  };
 }

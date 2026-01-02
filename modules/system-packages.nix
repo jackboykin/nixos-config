@@ -2,7 +2,8 @@
   pkgs,
   username,
   ...
-}: {
+}:
+{
   environment.systemPackages = with pkgs; [
     nix-output-monitor
   ];

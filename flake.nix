@@ -23,43 +23,44 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    home-manager,
-    lanzaboote,
-    nur,
-    ...
-  }: let
-    system = "x86_64-linux";
-    inherit (nixpkgs) lib;
-    theme = import ./lib/theme.nix {inherit lib;};
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      lanzaboote,
+      nur,
+      ...
+    }:
+    let
+      system = "x86_64-linux";
+      inherit (nixpkgs) lib;
+      theme = import ./lib/theme.nix { inherit lib; };
 
-    mkHost = {
-      hostname,
-      username,
-      extraModules ? [],
-    }: let
-      specialArgs =
-        inputs
-        // {
-          inherit
-            username
-            hostname
-            system
-            theme
-            ;
-        };
-    in
-      nixpkgs.lib.nixosSystem {
-        inherit system specialArgs;
-        modules =
-          [
+      mkHost =
+        {
+          hostname,
+          username,
+          extraModules ? [ ],
+        }:
+        let
+          specialArgs = inputs // {
+            inherit
+              username
+              hostname
+              system
+              theme
+              ;
+          };
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system specialArgs;
+          modules = [
             ./hosts/${hostname}/host.nix
             ./modules/modules.nix
 
             # Make NUR packages available as pkgs.nur.*
-            {nixpkgs.overlays = [nur.overlays.default];}
+            { nixpkgs.overlays = [ nur.overlays.default ]; }
 
             lanzaboote.nixosModules.lanzaboote
 
@@ -73,23 +74,24 @@
             }
           ]
           ++ extraModules;
-      };
-  in {
-    nixosConfigurations = {
-      # Primary desktop
-      nixos-orion = mkHost {
-        hostname = "nixos-orion";
-        username = "jack";
+        };
+    in
+    {
+      nixosConfigurations = {
+        # Primary desktop
+        nixos-orion = mkHost {
+          hostname = "nixos-orion";
+          username = "jack";
+        };
+
+        # Add more hosts here:
+        # laptop = mkHost {
+        #   hostname = "laptop";
+        #   username = "jack";
+        #   extraModules = [ ./hosts/laptop/extra.nix ];
+        # };
       };
 
-      # Add more hosts here:
-      # laptop = mkHost {
-      #   hostname = "laptop";
-      #   username = "jack";
-      #   extraModules = [ ./hosts/laptop/extra.nix ];
-      # };
+      formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
-
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
-  };
 }

@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # GUI Applications
     antigravity
@@ -12,7 +13,7 @@
     # CLI Tools
     fastfetch
     fd
-    gemini-cli
+    #gemini-cli
     jq
     opencode
     ripgrep
