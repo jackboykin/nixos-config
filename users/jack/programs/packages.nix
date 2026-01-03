@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     # GUI Applications
     antigravity
+    claude-code
     code-cursor
     jellyfin-media-player
     kdePackages.kate
