@@ -2,9 +2,11 @@
   pkgs,
   theme,
   ...
-}: let
+}:
+let
   colors = theme.colors;
-in {
+in
+{
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -29,24 +31,23 @@ in {
     plugins = with pkgs.vimPlugins; [
       # Treesitter with grammars
       (nvim-treesitter.withPlugins (
-        p:
-          with p; [
-            bash
-            c
-            css
-            html
-            javascript
-            json
-            lua
-            markdown
-            nix
-            python
-            rust
-            toml
-            typescript
-            vim
-            yaml
-          ]
+        p: with p; [
+          bash
+          c
+          css
+          html
+          javascript
+          json
+          lua
+          markdown
+          nix
+          python
+          rust
+          toml
+          typescript
+          vim
+          yaml
+        ]
       ))
       # UI/Editor utilities are handled by lazy.nvim to avoid bootstrap issues
     ];

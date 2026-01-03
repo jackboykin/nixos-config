@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # GUI Applications
     antigravity
@@ -12,13 +13,13 @@
     # CLI Tools
     fastfetch
     fd
-    # current package is broken gemini-cli
     jq
     opencode
     ripgrep
     yazi
 
     # Development
+    bun
     nodejs
     typescript
     typescript-language-server

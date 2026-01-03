@@ -5,6 +5,7 @@ _: {
   ];
 
   home.shellAliases = {
+    gemini = "bunx @google/gemini-cli";
     a = "nvim";
     q = "exit";
 

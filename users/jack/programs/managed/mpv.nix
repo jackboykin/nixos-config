@@ -7,12 +7,12 @@
       geometry = "60%";
       volume = 80;
       volume-max = 180;
-      audio-channels = "auto-safe";
+      audio-channels = "stereo";
       audio-exclusive = "yes";
       osd-bar = false;
       osc = false;
       border = false;
-      deband = false;
+      deband = true;
       hls-bitrate = "max";
       demuxer-lavf-o = "live_start_index=0";
       force-seekable = true;
@@ -20,7 +20,10 @@
       gpu-api = "vulkan";
       hwdec = "vulkan";
       video-sync = "display-resample";
+      interpolation="yes";
       cache = true;
+      tscale = "oversample";
+      dither-depth = "auto";
       screenshot-format = "png";
       screenshot-high-bit-depth = true;
       screenshot-png-compression = 3;
