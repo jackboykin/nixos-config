@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.firefox = {
     enable = true;
 
@@ -23,6 +24,7 @@
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
         "browser.newtabpage.activity-stream.default.sites" = "";
+        "browser.newtabpage.activity-stream.feeds.topsites" = false;
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
         "browser.newtabpage.activity-stream.showSponsored" = false;
         "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
@@ -72,9 +74,9 @@
         "signon.management.page.enabled" = false;
         "signon.rememberSignons" = false;
 
-        "font.name.sans-serif.x-western" = "Lexend";
-        "font.name.serif.x-western" = "Times New Roman";
-        "font.name.monospace.x-western" = "Consolas";
+        "font.name.sans-serif.x-western" = "Inter";
+        "font.name.serif.x-western" = "Noto Serif";
+        "font.name.monospace.x-western" = "JetBrainsMono Nerd Font";
         "font.size.variable.x-western" = 16;
         "font.default.x-western" = "sans-serif";
         "gfx.webrender.all" = true;
