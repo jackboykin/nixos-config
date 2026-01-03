@@ -20,7 +20,7 @@
       gpu-api = "vulkan";
       hwdec = "vulkan";
       video-sync = "display-resample";
-      interpolation="yes";
+      interpolation = "yes";
       cache = true;
       tscale = "oversample";
       dither-depth = "auto";

@@ -2,18 +2,13 @@
   pkgs,
   theme,
   ...
-}:
-let
+}: let
   colors = theme.colors;
   # Konsole colorscheme expects "R,G,B"
-  toRGB =
-    hex:
-    let
-      rgb = theme.hexToRgb hex;
-    in
-    "${toString rgb.r},${toString rgb.g},${toString rgb.b}";
-in
-{
+  toRGB = hex: let
+    rgb = theme.hexToRgb hex;
+  in "${toString rgb.r},${toString rgb.g},${toString rgb.b}";
+in {
   # Custom Color Scheme
   xdg.dataFile."konsole/Bellatrix.colorscheme".text = ''
     [General]
