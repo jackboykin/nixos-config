@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [
     "split_lock_detect=off"
@@ -9,8 +10,8 @@
   boot.loader.systemd-boot.enable = false;
   boot.lanzaboote = {
     enable = true;
-    # secure boot keys
-    pkiBundle = "/etc/secureboot";
+    # secure boot keys (v1.0.0 community standard location)
+    pkiBundle = "/var/lib/sbctl";
   };
 
   boot.loader.efi.canTouchEfiVariables = true;
