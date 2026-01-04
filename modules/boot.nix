@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [
     "split_lock_detect=off"
@@ -16,4 +17,5 @@
   boot.loader.efi.canTouchEfiVariables = true;
   # initrd systemd
   boot.initrd.systemd.enable = true;
+  boot.tmp.cleanOnBoot = true;
 }
