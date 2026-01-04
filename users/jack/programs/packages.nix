@@ -14,6 +14,7 @@
     # CLI Tools
     fastfetch
     fd
+    gh
     jq
     opencode
     ripgrep
