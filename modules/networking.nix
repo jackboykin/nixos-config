@@ -25,13 +25,13 @@
 
   services.tailscale.enable = true;
 
-  # DNS
+  # DNS - dnscrypt-proxy listens on 127.0.0.2:53, resolved forwards to it
   services.dnscrypt-proxy = {
     enable = true;
     settings = {
       listen_addresses = [
-        "127.0.0.1:53000"
-        "[::1]:53000"
+        "127.0.0.2:53"
+        "[::1]:53"
       ];
       server_names = [
         "cloudflare"
@@ -54,8 +54,9 @@
     dnsovertls = "false";
     fallbackDns = [];
     extraConfig = ''
-      DNS=127.0.0.1:53000
+      DNS=127.0.0.2 ::1
       DNSStubListener=yes
+      Domains=~.
     '';
   };
 }
