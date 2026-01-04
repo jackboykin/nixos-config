@@ -26,39 +26,38 @@
     nixpkgs-vesktop.url = "github:NixOS/nixpkgs/pull/476347/head";
   };
 
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      home-manager,
-      lanzaboote,
-      nur,
-      ...
-    }:
-    let
-      system = "x86_64-linux";
-      inherit (nixpkgs) lib;
-      theme = import ./lib/theme.nix { inherit lib; };
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    lanzaboote,
+    nur,
+    ...
+  }: let
+    system = "x86_64-linux";
+    inherit (nixpkgs) lib;
+    theme = import ./lib/theme.nix {inherit lib;};
 
-      mkHost =
-        {
-          hostname,
-          username,
-          extraModules ? [ ],
-        }:
-        let
-          specialArgs = inputs // {
-            inherit
-              username
-              hostname
-              system
-              theme
-              ;
-          };
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit system specialArgs;
-          modules = [
+    mkHost = {
+      hostname,
+      username,
+      extraModules ? [],
+    }: let
+      specialArgs =
+        inputs
+        // {
+          inherit
+            username
+            hostname
+            system
+            theme
+            ;
+        };
+    in
+      nixpkgs.lib.nixosSystem {
+        inherit system specialArgs;
+        modules =
+          [
             ./hosts/${hostname}/host.nix
             ./modules/modules.nix
 
@@ -68,7 +67,7 @@
               nixpkgs.overlays = [
                 nur.overlays.default
                 (final: prev: {
-                  vesktop = (import inputs.nixpkgs-vesktop { inherit (prev) system; }).vesktop;
+                  vesktop = (import inputs.nixpkgs-vesktop {inherit (prev) system;}).vesktop;
                 })
               ];
             }
@@ -85,24 +84,23 @@
             }
           ]
           ++ extraModules;
-        };
-    in
-    {
-      nixosConfigurations = {
-        # Primary desktop
-        nixos-orion = mkHost {
-          hostname = "nixos-orion";
-          username = "jack";
-        };
-
-        # Add more hosts here:
-        # laptop = mkHost {
-        #   hostname = "laptop";
-        #   username = "jack";
-        #   extraModules = [ ./hosts/laptop/extra.nix ];
-        # };
+      };
+  in {
+    nixosConfigurations = {
+      # Primary desktop
+      nixos-orion = mkHost {
+        hostname = "nixos-orion";
+        username = "jack";
       };
 
-      formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+      # Add more hosts here:
+      # laptop = mkHost {
+      #   hostname = "laptop";
+      #   username = "jack";
+      #   extraModules = [ ./hosts/laptop/extra.nix ];
+      # };
     };
+
+    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+  };
 }

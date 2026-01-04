@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   networking.networkmanager = {
     enable = true;
     dns = "systemd-resolved";
@@ -13,15 +12,15 @@
   networking.firewall = {
     enable = true;
     # tailscale
-    trustedInterfaces = [ "tailscale0" ];
-    allowedUDPPorts = [ config.services.tailscale.port ];
+    trustedInterfaces = ["tailscale0"];
+    allowedUDPPorts = [config.services.tailscale.port];
   };
 
   networking.nftables.enable = true;
 
   networking.interfaces.enp16s0.wakeOnLan = {
     enable = true;
-    policy = [ "magic" ];
+    policy = ["magic"];
   };
 
   services.tailscale.enable = true;
@@ -46,11 +45,14 @@
     };
   };
 
+  # systemd-resolved forwards to dnscrypt-proxy which handles DNSSEC validation.
+  # We disable resolved's own DNSSEC/DoT since dnscrypt-proxy already provides
+  # encrypted DNS with DNSSEC enforcement (require_dnssec = true above).
   services.resolved = {
     enable = true;
     dnssec = "false";
     dnsovertls = "false";
-    fallbackDns = [ ];
+    fallbackDns = [];
     extraConfig = ''
       DNS=127.0.0.1:53000
       DNSStubListener=yes

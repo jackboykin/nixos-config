@@ -1,3 +1,16 @@
+# Neovim configuration with LSP, Treesitter, and lazy.nvim plugin management.
+#
+# Structure:
+#   - programs.neovim: Core neovim settings, LSP servers, and Nix-managed treesitter grammars
+#   - xdg.configFile: Lua configuration files organized as:
+#       nvim/init.lua           - Entry point that loads core modules
+#       nvim/lua/core/          - Options, keymaps, autocmds, theme loading
+#       nvim/colors/bellatrix.lua - Custom colorscheme using theme.colors
+#       nvim/lua/lazy-bootstrap.lua - lazy.nvim plugin manager setup
+#       nvim/lua/plugins/       - Plugin specs (lsp, completions, ui, editor, etc.)
+#
+# Plugins are managed by lazy.nvim (not Nix) for flexibility and lazy-loading.
+# Treesitter grammars ARE managed by Nix to avoid compile issues.
 {
   pkgs,
   theme,
@@ -12,17 +25,18 @@ in {
     vimAlias = true;
     vimdiffAlias = true;
 
+    # LSP servers and formatters available to neovim
     extraPackages = with pkgs; [
       lua-language-server
       nil # Nix LSP
       nodePackages.typescript-language-server
       nodePackages.vscode-langservers-extracted
-      gcc
+      gcc # Required for treesitter compilation
 
-      # Formatters
+      # Formatters (used by conform.nvim)
       stylua
       nodePackages.prettier
-      nixfmt-rfc-style
+      alejandra # Matches system formatter (nix fmt)
     ];
 
     # Use the newer Treesitter management
@@ -297,7 +311,7 @@ in {
             json = { "prettier" },
             yaml = { "prettier" },
             markdown = { "prettier" },
-            nix = { "nixfmt" },
+            nix = { "alejandra" },
             ["*"] = { "trim_whitespace", "trim_newlines" },
           },
           format_on_save = {

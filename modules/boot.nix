@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [
-    "split_lock_detect=off"
     "amd_pstate=active"
   ];
 
