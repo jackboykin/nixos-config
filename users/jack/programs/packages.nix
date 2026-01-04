@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # GUI Applications
     antigravity
@@ -29,6 +28,5 @@
     # Nix Tooling
     alejandra
     nil
-    nixfmt-rfc-style
   ];
 }
