@@ -13,6 +13,21 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    extraConfig.pipewire."99-sample-rates" = {
+      "context.properties" = {
+        "default.clock.allowed-rates" = [44100 48000];
+      };
+    };
+    wireplumber.extraConfig."99-sample-rates" = {
+      "monitor.alsa.rules" = [
+        {
+          matches = [{"node.name" = "~alsa_output.*";}];
+          actions.update-props = {
+            "audio.allowed-rates" = "44100,48000";
+          };
+        }
+      ];
+    };
   };
 
   fonts.packages = with pkgs; [
