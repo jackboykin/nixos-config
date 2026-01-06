@@ -49,6 +49,8 @@
         "gfx.webrender.layer-compositor" = true;
         "layout.word_select.eat_space_to_next_word" = false;
         "media.wmf.zero-copy-nv12-textures-force-enabled" = true;
+        "dom.security.https_only_mode" = true;
+        "network.trr.mode" = 5;
         "network.cookie.lifetimePolicy" = 2;
         "network.dns.disablePrefetch" = true;
         "network.dns.disablePrefetchFromHTTPS" = true;
