@@ -23,7 +23,7 @@ sudo nixos-rebuild switch --flake ~/nixos-config
 ### Formatting
 ```bash
 # Format all Nix files with Alejandra
-nix fmt
+nix fmt .
 ```
 
 ### Flake Operations
@@ -62,8 +62,25 @@ nixos-config/
         ├── user.nix    # Main user config entry point
         ├── shell.nix   # Shell aliases and PATH
         └── programs/
-            ├── packages.nix    # Standalone packages
-            └── managed/        # Declaratively configured programs
+            ├── programs.nix    # Imports managed programs + standalone packages
+            ├── bash.nix
+            ├── bat.nix
+            ├── btop.nix
+            ├── direnv.nix
+            ├── eza.nix
+            ├── firefox.nix
+            ├── fish.nix
+            ├── fzf.nix
+            ├── git.nix
+            ├── konsole.nix
+            ├── lazygit.nix
+            ├── mpv.nix
+            ├── neovim/         # Modularized config with Lua
+            │   ├── neovim.nix
+            │   └── lua/
+            ├── tmux.nix
+            ├── zoxide.nix
+            └── zsh.nix
 ```
 
 ### Key Components
@@ -89,7 +106,7 @@ nixos-config/
 ## Theme System
 
 Located in `lib/theme.nix`, provides:
-- Base16-style color palette ("Colors" theme)
+- Base16-style color palette ("Bellatrix" v4 dark theme)
 - `mixColors` function for color blending
 - `hexToRgb` / `rgbToHex` conversions
 - Semantic and Functional UI roles:
@@ -114,7 +131,7 @@ in {
 
 ## Managed Programs
 
-Programs in `users/jack/programs/managed/` have declarative configs:
+Programs in `users/jack/programs/` have declarative configs:
 
 | Program | Purpose |
 |---------|---------|
@@ -138,6 +155,7 @@ Programs in `users/jack/programs/managed/` have declarative configs:
 
 Defined in `users/jack/shell.nix`:
 ```bash
+gemini  → bunx @google/gemini-cli
 a       → nvim
 q       → exit
 nr      → nh os switch
@@ -170,14 +188,14 @@ nixosConfigurations = {
 
 ## Adding New Programs
 
-1. **Standalone package**: Add to `users/jack/programs/packages.nix`
-2. **Managed program**: Create `users/jack/programs/managed/program.nix` and import in `managed.nix`
+1. **Standalone package**: Add to `home.packages` in `users/jack/programs/programs.nix`
+2. **Managed program**: Create `users/jack/programs/program.nix` and import in `programs.nix`
 
 ## Important Notes
 
 - State version: `25.11`
 - Kernel: Latest Linux with AMD pstate
-- Secure boot keys stored at `/etc/secureboot`
+- Secure boot keys stored at `/var/lib/sbctl` (Lanzaboote v1.0.0 standard location)
 - All program configs can access `theme` via `specialArgs`
 - Use `colors = theme.colors;` pattern in managed programs
 - **Default shell: fish** (zsh/bash available for POSIX compatibility)
@@ -185,7 +203,7 @@ nixosConfigurations = {
 ## Development Workflow
 
 1. Edit configuration files
-2. Run `nix fmt` to format
+2. Run `nix fmt .` to format
 3. Run `nr` (alias for `nh os switch`) to rebuild
 4. Test changes
 

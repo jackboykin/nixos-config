@@ -21,9 +21,6 @@
     };
 
     nur.url = "github:nix-community/NUR";
-
-    # Temporary: PR with Vesktop fix (remove once merged into nixos-unstable)
-    nixpkgs-vesktop.url = "github:NixOS/nixpkgs/pull/476347/head";
   };
 
   outputs = inputs @ {
@@ -62,13 +59,9 @@
             ./modules/modules.nix
 
             # Make NUR packages available as pkgs.nur.*
-            # Vesktop overlay: use vesktop from PR branch until merged
             {
               nixpkgs.overlays = [
                 nur.overlays.default
-                (final: prev: {
-                  vesktop = (import inputs.nixpkgs-vesktop {inherit (prev) system;}).vesktop;
-                })
               ];
             }
 
