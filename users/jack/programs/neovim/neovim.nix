@@ -60,7 +60,8 @@ in {
       nixd
       nodePackages.typescript-language-server
       nodePackages.vscode-langservers-extracted
-      gcc
+      clang
+      clang-tools # Provides clangd LSP server
 
       # Formatters (used by conform.nvim)
       stylua

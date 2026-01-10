@@ -40,6 +40,7 @@
 
     # Development
     bun
+    clang
     nodejs
     typescript
     typescript-language-server

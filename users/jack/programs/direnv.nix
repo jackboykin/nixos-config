@@ -8,6 +8,7 @@
     nix-direnv.enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
     # Store direnv layouts in cache instead of project directories
     # Keeps project dirs clean and prevents .direnv folders everywhere
     stdlib = ''
