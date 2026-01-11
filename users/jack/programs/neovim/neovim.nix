@@ -54,21 +54,6 @@ in {
     vimAlias = true;
     vimdiffAlias = true;
 
-    # LSP servers and formatters available to neovim
-    extraPackages = with pkgs; [
-      lua-language-server
-      nixd
-      nodePackages.typescript-language-server
-      nodePackages.vscode-langservers-extracted
-      clang
-      clang-tools # Provides clangd LSP server
-
-      # Formatters (used by conform.nvim)
-      stylua
-      nodePackages.prettier
-      alejandra
-    ];
-
     plugins = with pkgs.vimPlugins; [
       (nvim-treesitter.withPlugins (
         p:

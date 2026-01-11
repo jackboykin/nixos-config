@@ -41,9 +41,16 @@
     # Development
     bun
     clang
+    clang-tools # Provides clangd LSP
+    lua-language-server
     nodejs
+    nodePackages.prettier
+    pyright # Python LSP
+    rust-analyzer # Rust LSP
+    stylua
     typescript
     typescript-language-server
+    vscode-langservers-extracted # CSS/HTML/JSON LSPs
 
     # Nix Tooling
     alejandra
