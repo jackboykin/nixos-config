@@ -23,6 +23,8 @@
     antigravity
     claude-code
     code-cursor
+    chromium
+    obsidian
     jellyfin-media-player
     kdePackages.kate
     remmina
