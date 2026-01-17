@@ -51,38 +51,74 @@ with lib; let
   in
     rgbToHex mix;
 
-  # Bellatrix theme (v4 - Updated)
-  # System: base16, Slug: bellatrix, Variant: dark
+  # Bellatrix theme (v5)
+  # Direct terminal.sexy / Xresources mapping
   colors = rec {
-    # Neutral Base
-    base00 = "#0b0a09"; # Background
-    base01 = "#1a1716"; # Mantle
-    base02 = "#2d2624"; # Surface / Selection
-    base03 = "#9a8b94"; # Overlay / Comments
-    base04 = "#7b6562"; # Muted Text
-    base05 = "#dae4e4"; # Main Text
-    base06 = "#e5e9ef"; # Bright Text
-    base07 = "#fce4f0"; # Highlights
+    # Terminal colors - normal
+    color0 = "#36302f"; # black
+    color1 = "#ee0606"; # red
+    color2 = "#35de4f"; # green
+    color3 = "#ff9000"; # yellow
+    color4 = "#286ef1"; # blue
+    color5 = "#e52195"; # magenta
+    color6 = "#22e1ef"; # cyan
+    color7 = "#dae4e4"; # white
 
-    # Accents
-    red = "#ee0606"; # base08
-    orange = "#ff5500"; # base09
-    yellow = "#ff9000"; # base0A
-    green = "#35de4f"; # base0B
-    cyan = "#00ffff"; # base0C
-    blue = "#0000ff"; # base0D
-    magenta = "#e52195"; # base0E
-    maroon = "#be5046"; # base0F
+    # Terminal colors - bright
+    color8 = "#9a8b94"; # bright black
+    color9 = "#ff5500"; # bright red
+    color10 = "#7ed37d"; # bright green
+    color11 = "#ffaf2f"; # bright yellow
+    color12 = "#6357f9"; # bright blue
+    color13 = "#ec8cc5"; # bright magenta
+    color14 = "#69e8c8"; # bright cyan
+    color15 = "#e5e9ef"; # bright white
 
-    # Explicit Descriptive Names
+    # Special
+    foreground = "#dae4e4";
+    background = "#0b0a09";
+    cursorColor = "#dae4e4";
+
+    # Base16 mapping
+    base00 = background;
+    base01 = "#1a1716";
+    base02 = color0;
+    base03 = color8;
+    base04 = "#7b6562";
+    base05 = foreground;
+    base06 = color15;
+    base07 = "#fce4f0";
+
+    # Named colors
+    black = color0;
+    red = color1;
+    green = color2;
+    yellow = color3;
+    blue = color4;
+    magenta = color5;
+    cyan = color6;
+    white = color7;
+
+    brightBlack = color8;
+    brightRed = color9;
+    brightGreen = color10;
+    brightYellow = color11;
+    brightBlue = color12;
+    brightMagenta = color13;
+    brightCyan = color14;
+    brightWhite = color15;
+
+    # Legacy aliases (all map to palette colors)
+    orange = color9;
+    maroon = color9; # was custom #be5046, now maps to bright red
     sky = blue;
     teal = cyan;
     pink = magenta;
-    purple = magenta;
+    purple = brightBlue;
     tan = base04;
     cream = base07;
 
-    # Functional UI Roles (Dark Theme)
+    # Functional UI Roles
     base = base00;
     mantle = base01;
     crust = "#050403";
@@ -93,29 +129,24 @@ with lib; let
     overlay1 = base02;
     overlay2 = base03;
 
-    text = base05;
+    text = foreground;
     subtext1 = base04;
     subtext0 = base03;
 
     # Status & Diagnostics
     error = red;
-    warning = orange;
+    warning = yellow;
     info = blue;
     hint = cyan;
 
     # Git Styles
     gitAdded = green;
-    gitModified = orange;
+    gitModified = yellow;
     gitDeleted = red;
 
-    # Extended Brights
-    brightRed = "#ff5500";
-    brightOrange = orange;
-    brightYellow = "#ffaf2f";
-    brightGreen = "#7ed37d";
-    brightCyan = "#2bb7c8";
-    brightBlue = "#3c2dec";
-    brightPurple = "#ec8cc5";
+    # Extended Brights (legacy)
+    brightOrange = brightYellow;
+    brightPurple = brightMagenta;
 
     highlight = base07;
   };

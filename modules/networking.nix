@@ -45,18 +45,17 @@
     };
   };
 
-  # systemd-resolved forwards to dnscrypt-proxy which handles DNSSEC validation.
-  # We disable resolved's own DNSSEC/DoT since dnscrypt-proxy already provides
-  # encrypted DNS with DNSSEC enforcement (require_dnssec = true above).
   services.resolved = {
     enable = true;
     dnssec = "false";
     dnsovertls = "false";
     fallbackDns = [];
-    extraConfig = ''
-      DNS=127.0.0.2 ::1
-      DNSStubListener=yes
-      Domains=~.
-    '';
+    settings = {
+      Resolve = {
+        DNS = "127.0.0.2 ::1";
+        DNSStubListener = "yes";
+        Domains = "~.";
+      };
+    };
   };
 }

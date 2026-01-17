@@ -45,7 +45,7 @@ in {
 
     theme[cached_start]="${colors.cyan}"
     theme[cached_mid]="${colors.blue}"
-    theme[cached_end]="${colors.maroon}"
+    theme[cached_end]="${colors.magenta}"
 
     theme[available_start]="${colors.orange}"
     theme[available_mid]="${colors.yellow}"
@@ -64,7 +64,7 @@ in {
     theme[upload_end]="${colors.cyan}"
 
     theme[process_start]="${colors.cyan}"
-    theme[process_mid]="${colors.maroon}"
+    theme[process_mid]="${colors.magenta}"
     theme[process_end]="${colors.purple}"
   '';
 }

@@ -14,9 +14,9 @@ in {
       set -l orange     ${strip colors.orange}
       set -l yellow     ${strip colors.yellow}
       set -l green      ${strip colors.green}
-      set -l maroon     ${strip colors.maroon}
       set -l cyan       ${strip colors.cyan}
       set -l purple     ${strip colors.purple}
+      set -l brightMagenta ${strip colors.brightMagenta}
 
       set -g fish_color_normal $foreground
       set -g fish_color_command $green
@@ -26,7 +26,7 @@ in {
       set -g fish_color_end $orange
       set -g fish_color_option $purple
       set -g fish_color_error $red
-      set -g fish_color_param $maroon
+      set -g fish_color_param $brightMagenta
       set -g fish_color_comment $comment
       set -g fish_color_selection --background=$selection
       set -g fish_color_search_match --background=$selection

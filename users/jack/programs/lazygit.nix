@@ -44,13 +44,13 @@ in {
         unspecifiedAuthorColors = [
           colors.red
           colors.orange
-          colors.purple
           colors.yellow
           colors.green
           colors.cyan
           colors.blue
-          colors.maroon
-          colors.purple
+          colors.magenta
+          colors.brightCyan
+          colors.brightMagenta
         ];
       };
     };

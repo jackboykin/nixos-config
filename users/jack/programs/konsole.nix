@@ -17,64 +17,64 @@ in {
     Wallpaper=
 
     [Background]
-    Color=${toRGB colors.base}
+    Color=${toRGB colors.background}
 
     [BackgroundIntense]
-    Color=${toRGB colors.surface1}
+    Color=${toRGB colors.background}
 
     [Foreground]
-    Color=${toRGB colors.text}
+    Color=${toRGB colors.foreground}
 
     [ForegroundIntense]
-    Color=${toRGB colors.text}
+    Color=${toRGB colors.brightWhite}
 
     [Color0]
-    Color=${toRGB colors.base}
+    Color=${toRGB colors.color0}
 
     [Color0Intense]
-    Color=${toRGB colors.overlay0}
+    Color=${toRGB colors.color8}
 
     [Color1]
-    Color=${toRGB colors.red}
+    Color=${toRGB colors.color1}
 
     [Color1Intense]
-    Color=${toRGB colors.purple}
+    Color=${toRGB colors.color9}
 
     [Color2]
-    Color=${toRGB colors.green}
+    Color=${toRGB colors.color2}
 
     [Color2Intense]
-    Color=${toRGB colors.teal}
+    Color=${toRGB colors.color10}
 
     [Color3]
-    Color=${toRGB colors.yellow}
+    Color=${toRGB colors.color3}
 
     [Color3Intense]
-    Color=${toRGB colors.orange}
+    Color=${toRGB colors.color11}
 
     [Color4]
-    Color=${toRGB colors.blue}
+    Color=${toRGB colors.color4}
 
     [Color4Intense]
-    Color=${toRGB colors.sky}
+    Color=${toRGB colors.color12}
 
     [Color5]
-    Color=${toRGB colors.maroon}
+    Color=${toRGB colors.color5}
 
     [Color5Intense]
-    Color=${toRGB colors.purple}
+    Color=${toRGB colors.color13}
 
     [Color6]
-    Color=${toRGB colors.cyan}
+    Color=${toRGB colors.color6}
 
     [Color6Intense]
-    Color=${toRGB colors.cyan}
+    Color=${toRGB colors.color14}
 
     [Color7]
-    Color=${toRGB colors.text}
+    Color=${toRGB colors.color7}
 
     [Color7Intense]
-    Color=${toRGB colors.text}
+    Color=${toRGB colors.color15}
   '';
 
   # Custom Profile
