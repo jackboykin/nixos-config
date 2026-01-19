@@ -47,14 +47,14 @@
 
   services.resolved = {
     enable = true;
-    dnssec = "false";
-    dnsovertls = "false";
-    fallbackDns = [];
     settings = {
       Resolve = {
         DNS = "127.0.0.2 ::1";
         DNSStubListener = "yes";
         Domains = "~.";
+        DNSSEC = "false";
+        DNSOverTLS = "false";
+        FallbackDNS = "";
       };
     };
   };
