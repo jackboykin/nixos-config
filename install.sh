@@ -168,13 +168,19 @@ format_partitions() {
 mount_partitions() {
     info "Mounting partitions..."
 
-    # Mount root
-    mount /dev/disk/by-label/nixos /mnt
+    # Ensure partition names are set
+    get_partition_names
+
+    # Wait for udev to process the new filesystems
+    udevadm settle
+
+    # Mount root using direct partition path
+    mount "$ROOT_PART" /mnt
     success "Mounted root at /mnt"
 
-    # Mount boot
+    # Mount boot using direct partition path
     mkdir -p /mnt/boot
-    mount /dev/disk/by-label/BOOT /mnt/boot
+    mount "$EFI_PART" /mnt/boot
     success "Mounted boot at /mnt/boot"
 }
 
@@ -208,6 +214,43 @@ clone_config() {
 }
 
 # -----------------------------------------------------------------------------
+# Create Secure Boot Keys
+# -----------------------------------------------------------------------------
+create_secureboot_keys() {
+    info "Creating secure boot keys for Lanzaboote..."
+
+    # Create the sbctl directory structure (explicit for compatibility)
+    mkdir -p /mnt/var/lib/sbctl/keys/PK
+    mkdir -p /mnt/var/lib/sbctl/keys/KEK
+    mkdir -p /mnt/var/lib/sbctl/keys/db
+    chmod -R 700 /mnt/var/lib/sbctl
+
+    # Get openssl from nixpkgs (not in default live ISO)
+    OPENSSL="$(nix-build '<nixpkgs>' -A openssl --no-out-link)/bin/openssl"
+
+    # Generate keys manually with openssl (avoids sbctl permission issues)
+    info "Generating Platform Key (PK)..."
+    "$OPENSSL" req -new -x509 -newkey rsa:4096 -nodes -days 3650 \
+        -subj "/CN=Platform Key/" \
+        -keyout /mnt/var/lib/sbctl/keys/PK/PK.key \
+        -out /mnt/var/lib/sbctl/keys/PK/PK.pem
+
+    info "Generating Key Exchange Key (KEK)..."
+    "$OPENSSL" req -new -x509 -newkey rsa:4096 -nodes -days 3650 \
+        -subj "/CN=Key Exchange Key/" \
+        -keyout /mnt/var/lib/sbctl/keys/KEK/KEK.key \
+        -out /mnt/var/lib/sbctl/keys/KEK/KEK.pem
+
+    info "Generating Signature Database Key (db)..."
+    "$OPENSSL" req -new -x509 -newkey rsa:4096 -nodes -days 3650 \
+        -subj "/CN=Signature Database Key/" \
+        -keyout /mnt/var/lib/sbctl/keys/db/db.key \
+        -out /mnt/var/lib/sbctl/keys/db/db.pem
+
+    success "Secure boot keys created at /mnt/var/lib/sbctl"
+}
+
+# -----------------------------------------------------------------------------
 # Install NixOS
 # -----------------------------------------------------------------------------
 install_nixos() {
@@ -219,6 +262,16 @@ install_nixos() {
         --no-root-passwd
 
     success "NixOS installation complete!"
+
+    # Fix ownership of config directory (cloned as root)
+    info "Fixing config directory ownership..."
+    chown -R 1000:100 "/mnt/home/$USERNAME"
+    success "Config directory owned by $USERNAME"
+
+    # Set user password
+    info "Set password for $USERNAME:"
+    nixos-enter --root /mnt -c "passwd $USERNAME"
+    success "User password set"
 }
 
 # -----------------------------------------------------------------------------
@@ -232,21 +285,21 @@ post_install() {
     echo ""
     info "Next steps:"
     echo "  1. Reboot into your new system: reboot"
-    echo "  2. Log in as '$USERNAME'"
-    echo "  3. Set your user password: passwd"
+    echo "  2. Log in as '$USERNAME' with the password you just set"
     echo ""
     warn "Secure Boot Setup (Lanzaboote):"
-    echo "  Note: Secure Boot must be DISABLED to boot the live ISO."
-    echo "  After installation, follow these steps:"
+    echo "  Temporary keys were generated to complete installation."
+    echo "  To enable Secure Boot, follow these steps after first boot:"
     echo ""
-    echo "  1. Enter BIOS and enable Secure Boot in 'Setup Mode'"
-    echo "     (Setup Mode clears existing keys and allows enrollment)"
-    echo "  2. Boot into NixOS and run:"
+    echo "  1. Regenerate proper keys with sbctl:"
+    echo "     sudo rm -rf /var/lib/sbctl"
     echo "     sudo sbctl create-keys"
+    echo "  2. Enter BIOS and enable Secure Boot in 'Setup Mode'"
+    echo "     (Setup Mode clears existing keys and allows enrollment)"
+    echo "  3. Boot into NixOS and enroll keys:"
     echo "     sudo sbctl enroll-keys --microsoft"
-    echo "     sudo nixos-rebuild switch --flake ~/nixos-config"
-    echo "  3. Reboot, change Secure Boot from Setup Mode to Enabled"
-    echo "  4. Verify with: sbctl status"
+    echo "  4. Reboot, change Secure Boot from Setup Mode to Enabled"
+    echo "  5. Verify with: sbctl status"
     echo ""
     info "Your configuration is at: /home/$USERNAME/nixos-config"
     echo ""
@@ -268,6 +321,7 @@ main() {
     format_partitions
     mount_partitions
     clone_config
+    create_secureboot_keys
     install_nixos
     post_install
 }

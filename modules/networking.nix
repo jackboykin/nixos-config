@@ -7,6 +7,24 @@
       "ipv4.ignore-auto-dns" = true;
       "ipv6.ignore-auto-dns" = true;
     };
+    ensureProfiles.profiles = {
+      "Wired connection 1" = {
+        connection = {
+          id = "Wired connection 1";
+          type = "ethernet";
+          interface-name = "enp16s0";
+        };
+        ipv4 = {
+          method = "auto";
+          ignore-auto-dns = true;
+        };
+        ipv6 = {
+          method = "auto";
+          ignore-auto-dns = true;
+        };
+        ethernet = {};
+      };
+    };
   };
 
   networking.firewall = {
