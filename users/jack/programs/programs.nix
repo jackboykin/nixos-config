@@ -19,7 +19,6 @@
   ];
 
   home.packages = with pkgs; [
-    # GUI Applications
     antigravity
     claude-code
     code-cursor
@@ -31,7 +30,6 @@
     spotify
     vesktop
 
-    # CLI Tools
     fastfetch
     fd
     gh
@@ -40,21 +38,19 @@
     ripgrep
     yazi
 
-    # Development
     bun
     clang
-    clang-tools # Provides clangd LSP
+    clang-tools
     lua-language-server
     nodejs
     nodePackages.prettier
-    pyright # Python LSP
-    rust-analyzer # Rust LSP
+    pyright
+    rust-analyzer
     stylua
     typescript
     typescript-language-server
-    vscode-langservers-extracted # CSS/HTML/JSON LSPs
+    vscode-langservers-extracted
 
-    # Nix Tooling
     alejandra
     nixd
   ];

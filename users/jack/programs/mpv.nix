@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   programs.mpv = {
     enable = true;
-
     config = {
       profile = "high-quality";
       geometry = "60%";
@@ -28,17 +27,13 @@
       screenshot-high-bit-depth = true;
       screenshot-png-compression = 3;
     };
-
     scripts = with pkgs.mpvScripts; [
       uosc
       mpris
     ];
-
-    scriptOpts = {
-      uosc = {
-        progress = "never";
-        controls = "menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,open-conf,stats,console";
-      };
+    scriptOpts.uosc = {
+      progress = "never";
+      controls = "menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,open-conf,stats,console";
     };
   };
 }

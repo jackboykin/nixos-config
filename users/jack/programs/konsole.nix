@@ -4,12 +4,10 @@
   ...
 }: let
   colors = theme.colors;
-  # Konsole colorscheme expects "R,G,B"
   toRGB = hex: let
     rgb = theme.hexToRgb hex;
   in "${toString rgb.r},${toString rgb.g},${toString rgb.b}";
 in {
-  # Custom Color Scheme
   xdg.dataFile."konsole/Bellatrix.colorscheme".text = ''
     [General]
     Description=Bellatrix
@@ -77,7 +75,6 @@ in {
     Color=${toRGB colors.color15}
   '';
 
-  # Custom Profile
   xdg.dataFile."konsole/Bellatrix.profile".text = ''
     [General]
     Command=${pkgs.fish}/bin/fish

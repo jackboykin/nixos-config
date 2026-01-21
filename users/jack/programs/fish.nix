@@ -4,9 +4,7 @@
 in {
   programs.fish = {
     enable = true;
-
     interactiveShellInit = ''
-
       set -l foreground ${strip colors.text}
       set -l selection  ${strip colors.surface1}
       set -l comment    ${strip colors.subtext0}

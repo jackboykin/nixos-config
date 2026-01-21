@@ -1,16 +1,10 @@
-{
-  pkgs,
-  theme,
-  ...
-}: let
+{theme, ...}: let
   colors = theme.colors;
   ui = theme.ui;
 in {
   programs.bat = {
     enable = true;
-    config = {
-      theme = "bellatrix";
-    };
+    config.theme = "bellatrix";
   };
 
   xdg.configFile."bat/themes/bellatrix.tmTheme".text = ''

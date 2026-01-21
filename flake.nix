@@ -57,16 +57,8 @@
           [
             ./hosts/${hostname}/host.nix
             ./modules/modules.nix
-
-            # Make NUR packages available as pkgs.nur.*
-            {
-              nixpkgs.overlays = [
-                nur.overlays.default
-              ];
-            }
-
+            {nixpkgs.overlays = [nur.overlays.default];}
             lanzaboote.nixosModules.lanzaboote
-
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -79,19 +71,9 @@
           ++ extraModules;
       };
   in {
-    nixosConfigurations = {
-      # Primary desktop
-      nixos-orion = mkHost {
-        hostname = "nixos-orion";
-        username = "jack";
-      };
-
-      # Add more hosts here:
-      # laptop = mkHost {
-      #   hostname = "laptop";
-      #   username = "jack";
-      #   extraModules = [ ./hosts/laptop/extra.nix ];
-      # };
+    nixosConfigurations.nixos-orion = mkHost {
+      hostname = "nixos-orion";
+      username = "jack";
     };
 
     formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;

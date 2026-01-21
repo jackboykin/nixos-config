@@ -5,7 +5,6 @@ with lib; let
     r = substring 0 2 hex';
     g = substring 2 2 hex';
     b = substring 4 2 hex';
-    # hex-to-int
     parseHex = s: (builtins.fromTOML "a = 0x${s}").a;
   in {
     r = parseHex r;
@@ -16,20 +15,14 @@ with lib; let
   rgbToHex = rgb:
     "#"
     + concatStrings (
-      map
-      (
+      map (
         x: let
           s = toLower (toHexString x);
         in
           if stringLength s == 1
           then "0" + s
           else s
-      )
-      [
-        rgb.r
-        rgb.g
-        rgb.b
-      ]
+      ) [rgb.r rgb.g rgb.b]
     );
 
   round = x: let
@@ -51,35 +44,28 @@ with lib; let
   in
     rgbToHex mix;
 
-  # Bellatrix theme (v5)
-  # Direct terminal.sexy / Xresources mapping
   colors = rec {
-    # Terminal colors - normal
-    color0 = "#36302f"; # black
-    color1 = "#ee0606"; # red
-    color2 = "#35de4f"; # green
-    color3 = "#ff9000"; # yellow
-    color4 = "#286ef1"; # blue
-    color5 = "#e52195"; # magenta
-    color6 = "#22e1ef"; # cyan
-    color7 = "#dae4e4"; # white
+    color0 = "#36302f";
+    color1 = "#ee0606";
+    color2 = "#35de4f";
+    color3 = "#ff9000";
+    color4 = "#286ef1";
+    color5 = "#e52195";
+    color6 = "#22e1ef";
+    color7 = "#dae4e4";
+    color8 = "#9a8b94";
+    color9 = "#ff5500";
+    color10 = "#7ed37d";
+    color11 = "#ffaf2f";
+    color12 = "#6357f9";
+    color13 = "#ec8cc5";
+    color14 = "#69e8c8";
+    color15 = "#e5e9ef";
 
-    # Terminal colors - bright
-    color8 = "#9a8b94"; # bright black
-    color9 = "#ff5500"; # bright red
-    color10 = "#7ed37d"; # bright green
-    color11 = "#ffaf2f"; # bright yellow
-    color12 = "#6357f9"; # bright blue
-    color13 = "#ec8cc5"; # bright magenta
-    color14 = "#69e8c8"; # bright cyan
-    color15 = "#e5e9ef"; # bright white
-
-    # Special
     foreground = "#dae4e4";
     background = "#0b0a09";
     cursorColor = "#dae4e4";
 
-    # Base16 mapping
     base00 = background;
     base01 = "#1a1716";
     base02 = color0;
@@ -89,7 +75,6 @@ with lib; let
     base06 = color15;
     base07 = "#fce4f0";
 
-    # Named colors
     black = color0;
     red = color1;
     green = color2;
@@ -98,7 +83,6 @@ with lib; let
     magenta = color5;
     cyan = color6;
     white = color7;
-
     brightBlack = color8;
     brightRed = color9;
     brightGreen = color10;
@@ -108,9 +92,8 @@ with lib; let
     brightCyan = color14;
     brightWhite = color15;
 
-    # Legacy aliases (all map to palette colors)
     orange = color9;
-    maroon = color9; # was custom #be5046, now maps to bright red
+    maroon = color9;
     sky = blue;
     teal = cyan;
     pink = magenta;
@@ -118,7 +101,6 @@ with lib; let
     tan = base04;
     cream = base07;
 
-    # Functional UI Roles
     base = base00;
     mantle = base01;
     crust = "#050403";
@@ -133,26 +115,21 @@ with lib; let
     subtext1 = base04;
     subtext0 = base03;
 
-    # Status & Diagnostics
     error = red;
     warning = yellow;
     info = blue;
     hint = cyan;
 
-    # Git Styles
     gitAdded = green;
     gitModified = yellow;
     gitDeleted = red;
 
-    # Extended Brights (legacy)
     brightOrange = brightYellow;
     brightPurple = brightMagenta;
-
     highlight = base07;
   };
 in {
   rawHexValue = color: builtins.substring 1 6 color;
-
   inherit colors mixColors hexToRgb;
 
   diff = {
@@ -179,11 +156,7 @@ in {
       normal = 10;
       big = 14;
     };
-    sans = {
-      name = "Lexend";
-    };
-    mono = {
-      name = "JetBrainsMono Nerd Font Mono";
-    };
+    sans.name = "Lexend";
+    mono.name = "JetBrainsMono Nerd Font Mono";
   };
 }

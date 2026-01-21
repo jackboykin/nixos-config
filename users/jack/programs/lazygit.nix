@@ -38,9 +38,7 @@ in {
           defaultFgColor = [colors.text];
           searchingActiveBorderColor = [colors.purple];
         };
-        authorColors = {
-          "Jack Boykin" = colors.cyan;
-        };
+        authorColors."Jack Boykin" = colors.cyan;
         unspecifiedAuthorColors = [
           colors.red
           colors.orange

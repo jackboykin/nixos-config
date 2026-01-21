@@ -14,7 +14,6 @@
     ];
   };
 
-  # system-level shells
   programs.zsh.enable = true;
   programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;

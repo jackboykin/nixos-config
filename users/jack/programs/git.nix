@@ -9,11 +9,9 @@ in {
   programs.git = {
     enable = true;
     lfs.enable = true;
-
     settings = {
       user.name = "Jack Boykin";
       user.email = "jtboykin.jb@gmail.com";
-
       init.defaultBranch = "master";
       pull.rebase = true;
       push.autoSetupRemote = true;

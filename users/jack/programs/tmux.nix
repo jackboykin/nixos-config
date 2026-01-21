@@ -30,10 +30,8 @@ in {
       set -g renumber-windows on
       set -g repeat-time 1000
 
-      # prefix + C-l to clear
       bind C-l send-keys 'C-l'
 
-      # Smart pane switching (Vim aware)
       is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
           | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'"
       bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
