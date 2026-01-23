@@ -1,6 +1,16 @@
 {pkgs, ...}: {
   programs.firefox = {
     enable = true;
+
+    policies = {
+      Preferences = {
+        "privacy.fingerprintingProtection" = {
+          Value = false;
+          Status = "locked";
+        };
+      };
+    };
+
     profiles.jack = {
       isDefault = true;
       extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -10,10 +20,18 @@
         (pkgs.nur.repos.rycee.firefox-addons."7tv")
         twitch-auto-points
       ];
+
       settings = {
+        "privacy.sanitize.sanitizeOnShutdown" = true;
+        "privacy.clearOnShutdown.cookies" = true;
+        "privacy.clearOnShutdown.offlineApps" = true;
         "browser.aboutConfig.showWarning" = false;
         "browser.aboutwelcome.enabled" = false;
+
         "browser.contentblocking.category" = "strict";
+        "widget.wayland.vsync.enabled" = true;
+        "layout.frame_rate" = 144;
+
         "browser.discovery.enabled" = false;
         "browser.download.manager.addToRecentDocs" = false;
         "browser.helperApps.deleteTempFileOnExit" = true;
@@ -32,7 +50,6 @@
         "browser.sessionstore.interval" = 60000;
         "browser.shell.checkDefaultBrowser" = false;
         "browser.uitour.enabled" = false;
-        "browser.urlbar.scotchBonnet.enableOverride" = false;
         "browser.urlbar.speculativeConnect.enabled" = false;
         "browser.urlbar.trending.featureGate" = false;
         "browser.xul.error_pages.expert_bad_cert" = true;
@@ -45,10 +62,8 @@
         "geo.provider.network.url" = "https://beacondb.net/v1/geolocate";
         "gfx.webrender.layer-compositor" = true;
         "layout.word_select.eat_space_to_next_word" = false;
-        "media.wmf.zero-copy-nv12-textures-force-enabled" = true;
         "dom.security.https_only_mode" = true;
         "network.trr.mode" = 5;
-        "network.cookie.lifetimePolicy" = 2;
         "network.dns.disablePrefetch" = true;
         "network.dns.disablePrefetchFromHTTPS" = true;
         "network.http.referer.XOriginTrimmingPolicy" = 2;
@@ -80,6 +95,12 @@
         "gfx.canvas.accelerated" = true;
         "gfx.font_rendering.fontconfig.max_generic_substitutions" = 127;
         "browser.display.use_document_fonts" = 1;
+        "browser.urlbar.shortcuts.bookmarks" = false;
+        "browser.urlbar.shortcuts.history" = false;
+        "browser.urlbar.shortcuts.tabs" = false;
+        "browser.toolbars.bookmarks.visibility" = "never";
+        "browser.urlbar.trimURLs" = false;
+        "browser.urlbar.scotchBonnet.enableOverride" = false;
       };
     };
   };

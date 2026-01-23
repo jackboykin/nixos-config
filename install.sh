@@ -3,7 +3,7 @@
 # NixOS Installation Script
 # Automated reinstall from a live NixOS ISO
 #
-# Usage: bash <(curl -sL https://gist.githubusercontent.com/jackboykin/nixos-config/install.sh)
+# Usage: bash <(curl -sL https://raw.githubusercontent.com/jackboykin/nixos-config/refs/heads/master/install.sh)
 #
 
 set -euo pipefail
