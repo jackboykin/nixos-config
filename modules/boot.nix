@@ -16,4 +16,7 @@
 
     initrd.systemd.enable = true;
   };
+  system.nixos-init.enable = true;
+  system.etc.overlay.enable = true;
+  services.userborn.enable = true;
 }

@@ -92,8 +92,9 @@ return {
 								},
 								home_manager = {
 									expr = string.format(
-										'(builtins.getFlake "%s").homeConfigurations."%s".options',
+										'(builtins.getFlake "%s").nixosConfigurations.%s.config.home-manager.users.%s.options',
 										paths.nixos_config,
+										paths.hostname,
 										paths.username
 									),
 								},
@@ -101,6 +102,9 @@ return {
 						},
 					},
 				},
+				ts_ls = {},
+				cssls = {},
+				html = {},
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -111,9 +115,6 @@ return {
 						},
 					},
 				},
-				ts_ls = {},
-				cssls = {},
-				html = {},
 			}
 
 			for name, config in pairs(servers) do

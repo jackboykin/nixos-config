@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   username,
   ...
@@ -7,6 +8,7 @@
     isNormalUser = true;
     description = username;
     shell = pkgs.fish;
+    hashedPasswordFile = config.sops.secrets.user-password.path;
     extraGroups = [
       "networkmanager"
       "wheel"

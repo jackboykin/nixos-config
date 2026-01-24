@@ -251,6 +251,67 @@ create_secureboot_keys() {
 }
 
 # -----------------------------------------------------------------------------
+# Setup SOPS Age Key from Ventoy USB
+# -----------------------------------------------------------------------------
+setup_sops_key() {
+    info "Looking for age key on Ventoy USB..."
+
+    VENTOY_PART=""
+    VENTOY_MOUNT="/tmp/ventoy-mount"
+
+    # Find Ventoy partition by label
+    if [[ -b /dev/disk/by-label/Ventoy ]]; then
+        VENTOY_PART="/dev/disk/by-label/Ventoy"
+    else
+        # Try to find it by searching for Ventoy in partition labels
+        for part in /dev/sd*[0-9] /dev/nvme*p[0-9]; do
+            if [[ -b "$part" ]] && blkid "$part" 2>/dev/null | grep -q "Ventoy"; then
+                VENTOY_PART="$part"
+                break
+            fi
+        done
+    fi
+
+    if [[ -z "$VENTOY_PART" ]]; then
+        warn "Ventoy USB not found. Skipping SOPS key setup."
+        warn "You will need to manually copy your age key to /var/lib/sops-nix/key.txt"
+        return 0
+    fi
+
+    info "Found Ventoy at $VENTOY_PART"
+
+    # Mount Ventoy partition
+    mkdir -p "$VENTOY_MOUNT"
+    mount -o ro "$VENTOY_PART" "$VENTOY_MOUNT"
+
+    # Look for keys.txt in common locations
+    KEY_FILE=""
+    for path in "$VENTOY_MOUNT/keys.txt" "$VENTOY_MOUNT/sops/keys.txt" "$VENTOY_MOUNT/secrets/keys.txt"; do
+        if [[ -f "$path" ]]; then
+            KEY_FILE="$path"
+            break
+        fi
+    done
+
+    if [[ -z "$KEY_FILE" ]]; then
+        warn "keys.txt not found on Ventoy USB"
+        warn "Looked in: /keys.txt, /sops/keys.txt, /secrets/keys.txt"
+        umount "$VENTOY_MOUNT"
+        return 0
+    fi
+
+    info "Found age key at $KEY_FILE"
+
+    # Copy to sops-nix location
+    mkdir -p /mnt/var/lib/sops-nix
+    cp "$KEY_FILE" /mnt/var/lib/sops-nix/key.txt
+    chmod 600 /mnt/var/lib/sops-nix/key.txt
+
+    umount "$VENTOY_MOUNT"
+    success "SOPS age key installed to /mnt/var/lib/sops-nix/key.txt"
+}
+
+# -----------------------------------------------------------------------------
 # Install NixOS
 # -----------------------------------------------------------------------------
 install_nixos() {
@@ -322,6 +383,7 @@ main() {
     mount_partitions
     clone_config
     create_secureboot_keys
+    setup_sops_key
     install_nixos
     post_install
 }

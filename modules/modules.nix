@@ -8,5 +8,6 @@ _: {
     ./locale.nix
     ./networking.nix
     ./hardware.nix
+    ./secrets.nix
   ];
 }
