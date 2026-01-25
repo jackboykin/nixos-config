@@ -15,7 +15,7 @@
     ./neovim/neovim.nix
     ./tmux.nix
     ./zoxide.nix
-    ./zsh.nix
+    ./nushell.nix
   ];
 
   home.packages = with pkgs; [

@@ -42,6 +42,7 @@ nix flake check
 nixos-config/
 ├── flake.nix           # Flake definition with mkHost helper
 ├── flake.lock          # Pinned dependencies
+├── install.sh          # Automated installation script
 ├── hosts/              # Host-specific configurations
 │   └── nixos-orion/    # Primary desktop workstation
 │       ├── host.nix
@@ -49,14 +50,19 @@ nixos-config/
 ├── lib/                # Shared utilities
 │   └── theme.nix       # Custom color theme with mixing functions
 ├── modules/            # System-level NixOS modules
+│   ├── modules.nix     # Entry point for all modules
 │   ├── boot.nix        # Kernel, Lanzaboote secure boot
 │   ├── desktop.nix     # Plasma 6, SDDM, PipeWire, fonts
 │   ├── hardware.nix    # Hardware-specific settings
 │   ├── locale.nix      # Timezone, locale
 │   ├── networking.nix  # NetworkManager, Tailscale, dnscrypt-proxy
 │   ├── nix.nix         # Nix settings, caches, unfree
+│   ├── secrets.nix     # sops-nix configuration
 │   ├── system-packages.nix
 │   └── users.nix       # System users
+├── secrets/            # Encrypted secrets
+│   ├── .sops.yaml      # sops configuration
+│   └── secrets.yaml    # Encrypted data
 └── users/              # Home Manager configurations
     └── jack/
         ├── user.nix    # Main user config entry point
@@ -80,7 +86,7 @@ nixos-config/
             │   └── lua/
             ├── tmux.nix
             ├── zoxide.nix
-            └── zsh.nix
+            └── nushell.nix
 ```
 
 ### Key Components
@@ -136,8 +142,8 @@ Programs in `users/jack/programs/` have declarative configs:
 | Program | Purpose |
 |---------|---------|
 | `neovim.nix` | Primary editor with LSP, Treesitter |
-| `fish.nix` | Default shell |
-| `zsh.nix` / `bash.nix` | Alternative shells |
+| `nushell.nix` | Default shell |
+| `fish.nix` / `bash.nix` | Alternative shells |
 | `git.nix` | Git with delta pager |
 | `lazygit.nix` | Terminal Git UI |
 | `tmux.nix` | Terminal multiplexer |
@@ -191,14 +197,44 @@ nixosConfigurations = {
 1. **Standalone package**: Add to `home.packages` in `users/jack/programs/programs.nix`
 2. **Managed program**: Create `users/jack/programs/program.nix` and import in `programs.nix`
 
+## Secrets Management
+
+Managed via `sops-nix`:
+- **Secrets file**: `secrets/secrets.yaml`
+- **Key location**: `/var/lib/sops-nix/key.txt` (age key)
+- **Configuration**: `modules/secrets.nix` and `.sops.yaml`
+
+To edit secrets:
+```bash
+sops secrets/secrets.yaml
+```
+
+## Installation
+
+An automated installation script is provided for fresh installs from a NixOS live ISO.
+
+```bash
+# Run from a NixOS live ISO
+sudo bash install.sh
+```
+
+The script handles:
+1. Partitioning and formatting (GPT, EFI, Ext4)
+2. Cloning this repository
+3. Generating hardware configuration
+4. Creating initial Lanzaboote keys
+5. Setting up the SOPS age key (searches for `keys.txt` on a Ventoy USB)
+6. Installing NixOS
+
 ## Important Notes
 
 - State version: `25.11`
 - Kernel: Latest Linux with AMD pstate
 - Secure boot keys stored at `/var/lib/sbctl` (Lanzaboote v1.0.0 standard location)
+- Secrets: System age key must be present at `/var/lib/sops-nix/key.txt`
 - All program configs can access `theme` via `specialArgs`
 - Use `colors = theme.colors;` pattern in managed programs
-- **Default shell: fish** (zsh/bash available for POSIX compatibility)
+- **Default shell: nushell** (fish/bash available for POSIX compatibility)
 
 ## Development Workflow
 

@@ -77,7 +77,7 @@ in {
 
   xdg.dataFile."konsole/Bellatrix.profile".text = ''
     [General]
-    Command=${pkgs.fish}/bin/fish
+    Command=${pkgs.nushell}/bin/nu
     Name=Bellatrix
     Parent=FALLBACK/
 

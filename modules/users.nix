@@ -7,7 +7,7 @@
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    shell = pkgs.fish;
+    shell = pkgs.nushell;
     hashedPasswordFile = config.sops.secrets.user-password.path;
     extraGroups = [
       "networkmanager"
@@ -16,7 +16,5 @@
     ];
   };
 
-  programs.zsh.enable = true;
-  programs.fish.enable = true;
-  users.defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.nushell;
 }
