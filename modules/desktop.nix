@@ -1,28 +1,34 @@
 {pkgs, ...}: {
-  services.xserver.enable = false;
-  services.xserver.xkb.layout = "us";
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  services.printing.enable = true;
+  services = {
+    xserver = {
+      enable = false;
+      xkb.layout = "us";
+    };
+    displayManager.sddm.enable = true;
+    desktopManager.plasma6.enable = true;
+    printing.enable = true;
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      extraConfig.pipewire."99-sample-rates"."context.properties"."default.clock.allowed-rates" = [
+        44100
+        48000
+      ];
+      wireplumber.extraConfig."99-sample-rates"."monitor.alsa.rules" = [
+        {
+          matches = [{"node.name" = "~alsa_output.*";}];
+          actions.update-props."audio.allowed-rates" = "44100,48000";
+        }
+      ];
+    };
+  };
 
   security.rtkit.enable = true;
 
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    extraConfig.pipewire."99-sample-rates"."context.properties"."default.clock.allowed-rates" = [
-      44100
-      48000
-    ];
-    wireplumber.extraConfig."99-sample-rates"."monitor.alsa.rules" = [
-      {
-        matches = [{"node.name" = "~alsa_output.*";}];
-        actions.update-props."audio.allowed-rates" = "44100,48000";
-      }
-    ];
-  };
+  programs.gpu-screen-recorder.enable = true;
 
   programs.chromium = {
     enable = true;

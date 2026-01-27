@@ -17,7 +17,7 @@
         ublock-origin
         proton-pass
         violentmonkey
-        (pkgs.nur.repos.rycee.firefox-addons."7tv")
+        pkgs.nur.repos.rycee.firefox-addons."7tv"
         twitch-auto-points
       ];
 

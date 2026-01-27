@@ -23,7 +23,9 @@
     claude-code
     code-cursor
     chromium
+    gpu-screen-recorder
     obsidian
+    opencode
     jellyfin-media-player
     kdePackages.kate
     remmina
@@ -34,7 +36,6 @@
     fd
     gh
     jq
-    opencode
     ripgrep
     yazi
 
@@ -46,6 +47,7 @@
     nodePackages.prettier
     pyright
     rust-analyzer
+    statix
     stylua
     typescript
     typescript-language-server

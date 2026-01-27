@@ -1,5 +1,5 @@
 {theme, ...}: let
-  colors = theme.colors;
+  inherit (theme) colors;
   strip = theme.rawHexValue;
 in {
   programs.fish = {

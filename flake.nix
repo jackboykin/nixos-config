@@ -68,11 +68,13 @@
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-              home-manager.extraSpecialArgs = specialArgs;
-              home-manager.users.${username} = import ./users/${username}/user.nix;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "backup";
+                extraSpecialArgs = specialArgs;
+                users.${username} = import ./users/${username}/user.nix;
+              };
             }
           ]
           ++ extraModules;

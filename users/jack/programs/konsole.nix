@@ -3,7 +3,7 @@
   theme,
   ...
 }: let
-  colors = theme.colors;
+  inherit (theme) colors;
   toRGB = hex: let
     rgb = theme.hexToRgb hex;
   in "${toString rgb.r},${toString rgb.g},${toString rgb.b}";

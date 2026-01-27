@@ -7,7 +7,7 @@
   username,
   ...
 }: let
-  colors = theme.colors;
+  inherit (theme) colors;
 
   colorsLua = let
     formatColor = name: value: "  ${name} = \"${value}\",";

@@ -1,5 +1,5 @@
 {theme, ...}: let
-  colors = theme.colors;
+  inherit (theme) colors;
 in {
   programs.fzf = {
     enable = true;

@@ -3,7 +3,7 @@
   theme,
   ...
 }: let
-  colors = theme.colors;
+  inherit (theme) colors;
 in {
   programs.tmux = {
     enable = true;

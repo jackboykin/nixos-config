@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  colors = theme.colors;
+  inherit (theme) colors;
   d = theme.diff;
 in {
   programs.git = {

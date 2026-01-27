@@ -1,6 +1,5 @@
 {theme, ...}: let
-  colors = theme.colors;
-  ui = theme.ui;
+  inherit (theme) colors ui;
 in {
   programs.bat = {
     enable = true;

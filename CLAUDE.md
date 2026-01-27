@@ -26,6 +26,15 @@ sudo nixos-rebuild switch --flake ~/nixos-config
 nix fmt .
 ```
 
+### Linting
+```bash
+# Check for common Nix anti-patterns and style issues
+statix check .
+
+# Auto-fix issues where possible
+statix fix .
+```
+
 ### Flake Operations
 ```bash
 # Update flake.lock
@@ -129,7 +138,7 @@ Located in `lib/theme.nix`, provides:
 ```nix
 { theme, ... }:
 let
-  colors = theme.colors;
+  inherit (theme) colors;
 in {
   # Access colors.base00, colors.red, colors.text, etc.
 }
@@ -233,15 +242,16 @@ The script handles:
 - Secure boot keys stored at `/var/lib/sbctl` (Lanzaboote v1.0.0 standard location)
 - Secrets: System age key must be present at `/var/lib/sops-nix/key.txt`
 - All program configs can access `theme` via `specialArgs`
-- Use `colors = theme.colors;` pattern in managed programs
+- Use `inherit (theme) colors;` pattern in managed programs
 - **Default shell: nushell** (fish/bash available for POSIX compatibility)
 
 ## Development Workflow
 
 1. Edit configuration files
-2. Run `nix fmt .` to format
-3. Run `nr` (alias for `nh os switch`) to rebuild
-4. Test changes
+2. Run `statix check .` to lint for issues
+3. Run `nix fmt .` to format
+4. Run `nr` (alias for `nh os switch`) to rebuild
+5. Test changes
 
 ## Troubleshooting
 
