@@ -3,9 +3,9 @@
     enable = true;
     silent = true;
     nix-direnv.enable = true;
-    enableZshIntegration = true;
     enableBashIntegration = true;
     enableFishIntegration = true;
+    enableNushellIntegration = true;
     stdlib = ''
       : ''${XDG_CACHE_HOME:=$HOME/.cache}
       declare -A direnv_layout_dirs

@@ -19,9 +19,8 @@
   ];
 
   home.packages = with pkgs; [
-    antigravity
+    amp-cli
     claude-code
-    code-cursor
     chromium
     gpu-screen-recorder
     obsidian
@@ -31,6 +30,7 @@
     remmina
     spotify
     vesktop
+    zed-editor
 
     fastfetch
     fd

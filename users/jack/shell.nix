@@ -5,8 +5,7 @@ _: {
   ];
 
   home.shellAliases = {
-    gemini = "bunx @google/gemini-cli@preview";
-    codex = "bunx @openai/codex";
+    pi = " bunx @mariozechner/pi-coding-agent";
     a = "nvim";
     q = "exit";
     nr = "nh os switch";

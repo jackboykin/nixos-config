@@ -7,7 +7,7 @@
 in {
   programs.tmux = {
     enable = true;
-    shell = "${pkgs.fish}/bin/fish";
+    shell = "${pkgs.nushell}/bin/nu";
     terminal = "tmux-256color";
     prefix = "C-Space";
     escapeTime = 0;
