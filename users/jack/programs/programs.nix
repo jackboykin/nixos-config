@@ -13,6 +13,7 @@
     ./lazygit.nix
     ./mpv.nix
     ./neovim/neovim.nix
+    ./rust.nix
     ./tmux.nix
     ./zoxide.nix
     ./nushell.nix
@@ -46,12 +47,10 @@
     nodejs
     nodePackages.prettier
     pyright
-    rust-analyzer
     statix
     stylua
     typescript
     typescript-language-server
-    vscode-langservers-extracted
 
     alejandra
     nixd

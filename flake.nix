@@ -34,6 +34,7 @@
     home-manager,
     lanzaboote,
     nur,
+    rust-overlay,
     sops-nix,
     ...
   }: let
@@ -63,7 +64,7 @@
           [
             ./hosts/${hostname}/host.nix
             ./modules/modules.nix
-            {nixpkgs.overlays = [nur.overlays.default];}
+            {nixpkgs.overlays = [nur.overlays.default rust-overlay.overlays.default];}
             lanzaboote.nixosModules.lanzaboote
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
