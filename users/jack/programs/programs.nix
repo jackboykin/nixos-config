@@ -11,6 +11,7 @@
     ./git.nix
     ./konsole.nix
     ./lazygit.nix
+    ./llm-agents.nix
     ./mpv.nix
     ./neovim/neovim.nix
     ./rust.nix
@@ -20,15 +21,11 @@
   ];
 
   home.packages = with pkgs; [
-    amp-cli
-    claude-code
     chromium
     gpu-screen-recorder
-    obsidian
-    opencode
     jellyfin-media-player
     kdePackages.kate
-    remmina
+    obsidian
     spotify
     vesktop
     zed-editor
@@ -43,16 +40,16 @@
     bun
     clang
     clang-tools
-    lua-language-server
     nodejs
+    typescript
+    lua-language-server
     nodePackages.prettier
     pyright
-    statix
     stylua
-    typescript
     typescript-language-server
 
     alejandra
     nixd
+    statix
   ];
 }

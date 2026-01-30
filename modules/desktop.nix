@@ -1,9 +1,6 @@
 {pkgs, ...}: {
   services = {
-    xserver = {
-      enable = false;
-      xkb.layout = "us";
-    };
+    xserver.enable = false;
     displayManager.sddm.enable = true;
     desktopManager.plasma6.enable = true;
     printing.enable = true;
