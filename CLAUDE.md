@@ -89,13 +89,15 @@ nixos-config/
             ├── git.nix
             ├── konsole.nix
             ├── lazygit.nix
+            ├── llm-agents.nix
             ├── mpv.nix
             ├── neovim/         # Modularized config with Lua
             │   ├── neovim.nix
             │   └── lua/
+            ├── nushell.nix
+            ├── rust.nix
             ├── tmux.nix
-            ├── zoxide.nix
-            └── nushell.nix
+            └── zoxide.nix
 ```
 
 ### Key Components
@@ -106,6 +108,8 @@ nixos-config/
 - `lanzaboote` (secure boot)
 - `rust-overlay`
 - `nur`
+- `sops-nix` (secrets management)
+- `llm-agents` (LLM coding agents from numtide)
 
 **Desktop Environment:**
 - KDE Plasma 6 with SDDM
@@ -165,12 +169,13 @@ Programs in `users/jack/programs/` have declarative configs:
 | `direnv.nix` | Per-directory environments |
 | `mpv.nix` | Media player |
 | `konsole.nix` | KDE terminal |
+| `rust.nix` | Rust toolchain (stable + rust-analyzer) |
+| `llm-agents.nix` | LLM coding agents (amp, claude-code, opencode, pi) |
 
 ## Shell Aliases
 
 Defined in `users/jack/shell.nix`:
 ```bash
-gemini  → bunx @google/gemini-cli
 a       → nvim
 q       → exit
 nr      → nh os switch

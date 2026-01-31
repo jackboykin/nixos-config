@@ -6,7 +6,6 @@ _: {
     ];
 
     shellAliases = {
-      pi = "bunx @mariozechner/pi-coding-agent";
       a = "nvim";
       q = "exit";
       nr = "nh os switch";

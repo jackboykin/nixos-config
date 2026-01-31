@@ -40,12 +40,12 @@
     bun
     clang
     clang-tools
-    nodejs
-    typescript
     lua-language-server
+    nodejs
     nodePackages.prettier
     pyright
     stylua
+    typescript
     typescript-language-server
 
     alejandra

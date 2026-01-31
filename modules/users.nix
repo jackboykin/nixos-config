@@ -16,6 +16,5 @@
     ];
   };
 
-  users.defaultUserShell = pkgs.nushell;
   environment.shells = [pkgs.nushell];
 }
