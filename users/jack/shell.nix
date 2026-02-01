@@ -12,7 +12,6 @@ _: {
     '';
 
     shellAliases = {
-      a = "nvim";
       q = "exit";
       nr = "nh os switch";
       nru = "nh os switch -u";

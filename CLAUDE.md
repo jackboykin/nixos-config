@@ -91,9 +91,7 @@ nixos-config/
             ├── lazygit.nix
             ├── llm-agents.nix
             ├── mpv.nix
-            ├── neovim/         # Modularized config with Lua
-            │   ├── neovim.nix
-            │   └── lua/
+            ├── helix.nix
             ├── nushell.nix
             ├── rust.nix
             ├── tmux.nix
@@ -154,7 +152,7 @@ Programs in `users/jack/programs/` have declarative configs:
 
 | Program | Purpose |
 |---------|---------|
-| `neovim.nix` | Primary editor with LSP, Treesitter |
+| `helix.nix` | Primary editor with LSP, Treesitter |
 | `nushell.nix` | Default shell |
 | `fish.nix` / `bash.nix` | Alternative shells |
 | `git.nix` | Git with delta pager |
@@ -176,7 +174,6 @@ Programs in `users/jack/programs/` have declarative configs:
 
 Defined in `users/jack/shell.nix`:
 ```bash
-a       → nvim
 q       → exit
 nr      → nh os switch
 nru     → nh os switch -u

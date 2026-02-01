@@ -8,17 +8,15 @@
 
 set -euo pipefail
 
-# Configuration
 REPO_URL="https://github.com/jackboykin/nixos-config"
 FLAKE_HOST="nixos-orion"
 USERNAME="jack"
 
-# Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
 info() { echo -e "${BLUE}[INFO]${NC} $*"; }
 warn() { echo -e "${YELLOW}[WARN]${NC} $*"; }
@@ -31,19 +29,16 @@ success() { echo -e "${GREEN}[OK]${NC} $*"; }
 check_prerequisites() {
     info "Checking prerequisites..."
 
-    # Must be root
     if [[ $EUID -ne 0 ]]; then
         error "This script must be run as root. Use: sudo bash install.sh"
     fi
     success "Running as root"
 
-    # Check if on NixOS live ISO (check for /etc/NIXOS and installer environment)
     if [[ ! -f /etc/NIXOS ]]; then
         error "This script must be run from a NixOS live ISO"
     fi
     success "Running on NixOS"
 
-    # Check for required tools
     for cmd in parted mkfs.fat mkfs.ext4 git nixos-install; do
         if ! command -v "$cmd" &>/dev/null; then
             error "Required command not found: $cmd"
@@ -51,7 +46,6 @@ check_prerequisites() {
     done
     success "All required tools available"
 
-    # Check network connectivity
     if ! ping -c 1 github.com &>/dev/null; then
         warn "No network connection detected. Please configure networking first."
         warn "Use: nmtui, or for wifi: wpa_supplicant"
@@ -71,12 +65,10 @@ select_disk() {
 
     read -rp "Enter target disk (e.g., /dev/nvme0n1 or /dev/sda): " TARGET_DISK
 
-    # Validate disk exists
     if [[ ! -b "$TARGET_DISK" ]]; then
         error "Disk not found: $TARGET_DISK"
     fi
 
-    # Ensure it's a whole disk, not a partition
     if [[ "$TARGET_DISK" =~ [0-9]$ ]] && [[ ! "$TARGET_DISK" =~ nvme.*n[0-9]$ ]]; then
         error "Please specify the whole disk, not a partition"
     fi
@@ -99,26 +91,17 @@ select_disk() {
 partition_disk() {
     info "Partitioning $TARGET_DISK..."
 
-    # Unmount any existing mounts from this disk
     umount -R /mnt 2>/dev/null || true
     for part in "${TARGET_DISK}"*; do
         umount "$part" 2>/dev/null || true
     done
 
-    # Wipe existing partition table
     wipefs -af "$TARGET_DISK"
-
-    # Create GPT partition table
     parted -s "$TARGET_DISK" mklabel gpt
-
-    # Create EFI partition (512MB)
     parted -s "$TARGET_DISK" mkpart ESP fat32 1MiB 513MiB
     parted -s "$TARGET_DISK" set 1 esp on
-
-    # Create root partition (remaining space)
     parted -s "$TARGET_DISK" mkpart root ext4 513MiB 100%
 
-    # Wait for kernel to recognize new partitions
     sleep 2
     partprobe "$TARGET_DISK"
     sleep 1
@@ -130,7 +113,6 @@ partition_disk() {
 # Determine partition names
 # -----------------------------------------------------------------------------
 get_partition_names() {
-    # Handle different naming conventions (nvme vs sata)
     if [[ "$TARGET_DISK" =~ nvme ]]; then
         EFI_PART="${TARGET_DISK}p1"
         ROOT_PART="${TARGET_DISK}p2"
@@ -139,7 +121,6 @@ get_partition_names() {
         ROOT_PART="${TARGET_DISK}2"
     fi
 
-    # Verify partitions exist
     if [[ ! -b "$EFI_PART" ]] || [[ ! -b "$ROOT_PART" ]]; then
         error "Partitions not found. Expected: $EFI_PART and $ROOT_PART"
     fi
@@ -153,11 +134,9 @@ format_partitions() {
 
     get_partition_names
 
-    # Format EFI partition
     mkfs.fat -F 32 -n BOOT "$EFI_PART"
     success "Formatted EFI partition: $EFI_PART"
 
-    # Format root partition
     mkfs.ext4 -L nixos -F "$ROOT_PART"
     success "Formatted root partition: $ROOT_PART"
 }
@@ -168,17 +147,13 @@ format_partitions() {
 mount_partitions() {
     info "Mounting partitions..."
 
-    # Ensure partition names are set
     get_partition_names
 
-    # Wait for udev to process the new filesystems
     udevadm settle
 
-    # Mount root using direct partition path
     mount "$ROOT_PART" /mnt
     success "Mounted root at /mnt"
 
-    # Mount boot using direct partition path
     mkdir -p /mnt/boot
     mount "$EFI_PART" /mnt/boot
     success "Mounted boot at /mnt/boot"
@@ -190,19 +165,14 @@ mount_partitions() {
 clone_config() {
     info "Cloning NixOS configuration..."
 
-    # Create user home directory
     mkdir -p "/mnt/home/$USERNAME"
-
-    # Clone the configuration repository
     git clone "$REPO_URL" "/mnt/home/$USERNAME/nixos-config"
     success "Configuration cloned to /mnt/home/$USERNAME/nixos-config"
 
-    # Generate hardware configuration for this specific machine
     info "Generating hardware configuration..."
     nixos-generate-config --root /mnt --show-hardware-config > "/mnt/home/$USERNAME/nixos-config/hosts/$FLAKE_HOST/hardware-configuration.nix"
     success "Hardware configuration generated"
 
-    # Update stateVersion to match current NixOS release
     info "Updating stateVersion to current release..."
     CURRENT_VERSION=$(nixos-version | cut -d. -f1,2)
     CONFIG_DIR="/mnt/home/$USERNAME/nixos-config"
@@ -219,16 +189,12 @@ clone_config() {
 create_secureboot_keys() {
     info "Creating secure boot keys for Lanzaboote..."
 
-    # Create the sbctl directory structure (explicit for compatibility)
     mkdir -p /mnt/var/lib/sbctl/keys/PK
     mkdir -p /mnt/var/lib/sbctl/keys/KEK
     mkdir -p /mnt/var/lib/sbctl/keys/db
     chmod -R 700 /mnt/var/lib/sbctl
 
-    # Get openssl from nixpkgs (not in default live ISO)
     OPENSSL="$(nix-build '<nixpkgs>' -A openssl --no-out-link)/bin/openssl"
-
-    # Generate keys manually with openssl (avoids sbctl permission issues)
     info "Generating Platform Key (PK)..."
     "$OPENSSL" req -new -x509 -newkey rsa:4096 -nodes -days 3650 \
         -subj "/CN=Platform Key/" \
@@ -259,11 +225,9 @@ setup_sops_key() {
     VENTOY_PART=""
     VENTOY_MOUNT="/tmp/ventoy-mount"
 
-    # Find Ventoy partition by label
     if [[ -b /dev/disk/by-label/Ventoy ]]; then
         VENTOY_PART="/dev/disk/by-label/Ventoy"
     else
-        # Try to find it by searching for Ventoy in partition labels
         for part in /dev/sd*[0-9] /dev/nvme*p[0-9]; do
             if [[ -b "$part" ]] && blkid "$part" 2>/dev/null | grep -q "Ventoy"; then
                 VENTOY_PART="$part"
@@ -280,11 +244,9 @@ setup_sops_key() {
 
     info "Found Ventoy at $VENTOY_PART"
 
-    # Mount Ventoy partition
     mkdir -p "$VENTOY_MOUNT"
     mount -o ro "$VENTOY_PART" "$VENTOY_MOUNT"
 
-    # Look for keys.txt in common locations
     KEY_FILE=""
     for path in "$VENTOY_MOUNT/keys.txt" "$VENTOY_MOUNT/sops/keys.txt" "$VENTOY_MOUNT/secrets/keys.txt"; do
         if [[ -f "$path" ]]; then
@@ -302,7 +264,6 @@ setup_sops_key() {
 
     info "Found age key at $KEY_FILE"
 
-    # Copy to sops-nix location
     mkdir -p /mnt/var/lib/sops-nix
     cp "$KEY_FILE" /mnt/var/lib/sops-nix/key.txt
     chmod 600 /mnt/var/lib/sops-nix/key.txt
@@ -324,12 +285,10 @@ install_nixos() {
 
     success "NixOS installation complete!"
 
-    # Fix ownership of config directory (cloned as root)
     info "Fixing config directory ownership..."
     chown -R 1000:100 "/mnt/home/$USERNAME"
     success "Config directory owned by $USERNAME"
 
-    # Set user password
     info "Set password for $USERNAME:"
     nixos-enter --root /mnt -c "passwd $USERNAME"
     success "User password set"

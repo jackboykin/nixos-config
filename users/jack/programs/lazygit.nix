@@ -9,10 +9,10 @@ in {
     enable = true;
     settings = {
       os = {
-        edit = "${pkgs.neovim}/bin/nvim {{filename}}";
-        editAtLine = "${pkgs.neovim}/bin/nvim +{{line}} {{filename}}";
-        editAtLineAndWait = "${pkgs.neovim}/bin/nvim +{{line}} {{filename}}";
-        openDirInEditor = "${pkgs.neovim}/bin/nvim {{dir}}";
+        edit = "${pkgs.helix}/bin/hx {{filename}}";
+        editAtLine = "${pkgs.helix}/bin/hx {{filename}}:{{line}}";
+        editAtLineAndWait = "${pkgs.helix}/bin/hx {{filename}}:{{line}}";
+        openDirInEditor = "${pkgs.helix}/bin/hx {{dir}}";
       };
       git.pagers = [
         {

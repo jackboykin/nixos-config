@@ -9,11 +9,11 @@
     ./fish.nix
     ./fzf.nix
     ./git.nix
+    ./helix.nix
     ./konsole.nix
     ./lazygit.nix
     ./llm-agents.nix
     ./mpv.nix
-    ./neovim/neovim.nix
     ./rust.nix
     ./tmux.nix
     ./zoxide.nix
@@ -40,11 +40,9 @@
     bun
     clang
     clang-tools
-    lua-language-server
     nodejs
     nodePackages.prettier
     pyright
-    stylua
     typescript
     typescript-language-server
 
