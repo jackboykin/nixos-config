@@ -5,7 +5,7 @@ with lib; let
     r = substring 0 2 hex';
     g = substring 2 2 hex';
     b = substring 4 2 hex';
-    parseHex = s: (builtins.fromTOML "a = 0x${s}").a;
+    parseHex = s: (fromTOML "a = 0x${s}").a;
   in {
     r = parseHex r;
     g = parseHex g;
@@ -26,12 +26,12 @@ with lib; let
     );
 
   round = x: let
-    floor = builtins.floor x;
-    ceil = builtins.ceil x;
+    floorVal = floor x;
+    ceilVal = ceil x;
   in
-    if (x - floor) < 0.5
-    then floor
-    else ceil;
+    if (x - floorVal) < 0.5
+    then floorVal
+    else ceilVal;
 
   mixColors = color1: color2: factor: let
     c1 = hexToRgb color1;
@@ -129,7 +129,7 @@ with lib; let
     highlight = base07;
   };
 in {
-  rawHexValue = color: builtins.substring 1 6 color;
+  rawHexValue = color: substring 1 6 color;
   inherit colors mixColors hexToRgb;
 
   diff = {
