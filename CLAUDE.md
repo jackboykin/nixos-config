@@ -168,7 +168,7 @@ Programs in `users/jack/programs/` have declarative configs:
 | `mpv.nix` | Media player |
 | `konsole.nix` | KDE terminal |
 | `rust.nix` | Rust toolchain (stable + rust-analyzer) |
-| `llm-agents.nix` | LLM coding agents (amp, claude-code, opencode, pi) |
+| `llm-agents.nix` | LLM coding agents (claude-code, codex, pi) |
 
 ## Shell Aliases
 

@@ -1,28 +1,12 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   networking = {
     networkmanager = {
       enable = true;
-      dns = "systemd-resolved";
-      connectionConfig = {
-        "ipv4.ignore-auto-dns" = true;
-        "ipv6.ignore-auto-dns" = true;
-      };
-      ensureProfiles.profiles."Wired connection 1" = {
-        connection = {
-          id = "Wired connection 1";
-          type = "ethernet";
-          interface-name = "enp16s0";
-        };
-        ipv4 = {
-          method = "auto";
-          ignore-auto-dns = true;
-        };
-        ipv6 = {
-          method = "auto";
-          ignore-auto-dns = true;
-        };
-        ethernet = {};
-      };
+      dns = lib.mkForce "none";
     };
 
     firewall = {
@@ -53,14 +37,17 @@
           "[::1]:53"
         ];
         server_names = [
+          "nextdns"
+          "nextdns-ipv6"
           "cloudflare"
-          "quad9-dnscrypt-ip4-filter-pri"
+          "cloudflare-ipv6"
         ];
         ipv4_servers = true;
         ipv6_servers = true;
         dnscrypt_servers = true;
         doh_servers = true;
         require_dnssec = true;
+        require_nolog = true;
       };
     };
 
