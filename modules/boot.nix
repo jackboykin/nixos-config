@@ -14,6 +14,8 @@
       pkiBundle = "/var/lib/sbctl";
     };
 
+    blacklistedKernelModules = ["dccp" "sctp" "rds" "tipc"];
+
     initrd.systemd.enable = true;
   };
   system.nixos-init.enable = true;

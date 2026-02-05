@@ -19,11 +19,6 @@
     };
 
     nftables.enable = true;
-
-    interfaces.enp16s0.wakeOnLan = {
-      enable = true;
-      policy = ["magic"];
-    };
   };
 
   services = {

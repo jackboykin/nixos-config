@@ -19,15 +19,6 @@ in {
     enable = true;
     defaultEditor = true;
 
-    extraPackages = with pkgs; [
-      nixd
-      alejandra
-      rust-analyzer
-      nodePackages.typescript-language-server
-      nodePackages.prettier
-      pyright
-    ];
-
     settings = {
       theme = "bellatrix";
 

@@ -17,4 +17,6 @@
   };
 
   environment.shells = [pkgs.nushell];
+
+  security.sudo.execWheelOnly = true;
 }
