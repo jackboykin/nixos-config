@@ -78,7 +78,6 @@ nixos-config/
         ├── shell.nix   # Shell aliases and PATH
         └── programs/
             ├── programs.nix    # Imports managed programs + standalone packages
-            ├── bash.nix
             ├── bat.nix
             ├── btop.nix
             ├── direnv.nix
@@ -154,7 +153,7 @@ Programs in `users/jack/programs/` have declarative configs:
 |---------|---------|
 | `helix.nix` | Primary editor with LSP, Treesitter |
 | `nushell.nix` | Default shell |
-| `fish.nix` / `bash.nix` | Alternative shells |
+| `fish.nix` | Alternative shell (POSIX compatibility) |
 | `git.nix` | Git with delta pager |
 | `lazygit.nix` | Terminal Git UI |
 | `tmux.nix` | Terminal multiplexer |
