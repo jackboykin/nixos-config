@@ -6,13 +6,12 @@ _: {
       "nix-command"
       "flakes"
     ];
-    trusted-users = [
+    allowed-users = [
       "root"
       "@wheel"
     ];
+    trusted-users = ["root"];
     auto-optimise-store = true;
-    max-jobs = "auto";
-    cores = 0;
     substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"

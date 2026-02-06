@@ -3,7 +3,6 @@
 in {
   programs.fzf = {
     enable = true;
-    enableFishIntegration = true;
     enableBashIntegration = true;
     colors = {
       "bg+" = colors.base;

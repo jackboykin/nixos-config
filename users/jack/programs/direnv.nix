@@ -4,7 +4,6 @@
     silent = true;
     nix-direnv.enable = true;
     enableBashIntegration = true;
-    enableFishIntegration = true;
     enableNushellIntegration = true;
     stdlib = ''
       : ''${XDG_CACHE_HOME:=$HOME/.cache}

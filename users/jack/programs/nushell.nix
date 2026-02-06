@@ -1,4 +1,8 @@
-{theme, ...}: let
+{
+  theme,
+  pkgs,
+  ...
+}: let
   inherit (theme) colors;
 in {
   programs.nushell = {
@@ -8,6 +12,7 @@ in {
       show_banner = false;
       edit_mode = "emacs";
       cursor_shape = {
+        emacs = "line";
         vi_insert = "line";
         vi_normal = "block";
       };
@@ -72,6 +77,72 @@ in {
         shape_flag: { fg: "${colors.blue}" attr: b }
         shape_custom: "${colors.green}"
         shape_nothing: "${colors.red}"
+        shape_closure: { fg: "${colors.blue}" attr: b }
+        shape_keyword: { fg: "${colors.purple}" attr: b }
+        shape_pipe: "${colors.yellow}"
+        shape_redirection: "${colors.purple}"
+        shape_and: { fg: "${colors.yellow}" attr: b }
+        shape_or: { fg: "${colors.yellow}" attr: b }
+        shape_raw_string: "${colors.green}"
+        shape_match_pattern: "${colors.orange}"
+      }
+
+      $env.config.keybindings = ($env.config.keybindings | append [
+        {
+          name: history_menu
+          modifier: control
+          keycode: char_r
+          mode: [emacs vi_insert vi_normal]
+          event: {
+            send: executehostcommand
+            cmd: "commandline edit --replace (
+              history
+              | get command
+              | reverse
+              | uniq
+              | str join (char -i 0)
+              | fzf --scheme=history --read0 --layout=reverse --height=40% -q (commandline)
+              | decode utf-8
+              | str trim
+            )"
+          }
+        }
+        {
+          name: fzf_file
+          modifier: control
+          keycode: char_t
+          mode: [emacs vi_insert]
+          event: {
+            send: executehostcommand
+            cmd: "commandline edit --insert (
+              fd --type f --hidden --exclude .git
+              | fzf --layout=reverse --height=40%
+              | decode utf-8
+              | str trim
+            )"
+          }
+        }
+        {
+          name: fzf_directory
+          modifier: alt
+          keycode: char_c
+          mode: [emacs vi_insert]
+          event: {
+            send: executehostcommand
+            cmd: "let dir = (
+              fd --type d --hidden --exclude .git
+              | fzf --layout=reverse --height=40%
+              | decode utf-8
+              | str trim
+            ); if ($dir | is-not-empty) { cd $dir }"
+          }
+        }
+      ])
+    '';
+
+    extraEnv = ''
+      if ("/run/secrets/brave-api-key" | path exists) {
+        $env.BRAVE_API_KEY = (open /run/secrets/brave-api-key | str trim)
       }
     '';
 
@@ -79,5 +150,14 @@ in {
       ll = "ls -l";
       la = "ls -a";
     };
+  };
+
+  home.packages = with pkgs; [
+    carapace
+  ];
+
+  programs.carapace = {
+    enable = true;
+    enableNushellIntegration = true;
   };
 }

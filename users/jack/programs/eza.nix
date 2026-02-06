@@ -1,7 +1,58 @@
-_: {
+{theme, ...}: let
+  inherit (theme) colors;
+  toRGB = hex: let
+    rgb = theme.hexToRgb hex;
+  in "${toString rgb.r};${toString rgb.g};${toString rgb.b}";
+
+  fg = color: "38;2;${toRGB color}";
+  ezaColorsStr = builtins.concatStringsSep ":" [
+    "di=${fg colors.blue}"
+    "ln=${fg colors.cyan}"
+    "ex=${fg colors.green}"
+    "or=${fg colors.red}"
+    "su=${fg colors.red}"
+    "sg=${fg colors.yellow}"
+    "tw=${fg colors.green}"
+    "ow=${fg colors.blue}"
+    "pi=${fg colors.orange}"
+    "so=${fg colors.magenta}"
+    "bd=${fg colors.orange}"
+    "cd=${fg colors.orange}"
+
+    "ur=${fg colors.yellow}"
+    "uw=${fg colors.red}"
+    "ux=${fg colors.green}"
+    "ue=${fg colors.green}"
+    "gr=${fg colors.yellow}"
+    "gw=${fg colors.red}"
+    "gx=${fg colors.green}"
+    "tr=${fg colors.yellow}"
+    "tx=${fg colors.green}"
+
+    "uu=${fg colors.cyan}"
+    "uR=${fg colors.subtext0}"
+    "gu=${fg colors.purple}"
+    "gR=${fg colors.subtext0}"
+
+    "sn=${fg colors.green}"
+    "sb=${fg colors.green}"
+
+    "da=${fg colors.subtext0}"
+
+    "ga=${fg colors.gitAdded}"
+    "gm=${fg colors.gitModified}"
+    "gd=${fg colors.gitDeleted}"
+    "gv=${fg colors.cyan}"
+    "gt=${fg colors.subtext0}"
+
+    "hd=4;${fg colors.text}"
+  ];
+in {
   programs.eza = {
     enable = true;
     icons = "auto";
     git = true;
   };
+
+  home.sessionVariables.EZA_COLORS = ezaColorsStr;
 }

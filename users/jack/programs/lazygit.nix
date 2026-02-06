@@ -26,11 +26,11 @@ in {
         nerdFontsVersion = "3";
         theme = {
           activeBorderColor = [
-            "cyan"
+            colors.cyan
             "bold"
           ];
           inactiveBorderColor = [colors.overlay1];
-          optionsTextColor = ["yellow"];
+          optionsTextColor = [colors.yellow];
           selectedLineBgColor = [colors.surface1];
           cherryPickedCommitBgColor = [colors.surface1];
           cherryPickedCommitFgColor = [colors.purple];

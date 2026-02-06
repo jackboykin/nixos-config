@@ -4,19 +4,25 @@
   username,
   ...
 }: {
-  users.users.${username} = {
-    isNormalUser = true;
-    description = username;
-    shell = pkgs.nushell;
-    hashedPasswordFile = config.sops.secrets.user-password.path;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "video"
-    ];
+  users = {
+    mutableUsers = false;
+
+    users.${username} = {
+      isNormalUser = true;
+      description = username;
+      shell = pkgs.nushell;
+      hashedPasswordFile = config.sops.secrets.user-password.path;
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "video"
+      ];
+    };
   };
 
   environment.shells = [pkgs.nushell];
 
-  security.sudo.execWheelOnly = true;
+  security.sudo = {
+    execWheelOnly = true;
+  };
 }

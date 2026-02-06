@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  theme,
+  ...
+}: let
+  inherit (theme) fonts;
+in {
   programs.mpv = {
     enable = true;
     config = {
@@ -26,6 +32,9 @@
       screenshot-format = "png";
       screenshot-high-bit-depth = true;
       screenshot-png-compression = 3;
+
+      osd-font = fonts.sans.name;
+      sub-font = fonts.sans.name;
     };
     scripts = with pkgs.mpvScripts; [
       uosc

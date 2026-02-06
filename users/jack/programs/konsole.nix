@@ -83,6 +83,6 @@ in {
 
     [Appearance]
     ColorScheme=Bellatrix
-    Font=JetBrainsMono Nerd Font Mono,10,-1,5,63,0,0,0,0,0
+    Font=${theme.fonts.mono.name},${toString theme.fonts.size.normal},-1,5,63,0,0,0,0,0
   '';
 }

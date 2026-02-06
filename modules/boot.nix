@@ -14,10 +14,23 @@
       pkiBundle = "/var/lib/sbctl";
     };
 
-    blacklistedKernelModules = ["dccp" "sctp" "rds" "tipc"];
+    blacklistedKernelModules = [
+      "dccp"
+      "sctp"
+      "rds"
+      "tipc"
+      "n-hdlc"
+      "can"
+      "cramfs"
+      "jffs2"
+      "vivid"
+    ];
 
     initrd.systemd.enable = true;
   };
+
+  security.protectKernelImage = true;
+
   system.nixos-init.enable = true;
   system.etc.overlay.enable = true;
   services.userborn.enable = true;

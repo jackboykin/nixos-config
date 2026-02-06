@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  theme,
+  ...
+}: {
   programs.firefox = {
     enable = true;
 
@@ -88,7 +92,7 @@
         "signon.rememberSignons" = false;
         "font.name.sans-serif.x-western" = "Inter";
         "font.name.serif.x-western" = "Noto Serif";
-        "font.name.monospace.x-western" = "JetBrainsMono Nerd Font";
+        "font.name.monospace.x-western" = theme.fonts.mono.name;
         "font.size.variable.x-western" = 16;
         "font.default.x-western" = "sans-serif";
         "gfx.webrender.all" = true;

@@ -12,10 +12,6 @@
     firewall = {
       enable = true;
       allowedUDPPorts = [config.services.tailscale.port];
-      interfaces."tailscale0" = {
-        allowedTCPPorts = [];
-        allowedUDPPorts = [];
-      };
     };
 
     nftables.enable = true;
@@ -32,17 +28,15 @@
           "[::1]:53"
         ];
         server_names = [
-          "nextdns"
-          "nextdns-ipv6"
           "cloudflare"
           "cloudflare-ipv6"
         ];
-        ipv4_servers = true;
         ipv6_servers = true;
-        dnscrypt_servers = true;
-        doh_servers = true;
         require_dnssec = true;
-        require_nolog = true;
+        block_unqualified = true;
+        block_undelegated = true;
+        cache_size = 4096;
+        cache_neg_min_ttl = 60;
       };
     };
 

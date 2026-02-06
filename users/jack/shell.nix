@@ -5,12 +5,6 @@ _: {
       "$HOME/.local/bin"
     ];
 
-    sessionVariablesExtra = ''
-      if [ -f /run/secrets/brave-api-key ]; then
-        export BRAVE_API_KEY="$(cat /run/secrets/brave-api-key)"
-      fi
-    '';
-
     shellAliases = {
       q = "exit";
       nr = "nh os switch";
