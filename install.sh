@@ -12,6 +12,16 @@ REPO_URL="https://github.com/jackboykin/nixos-config"
 FLAKE_HOST="nixos-orion"
 USERNAME="jack"
 
+# Cleanup mounts on failure
+cleanup() {
+    if [[ $? -ne 0 ]]; then
+        echo -e "${YELLOW}[WARN]${NC} Installation failed. Cleaning up mounts..."
+        umount -R /mnt 2>/dev/null || true
+        umount /tmp/ventoy-mount 2>/dev/null || true
+    fi
+}
+trap cleanup EXIT
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -237,15 +247,22 @@ setup_sops_key() {
     fi
 
     if [[ -z "$VENTOY_PART" ]]; then
-        warn "Ventoy USB not found. Skipping SOPS key setup."
-        warn "You will need to manually copy your age key to /var/lib/sops-nix/key.txt"
-        return 0
+        error "Ventoy USB not found. The age key is required for sops-nix to decrypt the user password."
     fi
 
     info "Found Ventoy at $VENTOY_PART"
 
-    mkdir -p "$VENTOY_MOUNT"
-    mount -o ro "$VENTOY_PART" "$VENTOY_MOUNT"
+    # Use existing mount if Ventoy is already mounted (e.g., booting from the same USB)
+    EXISTING_MOUNT=$(findmnt -n -o TARGET "$VENTOY_PART" 2>/dev/null || true)
+    if [[ -n "$EXISTING_MOUNT" ]]; then
+        VENTOY_MOUNT="$EXISTING_MOUNT"
+        VENTOY_MOUNTED_BY_US=false
+        info "Ventoy already mounted at $VENTOY_MOUNT"
+    else
+        mkdir -p "$VENTOY_MOUNT"
+        mount -o ro "$VENTOY_PART" "$VENTOY_MOUNT"
+        VENTOY_MOUNTED_BY_US=true
+    fi
 
     KEY_FILE=""
     for path in "$VENTOY_MOUNT/keys.txt" "$VENTOY_MOUNT/sops/keys.txt" "$VENTOY_MOUNT/secrets/keys.txt"; do
@@ -256,19 +273,23 @@ setup_sops_key() {
     done
 
     if [[ -z "$KEY_FILE" ]]; then
-        warn "keys.txt not found on Ventoy USB"
-        warn "Looked in: /keys.txt, /sops/keys.txt, /secrets/keys.txt"
-        umount "$VENTOY_MOUNT"
-        return 0
+        [[ "$VENTOY_MOUNTED_BY_US" == true ]] && umount "$VENTOY_MOUNT"
+        error "keys.txt not found on Ventoy USB. Looked in: /keys.txt, /sops/keys.txt, /secrets/keys.txt"
     fi
 
     info "Found age key at $KEY_FILE"
+
+    # Validate the key looks like an age secret key
+    if ! grep -q "^AGE-SECRET-KEY-" "$KEY_FILE"; then
+        [[ "$VENTOY_MOUNTED_BY_US" == true ]] && umount "$VENTOY_MOUNT"
+        error "keys.txt does not contain a valid age secret key"
+    fi
 
     mkdir -p /mnt/var/lib/sops-nix
     cp "$KEY_FILE" /mnt/var/lib/sops-nix/key.txt
     chmod 600 /mnt/var/lib/sops-nix/key.txt
 
-    umount "$VENTOY_MOUNT"
+    [[ "$VENTOY_MOUNTED_BY_US" == true ]] && umount "$VENTOY_MOUNT"
     success "SOPS age key installed to /mnt/var/lib/sops-nix/key.txt"
 }
 
@@ -286,12 +307,11 @@ install_nixos() {
     success "NixOS installation complete!"
 
     info "Fixing config directory ownership..."
-    chown -R 1000:100 "/mnt/home/$USERNAME"
-    success "Config directory owned by $USERNAME"
+    USER_UID=$(nixos-enter --root /mnt -c "id -u $USERNAME")
+    USER_GID=$(nixos-enter --root /mnt -c "id -g $USERNAME")
+    chown -R "$USER_UID:$USER_GID" "/mnt/home/$USERNAME"
+    success "Config directory owned by $USERNAME ($USER_UID:$USER_GID)"
 
-    info "Set password for $USERNAME:"
-    nixos-enter --root /mnt -c "passwd $USERNAME"
-    success "User password set"
 }
 
 # -----------------------------------------------------------------------------
@@ -305,7 +325,7 @@ post_install() {
     echo ""
     info "Next steps:"
     echo "  1. Reboot into your new system: reboot"
-    echo "  2. Log in as '$USERNAME' with the password you just set"
+    echo "  2. Log in as '$USERNAME' (password is managed by sops-nix)"
     echo ""
     warn "Secure Boot Setup (Lanzaboote):"
     echo "  Temporary keys were generated to complete installation."
