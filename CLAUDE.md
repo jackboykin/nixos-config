@@ -83,7 +83,6 @@ nixos-config/
             ├── direnv.nix
             ├── eza.nix
             ├── firefox.nix
-            ├── fish.nix
             ├── fzf.nix
             ├── git.nix
             ├── konsole.nix
@@ -153,7 +152,6 @@ Programs in `users/jack/programs/` have declarative configs:
 |---------|---------|
 | `helix.nix` | Primary editor with LSP, Treesitter |
 | `nushell.nix` | Default shell |
-| `fish.nix` | Alternative shell (POSIX compatibility) |
 | `git.nix` | Git with delta pager |
 | `lazygit.nix` | Terminal Git UI |
 | `tmux.nix` | Terminal multiplexer |
@@ -244,7 +242,7 @@ The script handles:
 - Secrets: System age key must be present at `/var/lib/sops-nix/key.txt`
 - All program configs can access `theme` via `specialArgs`
 - Use `inherit (theme) colors;` pattern in managed programs
-- **Default shell: nushell** (fish/bash available for POSIX compatibility)
+- **Default shell: nushell**
 
 ## Development Workflow
 
