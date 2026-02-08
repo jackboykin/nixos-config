@@ -8,7 +8,6 @@
     ./fzf.nix
     ./git.nix
     ./helix.nix
-    ./kitty.nix
     ./konsole.nix
     ./lazygit.nix
     ./llm-agents.nix
