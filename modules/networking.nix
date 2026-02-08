@@ -28,8 +28,8 @@
           "[::1]:53"
         ];
         server_names = [
-          "cloudflare"
-          "cloudflare-ipv6"
+          "cloudflare-security"
+          "cloudflare-security-ipv6"
         ];
         ipv6_servers = true;
         require_dnssec = true;
@@ -48,6 +48,8 @@
         Domains = "~.";
         DNSSEC = "false";
         DNSOverTLS = "false";
+        LLMNR = "no";
+        MulticastDNS = "no";
         FallbackDNS = "";
       };
     };

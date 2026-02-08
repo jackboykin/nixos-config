@@ -8,20 +8,20 @@
     ./fzf.nix
     ./git.nix
     ./helix.nix
+    ./kitty.nix
     ./konsole.nix
     ./lazygit.nix
     ./llm-agents.nix
     ./mpv.nix
+    ./nushell.nix
     ./rust.nix
     ./tmux.nix
     ./zoxide.nix
-    ./nushell.nix
   ];
 
   home.packages = with pkgs; [
     chromium
     gpu-screen-recorder
-    jellyfin-media-player
     kdePackages.kate
     obsidian
     spotify
