@@ -5,7 +5,6 @@ _: {
     ./users.nix
     ./boot.nix
     ./desktop.nix
-    ./locale.nix
     ./networking.nix
     ./hardware.nix
     ./secrets.nix

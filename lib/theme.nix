@@ -98,9 +98,6 @@ with lib; let
     teal = cyan;
     pink = magenta;
     purple = brightBlue;
-    tan = base04;
-    cream = base07;
-
     base = base00;
     mantle = base01;
     crust = "#050403";
@@ -129,7 +126,6 @@ with lib; let
     highlight = base07;
   };
 in {
-  rawHexValue = color: substring 1 6 color;
   inherit colors mixColors hexToRgb;
 
   diff = {
