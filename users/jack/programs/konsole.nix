@@ -80,6 +80,7 @@ in {
     Command=${pkgs.nushell}/bin/nu
     Name=Bellatrix
     Parent=FALLBACK/
+    ShowTerminalSizeHint=false
 
     [Appearance]
     ColorScheme=Bellatrix
