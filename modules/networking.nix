@@ -1,12 +1,23 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{config, ...}: {
   networking = {
     networkmanager = {
       enable = true;
-      dns = lib.mkForce "none";
+      dns = "systemd-resolved";
+      ensureProfiles.profiles.wired = {
+        connection = {
+          id = "Wired connection 1";
+          type = "ethernet";
+          interface-name = "enp16s0";
+        };
+        ipv4 = {
+          method = "auto";
+          ignore-auto-dns = true;
+        };
+        ipv6 = {
+          method = "auto";
+          ignore-auto-dns = true;
+        };
+      };
     };
 
     firewall = {
