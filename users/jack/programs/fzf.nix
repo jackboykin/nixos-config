@@ -3,7 +3,6 @@
 in {
   programs.fzf = {
     enable = true;
-    enableBashIntegration = true;
     colors = {
       "bg+" = colors.base;
       spinner = colors.purple;

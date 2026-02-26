@@ -145,11 +145,6 @@ in {
         $env.BRAVE_API_KEY = (open /run/secrets/brave-api-key | str trim)
       }
     '';
-
-    shellAliases = {
-      ll = "ls -l";
-      la = "ls -a";
-    };
   };
 
   home.packages = with pkgs; [

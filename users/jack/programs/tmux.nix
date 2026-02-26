@@ -12,12 +12,11 @@ in {
     prefix = "C-Space";
     escapeTime = 0;
     baseIndex = 1;
-    keyMode = "vi";
+    keyMode = "emacs";
     mouse = true;
     historyLimit = 50000;
 
     plugins = with pkgs.tmuxPlugins; [
-      vim-tmux-navigator
       {
         plugin = yank;
         extraConfig = "set -g @yank_selection_mouse 'clipboard'";
@@ -32,17 +31,10 @@ in {
 
       bind C-l send-keys 'C-l'
 
-      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-          | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'"
-      bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
-      bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
-      bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
-      bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
-
-      bind-key -T copy-mode-vi 'C-h' select-pane -L
-      bind-key -T copy-mode-vi 'C-j' select-pane -D
-      bind-key -T copy-mode-vi 'C-k' select-pane -U
-      bind-key -T copy-mode-vi 'C-l' select-pane -R
+      bind-key -n 'C-h' select-pane -L
+      bind-key -n 'C-j' select-pane -D
+      bind-key -n 'C-k' select-pane -U
+      bind-key -n 'C-l' select-pane -R
 
       bind-key "|" split-window -h -c "#{pane_current_path}"
       bind-key "\\" split-window -fh -c "#{pane_current_path}"
