@@ -36,6 +36,10 @@ _: {
     "net.ipv6.conf.default.accept_source_route" = 0;
   };
 
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
+  '';
+
   hardware = {
     graphics.enable = true;
     amdgpu.initrd.enable = true;

@@ -20,11 +20,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,7 +34,6 @@
     home-manager,
     lanzaboote,
     llm-agents,
-    nur,
     rust-overlay,
     sops-nix,
     ...
@@ -70,7 +64,7 @@
           [
             ./hosts/${hostname}/host.nix
             ./modules/modules.nix
-            {nixpkgs.overlays = [nur.overlays.default rust-overlay.overlays.default];}
+            {nixpkgs.overlays = [rust-overlay.overlays.default];}
             lanzaboote.nixosModules.lanzaboote
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
