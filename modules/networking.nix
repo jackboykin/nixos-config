@@ -33,6 +33,7 @@
           meta l4proto { tcp, udp } th dport 53 ip daddr { 127.0.0.0/8 } accept
           meta l4proto { tcp, udp } th dport 53 ip6 daddr ::1 accept
           oifname "tailscale0" meta l4proto { tcp, udp } th dport 53 accept
+          meta l4proto { tcp, udp } th dport 53 ip daddr 194.242.2.2 accept comment "dnscrypt-proxy bootstrap"
           meta l4proto { tcp, udp } th dport 53 drop
         }
       '';
@@ -54,12 +55,10 @@
         ];
         ipv6_servers = true;
         require_dnssec = true;
-        block_unqualified = true;
-        block_undelegated = true;
-        cache_size = 4096;
         dnscrypt_ephemeral_keys = true;
         tls_disable_session_tickets = true;
-        cache_neg_min_ttl = 60;
+        bootstrap_resolvers = ["194.242.2.2:53"];
+        netprobe_address = "194.242.2.2:443";
       };
     };
 
