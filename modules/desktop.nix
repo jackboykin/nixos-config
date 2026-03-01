@@ -65,16 +65,7 @@
   ];
 
   fonts.fontconfig = {
-    enable = true;
-    antialias = true;
-    hinting = {
-      enable = true;
-      style = "slight";
-    };
-    subpixel = {
-      rgba = "rgb";
-      lcdfilter = "default";
-    };
+    subpixel.rgba = "rgb";
     defaultFonts = {
       serif = [
         "Noto Serif"

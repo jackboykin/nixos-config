@@ -15,6 +15,8 @@ _: {
 
     "kernel.kptr_restrict" = 2;
     "kernel.dmesg_restrict" = 1;
+    "kernel.kexec_load_disabled" = 1;
+    "kernel.unprivileged_bpf_disabled" = 1;
     "net.core.bpf_jit_harden" = 2;
     "dev.tty.ldisc_autoload" = 0;
     "kernel.sysrq" = 240;

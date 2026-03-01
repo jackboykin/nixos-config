@@ -45,7 +45,6 @@
     mkHost = {
       hostname,
       username,
-      extraModules ? [],
     }: let
       specialArgs =
         inputs
@@ -60,25 +59,23 @@
     in
       nixpkgs.lib.nixosSystem {
         inherit system specialArgs;
-        modules =
-          [
-            ./hosts/${hostname}/host.nix
-            ./modules/modules.nix
-            {nixpkgs.overlays = [rust-overlay.overlays.default];}
-            lanzaboote.nixosModules.lanzaboote
-            sops-nix.nixosModules.sops
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                backupFileExtension = "backup";
-                extraSpecialArgs = specialArgs;
-                users.${username} = import ./users/${username}/user.nix;
-              };
-            }
-          ]
-          ++ extraModules;
+        modules = [
+          ./hosts/${hostname}/host.nix
+          ./modules/modules.nix
+          {nixpkgs.overlays = [rust-overlay.overlays.default];}
+          lanzaboote.nixosModules.lanzaboote
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "backup";
+              extraSpecialArgs = specialArgs;
+              users.${username} = import ./users/${username}/user.nix;
+            };
+          }
+        ];
       };
   in {
     nixosConfigurations.nixos-orion = mkHost {
