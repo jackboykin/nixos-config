@@ -40,7 +40,7 @@
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
       HardwareAccelerationModeEnabled = true;
-      AudioCaptureAllowed = false;
+      AudioCaptureAllowed = true;
       VideoCaptureAllowed = false;
       DefaultGeolocationSetting = 2;
       DefaultNotificationsSetting = 2;

@@ -36,15 +36,19 @@
 
     bun
     clang
-    clang-tools
     nodejs
+    typescript
+    zig
+
+    clang-tools
+    nixd
     nodePackages.prettier
     pyright
-    typescript
     typescript-language-server
+    zig-zlint
+    zls
 
     alejandra
-    nixd
     statix
   ];
 }
