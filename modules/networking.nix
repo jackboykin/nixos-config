@@ -29,29 +29,10 @@
   services = {
     tailscale.enable = true;
 
-    dnscrypt-proxy = {
-      enable = true;
-      settings = {
-        listen_addresses = [
-          "127.0.0.2:53"
-          "[::1]:53"
-        ];
-        server_names = [
-          "mullvad-base-doh"
-        ];
-        ipv6_servers = true;
-        require_dnssec = true;
-        dnscrypt_ephemeral_keys = true;
-        tls_disable_session_tickets = true;
-        bootstrap_resolvers = ["194.242.2.2:53"];
-        netprobe_address = "194.242.2.2:443";
-      };
-    };
-
     resolved = {
       enable = true;
       settings.Resolve = {
-        DNS = "127.0.0.2 ::1";
+        DNS = "192.168.1.252";
         Domains = "~.";
         LLMNR = "no";
         MulticastDNS = "no";

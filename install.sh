@@ -265,7 +265,7 @@ setup_sops_key() {
     fi
 
     KEY_FILE=""
-    for path in "$VENTOY_MOUNT/keys.txt" "$VENTOY_MOUNT/sops/keys.txt" "$VENTOY_MOUNT/secrets/keys.txt"; do
+    for path in "$VENTOY_MOUNT/key.txt" "$VENTOY_MOUNT/keys.txt" "$VENTOY_MOUNT/sops/key.txt" "$VENTOY_MOUNT/secrets/key.txt"; do
         if [[ -f "$path" ]]; then
             KEY_FILE="$path"
             break
@@ -274,7 +274,7 @@ setup_sops_key() {
 
     if [[ -z "$KEY_FILE" ]]; then
         [[ "$VENTOY_MOUNTED_BY_US" == true ]] && umount "$VENTOY_MOUNT"
-        error "keys.txt not found on Ventoy USB. Looked in: /keys.txt, /sops/keys.txt, /secrets/keys.txt"
+        error "age key not found on Ventoy USB. Looked in: /key.txt, /keys.txt, /sops/key.txt, /secrets/key.txt"
     fi
 
     info "Found age key at $KEY_FILE"
