@@ -38,7 +38,7 @@
     clang
     nodejs
     typescript
-    zig
+    zigpkgs.master
 
     clang-tools
     nixd

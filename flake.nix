@@ -9,6 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zig-overlay = {
+      url = "github:mitchellh/zig-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,6 +41,7 @@
     llm-agents,
     rust-overlay,
     sops-nix,
+    zig-overlay,
     ...
   }: let
     system = "x86_64-linux";
@@ -62,7 +68,7 @@
         modules = [
           ./hosts/${hostname}/host.nix
           ./modules/modules.nix
-          {nixpkgs.overlays = [rust-overlay.overlays.default];}
+          {nixpkgs.overlays = [rust-overlay.overlays.default zig-overlay.overlays.default];}
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
