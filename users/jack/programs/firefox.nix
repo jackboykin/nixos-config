@@ -16,7 +16,6 @@
 
         "browser.discovery.enabled" = false;
         "browser.download.manager.addToRecentDocs" = false;
-        "browser.helperApps.deleteTempFileOnExit" = true;
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
         "browser.newtabpage.activity-stream.default.sites" = "";
@@ -39,7 +38,6 @@
         "full-screen-api.transition-duration.enter" = "0 0";
         "full-screen-api.transition-duration.leave" = "0 0";
         "full-screen-api.warning.timeout" = 0;
-        "gfx.webrender.layer-compositor" = true;
         "layout.word_select.eat_space_to_next_word" = false;
         "dom.security.https_only_mode" = true;
         "network.trr.mode" = 5;
@@ -68,7 +66,6 @@
         "font.size.variable.x-western" = 16;
         "font.default.x-western" = "sans-serif";
         "gfx.font_rendering.fontconfig.max_generic_substitutions" = 127;
-        "browser.display.use_document_fonts" = 1;
         "browser.urlbar.shortcuts.bookmarks" = false;
         "browser.urlbar.shortcuts.history" = false;
         "browser.urlbar.shortcuts.tabs" = false;

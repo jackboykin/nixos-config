@@ -25,7 +25,7 @@
     obsidian
     spotify
     vesktop
-    zed-editor
+    vscode
 
     fastfetch
     fd

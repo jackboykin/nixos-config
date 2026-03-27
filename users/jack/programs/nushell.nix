@@ -140,11 +140,6 @@ in {
       ])
     '';
 
-    extraEnv = ''
-      if ("/run/secrets/brave-api-key" | path exists) {
-        $env.BRAVE_API_KEY = (open /run/secrets/brave-api-key | str trim)
-      }
-    '';
   };
 
   home.packages = with pkgs; [

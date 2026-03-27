@@ -6,9 +6,6 @@ _: {
       user-password = {
         neededForUsers = true;
       };
-      brave-api-key = {
-        owner = "jack";
-      };
     };
   };
 }
