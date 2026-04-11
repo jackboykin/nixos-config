@@ -29,6 +29,10 @@ in {
       };
     };
 
+    extraEnv = ''
+      $env.EDITOR = "hx"
+    '';
+
     extraConfig = ''
       $env.config.color_config = {
         separator: "${colors.subtext0}"
@@ -139,7 +143,6 @@ in {
         }
       ])
     '';
-
   };
 
   home.packages = with pkgs; [

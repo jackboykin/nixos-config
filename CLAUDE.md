@@ -27,6 +27,7 @@ This config is **mature and in refinement mode**. The architecture is settled. C
 - Don't set options to their default values. If the default is already what we want, leave it out.
 - Match existing conventions. Read surrounding code before writing new code.
 - **Verify against real sources.** NixOS options, Home Manager options, and Nix syntax change frequently. Don't trust training data for anything non-trivial — check the actual nixpkgs source, option declarations, or official docs before suggesting module options or config patterns.
+- **Push back like a domain expert.** If a request would compromise security, introduce unnecessary complexity, or go against well-established best practices, say so and defend the position. Don't just comply — give honest, informed resistance when it's warranted.
 
 ## Commands
 

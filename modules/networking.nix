@@ -32,7 +32,7 @@
     resolved = {
       enable = true;
       settings.Resolve = {
-        DNS = "192.168.1.252";
+        DNS = "192.168.1.161";
         Domains = "~.";
         LLMNR = "no";
         MulticastDNS = "no";

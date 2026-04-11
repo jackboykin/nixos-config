@@ -10,15 +10,13 @@
     inherit name;
     auto-format = true;
     formatter = {
-      command = lib.getExe pkgs.nodePackages.prettier;
+      command = lib.getExe pkgs.prettier;
       args = ["--parser" parser];
     };
   };
 in {
   programs.helix = {
     enable = true;
-    defaultEditor = true;
-
     settings = {
       theme = "bellatrix";
 

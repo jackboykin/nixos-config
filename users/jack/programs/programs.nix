@@ -42,7 +42,7 @@
 
     clang-tools
     nixd
-    nodePackages.prettier
+    prettier
     pyright
     typescript-language-server
     zig-zlint
