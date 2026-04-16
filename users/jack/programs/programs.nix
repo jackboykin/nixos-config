@@ -10,7 +10,6 @@
     ./helix.nix
     ./konsole.nix
     ./lazygit.nix
-    ./llm-agents.nix
     ./mpv.nix
     ./nushell.nix
     ./rust.nix
@@ -27,6 +26,7 @@
     vesktop
     vscode
 
+    claude-code
     fastfetch
     fd
     gh

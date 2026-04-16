@@ -30,7 +30,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    llm-agents.url = "github:numtide/llm-agents.nix";
+    claude-code = {
+      url = "github:ryoppippi/claude-code-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -38,7 +41,7 @@
     nixpkgs,
     home-manager,
     lanzaboote,
-    llm-agents,
+    claude-code,
     rust-overlay,
     sops-nix,
     zig-overlay,
@@ -68,7 +71,7 @@
         modules = [
           ./hosts/${hostname}/host.nix
           ./modules/modules.nix
-          {nixpkgs.overlays = [rust-overlay.overlays.default zig-overlay.overlays.default];}
+          {nixpkgs.overlays = [claude-code.overlays.default rust-overlay.overlays.default zig-overlay.overlays.default];}
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
