@@ -1,4 +1,6 @@
 _: {
+  fileSystems."/".options = ["noatime"];
+
   services.fstrim.enable = true;
 
   zramSwap = {
@@ -12,6 +14,9 @@ _: {
     "vm.watermark_boost_factor" = 0;
     "vm.watermark_scale_factor" = 125;
     "vm.page-cluster" = 0;
+    "vm.dirty_bytes" = 536870912;
+    "vm.dirty_background_bytes" = 134217728;
+    "vm.vfs_cache_pressure" = 50;
 
     "kernel.kptr_restrict" = 2;
     "kernel.dmesg_restrict" = 1;
@@ -43,6 +48,13 @@ _: {
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
   '';
+
+  systemd.oomd = {
+    enableSystemSlice = true;
+    enableUserSlices = true;
+  };
+
+  systemd.slices."user".sliceConfig.ManagedOOMMemoryPressureLimit = "60%";
 
   hardware = {
     graphics.enable = true;
