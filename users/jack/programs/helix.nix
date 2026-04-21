@@ -72,8 +72,8 @@ in {
           "C-k" = "jump_view_up";
           "C-l" = "jump_view_right";
 
-          "A-." = "goto_next_buffer";
-          "A-," = "goto_previous_buffer";
+          "A-]" = "goto_next_buffer";
+          "A-[" = "goto_previous_buffer";
           "A-w" = ":buffer-close";
 
           "n" = ["search_next" "align_view_center"];

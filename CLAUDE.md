@@ -11,10 +11,6 @@ This is a personal NixOS desktop config. It is **simple, minimal, modern, bleedi
 - **Opinionated**: Strong choices, consistently applied. One way to do things, not every way. The config reflects personal taste, not broad compatibility.
 - **Secure**: Prefer options that increase security and privacy. Minimize telemetry, reduce attack surface, and default to locked-down settings where practical.
 
-## Direction
-
-This config is **mature and in refinement mode**. The architecture is settled. Changes should be polishing, tuning, and maintaining — not rearchitecting.
-
 ## Taste
 
 **Code style**: Concise and flat inside files, well-organized across the module structure. Prefer `let`/`inherit` over deep nesting. Keep files focused and short.
