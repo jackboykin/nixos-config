@@ -19,7 +19,6 @@
 
   home.packages = with pkgs; [
     chromium
-    gpu-screen-recorder
     kdePackages.kate
     obsidian
     spotify

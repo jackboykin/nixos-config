@@ -3,7 +3,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   services = {
-    xserver.enable = false;
     displayManager.plasma-login-manager.enable = true;
     desktopManager.plasma6.enable = true;
 

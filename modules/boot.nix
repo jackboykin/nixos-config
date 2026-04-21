@@ -4,10 +4,7 @@
     kernelParams = ["amd_pstate=active"];
     tmp.cleanOnBoot = true;
 
-    loader = {
-      systemd-boot.enable = false;
-      efi.canTouchEfiVariables = true;
-    };
+    loader.efi.canTouchEfiVariables = true;
 
     lanzaboote = {
       enable = true;
