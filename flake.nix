@@ -51,6 +51,12 @@
     inherit (nixpkgs) lib;
     theme = import ./lib/theme.nix {inherit lib;};
 
+    overlays = [
+      claude-code.overlays.default
+      rust-overlay.overlays.default
+      zig-overlay.overlays.default
+    ];
+
     mkHost = {
       hostname,
       username,
@@ -71,7 +77,7 @@
         modules = [
           ./hosts/${hostname}/host.nix
           ./modules/modules.nix
-          {nixpkgs.overlays = [claude-code.overlays.default rust-overlay.overlays.default zig-overlay.overlays.default];}
+          {nixpkgs.overlays = overlays;}
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager

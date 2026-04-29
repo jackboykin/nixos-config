@@ -15,10 +15,16 @@ in {
       init.defaultBranch = "master";
       pull.rebase = true;
       push.autoSetupRemote = true;
-      core.autocrlf = "input";
-      merge.conflictstyle = "diff3";
+      rerere.enabled = true;
+      commit.verbose = true;
+      tag.gpgSign = true;
+      merge.conflictStyle = "zdiff3";
       diff.algorithm = "histogram";
       diff.colorMoved = "default";
+    };
+    signing = {
+      format = "ssh";
+      key = "~/.ssh/id_ed25519.pub";
     };
   };
 

@@ -13,7 +13,6 @@ in {
       volume = 80;
       volume-max = 180;
       audio-channels = "stereo";
-      audio-exclusive = "yes";
       osd-bar = false;
       osc = false;
       border = false;
@@ -27,8 +26,6 @@ in {
       video-sync = "display-resample";
       interpolation = "yes";
       cache = true;
-      tscale = "oversample";
-      dither-depth = "auto";
       screenshot-format = "png";
       screenshot-high-bit-depth = true;
       screenshot-png-compression = 3;
