@@ -33,6 +33,8 @@
         "browser.urlbar.speculativeConnect.enabled" = false;
         "browser.urlbar.trending.featureGate" = false;
         "extensions.enabledScopes" = 5;
+        "extensions.formautofill.addresses.enabled" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
         "extensions.htmlaboutaddons.recommendations.enabled" = false;
         "findbar.highlightAll" = true;
         "full-screen-api.transition-duration.enter" = "0 0";
@@ -43,6 +45,7 @@
         "network.trr.mode" = 5;
         "network.dns.disablePrefetch" = true;
         "network.dns.disablePrefetchFromHTTPS" = true;
+        "network.auth.subresource-http-auth-allow" = 1;
         "network.http.referer.XOriginTrimmingPolicy" = 2;
         "network.http.speculative-parallel-limit" = 0;
         "network.prefetch-next" = false;
@@ -58,6 +61,8 @@
         "security.mixed_content.block_display_content" = true;
         "security.ssl.treat_unsafe_negotiation_as_broken" = true;
         "security.tls.enable_0rtt_data" = false;
+        "signon.autofillForms" = false;
+        "signon.formlessCapture.enabled" = false;
         "signon.management.page.enabled" = false;
         "signon.rememberSignons" = false;
         "font.name.sans-serif.x-western" = "Inter";
