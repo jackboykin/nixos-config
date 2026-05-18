@@ -2,7 +2,7 @@
   description = "Modular NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";

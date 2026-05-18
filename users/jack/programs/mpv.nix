@@ -39,7 +39,7 @@ in {
     ];
     scriptOpts.uosc = {
       progress = "never";
-      controls = "menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,open-conf,stats,console";
+      controls = "menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,speed,";
     };
   };
 }

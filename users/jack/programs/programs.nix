@@ -26,10 +26,10 @@
     vscode
 
     claude-code
-    fastfetch
     fd
     gh
     jq
+    macchina
     ripgrep
     yazi
 
