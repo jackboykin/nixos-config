@@ -49,6 +49,10 @@
         "network.http.referer.XOriginTrimmingPolicy" = 2;
         "network.http.speculative-parallel-limit" = 0;
         "network.prefetch-next" = false;
+        "network.lna.enabled" = true;
+        "network.lna.blocking" = true;
+        "network.lna.block_trackers" = true;
+        "network.lna.websocket.enabled" = true;
         "pdfjs.enableScripting" = false;
         "permissions.default.camera" = 2;
         "permissions.default.desktop-notification" = 2;

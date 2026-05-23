@@ -7,6 +7,10 @@
 in {
   programs.mpv = {
     enable = true;
+    package = pkgs.mpv.override {
+      youtubeSupport = false;
+      scripts = with pkgs.mpvScripts; [uosc mpris];
+    };
     config = {
       profile = "high-quality";
       geometry = "60%";
@@ -33,10 +37,6 @@ in {
       osd-font = fonts.sans.name;
       sub-font = fonts.sans.name;
     };
-    scripts = with pkgs.mpvScripts; [
-      uosc
-      mpris
-    ];
     scriptOpts.uosc = {
       progress = "never";
       controls = "menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,speed,";
