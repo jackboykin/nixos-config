@@ -9,6 +9,7 @@
     ./git.nix
     ./helix.nix
     ./konsole.nix
+    ./ladybird.nix
     ./lazygit.nix
     ./mpv.nix
     ./nushell.nix

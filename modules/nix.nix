@@ -24,6 +24,7 @@ _: {
     ];
     builders-use-substitutes = true;
     use-xdg-base-directories = true;
+    cores = 16;
   };
 
   nixpkgs.config.allowUnfree = true;
