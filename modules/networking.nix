@@ -1,4 +1,4 @@
-{config, ...}: {
+_: {
   networking = {
     networkmanager = {
       enable = true;
@@ -21,15 +21,16 @@
       };
     };
 
-    firewall.allowedUDPPorts = [config.services.tailscale.port];
-
     nftables.enable = true;
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
   services = {
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
 
     resolved = {
       enable = true;
