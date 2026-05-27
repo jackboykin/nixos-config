@@ -5,11 +5,11 @@
     ./direnv.nix
     ./eza.nix
     ./firefox.nix
+    ./fish.nix
     ./fzf.nix
     ./git.nix
     ./helix.nix
     ./konsole.nix
-    ./lazygit.nix
     ./mpv.nix
     ./nushell.nix
     ./rust.nix
