@@ -41,8 +41,6 @@
     nixpkgs,
     home-manager,
     lanzaboote,
-    claude-code,
-    rust-overlay,
     sops-nix,
     ...
   }: let
@@ -50,11 +48,7 @@
     inherit (nixpkgs) lib;
     theme = import ./lib/theme.nix {inherit lib;};
 
-    overlays = [
-      claude-code.overlays.default
-      rust-overlay.overlays.default
-      (import ./zig.nix inputs.zig-index)
-    ];
+    overlays = import ./overlays/overlays.nix inputs;
 
     mkHost = {
       hostname,
