@@ -9,9 +9,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zig-overlay = {
-      url = "github:mitchellh/zig-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
+    zig-index = {
+      url = "file+https://ziglang.org/download/index.json";
+      flake = false;
     };
 
     lanzaboote = {
@@ -44,7 +44,6 @@
     claude-code,
     rust-overlay,
     sops-nix,
-    zig-overlay,
     ...
   }: let
     system = "x86_64-linux";
@@ -54,7 +53,7 @@
     overlays = [
       claude-code.overlays.default
       rust-overlay.overlays.default
-      zig-overlay.overlays.default
+      (import ./zig.nix inputs.zig-index)
     ];
 
     mkHost = {

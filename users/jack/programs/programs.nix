@@ -11,6 +11,7 @@
     ./helix.nix
     ./konsole.nix
     ./mpv.nix
+    ./ndu.nix
     ./nushell.nix
     ./rust.nix
     ./tmux.nix
@@ -36,8 +37,9 @@
     bun
     clang
     nodejs
+    python3
     typescript
-    zigpkgs.default
+    zigpkgs.master
 
     clang-tools
     nixd
@@ -45,7 +47,6 @@
     pyright
     typescript-language-server
     zig-zlint
-    zls
 
     alejandra
     statix
