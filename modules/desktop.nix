@@ -2,9 +2,13 @@
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 
+  environment.plasma6.excludePackages = [pkgs.kdePackages.kwin-x11];
+
   services = {
     displayManager.plasma-login-manager.enable = true;
     desktopManager.plasma6.enable = true;
+    power-profiles-daemon.enable = false;
+    fwupd.enable = false;
 
     pipewire = {
       enable = true;

@@ -28,5 +28,9 @@
     enable = true;
     createDirectories = true;
   };
+  xdg.configFile."baloofilerc".text = ''
+    [Basic Settings]
+    Indexing-Enabled=false
+  '';
   programs.home-manager.enable = true;
 }

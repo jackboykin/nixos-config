@@ -1,30 +1,23 @@
 _: {
   networking = {
-    networkmanager = {
-      enable = true;
-      dns = "systemd-resolved";
-      ensureProfiles.profiles.wired = {
-        connection = {
-          id = "Wired connection 1";
-          type = "ethernet";
-          interface-name = "enp16s0";
-        };
-        ipv4 = {
-          method = "auto";
-          ignore-auto-dns = true;
-        };
-        ipv6 = {
-          method = "auto";
-          ignore-auto-dns = true;
-          ip6-privacy = "2";
-        };
-      };
-    };
-
+    useDHCP = false;
     nftables.enable = true;
   };
 
-  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd.network = {
+    enable = true;
+    wait-online.enable = false;
+    networks."10-wired" = {
+      matchConfig.Name = "enp16s0";
+      networkConfig = {
+        DHCP = "yes";
+        IPv6PrivacyExtensions = "yes";
+      };
+      dhcpV4Config.UseDNS = false;
+      dhcpV6Config.UseDNS = false;
+      ipv6AcceptRAConfig.UseDNS = false;
+    };
+  };
 
   services = {
     tailscale = {
