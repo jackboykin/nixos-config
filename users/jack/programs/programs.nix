@@ -29,23 +29,22 @@
     claude-code
     fd
     gh
+    hyperfine
     jq
     macchina
     ripgrep
+    uutils-coreutils-noprefix
     yazi
 
     bun
     clang
-    nodejs
     python3
     typescript
     zigpkgs.master
 
     clang-tools
     nixd
-    prettier
     pyright
-    typescript-language-server
     zig-zlint
 
     alejandra
