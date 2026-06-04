@@ -1,18 +1,31 @@
 {pkgs, ...}: {
   home.packages = [
-    (pkgs.writeShellScriptBin "ndu" ''
-      set -euo pipefail
-      out=$(nix build --dry-run \
-        /home/jack/nixos-config#nixosConfigurations.nixos-orion.config.system.build.toplevel \
-        --override-input nixpkgs github:NixOS/nixpkgs/nixos-unstable-small 2>&1)
+    (pkgs.writers.writeNuBin "ndu" ''
+      let target = "/home/jack/nixos-config#nixosConfigurations.nixos-orion.config.system.build.toplevel"
 
-      grep -iE "will be built|will be fetched" <<<"$out" || true
-      echo "--- would compile (config-gen noise filtered) ---"
-      awk '/will be built:/{f=1;next} /will be fetched/{f=0} f' <<<"$out" \
-        | grep '\.drv$' \
-        | sed -E 's#.*/[a-z0-9]{32}-##; s#\.drv$##' \
-        | grep -vE '^(unit-|X-Restart-Triggers-|system-|user-|etc$|etc-|activate$|activation-|boot\.json|builder\.pl|home-manager|hm_|man-|man$|nixos-(version|help|system)|.*-env$|.*-config.*|.*-completions$|dummy-|extra-|fix-|ensure-|mozilla-native|dbus-1$|issue$|helix-|.*-hook$|.*\.(conf|toml|json|rules|patch|bin|erofs|manpath|service|socket))' \
-        | sort -u || true
+      let noise = '^(unit-|X-Restart-Triggers-|system-|user-|etc$|etc-|activate$|activation-|boot\.json|builder\.pl|home-manager|hm_|man-|man$|nixos-(version|help|system)|.*-env$|.*-config.*|.*-completions$|dummy-|extra-|fix-|ensure-|mozilla-native|dbus-1$|issue$|helix-|.*-hook$|.*\.(conf|toml|json|rules|patch|bin|erofs|manpath|service|socket))'
+
+      let plan = (
+        nix build --dry-run $target --override-input nixpkgs github:NixOS/nixpkgs/nixos-unstable-small
+        | complete | get stderr | lines
+      )
+
+      print ($plan | where {|l| $l =~ '(?i)will be (built|fetched)' } | str join (char newline))
+      print "--- would compile (config-gen noise filtered) ---"
+
+      $plan
+      | skip until {|l| $l =~ 'will be built' }
+      | skip 1
+      | take until {|l| $l =~ 'will be fetched' }
+      | str trim
+      | where {|l| $l | str ends-with '.drv' }
+      | str replace -r '.*/[a-z0-9]{32}-' ""
+      | str replace -r '\.drv$' ""
+      | where {|l| $l !~ $noise }
+      | uniq
+      | sort
+      | str join (char newline)
+      | print
     '')
   ];
 }

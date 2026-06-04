@@ -60,7 +60,7 @@ in {
     };
 
     blacklistedKernelModules = disabledModules;
-    extraModprobeConfig = lib.concatMapStringsSep "\n" (m: "install ${m} ${pkgs.coreutils}/bin/false") disabledModules;
+    extraModprobeConfig = lib.concatMapStringsSep "\n" (m: "install ${m} ${pkgs.uutils-coreutils-noprefix}/bin/false") disabledModules;
 
     initrd.systemd.enable = true;
   };
