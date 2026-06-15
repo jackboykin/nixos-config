@@ -52,6 +52,7 @@ in {
     ];
     tmp.cleanOnBoot = true;
 
+    loader.timeout = 1;
     loader.efi.canTouchEfiVariables = true;
 
     lanzaboote = {

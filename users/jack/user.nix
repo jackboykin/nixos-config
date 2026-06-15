@@ -23,14 +23,16 @@
     };
   };
 
-  xdg.enable = true;
-  xdg.userDirs = {
+  xdg = {
     enable = true;
-    createDirectories = true;
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+    };
+    configFile."baloofilerc".text = ''
+      [Basic Settings]
+      Indexing-Enabled=false
+    '';
   };
-  xdg.configFile."baloofilerc".text = ''
-    [Basic Settings]
-    Indexing-Enabled=false
-  '';
   programs.home-manager.enable = true;
 }
