@@ -12,7 +12,6 @@ in {
     prefix = "C-Space";
     escapeTime = 0;
     baseIndex = 1;
-    keyMode = "emacs";
     mouse = true;
     historyLimit = 50000;
 
