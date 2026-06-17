@@ -64,7 +64,6 @@ with lib; let
 
     foreground = "#dae4e4";
     background = "#0b0a09";
-    cursorColor = "#dae4e4";
 
     base00 = background;
     base01 = "#1a1716";
@@ -72,7 +71,6 @@ with lib; let
     base03 = color8;
     base04 = "#7b6562";
     base05 = foreground;
-    base06 = color15;
     base07 = "#fce4f0";
 
     black = color0;
@@ -96,7 +94,6 @@ with lib; let
     maroon = color9;
     sky = blue;
     teal = cyan;
-    pink = magenta;
     purple = brightBlue;
     base = base00;
     mantle = base01;
@@ -106,7 +103,6 @@ with lib; let
     surface2 = base03;
     overlay0 = base01;
     overlay1 = base02;
-    overlay2 = base03;
 
     text = foreground;
     subtext1 = base04;
@@ -121,8 +117,6 @@ with lib; let
     gitModified = yellow;
     gitDeleted = red;
 
-    brightOrange = brightYellow;
-    brightPurple = brightMagenta;
     highlight = base07;
   };
 in {
