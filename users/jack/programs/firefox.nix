@@ -60,7 +60,6 @@
         "permissions.default.microphone" = 2;
         "privacy.globalprivacycontrol.enabled" = true;
         "privacy.userContext.ui.enabled" = true;
-        "security.OCSP.enabled" = 0;
         "security.csp.reporting.enabled" = false;
         "security.mixed_content.block_display_content" = true;
         "security.ssl.treat_unsafe_negotiation_as_broken" = true;
