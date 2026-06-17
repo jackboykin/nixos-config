@@ -27,11 +27,11 @@
     vscode
 
     claude-code
+    fastfetch
     fd
     gh
     hyperfine
     jq
-    macchina
     ripgrep
     uutils-coreutils-noprefix
     yazi
