@@ -36,7 +36,7 @@
     uutils-coreutils-noprefix
     yazi
 
-    bun
+    bun-canary
     clang
     python3
     typescript
