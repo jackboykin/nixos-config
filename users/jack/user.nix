@@ -33,6 +33,23 @@
       [Basic Settings]
       Indexing-Enabled=false
     '';
+    configFile."krunnerrc".text = ''
+      [Plugins]
+      baloosearchEnabled=false
+      bookmarksEnabled=false
+      browserhistoryEnabled=false
+      browsertabsEnabled=false
+      recentdocumentsEnabled=false
+      webshortcutsEnabled=false
+      unitconverterEnabled=false
+      CharacterRunnerEnabled=false
+      krunner_spellcheckEnabled=false
+      org.kde.activities2Enabled=false
+      org.kde.datetimeEnabled=false
+      placesEnabled=false
+      desktopsessionsEnabled=false
+      katesessionsEnabled=false
+    '';
   };
   programs.home-manager.enable = true;
 }
