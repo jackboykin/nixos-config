@@ -14,7 +14,7 @@
       flake = false;
     };
 
-    bun-canary = {
+    bun-bin = {
       url = "file+https://registry.npmjs.org/@oven/bun-linux-x64/canary";
       flake = false;
     };

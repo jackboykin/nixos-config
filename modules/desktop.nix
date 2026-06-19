@@ -32,30 +32,6 @@
 
   programs.gpu-screen-recorder.enable = true;
 
-  programs.chromium = {
-    enable = true;
-    extraOpts = {
-      BlockThirdPartyCookies = true;
-      DnsOverHttpsMode = "off";
-      HttpsOnlyMode = "force_enabled";
-      PasswordManagerEnabled = false;
-      MetricsReportingEnabled = false;
-      AutofillAddressEnabled = false;
-      AutofillCreditCardEnabled = false;
-      HardwareAccelerationModeEnabled = true;
-      AudioCaptureAllowed = true;
-      VideoCaptureAllowed = false;
-      DefaultGeolocationSetting = 2;
-      DefaultNotificationsSetting = 2;
-      DefaultImagesSetting = 1;
-      DefaultPopupsSetting = 2;
-      BackgroundModeEnabled = false;
-      DefaultBrowserSettingEnabled = false;
-      SyncDisabled = true;
-      BrowserSignin = 0;
-    };
-  };
-
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     noto-fonts

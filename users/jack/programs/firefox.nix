@@ -1,6 +1,11 @@
-{theme, ...}: {
+{
+  theme,
+  pkgs,
+  ...
+}: {
   programs.firefox = {
     enable = true;
+    package = pkgs.firefox-bin;
 
     profiles.jack = {
       isDefault = true;

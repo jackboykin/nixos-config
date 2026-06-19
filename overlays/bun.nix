@@ -2,7 +2,7 @@ bun-manifest: final: prev: let
   inherit (prev) lib;
   manifest = builtins.fromJSON (builtins.readFile "${bun-manifest}");
 in {
-  bun-canary = prev.stdenvNoCC.mkDerivation {
+  bun = prev.stdenvNoCC.mkDerivation {
     pname = "bun";
     inherit (manifest) version;
 
@@ -28,7 +28,7 @@ in {
 
     meta = {
       homepage = "https://bun.sh";
-      description = "Incredibly fast JavaScript runtime, bundler, test runner and package manager (canary)";
+      description = "Incredibly fast JavaScript runtime, bundler, test runner and package manager";
       license = lib.licenses.mit;
       platforms = ["x86_64-linux"];
       mainProgram = "bun";

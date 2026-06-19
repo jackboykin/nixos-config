@@ -11,15 +11,12 @@
     ./helix.nix
     ./konsole.nix
     ./mpv.nix
-    ./ndu.nix
     ./nushell.nix
-    ./rust.nix
     ./tmux.nix
     ./zoxide.nix
   ];
 
   home.packages = with pkgs; [
-    chromium
     kdePackages.kate
     obsidian
     spotify
@@ -36,9 +33,10 @@
     uutils-coreutils-noprefix
     yazi
 
-    bun-canary
+    bun
     clang
     python3
+    rust-bin.stable.latest.default
     typescript
     zigpkgs.master
 
