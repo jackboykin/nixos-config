@@ -1,4 +1,21 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  berkeley-mono-src,
+  ...
+}: let
+  berkeley-mono = pkgs.stdenvNoCC.mkDerivation {
+    pname = "berkeley-mono";
+    version = "tx02";
+    src = berkeley-mono-src;
+    dontConfigure = true;
+    dontBuild = true;
+    installPhase = ''
+      runHook preInstall
+      install -Dm644 $src/*.ttf -t $out/share/fonts/truetype/berkeley-mono
+      runHook postInstall
+    '';
+  };
+in {
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -32,21 +49,23 @@
 
   programs.gpu-screen-recorder.enable = true;
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    noto-fonts-lgc-plus
-    lexend
-    liberation_ttf
-    inter
-  ];
+  fonts.packages =
+    [berkeley-mono]
+    ++ (with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-color-emoji
+      lexend
+      liberation_ttf
+      inter
+      source-serif
+    ]);
 
   fonts.fontconfig = {
     subpixel.rgba = "rgb";
     defaultFonts = {
       serif = [
+        "Source Serif 4"
         "Noto Serif"
         "Liberation Serif"
       ];
@@ -56,7 +75,7 @@
         "Noto Sans"
       ];
       monospace = [
-        "JetBrainsMono Nerd Font"
+        "Berkeley Mono"
         "Noto Sans Mono"
       ];
       emoji = [

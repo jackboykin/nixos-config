@@ -19,6 +19,11 @@
       flake = false;
     };
 
+    berkeley-mono-src = {
+      url = "path:/home/jack/.local/share/font-src/berkeley-mono";
+      flake = false;
+    };
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";

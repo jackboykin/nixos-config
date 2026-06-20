@@ -74,11 +74,9 @@
         "signon.management.page.enabled" = false;
         "signon.rememberSignons" = false;
         "font.name.sans-serif.x-western" = "Inter";
-        "font.name.serif.x-western" = "Noto Serif";
+        "font.name.serif.x-western" = "Source Serif 4";
         "font.name.monospace.x-western" = theme.fonts.mono.name;
-        "font.size.variable.x-western" = 16;
         "font.default.x-western" = "sans-serif";
-        "gfx.font_rendering.fontconfig.max_generic_substitutions" = 127;
         "browser.urlbar.shortcuts.bookmarks" = false;
         "browser.urlbar.shortcuts.history" = false;
         "browser.urlbar.shortcuts.tabs" = false;

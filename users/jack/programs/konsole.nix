@@ -84,6 +84,6 @@ in {
 
     [Appearance]
     ColorScheme=Bellatrix
-    Font=${theme.fonts.mono.name},${toString theme.fonts.size.normal},-1,5,63,0,0,0,0,0
+    Font=${theme.fonts.mono.name},${toString theme.fonts.size.normal},-1,5,50,0,0,0,0,0
   '';
 }
