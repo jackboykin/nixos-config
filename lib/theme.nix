@@ -146,7 +146,7 @@ in {
       normal = 10;
       big = 14;
     };
-    sans.name = "Lexend";
-    mono.name = "Berkeley Mono";
+    sans.name = "Inter";
+    mono.name = "JetBrainsMono Nerd Font Mono";
   };
 }

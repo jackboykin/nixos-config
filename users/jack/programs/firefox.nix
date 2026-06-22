@@ -73,7 +73,7 @@
         "signon.formlessCapture.enabled" = false;
         "signon.management.page.enabled" = false;
         "signon.rememberSignons" = false;
-        "font.name.sans-serif.x-western" = "Inter";
+        "font.name.sans-serif.x-western" = theme.fonts.sans.name;
         "font.name.serif.x-western" = "Source Serif 4";
         "font.name.monospace.x-western" = theme.fonts.mono.name;
         "font.default.x-western" = "sans-serif";

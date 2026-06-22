@@ -1,21 +1,4 @@
-{
-  pkgs,
-  berkeley-mono-src,
-  ...
-}: let
-  berkeley-mono = pkgs.stdenvNoCC.mkDerivation {
-    pname = "berkeley-mono";
-    version = "tx02";
-    src = berkeley-mono-src;
-    dontConfigure = true;
-    dontBuild = true;
-    installPhase = ''
-      runHook preInstall
-      install -Dm644 $src/*.ttf -t $out/share/fonts/truetype/berkeley-mono
-      runHook postInstall
-    '';
-  };
-in {
+{pkgs, ...}: {
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -49,20 +32,32 @@ in {
 
   programs.gpu-screen-recorder.enable = true;
 
-  fonts.packages =
-    [berkeley-mono]
-    ++ (with pkgs; [
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-color-emoji
-      lexend
-      liberation_ttf
-      inter
-      source-serif
-    ]);
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    julia-mono
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    liberation_ttf
+    inter
+    source-serif
+  ];
 
   fonts.fontconfig = {
     subpixel.rgba = "rgb";
+    localConf = ''
+      <?xml version="1.0"?>
+      <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+      <fontconfig>
+        <selectfont>
+          <rejectfont>
+            <pattern>
+              <patelt name="family"><string>FreeMono</string></patelt>
+            </pattern>
+          </rejectfont>
+        </selectfont>
+      </fontconfig>
+    '';
     defaultFonts = {
       serif = [
         "Source Serif 4"
@@ -70,12 +65,12 @@ in {
         "Liberation Serif"
       ];
       sansSerif = [
-        "Lexend"
         "Inter"
         "Noto Sans"
       ];
       monospace = [
-        "Berkeley Mono"
+        "JetBrainsMono Nerd Font"
+        "JuliaMono"
         "Noto Sans Mono"
       ];
       emoji = [
