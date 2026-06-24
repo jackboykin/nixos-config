@@ -10,7 +10,13 @@ zig-index: final: prev: let
       pname = "zig";
       version = entry.version or name;
       src = prev.fetchurl {
-        url = bin.tarball;
+        urls = let
+          file = baseNameOf bin.tarball;
+        in [
+          "https://pkg.hexops.org/zig/${file}"
+          "https://zigmirror.hryx.net/zig/${file}"
+          bin.tarball
+        ];
         sha256 = bin.shasum;
       };
       dontConfigure = true;
