@@ -21,7 +21,7 @@
     obsidian
     spotify
     vesktop
-    vscode
+    zed-editor
 
     claude-code
     fastfetch
@@ -44,6 +44,10 @@
     nixd
     pyright
     zig-zlint
+
+    bandwhich
+    nmap
+    tcpdump
 
     alejandra
     statix
