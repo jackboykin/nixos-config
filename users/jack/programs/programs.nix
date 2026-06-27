@@ -7,7 +7,6 @@
     ./firefox.nix
     ./fish.nix
     ./fzf.nix
-    ./ghostty.nix
     ./git.nix
     ./helix.nix
     ./konsole.nix
