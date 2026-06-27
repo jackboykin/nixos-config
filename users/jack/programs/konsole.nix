@@ -7,8 +7,8 @@
   toRGB = hex: let
     rgb = theme.hexToRgb hex;
   in "${toString rgb.r},${toString rgb.g},${toString rgb.b}";
-in {
-  xdg.dataFile."konsole/Bellatrix.colorscheme".text = ''
+
+  colorscheme = ''
     [General]
     Description=Bellatrix
     Opacity=1
@@ -75,15 +75,33 @@ in {
     Color=${toRGB colors.color15}
   '';
 
-  xdg.dataFile."konsole/Bellatrix.profile".text = ''
+  profile = ''
     [General]
     Command=${pkgs.fish}/bin/fish
     Name=Bellatrix
     Parent=FALLBACK/
     ShowTerminalSizeHint=false
+    TerminalColumns=143
+    TerminalRows=41
 
     [Appearance]
     ColorScheme=Bellatrix
     Font=${theme.fonts.mono.name},${toString theme.fonts.size.normal},-1,5,50,0,0,0,0,0
   '';
+
+  konsolerc = ''
+    MenuBar=Disabled
+
+    [Desktop Entry]
+    DefaultProfile=Bellatrix.profile
+
+    [KonsoleWindow]
+    RememberWindowSize=false
+  '';
+in {
+  xdg = {
+    dataFile."konsole/Bellatrix.colorscheme".text = colorscheme;
+    dataFile."konsole/Bellatrix.profile".text = profile;
+    configFile."konsolerc".text = konsolerc;
+  };
 }
