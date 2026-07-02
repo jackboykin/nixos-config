@@ -21,7 +21,6 @@ in {
       osc = false;
       border = false;
       deband = true;
-      hls-bitrate = "max";
       demuxer-lavf-o = "live_start_index=0";
       force-seekable = true;
       vo = "gpu-next";
