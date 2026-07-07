@@ -12,7 +12,7 @@
     ./konsole.nix
     ./mpv.nix
     ./nushell.nix
-    ./tmux.nix
+    ./zellij.nix
     ./zoxide.nix
   ];
 
