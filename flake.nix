@@ -14,11 +14,6 @@
       flake = false;
     };
 
-    bun-bin = {
-      url = "file+https://registry.npmjs.org/@oven/bun-linux-x64/canary";
-      flake = false;
-    };
-
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -3,5 +3,4 @@ inputs: [
   inputs.rust-overlay.overlays.default
   (import ./plasma-flatten.nix)
   (import ./zig.nix inputs.zig-index)
-  (import ./bun.nix inputs.bun-bin)
 ]
