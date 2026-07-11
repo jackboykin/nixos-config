@@ -49,12 +49,23 @@ _: {
     ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
   '';
 
-  systemd.oomd = {
-    enableSystemSlice = true;
-    enableUserSlices = true;
-  };
+  systemd = {
+    oomd = {
+      enableSystemSlice = true;
+      enableUserSlices = true;
+    };
 
-  systemd.slices."user".sliceConfig.ManagedOOMMemoryPressureLimit = "60%";
+    slices."user".sliceConfig.ManagedOOMMemoryPressureLimit = "60%";
+
+    slices."nix-daemon".sliceConfig = {
+      ManagedOOMMemoryPressure = "kill";
+      ManagedOOMMemoryPressureLimit = "50%";
+    };
+    services.nix-daemon.serviceConfig = {
+      Slice = "nix-daemon.slice";
+      OOMScoreAdjust = 1000;
+    };
+  };
 
   hardware = {
     graphics.enable = true;
