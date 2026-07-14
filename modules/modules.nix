@@ -6,7 +6,7 @@ _: {
     ./boot.nix
     ./desktop.nix
     ./networking.nix
-    ./time.nix
+    ./ntp.nix
     ./hardware.nix
     ./secrets.nix
   ];

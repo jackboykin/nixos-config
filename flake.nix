@@ -54,16 +54,7 @@
       hostname,
       username,
     }: let
-      specialArgs =
-        inputs
-        // {
-          inherit
-            username
-            hostname
-            system
-            theme
-            ;
-        };
+      specialArgs = {inherit username hostname;};
     in
       nixpkgs.lib.nixosSystem {
         inherit system specialArgs;
@@ -79,7 +70,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               backupFileExtension = "backup";
-              extraSpecialArgs = specialArgs;
+              extraSpecialArgs = specialArgs // {inherit theme;};
               users.${username} = import ./users/${username}/user.nix;
             };
           }
