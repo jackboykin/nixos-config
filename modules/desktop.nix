@@ -4,6 +4,8 @@
 
   environment.plasma6.excludePackages = [pkgs.kdePackages.kwin-x11];
 
+  gtk.iconCache.enable = true;
+
   services = {
     displayManager.plasma-login-manager.enable = true;
     desktopManager.plasma6.enable = true;

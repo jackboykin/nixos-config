@@ -28,8 +28,8 @@ _: {
         "ryoppippi.cachix.org-1:b2LbtWNvJeL/qb1B6TYOMK+apaCps4SCbzlPRfSQIms="
       ];
       use-xdg-base-directories = true;
-      max-jobs = 4;
-      cores = 8;
+      max-jobs = 2;
+      cores = 16;
     };
   };
 
