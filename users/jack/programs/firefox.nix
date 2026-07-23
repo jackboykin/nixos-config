@@ -18,6 +18,7 @@
 
         "browser.contentblocking.category" = "strict";
         "layout.frame_rate" = 144;
+        "ui.prefersReducedMotion" = 1;
 
         "browser.discovery.enabled" = false;
         "browser.download.manager.addToRecentDocs" = false;
