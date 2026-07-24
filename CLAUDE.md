@@ -1,9 +1,5 @@
 # CLAUDE.md
 
-## Philosophy
-
-This is a personal NixOS desktop config. It is **simple, minimal, modern, bleeding edge**.
-
 ## Taste
 
 **Code style**: Concise and flat inside files, well-organized across the module structure. Prefer `let`/`inherit` over deep nesting. Keep files focused and short.
