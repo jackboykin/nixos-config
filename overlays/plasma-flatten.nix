@@ -9,9 +9,6 @@ final: prev: let
     "plasma-workspace"
   ];
 
-  # copy-wrapped for member-path rewriting only; contribute nothing to the forest
-  rewrites = ["plasma-login-manager"];
-
   subdirs = {
     NIXPKGS_QT6_QML_IMPORT_PATH = "lib/qt-6/qml";
     QT_PLUGIN_PATH = "lib/qt-6/plugins";
@@ -22,23 +19,21 @@ in {
   kdePackages = let
     kp = prev.kdePackages;
 
-    step = withMembers: d:
+    step = d:
       map (x: {
         key = x.outPath;
         val = x;
-      }) (lib.filter (x: lib.isDerivation x && (withMembers || !(lib.elem (lib.getName x) members))) d);
+      }) (lib.filter (x: lib.isDerivation x && !(lib.elem (lib.getName x) members)) d);
 
-    closureOf = withMembers: inputs:
+    closureOf = inputs:
       map (x: x.val) (builtins.genericClosure {
-        startSet = step withMembers inputs;
+        startSet = step inputs;
         operator = item:
-          step withMembers ((item.val.propagatedBuildInputs or []) ++ (item.val.propagatedNativeBuildInputs or []));
+          step ((item.val.propagatedBuildInputs or []) ++ (item.val.propagatedNativeBuildInputs or []));
       });
 
-    inputsOf = pkg: (pkg.buildInputs or []) ++ (pkg.propagatedBuildInputs or []);
-
     manifestOf = pkg: let
-      deps = closureOf false (inputsOf pkg);
+      deps = closureOf ((pkg.buildInputs or []) ++ (pkg.propagatedBuildInputs or []));
     in
       lib.flatten (lib.mapAttrsToList (
           var: sub:
@@ -88,194 +83,134 @@ in {
         done
       '';
 
-    copiedOutputs = pkg: lib.intersectLists ["out" "sessions"] pkg.outputs;
+    shimOutputs = pkg: lib.intersectLists ["out" "sessions"] pkg.outputs;
 
-    memberDepsOf = pkg: let
-      names = map lib.getName (closureOf true (inputsOf pkg));
-    in
-      lib.filter (m: m != lib.getName pkg && lib.elem m names) members;
+    shims = lib.genAttrs members (n: shim kp.${n});
 
-    copies = lib.genAttrs (members ++ rewrites) (n: copyWrap kp.${n});
-
-    # cp -a of the substituted upstream package, member store hashes rewritten
-    # (same-length, replaceDependency-style), binary wrappers rebuilt from their
-    # embedded makeCWrapper docstrings with flattened env args.
-    copyWrap = pkg: let
-      pairs =
-        map (o: {
-          old = "${pkg.${o}}";
-          new = placeholder o;
-        }) (copiedOutputs pkg)
-        ++ lib.concatMap (
-          m:
-            map (o: {
-              old = "${kp.${m}.${o}}";
-              new = "${copies.${m}.${o}}";
-            }) (copiedOutputs kp.${m})
-        ) (memberDepsOf pkg);
-    in
+    # lndir over substituted vanilla, kept alive as a real reference. Only two
+    # things diverge: wrappers rebuilt with dep dirs collapsed into the forest,
+    # and exec-surface text (units, dbus, .desktop) repointed at the shim.
+    shim = pkg:
       final.runCommand pkg.name {
-        outputs = copiedOutputs pkg;
-        srcPaths = map (o: "${pkg.${o}}") (copiedOutputs pkg);
-        replaceOld = map (p: p.old) pairs;
-        replaceNew = map (p: p.new) pairs;
-        forbidden =
-          lib.concatMap (
-            m:
-              map (o: baseNameOf (builtins.unsafeDiscardStringContext "${kp.${m}.${o}}")) (copiedOutputs kp.${m})
-          )
-          (members ++ rewrites);
+        outputs = shimOutputs pkg;
+        srcPaths = map (o: "${pkg.${o}}") (shimOutputs pkg);
         flattenManifest = manifest;
         passAsFile = ["flattenManifest"];
         flatVars = toString (lib.attrNames subdirs);
-        nativeBuildInputs = [final.makeBinaryWrapper final.binutils final.gtk3];
+        nativeBuildInputs = [final.lndir final.makeBinaryWrapper final.binutils];
         preferLocalBuild = true;
         allowSubstitutes = false;
         passthru =
           (pkg.passthru or {})
-          // lib.genAttrs (lib.subtractLists (copiedOutputs pkg) pkg.outputs) (o: pkg.${o})
+          // lib.genAttrs (lib.subtractLists (shimOutputs pkg) pkg.outputs) (o: pkg.${o})
           // {vanilla = pkg;};
         meta =
           pkg.meta
           // {
-            outputsToInstall = lib.intersectLists (copiedOutputs pkg) (pkg.meta.outputsToInstall or ["out"]);
+            outputsToInstall = lib.intersectLists (shimOutputs pkg) (pkg.meta.outputsToInstall or ["out"]);
           };
       } ''
         outs=($outputs)
         srcs=($srcPaths)
-        olds=($replaceOld)
-        news=($replaceNew)
 
-        sedscript="$NIX_BUILD_TOP/rewrite.sed"
-        touch "$sedscript"
-        for i in "''${!olds[@]}"; do
-          old=''${olds[i]}
-          new=''${news[i]}
-          if ((''${#old} != ''${#new})); then
-            echo "copyWrap: length mismatch: $old -> $new" >&2
-            exit 1
-          fi
-          lhs=$(printf '%s' "$old" | sed 's/[.[\*^$]/\\&/g')
-          rhs=''${new//\\/\\\\}
-          rhs=''${rhs//&/\\&}
-          printf 's|%s|%s|g\n' "$lhs" "$rhs" >>"$sedscript"
-        done
-
+        sedExpr=
+        grepArgs=()
+        # exec surfaces only -- a share ref repointed at the shim's symlink
+        # forest risks the KPackage canonicalize-outside-root rejection
         for i in "''${!outs[@]}"; do
-          dst=''${!outs[i]}
-          cp -a "''${srcs[i]}" "$dst"
-          chmod -R u+w "$dst"
-          find "$dst" -type f -print0 | xargs -0 -r sed -i -f "$sedscript"
-          while IFS= read -r -d "" l; do
-            t=$(readlink "$l")
-            nt=$t
-            for j in "''${!olds[@]}"; do
-              nt=''${nt//''${olds[j]}/''${news[j]}}
-            done
-            if [[ $nt != "$t" ]]; then
-              ln -sfT "$nt" "$l"
-            fi
-          done < <(find "$dst" -type l -print0)
+          for d in bin libexec; do
+            sedExpr+="s|''${srcs[i]}/$d|''${!outs[i]}/$d|g;"
+            grepArgs+=(-e "''${srcs[i]}/$d")
+          done
+        done
+        forestArgs=()
+        for var in $flatVars; do
+          if [[ -d ${forest}/$var ]]; then
+            forestArgs+=(--prefix "$var" : "${forest}/$var")
+          fi
         done
 
         rewrapped=0
         droppedData=0
-        while IFS= read -r -d "" f; do
-          cmd=$(strings -dw "$f" | sed -n '/^makeCWrapper/,/^$/p')
-          [[ -n $cmd ]] || continue
-          eval "words=( ''${cmd#makeCWrapper} )"
-          exe=''${words[0]}
-          if [[ $exe != "$out"/* ]]; then
-            echo "copyWrap: wrapped executable $exe escaped $out" >&2
-            exit 1
-          fi
-          args=("''${words[@]:1}")
-          kept=()
-          own=()
-          fileFlat=0
-          fileDropped=0
-          i=0
-          while ((i < ''${#args[@]})); do
-            if [[ ''${args[i]} == --prefix && " $flatVars " == *" ''${args[i + 1]} "* ]]; then
-              var=''${args[i + 1]}
-              dir=''${args[i + 3]}
-              if [[ $dir == "$out"/* ]]; then
-                own+=(--prefix "$var" : "$dir")
-              else
-                fileFlat=$((fileFlat + 1))
-                if grep -qxF "$var $dir" "$flattenManifestPath"; then
-                  fileDropped=$((fileDropped + 1))
-                  if [[ $var == XDG_DATA_DIRS ]]; then
-                    droppedData=$((droppedData + 1))
-                  fi
+        for i in "''${!outs[@]}"; do
+          src=''${srcs[i]}
+          dst=''${!outs[i]}
+          mkdir -p "$dst"
+          lndir -silent "$src" "$dst"
+
+          while IFS= read -r -d "" f; do
+            cmd=$(strings -dw "$f" | sed -n '/^makeCWrapper/,/^$/p')
+            [[ -n $cmd ]] || continue
+            eval "words=( ''${cmd#makeCWrapper} )"
+            exe=''${words[0]}
+            if [[ $exe != "$src"/* ]]; then
+              echo "shim: wrapped executable $exe escaped $src" >&2
+              exit 1
+            fi
+            args=("''${words[@]:1}")
+            kept=()
+            own=()
+            fileFlat=0
+            fileDropped=0
+            j=0
+            while ((j < ''${#args[@]})); do
+              if [[ ''${args[j]} == --prefix && " $flatVars " == *" ''${args[j + 1]} "* ]]; then
+                var=''${args[j + 1]}
+                dir=''${args[j + 3]}
+                if [[ $dir == "$src"/* ]]; then
+                  own+=(--prefix "$var" : "$dir")
                 else
-                  kept+=(--prefix "$var" : "$dir")
+                  fileFlat=$((fileFlat + 1))
+                  if grep -qxF "$var $dir" "$flattenManifestPath"; then
+                    fileDropped=$((fileDropped + 1))
+                    if [[ $var == XDG_DATA_DIRS ]]; then
+                      droppedData=$((droppedData + 1))
+                    fi
+                  else
+                    kept+=(--prefix "$var" : "$dir")
+                  fi
                 fi
+                ((j += 4))
+              else
+                kept+=("''${args[j]}")
+                ((j += 1))
               fi
-              ((i += 4))
-            else
-              kept+=("''${args[i]}")
-              ((i += 1))
+            done
+            if ((fileFlat > 0 && fileDropped == 0)); then
+              echo "shim: $f has dep-dir wrapper args but none matched the manifest; hook layout changed" >&2
+              exit 1
             fi
-          done
-          forestArgs=()
-          for var in $flatVars; do
-            if [[ -d ${forest}/$var ]]; then
-              forestArgs+=(--prefix "$var" : "${forest}/$var")
-            fi
-          done
-          if ((fileFlat > 0 && fileDropped == 0)); then
-            echo "copyWrap: $f has dep-dir wrapper args but none matched the manifest; hook layout changed" >&2
-            exit 1
-          fi
-          rm "$f"
-          makeBinaryWrapper "$exe" "$f" "''${kept[@]}" "''${forestArgs[@]}" "''${own[@]}"
-          rewrapped=$((rewrapped + 1))
-        done < <(find "$out" -type f -executable -print0)
+            w=$dst''${f#"$src"}
+            rm "$w"
+            makeBinaryWrapper "$exe" "$w" "''${kept[@]}" "''${forestArgs[@]}" "''${own[@]}"
+            rewrapped=$((rewrapped + 1))
+          done < <(find "$src" -type f -executable -print0)
+
+          while IFS= read -r f; do
+            [[ -L $f ]] || continue
+            t=$(readlink "$f")
+            rm "$f"
+            sed "$sedExpr" "$t" >"$f"
+            chmod --reference="$t" "$f"
+          done < <(grep -RlIF "''${grepArgs[@]}" "$dst")
+        done
 
         if ((rewrapped == 0)); then
-          echo "copyWrap: found no binary wrappers to rebuild" >&2
+          echo "shim: found no binary wrappers to rebuild" >&2
           exit 1
         fi
         if ((droppedData == 0)); then
-          echo "copyWrap: dropped no XDG_DATA_DIRS wrapper args; hook layout changed" >&2
+          echo "shim: dropped no XDG_DATA_DIRS wrapper args; hook layout changed" >&2
           exit 1
         fi
 
-        for themedir in "$out"/share/icons/*/; do
-          [[ -d $themedir ]] || continue
-          rm -f "$themedir/icon-theme.cache"
-          gtk-update-icon-cache --ignore-theme-index --quiet "$themedir"
-        done
-
-        for i in "''${!outs[@]}"; do
-          dst=''${!outs[i]}
-          for h in $forbidden; do
-            if hits=$(grep -rlF "$h" "$dst"); then
-              echo "copyWrap: vanilla member reference $h survives in:" >&2
-              echo "$hits" >&2
-              exit 1
-            fi
-            while IFS= read -r -d "" l; do
-              if [[ $(readlink "$l") == *"$h"* ]]; then
-                echo "copyWrap: vanilla member symlink $l -> $(readlink "$l")" >&2
-                exit 1
-              fi
-            done < <(find "$dst" -type l -print0)
-            while IFS= read -r -d "" z; do
-              case $z in
-                *.gz) dec="gzip -dc" ;;
-                *.bz2) dec="bzip2 -dc" ;;
-                *.xz) dec="xz -dc" ;;
-              esac
-              if $dec "$z" | grep -qF "$h"; then
-                echo "copyWrap: vanilla member reference $h inside compressed $z" >&2
-                exit 1
-              fi
-            done < <(find "$dst" \( -name '*.gz' -o -name '*.bz2' -o -name '*.xz' \) -type f -print0)
-          done
-        done
+        # unreferenced after the sed; a GC'd vanilla output forces a source rebuild
+        if [[ -L $out/nix-support ]]; then
+          rm "$out/nix-support"
+        fi
+        mkdir -p "$out/nix-support"
+        printf '%s\n' "''${srcs[@]}" >"$out/nix-support/shim-vanilla"
       '';
   in
-    kp // copies;
+    kp // shims;
 }
