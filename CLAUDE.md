@@ -8,6 +8,7 @@
 - Don't cargo-cult patterns from other NixOS configs. Understand the why before suggesting anything.
 - Don't set options to their default values. If the default is already what we want, leave it out.
 - **Verify against real sources.** NixOS options, Home Manager options, and Nix syntax change frequently. Don't trust training data for anything non-trivial — check the actual nixpkgs source, option declarations, or official docs before suggesting module options or config patterns.
+- `flake.lock` churns from daily updates. Never revert it; fold it silently into whichever commit is at hand and otherwise ignore it unless the task is about inputs.
 
 ## Commands
 
@@ -33,5 +34,6 @@ statix fix .          # Auto-fix lint issues
 - `hosts/nixos-orion/` — the one machine this manages
 - `modules/` — system-level NixOS config (boot, desktop, networking, etc.)
 - `users/jack/` — Home Manager config, shell, and per-program modules
+- `overlays/` — nixpkgs overlays, aggregated in `overlays.nix`
 - `lib/theme.nix` — color theme used across all program configs
 - `secrets/` — sops-nix encrypted secrets
