@@ -57,11 +57,14 @@
       specialArgs = {inherit username hostname;};
     in
       nixpkgs.lib.nixosSystem {
-        inherit system specialArgs;
+        inherit specialArgs;
         modules = [
           ./hosts/${hostname}/host.nix
           ./modules/modules.nix
-          {nixpkgs.overlays = overlays;}
+          {
+            nixpkgs.hostPlatform = lib.mkDefault system;
+            nixpkgs.overlays = overlays;
+          }
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager

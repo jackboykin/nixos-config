@@ -8,6 +8,7 @@ _: {
     ./networking.nix
     ./ntp.nix
     ./hardware.nix
+    ./musl.nix
     ./secrets.nix
   ];
 }

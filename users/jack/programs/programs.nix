@@ -32,7 +32,7 @@
     hyperfine
     jq
     ripgrep
-    uutils-coreutils-noprefix
+    pkgsStatic.uutils-coreutils-noprefix
     yazi
 
     bun
