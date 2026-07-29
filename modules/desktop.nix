@@ -4,6 +4,8 @@
 
   environment.plasma6.excludePackages = [pkgs.kdePackages.kwin-x11];
 
+  programs.kde-pim.enable = false;
+
   gtk.iconCache.enable = true;
 
   services = {
@@ -15,7 +17,6 @@
     pipewire = {
       enable = true;
       alsa.enable = true;
-      alsa.support32Bit = true;
       pulse.enable = true;
       extraConfig.pipewire."99-sample-rates"."context.properties"."default.clock.allowed-rates" = [
         44100
