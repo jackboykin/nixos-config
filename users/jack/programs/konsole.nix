@@ -1,8 +1,4 @@
-{
-  pkgs,
-  theme,
-  ...
-}: let
+{theme, ...}: let
   inherit (theme) colors;
   toRGB = hex: let
     rgb = theme.hexToRgb hex;
@@ -77,7 +73,6 @@
 
   profile = ''
     [General]
-    Command=${pkgs.fish}/bin/fish
     Name=Bellatrix
     Parent=FALLBACK/
     ShowTerminalSizeHint=false

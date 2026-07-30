@@ -10,7 +10,7 @@
     users.${username} = {
       isNormalUser = true;
       description = username;
-      shell = pkgs.fish;
+      shell = pkgs.nushell;
       hashedPasswordFile = config.sops.secrets.user-password.path;
       extraGroups = [
         "wheel"
@@ -19,11 +19,7 @@
     };
   };
 
-  environment.shells = [pkgs.fish];
-  programs.fish = {
-    enable = true;
-    generateCompletions = false;
-  };
+  environment.shells = [pkgs.nushell];
 
   security.sudo = {
     execWheelOnly = true;
