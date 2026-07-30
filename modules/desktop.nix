@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  julia-mono = pkgs.runCommand "juliamono-terminal-fallback" {} ''
+    install -Dm444 ${pkgs.julia-mono}/share/fonts/truetype/JuliaMono-{Regular,Bold}.ttf -t $out/share/fonts/truetype
+  '';
+in {
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 

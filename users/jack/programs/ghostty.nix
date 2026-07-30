@@ -10,7 +10,7 @@ in {
 
     settings = {
       theme = "bellatrix";
-      font-family = fonts.mono.name;
+      font-family = [fonts.mono.name fonts.mono.fallback];
       font-size = fonts.size.normal;
       freetype-load-flags = "no-light,no-autohint";
       window-decoration = "none";
