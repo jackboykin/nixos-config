@@ -14,6 +14,11 @@
       flake = false;
     };
 
+    bun-bin = {
+      url = "file+https://github.com/oven-sh/bun/releases/download/canary/bun-linux-x64.zip";
+      flake = false;
+    };
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";

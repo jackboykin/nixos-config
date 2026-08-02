@@ -17,6 +17,7 @@
       nb = "nh os boot";
       nbu = "nh os boot -u";
       cf = "claude --dangerously-skip-permissions --system-prompt=\"\"";
+      cfw = "claude --dangerously-skip-permissions --system-prompt=\"\" --settings '{\"disableWorkflows\": false}'";
       l = "eza --icons -la --no-user --no-time --no-permissions --git --group-directories-first";
       lr = "eza --icons -laR --git-ignore --git --no-user --no-time --no-permissions --group-directories-first";
       t = "eza --icons --tree --git-ignore";
