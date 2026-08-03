@@ -5,7 +5,7 @@
 }: {
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-bin;
+    package = pkgs.firefox-nightly;
 
     profiles.jack = {
       isDefault = true;
@@ -17,6 +17,8 @@
         "browser.aboutwelcome.enabled" = false;
 
         "browser.contentblocking.category" = "strict";
+        "media.hardware-video-decoding-vulkan.enabled" = true;
+        "media.hardware-video-decoding-vulkan.direct-export.enabled" = true;
         "layout.frame_rate" = 144;
         "ui.prefersReducedMotion" = 1;
 
