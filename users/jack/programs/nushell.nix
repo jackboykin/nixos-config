@@ -1,11 +1,11 @@
 {
-  config,
+  pkgs,
   lib,
   theme,
   ...
 }: let
   inherit (theme) colors;
-  inherit (lib.hm.nushell) mkNushellInline;
+
   unbold =
     lib.genAttrs [
       "binary_printable"
@@ -39,38 +39,57 @@
     ] (_: "purple")
     // lib.genAttrs ["shape_block" "shape_flag" "shape_table"] (_: "blue")
     // lib.genAttrs ["binary_non_ascii" "shape_range"] (_: "yellow");
-  sessionPath =
-    map (lib.replaceStrings ["$HOME"] [config.home.homeDirectory])
-    config.home.sessionPath;
-in {
-  programs.nushell = {
-    enable = true;
 
-    settings = {
-      show_banner = false;
-      history.file_format = "sqlite";
-      completions.algorithm = "fuzzy";
-      highlight_resolved_externals = true;
-
-      color_config =
-        unbold
-        // {
-          row_index = colors.subtext0;
-          separator = colors.surface2;
-          search_result = mkNushellInline ''{fg: "${colors.base}", bg: "${colors.yellow}"}'';
-          shape_external = colors.red;
-          shape_external_resolved = colors.cyan;
-          shape_garbage = colors.red;
-        };
+  colorConfig =
+    unbold
+    // {
+      row_index = colors.subtext0;
+      separator = colors.surface2;
+      search_result = ''{fg: "${colors.base}", bg: "${colors.yellow}"}'';
+      shape_external = colors.red;
+      shape_external_resolved = colors.cyan;
+      shape_garbage = colors.red;
     };
 
-    environmentVariables = config.home.sessionVariables;
+  toNu = v:
+    if lib.hasPrefix "{" v
+    then v
+    else ''"${v}"'';
 
-    extraEnv = ''
-      $env.PATH = ($env.PATH | append ${lib.hm.nushell.toNushell {} sessionPath} | uniq)
+  aliases = {
+    q = "exit";
+    nr = "nh os switch";
+    nru = "nh os switch -u";
+    nb = "nh os boot";
+    nbu = "nh os boot -u";
+    cf = ''claude --dangerously-skip-permissions --system-prompt=""'';
+    cfw = ''claude --dangerously-skip-permissions --system-prompt="" --settings '{"disableWorkflows": false}' '';
+    eza = "eza --icons auto --git";
+    l = "eza --icons -la --no-user --no-time --no-permissions --git --group-directories-first";
+    lr = "eza --icons -laR --git-ignore --git --no-user --no-time --no-permissions --group-directories-first";
+    t = "eza --icons --tree --git-ignore";
+  };
+in {
+  programs.nushell.enable = true;
+
+  home.links = {
+    ".config/nushell/env.nu" = pkgs.writeText "env.nu" ''
+      $env.PATH = ($env.PATH | append [
+          $"($env.HOME)/.cargo/bin"
+          $"($env.HOME)/.local/bin"
+      ] | uniq)
     '';
 
-    extraConfig = ''
+    ".config/nushell/config.nu" = pkgs.writeText "config.nu" ''
+      $env.config.show_banner = false
+      $env.config.history.file_format = "sqlite"
+      $env.config.completions.algorithm = "fuzzy"
+      $env.config.highlight_resolved_externals = true
+
+      $env.config.color_config = ($env.config.color_config | merge {
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "    ${k}: ${toNu v}") colorConfig)}
+      })
+
       $env.PROMPT_COMMAND = {||
           let dir = if ($env.PWD | str starts-with $nu.home-dir) {
               $env.PWD | str replace $nu.home-dir "~"
@@ -84,6 +103,8 @@ in {
           let color = if $env.LAST_EXIT_CODE == 0 { "${colors.magenta}" } else { "${colors.red}" }
           $" (ansi --escape {fg: ($color)})❯(ansi reset) "
       }
+
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: ''alias "${k}" = ${lib.removeSuffix " " v}'') aliases)}
     '';
   };
 }

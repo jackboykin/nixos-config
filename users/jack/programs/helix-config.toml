@@ -1,0 +1,93 @@
+theme = "bellatrix"
+
+[editor]
+bufferline = "multiple"
+color-modes = true
+cursorline = true
+line-number = "relative"
+scrolloff = 8
+true-color = true
+
+[editor.auto-save]
+focus-lost = true
+
+[editor.auto-save.after-delay]
+enable = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.indent-guides]
+render = true
+
+[editor.inline-diagnostics]
+cursor-line = "hint"
+other-lines = "disable"
+
+[editor.lsp]
+display-inlay-hints = true
+display-messages = true
+
+[editor.soft-wrap]
+enable = true
+wrap-at-text-width = true
+
+[editor.statusline]
+left = ["mode", "spinner", "version-control", "file-name"]
+right = ["diagnostics", "workspace-diagnostics", "selections", "position", "file-type"]
+separator = "│"
+
+[keys.insert]
+C-s = ":write"
+
+[keys.normal]
+"A-[" = "goto_previous_buffer"
+"A-]" = "goto_next_buffer"
+A-w = ":buffer-close"
+C-h = "jump_view_left"
+C-j = "jump_view_down"
+C-k = "jump_view_up"
+C-l = "jump_view_right"
+C-s = ":write"
+N = ["search_prev", "align_view_center"]
+U = "redo"
+n = ["search_next", "align_view_center"]
+
+[keys.normal.g]
+d = "goto_definition"
+i = "goto_implementation"
+r = "goto_reference"
+
+[keys.normal.m]
+d = "surround_delete"
+m = "match_brackets"
+r = "surround_replace"
+s = "surround_add"
+
+[keys.normal.space]
+"/" = "global_search"
+a = "code_action"
+b = "buffer_picker"
+d = "diagnostics_picker"
+f = "file_picker"
+g = "changed_file_picker"
+k = "hover"
+p = "paste_clipboard_after"
+r = "rename_symbol"
+s = "symbol_picker"
+y = "yank_to_clipboard"
+
+[keys.normal.space.t]
+i = ":toggle indent-guides.render"
+l = ":toggle lsp.display-inlay-hints"
+w = ":toggle soft-wrap.enable"
+
+[keys.normal.space.w]
+h = "jump_view_left"
+j = "jump_view_down"
+k = "jump_view_up"
+l = "jump_view_right"
+s = "hsplit"
+v = "vsplit"

@@ -3,7 +3,6 @@
   lib,
   ...
 }: let
-  # musl compatibility contract
   dynamicUsers =
     lib.attrNames
     (lib.filterAttrs

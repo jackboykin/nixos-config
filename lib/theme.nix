@@ -71,7 +71,6 @@ with lib; let
     base03 = color8;
     base04 = "#8f897c";
     base05 = foreground;
-    base07 = "#f4e4d2";
 
     black = color0;
     red = color1;
@@ -116,8 +115,6 @@ with lib; let
     gitAdded = magenta;
     gitModified = yellow;
     gitDeleted = red;
-
-    highlight = base07;
   };
 in {
   inherit colors mixColors hexToRgb;
@@ -135,10 +132,8 @@ in {
   };
 
   ui = {
-    findHighlight = mixColors colors.base colors.highlight 0.4;
     selection = mixColors colors.surface2 colors.base00 0.6;
     cursor = colors.magenta;
-    activeBorder = colors.blue;
   };
 
   fonts = {

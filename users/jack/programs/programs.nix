@@ -1,6 +1,9 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  username,
+  ...
+}: {
   imports = [
-    ./bat.nix
     ./btop.nix
     ./carapace.nix
     ./direnv.nix
@@ -17,7 +20,7 @@
     ./zoxide.nix
   ];
 
-  home.packages = with pkgs; [
+  users.users.${username}.packages = with pkgs; [
     kdePackages.kate
     obsidian
     spotify

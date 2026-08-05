@@ -87,9 +87,6 @@ in {
 
     shims = lib.genAttrs members (n: shim kp.${n});
 
-    # lndir over substituted vanilla, kept alive as a real reference. Only two
-    # things diverge: wrappers rebuilt with dep dirs collapsed into the forest,
-    # and exec-surface text (units, dbus, .desktop) repointed at the shim.
     shim = pkg:
       final.runCommand pkg.name {
         outputs = shimOutputs pkg;
@@ -115,8 +112,6 @@ in {
 
         sedExpr=
         grepArgs=()
-        # exec surfaces only -- a share ref repointed at the shim's symlink
-        # forest risks the KPackage canonicalize-outside-root rejection
         for i in "''${!outs[@]}"; do
           for d in bin libexec; do
             sedExpr+="s|''${srcs[i]}/$d|''${!outs[i]}/$d|g;"
@@ -204,7 +199,6 @@ in {
           exit 1
         fi
 
-        # unreferenced after the sed; a GC'd vanilla output forces a source rebuild
         if [[ -L $out/nix-support ]]; then
           rm "$out/nix-support"
         fi

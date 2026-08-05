@@ -1,4 +1,9 @@
-{theme, ...}: let
+{
+  pkgs,
+  theme,
+  username,
+  ...
+}: let
   inherit (theme) colors;
   toRGB = hex: let
     rgb = theme.hexToRgb hex;
@@ -48,11 +53,11 @@
     "hd=4;${fg colors.text}"
   ];
 in {
-  programs.eza = {
-    enable = true;
-    icons = "auto";
-    git = true;
-  };
+  users.users.${username}.packages = [pkgs.eza];
 
-  home.sessionVariables.EZA_COLORS = ezaColorsStr;
+  programs.nushell.autoloads = [
+    (pkgs.writeTextDir "share/nushell/vendor/autoload/10-eza.nu" ''
+      $env.EZA_COLORS = "${ezaColorsStr}"
+    '')
+  ];
 }

@@ -1,4 +1,8 @@
-{theme, ...}: let
+{
+  pkgs,
+  theme,
+  ...
+}: let
   inherit (theme) colors;
   toRGB = hex: let
     rgb = theme.hexToRgb hex;
@@ -94,9 +98,11 @@
     RememberWindowSize=false
   '';
 in {
-  xdg = {
-    dataFile."konsole/Bellatrix.colorscheme".text = colorscheme;
-    dataFile."konsole/Bellatrix.profile".text = profile;
-    configFile."konsolerc".text = konsolerc;
+  home.links = {
+    ".local/share/konsole/Bellatrix.colorscheme" =
+      pkgs.writeText "Bellatrix.colorscheme" colorscheme;
+    ".local/share/konsole/Bellatrix.profile" =
+      pkgs.writeText "Bellatrix.profile" profile;
+    ".config/konsolerc" = pkgs.writeText "konsolerc" konsolerc;
   };
 }

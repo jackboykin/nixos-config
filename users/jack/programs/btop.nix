@@ -1,19 +1,21 @@
-{theme, ...}: let
+{
+  pkgs,
+  lib,
+  theme,
+  username,
+  ...
+}: let
   inherit (theme) colors;
-in {
-  programs.btop = {
-    enable = true;
-    settings = {
-      color_theme = "bellatrix";
-      theme_background = true;
-      update_ms = 100;
-      proc_sorting = "memory";
-      show_cpu_watts = true;
-      io_mode = true;
-    };
-  };
 
-  xdg.configFile."btop/themes/bellatrix.theme".text = ''
+  settings = {
+    color_theme = ''"bellatrix"'';
+    theme_background = "True";
+    update_ms = "100";
+    proc_sorting = ''"memory"'';
+    show_cpu_watts = "True";
+    io_mode = "True";
+  };
+  themeFile = pkgs.writeText "bellatrix.theme" ''
     theme[main_bg]="${colors.base}"
     theme[main_fg]="${colors.text}"
     theme[title]="${colors.text}"
@@ -67,4 +69,18 @@ in {
     theme[process_mid]="${colors.magenta}"
     theme[process_end]="${colors.purple}"
   '';
+
+  btop = pkgs.btop.overrideAttrs (old: {
+    postInstall =
+      (old.postInstall or "")
+      + ''
+        install -Dm444 ${themeFile} $out/share/btop/themes/bellatrix.theme
+      '';
+  });
+in {
+  users.users.${username}.packages = [btop];
+
+  home.links.".config/btop/btop.conf" =
+    pkgs.writeText "btop.conf"
+    (lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k} = ${v}") settings) + "\n");
 }

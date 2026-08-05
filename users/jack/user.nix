@@ -1,39 +1,40 @@
-{username, ...}: {
-  imports = [./programs/programs.nix];
-
-  home = {
-    inherit username;
-    homeDirectory = "/home/${username}";
-    stateVersion = "26.05";
-    enableNixpkgsReleaseCheck = false;
-    sessionPath = [
-      "$HOME/.cargo/bin"
-      "$HOME/.local/bin"
-    ];
-    shellAliases = {
-      q = "exit";
-      nr = "nh os switch";
-      nru = "nh os switch -u";
-      nb = "nh os boot";
-      nbu = "nh os boot -u";
-      cf = "claude --dangerously-skip-permissions --system-prompt=\"\"";
-      cfw = "claude --dangerously-skip-permissions --system-prompt=\"\" --settings '{\"disableWorkflows\": false}'";
-      l = "eza --icons -la --no-user --no-time --no-permissions --git --group-directories-first";
-      lr = "eza --icons -laR --git-ignore --git --no-user --no-time --no-permissions --group-directories-first";
-      t = "eza --icons --tree --git-ignore";
-    };
+{
+  pkgs,
+  lib,
+  username,
+  ...
+}: let
+  userDirs = {
+    DESKTOP = "Desktop";
+    DOCUMENTS = "Documents";
+    DOWNLOAD = "Downloads";
+    MUSIC = "Music";
+    PICTURES = "Pictures";
+    PROJECTS = "Projects";
+    PUBLICSHARE = "Public";
+    TEMPLATES = "Templates";
+    VIDEOS = "Videos";
   };
+in {
+  imports = [
+    ./home.nix
+    ./programs/programs.nix
+  ];
 
-  xdg = {
-    enable = true;
-    userDirs = {
-      enable = true;
-      createDirectories = true;
-    };
-    configFile."baloofilerc".text = ''
+  home.dirs = builtins.attrValues userDirs;
+
+  home.links = {
+    ".config/user-dirs.conf" = pkgs.writeText "user-dirs.conf" "enabled=False\n";
+
+    ".config/user-dirs.dirs" =
+      pkgs.writeText "user-dirs.dirs"
+      (lib.concatLines (lib.mapAttrsToList
+        (key: dir: ''XDG_${key}_DIR="/home/${username}/${dir}"'')
+        userDirs));
+
+    ".config/baloofilerc" = pkgs.writeText "baloofilerc" ''
       [Basic Settings]
       Indexing-Enabled=false
     '';
   };
-  programs.home-manager.enable = true;
 }

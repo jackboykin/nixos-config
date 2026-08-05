@@ -1,92 +1,40 @@
 {
-  theme,
   pkgs,
+  lib,
+  theme,
+  username,
   ...
-}: {
-  programs.firefox = {
-    enable = true;
-    package = pkgs.firefox-nightly;
+}: let
+  profile = username;
 
-    profiles.jack = {
-      isDefault = true;
-      settings = {
-        "privacy.sanitize.sanitizeOnShutdown" = true;
-        "privacy.clearOnShutdown_v2.cookiesAndStorage" = true;
-        "privacy.clearOnShutdown_v2.cache" = true;
-        "browser.aboutConfig.showWarning" = false;
-        "browser.aboutwelcome.enabled" = false;
+  fontPrefs = {
+    "font.default.x-western" = "sans-serif";
+    "font.name.serif.x-western" = "Source Serif 4";
+    "font.name.sans-serif.x-western" = theme.fonts.sans.name;
+    "font.name.monospace.x-western" = theme.fonts.mono.name;
+  };
+in {
+  users.users.${username}.packages = [pkgs.firefox-nightly];
 
-        "browser.contentblocking.category" = "strict";
-        "media.hardware-video-decoding-vulkan.enabled" = true;
-        "media.hardware-video-decoding-vulkan.direct-export.enabled" = true;
-        "layout.frame_rate" = 144;
-        "ui.prefersReducedMotion" = 1;
+  home.links = {
+    ".config/mozilla/firefox/profiles.ini" = pkgs.writeText "profiles.ini" ''
+      [General]
+      StartWithLastProfile=1
+      Version=2
 
-        "browser.discovery.enabled" = false;
-        "browser.download.manager.addToRecentDocs" = false;
-        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
-        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
-        "browser.newtabpage.activity-stream.default.sites" = "";
-        "browser.newtabpage.activity-stream.feeds.topsites" = false;
-        "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-        "browser.newtabpage.activity-stream.showSponsored" = false;
-        "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
-        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-        "browser.places.speculativeConnect.enabled" = false;
-        "browser.profiles.enabled" = true;
-        "browser.safebrowsing.downloads.remote.enabled" = false;
-        "browser.sessionstore.interval" = 60000;
-        "browser.shell.checkDefaultBrowser" = false;
-        "browser.uitour.enabled" = false;
-        "browser.urlbar.speculativeConnect.enabled" = false;
-        "browser.urlbar.trending.featureGate" = false;
-        "extensions.enabledScopes" = 5;
-        "extensions.formautofill.addresses.enabled" = false;
-        "extensions.formautofill.creditCards.enabled" = false;
-        "extensions.htmlaboutaddons.recommendations.enabled" = false;
-        "findbar.highlightAll" = true;
-        "full-screen-api.transition-duration.enter" = "0 0";
-        "full-screen-api.transition-duration.leave" = "0 0";
-        "full-screen-api.warning.timeout" = 0;
-        "layout.word_select.eat_space_to_next_word" = false;
-        "dom.security.https_only_mode" = true;
-        "network.trr.mode" = 5;
-        "network.dns.disablePrefetch" = true;
-        "network.dns.disablePrefetchFromHTTPS" = true;
-        "network.auth.subresource-http-auth-allow" = 1;
-        "network.http.referer.XOriginTrimmingPolicy" = 2;
-        "network.http.speculative-parallel-limit" = 0;
-        "network.prefetch-next" = false;
-        "network.lna.enabled" = true;
-        "network.lna.blocking" = true;
-        "network.lna.block_trackers" = true;
-        "network.lna.websocket.enabled" = true;
-        "pdfjs.enableScripting" = false;
-        "permissions.default.camera" = 2;
-        "permissions.default.desktop-notification" = 2;
-        "permissions.default.geo" = 2;
-        "permissions.default.microphone" = 2;
-        "privacy.globalprivacycontrol.enabled" = true;
-        "privacy.userContext.ui.enabled" = true;
-        "security.csp.reporting.enabled" = false;
-        "security.mixed_content.block_display_content" = true;
-        "security.ssl.treat_unsafe_negotiation_as_broken" = true;
-        "security.tls.enable_0rtt_data" = false;
-        "signon.autofillForms" = false;
-        "signon.formlessCapture.enabled" = false;
-        "signon.management.page.enabled" = false;
-        "signon.rememberSignons" = false;
-        "font.name.sans-serif.x-western" = theme.fonts.sans.name;
-        "font.name.serif.x-western" = "Source Serif 4";
-        "font.name.monospace.x-western" = theme.fonts.mono.name;
-        "font.default.x-western" = "sans-serif";
-        "browser.urlbar.shortcuts.bookmarks" = false;
-        "browser.urlbar.shortcuts.history" = false;
-        "browser.urlbar.shortcuts.tabs" = false;
-        "browser.toolbars.bookmarks.visibility" = "never";
-        "browser.urlbar.trimURLs" = false;
-        "media.peerconnection.ice.default_address_only" = true;
-      };
-    };
+      [Profile0]
+      Default=1
+      IsRelative=1
+      Name=${profile}
+      Path=${profile}
+    '';
+
+    ".config/mozilla/firefox/${profile}/user.js" =
+      pkgs.writeText "user.js"
+      (builtins.readFile ./firefox-prefs.js
+        + "\n"
+        + lib.concatLines (lib.mapAttrsToList
+          (k: v: "user_pref(${builtins.toJSON k}, ${builtins.toJSON v});")
+          fontPrefs));
   };
 }

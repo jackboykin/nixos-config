@@ -25,11 +25,6 @@
       inputs.rust-overlay.follows = "rust-overlay";
     };
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -54,7 +49,6 @@
   outputs = inputs @ {
     self,
     nixpkgs,
-    home-manager,
     lanzaboote,
     sops-nix,
     ...
@@ -68,30 +62,19 @@
     mkHost = {
       hostname,
       username,
-    }: let
-      specialArgs = {inherit username hostname;};
-    in
+    }:
       nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
+        specialArgs = {inherit username hostname theme;};
         modules = [
           ./hosts/${hostname}/host.nix
           ./modules/modules.nix
+          ./users/${username}/user.nix
           {
             nixpkgs.hostPlatform = lib.mkDefault system;
             nixpkgs.overlays = overlays;
           }
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "backup";
-              extraSpecialArgs = specialArgs // {inherit theme;};
-              users.${username} = import ./users/${username}/user.nix;
-            };
-          }
         ];
       };
   in {

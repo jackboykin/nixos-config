@@ -1,39 +1,42 @@
 {
+  pkgs,
   theme,
   lib,
+  username,
   ...
 }: let
   inherit (theme) colors;
   d = theme.diff;
-in {
-  programs.git = {
-    enable = true;
-    lfs.enable = true;
-    settings = {
-      user.name = "Jack Boykin";
-      user.email = "jtboykin.jb@gmail.com";
-      init.defaultBranch = "master";
-      pull.rebase = true;
-      push.autoSetupRemote = true;
-      rerere.enabled = true;
-      commit.verbose = true;
-      tag.gpgSign = true;
-      merge.conflictStyle = "zdiff3";
-      diff.algorithm = "histogram";
-      diff.colorMoved = "default";
-    };
-    signing = {
-      format = "ssh";
-      key = "~/.ssh/id_ed25519.pub";
-    };
-  };
 
-  programs.delta = {
-    enable = true;
-    enableGitIntegration = true;
-    options = {
+  delta = lib.getExe pkgs.delta;
+
+  settings = {
+    user = {
+      name = "Jack Boykin";
+      email = "jtboykin.jb@gmail.com";
+      signingKey = "~/.ssh/id_ed25519.pub";
+    };
+    init.defaultBranch = "master";
+    pull.rebase = true;
+    push.autoSetupRemote = true;
+    rerere.enabled = true;
+    commit.verbose = true;
+    tag.gpgSign = true;
+    merge.conflictStyle = "zdiff3";
+    diff.algorithm = "histogram";
+    diff.colorMoved = "default";
+
+    gpg = {
+      format = "ssh";
+      ssh.program = lib.getExe' pkgs.openssh "ssh-keygen";
+    };
+
+    interactive.diffFilter = "${delta} --color-only";
+    pager = lib.genAttrs ["blame" "diff" "log" "show"] (_: delta);
+
+    delta = {
       line-numbers = true;
-      syntax-theme = "bellatrix";
+      syntax-theme = "ansi";
       blame-palette = lib.concatStringsSep " " (
         map (c: "'${c}'") [
           colors.base
@@ -67,4 +70,12 @@ in {
       ];
     };
   };
+in {
+  programs.git = {
+    enable = true;
+    lfs.enable = true;
+    config = settings;
+  };
+
+  users.users.${username}.packages = [pkgs.delta];
 }

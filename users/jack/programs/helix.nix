@@ -2,9 +2,12 @@
   pkgs,
   lib,
   theme,
+  username,
   ...
 }: let
   inherit (theme) colors ui;
+
+  toml = pkgs.formats.toml {};
 
   prettierLang = name: parser: {
     inherit name;
@@ -15,123 +18,17 @@
     };
   };
 in {
-  programs.helix = {
-    enable = true;
-    defaultEditor = true;
-    settings = {
-      theme = "bellatrix";
+  users.users.${username}.packages = [pkgs.helix];
 
-      editor = {
-        line-number = "relative";
-        cursorline = true;
-        color-modes = true;
-        true-color = true;
+  environment.sessionVariables = {
+    EDITOR = "hx";
+    VISUAL = "hx";
+  };
 
-        cursor-shape = {
-          insert = "bar";
-          normal = "block";
-          select = "underline";
-        };
+  home.links.".config/helix" = pkgs.linkFarm "helix-config" {
+    "config.toml" = ./helix-config.toml;
 
-        scrolloff = 8;
-        auto-save = {
-          focus-lost = true;
-          after-delay.enable = true;
-        };
-
-        bufferline = "multiple";
-        indent-guides.render = true;
-        soft-wrap = {
-          enable = true;
-          wrap-at-text-width = true;
-        };
-
-        lsp = {
-          display-inlay-hints = true;
-          display-messages = true;
-        };
-
-        inline-diagnostics = {
-          cursor-line = "hint";
-          other-lines = "disable";
-        };
-
-        statusline = {
-          left = ["mode" "spinner" "version-control" "file-name"];
-          right = ["diagnostics" "workspace-diagnostics" "selections" "position" "file-type"];
-          separator = "│";
-        };
-      };
-
-      keys = {
-        normal = {
-          "C-s" = ":write";
-          "U" = "redo";
-
-          "C-h" = "jump_view_left";
-          "C-j" = "jump_view_down";
-          "C-k" = "jump_view_up";
-          "C-l" = "jump_view_right";
-
-          "A-]" = "goto_next_buffer";
-          "A-[" = "goto_previous_buffer";
-          "A-w" = ":buffer-close";
-
-          "n" = ["search_next" "align_view_center"];
-          "N" = ["search_prev" "align_view_center"];
-
-          "space" = {
-            "f" = "file_picker";
-            "b" = "buffer_picker";
-            "g" = "changed_file_picker";
-            "s" = "symbol_picker";
-            "d" = "diagnostics_picker";
-            "/" = "global_search";
-
-            "k" = "hover";
-            "r" = "rename_symbol";
-            "a" = "code_action";
-
-            "y" = "yank_to_clipboard";
-            "p" = "paste_clipboard_after";
-
-            "w" = {
-              "v" = "vsplit";
-              "s" = "hsplit";
-              "h" = "jump_view_left";
-              "j" = "jump_view_down";
-              "k" = "jump_view_up";
-              "l" = "jump_view_right";
-            };
-
-            "t" = {
-              "w" = ":toggle soft-wrap.enable";
-              "l" = ":toggle lsp.display-inlay-hints";
-              "i" = ":toggle indent-guides.render";
-            };
-          };
-
-          "g" = {
-            "d" = "goto_definition";
-            "r" = "goto_reference";
-            "i" = "goto_implementation";
-          };
-
-          "m" = {
-            "m" = "match_brackets";
-            "s" = "surround_add";
-            "r" = "surround_replace";
-            "d" = "surround_delete";
-          };
-        };
-
-        insert = {
-          "C-s" = ":write";
-        };
-      };
-    };
-
-    languages = {
+    "languages.toml" = toml.generate "languages.toml" {
       language-server = {
         rust-analyzer.config = {
           check.command = "clippy";
@@ -181,7 +78,7 @@ in {
       ];
     };
 
-    themes.bellatrix = {
+    "themes/bellatrix.toml" = toml.generate "bellatrix.toml" {
       "ui.background" = {bg = colors.base;};
       "ui.popup" = {
         fg = colors.text;

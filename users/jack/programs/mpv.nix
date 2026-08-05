@@ -1,17 +1,34 @@
 {
   pkgs,
+  lib,
   theme,
+  username,
   ...
 }: let
   inherit (theme) fonts;
+
+  mpv = pkgs.mpv.override {
+    youtubeSupport = false;
+    scripts = with pkgs.mpvScripts; [uosc mpris];
+  };
+
+  toConf = settings:
+    lib.concatStringsSep "\n" (lib.mapAttrsToList
+      (k: v: "${k}=${
+        if lib.isBool v
+        then
+          if v
+          then "yes"
+          else "no"
+        else toString v
+      }")
+      settings)
+    + "\n";
 in {
-  programs.mpv = {
-    enable = true;
-    package = pkgs.mpv.override {
-      youtubeSupport = false;
-      scripts = with pkgs.mpvScripts; [uosc mpris];
-    };
-    config = {
+  users.users.${username}.packages = [mpv];
+
+  home.links.".config/mpv" = pkgs.linkFarm "mpv-config" {
+    "mpv.conf" = pkgs.writeText "mpv.conf" (toConf {
       profile = "high-quality";
       geometry = "60%";
       volume = 80;
@@ -35,10 +52,11 @@ in {
 
       osd-font = fonts.sans.name;
       sub-font = fonts.sans.name;
-    };
-    scriptOpts.uosc = {
+    });
+
+    "script-opts/uosc.conf" = pkgs.writeText "uosc.conf" (toConf {
       progress = "never";
       controls = "menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,speed,";
-    };
+    });
   };
 }
