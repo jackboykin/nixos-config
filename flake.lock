@@ -3,7 +3,7 @@
     "bun-bin": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-lg1jFEtgCytpKgemwoJ3DfIKJTg4r9ziJEJajFopi+4=",
+        "narHash": "sha256-D6k+SIymLIu6KupqXeFHCnTJCLRD+EJ0iTldWUo47F4=",
         "type": "file",
         "url": "https://github.com/oven-sh/bun/releases/download/canary/bun-linux-x64.zip"
       },
@@ -19,11 +19,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785795603,
-        "narHash": "sha256-6PgIA2S6hfto/kZ1tTAjtDG0p4Vr3+KMrtRBaW1wqv0=",
+        "lastModified": 1785878663,
+        "narHash": "sha256-aFxufwNsDB34KXhuz7/H9yvQ1IxhXso9lhvskGkYWLM=",
         "owner": "ryoppippi",
         "repo": "claude-code-overlay",
-        "rev": "aa0ebe66e2fcc68498e7e80079e0601853836c99",
+        "rev": "b9e72f05ca05fcc0c3d92b53667ec4070703dbc1",
         "type": "github"
       },
       "original": {
@@ -47,14 +47,14 @@
         "type": "github"
       }
     },
-    "ffmpeg-src": {
+    "ffmpeg-master": {
       "flake": false,
       "locked": {
-        "lastModified": 1785780984,
-        "narHash": "sha256-y30A/JdVb2W5o1PN6wLq5+n7Y+Gwi+xtHu7lrbP5j6I=",
+        "lastModified": 1785935494,
+        "narHash": "sha256-z96NZ4j608lXQZYUOdhqnIDH18tLKUEmZmr8CQ9cihU=",
         "owner": "FFmpeg",
         "repo": "FFmpeg",
-        "rev": "9862dd83b1645b0c6e39b318aefb896138ffb08e",
+        "rev": "e13b2e00e89dc8cdbb05cca7c22ebbbf8d9fd171",
         "type": "github"
       },
       "original": {
@@ -72,11 +72,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785774396,
-        "narHash": "sha256-+7laXCoy8aS5xsKXNfx73oMGVeRXVSQI7CUdGXwKxZQ=",
+        "lastModified": 1785947633,
+        "narHash": "sha256-pkSu4beb8wOKKBgPSUSVcWvSRr48co0XLWZ1pgrLbgU=",
         "owner": "nix-community",
         "repo": "flake-firefox-nightly",
-        "rev": "78b66f88ebdcac5f252bb104f121fbfb139b5b8a",
+        "rev": "e1eb55614d2ac38bfdbaa938eb8bb84c044c6736",
         "type": "github"
       },
       "original": {
@@ -141,11 +141,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785531816,
-        "narHash": "sha256-vkMnV0JIyw+g/NmcfoajlGaAO+9a0ezia+FZohQJrik=",
+        "lastModified": 1785944609,
+        "narHash": "sha256-oVALwpE6ztz2Ll6vGlCHJs7fhblEmOFz3/TTcgZnrqM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "bf9ce9fec78f95f374e8dd3b503863a3ec128ebe",
+        "rev": "44a1a0ab16b1b6b8e6b673227d870c3a89cab35e",
         "type": "github"
       },
       "original": {
@@ -200,11 +200,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1785792798,
-        "narHash": "sha256-CSVbsqKC/0h6eWBaL1c505Cy/x7FJqne+zO25D+qgeA=",
+        "lastModified": 1785925688,
+        "narHash": "sha256-taRLhiPA3s8J5+b6BLzUugC/0T4mQuyhkPiqr+fai2w=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d5b60683f2be469f332381b81d91b3e11c6e4b3e",
+        "rev": "379e2fc6c7612f7341d941ae4d1ea38021c41d6e",
         "type": "github"
       },
       "original": {
@@ -255,7 +255,7 @@
       "inputs": {
         "bun-bin": "bun-bin",
         "claude-code": "claude-code",
-        "ffmpeg-src": "ffmpeg-src",
+        "ffmpeg-master": "ffmpeg-master",
         "firefox-nightly": "firefox-nightly",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
@@ -272,11 +272,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785736145,
-        "narHash": "sha256-DauSP0ACycrq3MEEmDz/Scsxhs9TPBTexwKbTuE8Bw8=",
+        "lastModified": 1785907205,
+        "narHash": "sha256-Ds1vTi53af4wDMAveSR/K0JnywDslLwmgwhVIiwnNmY=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "292249772330735cb32b90dedf44feddec40e7d0",
+        "rev": "c5cb13481d718fac906aa9cfd85f9b60e1a546cb",
         "type": "github"
       },
       "original": {
@@ -323,7 +323,7 @@
     "zig-index": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-RvsfkAW9wRoHphiSUI00TppzNwqmIUQ9+fBHZspLOSs=",
+        "narHash": "sha256-OO/QGr4WNGj+4XpoiZKNI5eMyFoCcHEFZwW8eBk55hc=",
         "type": "file",
         "url": "https://ziglang.org/download/index.json"
       },

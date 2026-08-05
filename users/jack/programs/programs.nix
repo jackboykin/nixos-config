@@ -27,7 +27,7 @@
     claude-code
     fastfetch
     fd
-    ffmpeg
+    ffmpeg-master
     gh
     hyperfine
     jq

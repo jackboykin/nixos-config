@@ -45,7 +45,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ffmpeg-src = {
+    ffmpeg-master = {
       url = "github:FFmpeg/FFmpeg";
       flake = false;
     };
