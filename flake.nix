@@ -21,8 +21,11 @@
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+        pre-commit.follows = "";
+      };
     };
 
     sops-nix = {
@@ -36,8 +39,13 @@
     };
 
     firefox-nightly = {
-      url = "github:nix-community/flake-firefox-nightly";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "file+https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US";
+      flake = false;
+    };
+
+    firefox-versions = {
+      url = "file+https://product-details.mozilla.org/1.0/firefox_versions.json";
+      flake = false;
     };
 
     ffmpeg-master = {
