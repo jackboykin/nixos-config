@@ -31,8 +31,8 @@
     };
 
     claude-code = {
-      url = "github:ryoppippi/claude-code-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "file+https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/latest";
+      flake = false;
     };
 
     firefox-nightly = {

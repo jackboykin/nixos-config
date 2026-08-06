@@ -27,6 +27,7 @@
     vesktop
     zed-editor
 
+    bubblewrap
     claude-code
     fastfetch
     fd
@@ -34,7 +35,9 @@
     gh
     hyperfine
     jq
+    poppler-utils
     ripgrep
+    socat
     pkgsStatic.uutils-coreutils-noprefix
     yazi
 
