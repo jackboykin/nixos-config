@@ -16,7 +16,7 @@
     ./konsole.nix
     ./mpv.nix
     ./nushell.nix
-    ./zellij.nix
+    ./tmux.nix
     ./zoxide.nix
   ];
 
