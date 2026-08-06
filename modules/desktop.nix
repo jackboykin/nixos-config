@@ -17,6 +17,8 @@ in {
     desktopManager.plasma6.enable = true;
     power-profiles-daemon.enable = false;
     fwupd.enable = false;
+    orca.enable = false;
+    speechd.enable = false;
 
     pipewire = {
       enable = true;
