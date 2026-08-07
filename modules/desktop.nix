@@ -7,7 +7,7 @@ in {
   i18n.defaultLocale = "en_US.UTF-8";
 
   environment = {
-    plasma6.excludePackages = [pkgs.kdePackages.kwin-x11];
+    plasma6.excludePackages = with pkgs.kdePackages; [kwin-x11 khelpcenter];
     sessionVariables.NIXOS_SPEECH = "False";
   };
 
