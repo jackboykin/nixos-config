@@ -188,8 +188,7 @@ clone_config() {
     CONFIG_DIR="/mnt/home/$USERNAME/nixos-config"
 
     sed -i "s/stateVersion = \"[0-9.]*\"/stateVersion = \"$CURRENT_VERSION\"/" \
-        "$CONFIG_DIR/hosts/$FLAKE_HOST/host.nix" \
-        "$CONFIG_DIR/users/$USERNAME/user.nix"
+        "$CONFIG_DIR/hosts/$FLAKE_HOST/host.nix"
     success "Updated stateVersion to $CURRENT_VERSION"
 }
 
