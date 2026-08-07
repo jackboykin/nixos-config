@@ -4,6 +4,16 @@
     sbctl
     sops
     age
+
+    pkgsStatic.uutils-coreutils-noprefix
+    uutils-acl
+    uutils-diffutils
+    uutils-findutils
+    uutils-hostname
+    uutils-procps
+    uutils-sed
+    uutils-tar
+    uutils-util-linux
   ];
 
   environment.defaultPackages = [];

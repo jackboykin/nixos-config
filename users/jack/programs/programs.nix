@@ -38,7 +38,6 @@
     poppler-utils
     ripgrep
     socat
-    pkgsStatic.uutils-coreutils-noprefix
     yazi
 
     bun
