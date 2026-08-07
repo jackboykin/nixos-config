@@ -1,21 +1,33 @@
-ffmpeg-master: final: prev: let
+inputs: final: prev: let
   inherit (prev) lib;
 
-  d = ffmpeg-master.lastModifiedDate;
-  date = "${lib.substring 0 4 d}-${lib.substring 4 2 d}-${lib.substring 6 2 d}";
+  src = inputs.ffmpeg;
+
+  release = lib.removeSuffix ".git" (lib.trim (builtins.readFile "${src}/RELEASE"));
+
+  newest = let
+    matches = builtins.split "ffmpeg-([0-9]+\\.[0-9]+)" (builtins.readFile "${inputs.ffmpeg-index}");
+    versions = lib.concatMap (m: lib.optional (lib.isList m) (lib.head m)) matches;
+  in
+    lib.foldl' (a: b:
+      if lib.versionOlder a b
+      then b
+      else a) "0"
+    versions;
 
   lavcSupported = "63";
   lavc = let
-    header = builtins.readFile "${ffmpeg-master}/libavcodec/version_major.h";
+    header = builtins.readFile "${src}/libavcodec/version_major.h";
     line = lib.findFirst (lib.hasPrefix "#define LIBAVCODEC_VERSION_MAJOR") null (lib.splitString "\n" header);
   in
     lib.last (lib.splitString " " line);
 in {
-  ffmpeg-master = assert lib.assertMsg (lavc == lavcSupported) "libavcodec ${lavcSupported} -> ${lavc}";
+  ffmpeg-release = assert lib.assertMsg (lavc == lavcSupported) "libavcodec ${lavcSupported} -> ${lavc}";
+    lib.warnIf (lib.versionOlder release newest) "ffmpeg ${release} superseded: point flake.nix at release/${newest}"
     prev.stdenv.mkDerivation {
-      pname = "ffmpeg-master";
-      version = date;
-      src = ffmpeg-master;
+      pname = "ffmpeg";
+      version = release;
+      inherit src;
 
       outputs = ["out" "lib"];
 
@@ -36,6 +48,7 @@ in {
         openssl
         soxr
         svt-av1
+        spirv-headers
         vulkan-headers
         vulkan-loader
         x264
@@ -70,6 +83,7 @@ in {
         "--disable-ffplay"
 
         "--enable-vulkan"
+        "--glslc=${lib.getExe' prev.buildPackages.shaderc "glslc"}"
         "--enable-vaapi"
         "--enable-libdrm"
         "--enable-libdav1d"
@@ -90,12 +104,16 @@ in {
       ];
 
       postConfigure = ''
-        remove-references-to -t ${placeholder "out"} -t ${placeholder "lib"} config.h
+        remove-references-to -t ${placeholder "out"} -t ${placeholder "lib"} -t ${prev.buildPackages.shaderc.bin} config.h
+        grep -q 'define CONFIG_AVGBLUR_VULKAN_FILTER 1' config_components.h || {
+          echo "configure disabled spirv_compiler: glslc did not work" >&2
+          exit 1
+        }
       '';
 
       meta = {
         homepage = "https://www.ffmpeg.org/";
-        description = "FFmpeg master, trimmed to firefox's decode path and local transcoding";
+        description = "Complete, cross-platform solution to record, convert and stream audio and video";
         license = lib.licenses.gpl3Plus;
         platforms = ["x86_64-linux"];
         mainProgram = "ffmpeg";

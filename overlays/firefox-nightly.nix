@@ -18,6 +18,6 @@ inputs: final: prev: let
     };
 in {
   firefox-nightly = assert lib.assertMsg (lib.versionAtLeast version "146") "firefox ${version} takes the ffmpeg_7 branch";
-    (prev.wrapFirefox.override {ffmpeg_8 = final.ffmpeg-master;})
+    (prev.wrapFirefox.override {ffmpeg_8 = final.ffmpeg-release;})
     unwrapped {pname = "firefox-nightly-bin";};
 }

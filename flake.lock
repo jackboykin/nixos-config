@@ -39,20 +39,33 @@
         "type": "github"
       }
     },
-    "ffmpeg-master": {
+    "ffmpeg": {
       "flake": false,
       "locked": {
-        "lastModified": 1786110936,
-        "narHash": "sha256-+02yxegaBYUb4hSkFO3OI0AgTnmpKh8mxP0rWG2te+U=",
+        "lastModified": 1785786727,
+        "narHash": "sha256-LbHwxvylAPh5lb/H+o+9eMVTB9X+tphrxYYX0cqAL0k=",
         "owner": "FFmpeg",
         "repo": "FFmpeg",
-        "rev": "a81b23a85aca34f9942dc1a63a521946a6407d3f",
+        "rev": "d32b387f2b0a484599d4587d651891f0c63c4238",
         "type": "github"
       },
       "original": {
         "owner": "FFmpeg",
+        "ref": "release/9.0",
         "repo": "FFmpeg",
         "type": "github"
+      }
+    },
+    "ffmpeg-index": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-rY89b4QUP/sAsd8E++2+li/lpHt1bvD+CUHMaMUQwzQ=",
+        "type": "file",
+        "url": "https://ffmpeg.org/releases/"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://ffmpeg.org/releases/"
       }
     },
     "firefox-nightly": {
@@ -124,7 +137,8 @@
       "inputs": {
         "bun-bin": "bun-bin",
         "claude-code": "claude-code",
-        "ffmpeg-master": "ffmpeg-master",
+        "ffmpeg": "ffmpeg",
+        "ffmpeg-index": "ffmpeg-index",
         "firefox-nightly": "firefox-nightly",
         "firefox-versions": "firefox-versions",
         "lanzaboote": "lanzaboote",

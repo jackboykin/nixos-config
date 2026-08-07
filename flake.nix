@@ -48,8 +48,13 @@
       flake = false;
     };
 
-    ffmpeg-master = {
-      url = "github:FFmpeg/FFmpeg";
+    ffmpeg = {
+      url = "github:FFmpeg/FFmpeg/release/9.0";
+      flake = false;
+    };
+
+    ffmpeg-index = {
+      url = "file+https://ffmpeg.org/releases/";
       flake = false;
     };
   };
