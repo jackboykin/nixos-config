@@ -6,7 +6,10 @@ in {
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  environment.plasma6.excludePackages = [pkgs.kdePackages.kwin-x11];
+  environment = {
+    plasma6.excludePackages = [pkgs.kdePackages.kwin-x11];
+    sessionVariables.NIXOS_SPEECH = "False";
+  };
 
   programs.kde-pim.enable = false;
 
