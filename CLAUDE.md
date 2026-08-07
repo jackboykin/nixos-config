@@ -24,7 +24,9 @@ statix fix .          # Auto-fix lint issues
 
 ## Key Patterns
 
-**Adding packages**: Standalone packages go in `home.packages` in `users/jack/programs/programs.nix`. Managed programs get their own file in `users/jack/programs/` and an import in `programs.nix`.
+**Adding packages**: Standalone packages go in `users.users.${username}.packages` in `users/jack/programs/programs.nix`. Configured programs get their own file in `users/jack/programs/` and an import in `programs.nix`.
+
+**User config files**: Dotfiles are declared with the `home.links` (path → store source, deployed as systemd-tmpfiles `L+` symlinks) and `home.dirs` options defined in `users/jack/home.nix`.
 
 **Secrets**: Managed via sops-nix. Edit with `sops secrets/secrets.yaml`.
 
@@ -33,7 +35,7 @@ statix fix .          # Auto-fix lint issues
 - `flake.nix` — single entry point, `mkHost` helper
 - `hosts/nixos-orion/` — the one machine this manages
 - `modules/` — system-level NixOS config (boot, desktop, networking, etc.)
-- `users/jack/` — Home Manager config, shell, and per-program modules
-- `overlays/` — nixpkgs overlays, aggregated in `overlays.nix`
+- `users/jack/` — user account, shell, and per-program modules
+- `overlays/` — custom package sourcing and other bespoke configuration
 - `lib/theme.nix` — color theme used across all program configs
 - `secrets/` — sops-nix encrypted secrets
