@@ -3,7 +3,7 @@
     "bun-bin": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-eTHL1V/HlEiLiEWp+UgesuFzoHjNmESfyuT7aM3VVHo=",
+        "narHash": "sha256-XZxUz8ecfOdShcPZaFWjF79uD2PUJsmvzBFGI6lUysY=",
         "type": "file",
         "url": "https://github.com/oven-sh/bun/releases/download/canary/bun-linux-x64.zip"
       },
@@ -42,11 +42,11 @@
     "ffmpeg-master": {
       "flake": false,
       "locked": {
-        "lastModified": 1786070013,
-        "narHash": "sha256-lLCYlGtHbGFN/ll+7NymFlVr0qnbiuDbtbwe9oibU1Y=",
+        "lastModified": 1786110936,
+        "narHash": "sha256-+02yxegaBYUb4hSkFO3OI0AgTnmpKh8mxP0rWG2te+U=",
         "owner": "FFmpeg",
         "repo": "FFmpeg",
-        "rev": "5c395992f99feb47860e4cc99a0cea2009457870",
+        "rev": "a81b23a85aca34f9942dc1a63a521946a6407d3f",
         "type": "github"
       },
       "original": {
