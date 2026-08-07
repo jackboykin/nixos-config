@@ -15,7 +15,7 @@
     "claude-code": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ElqhW1VyEm/MsVtt6Y8MNuPOxjcezdmR8ndn2aXCd+I=",
+        "narHash": "sha256-huG4z7Mz6cLpvPiNfqE3k9fLd/zgt3JdgThe0p8jUNo=",
         "type": "file",
         "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/latest"
       },
@@ -191,7 +191,7 @@
     "zig-index": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-fpGnqerA11peqBAWpjbDxTh+PsGEu0tvIHnlrxZKJ4I=",
+        "narHash": "sha256-EzqK7bdCElDCosoznfTafG+GdRjkD8P7aEuzs0NFk5g=",
         "type": "file",
         "url": "https://ziglang.org/download/index.json"
       },
