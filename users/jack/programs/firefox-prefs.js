@@ -69,6 +69,7 @@ user_pref("browser.uitour.enabled", false);
 user_pref("media.hardware-video-decoding-vulkan.direct-export.enabled", true);
 user_pref("media.hardware-video-decoding-vulkan.enabled", true);
 user_pref("media.peerconnection.ice.default_address_only", true);
+user_pref("media.webspeech.synth.enabled", false);
 
 user_pref("layout.frame_rate", 144);
 user_pref("layout.word_select.eat_space_to_next_word", false);
