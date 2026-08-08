@@ -179,13 +179,19 @@ clone_config() {
     git clone "$REPO_URL" "/mnt/home/$USERNAME/nixos-config"
     success "Configuration cloned to /mnt/home/$USERNAME/nixos-config"
 
-    info "Generating hardware configuration..."
-    nixos-generate-config --root /mnt --show-hardware-config > "/mnt/home/$USERNAME/nixos-config/hosts/$FLAKE_HOST/hardware-configuration.nix"
-    success "Hardware configuration generated"
+    CONFIG_DIR="/mnt/home/$USERNAME/nixos-config"
+
+    info "Patching filesystem UUIDs into hardware configuration..."
+    ROOT_UUID=$(blkid -s UUID -o value "$ROOT_PART")
+    EFI_UUID=$(blkid -s UUID -o value "$EFI_PART")
+    sed -i -E \
+        -e "s|by-uuid/[0-9a-f-]{36}|by-uuid/$ROOT_UUID|" \
+        -e "s|by-uuid/[0-9A-F]{4}-[0-9A-F]{4}|by-uuid/$EFI_UUID|" \
+        "$CONFIG_DIR/hosts/$FLAKE_HOST/hardware-configuration.nix"
+    success "Hardware configuration UUIDs updated"
 
     info "Updating stateVersion to current release..."
     CURRENT_VERSION=$(nixos-version | cut -d. -f1,2)
-    CONFIG_DIR="/mnt/home/$USERNAME/nixos-config"
 
     sed -i "s/stateVersion = \"[0-9.]*\"/stateVersion = \"$CURRENT_VERSION\"/" \
         "$CONFIG_DIR/hosts/$FLAKE_HOST/host.nix"
