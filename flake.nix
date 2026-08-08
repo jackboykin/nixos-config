@@ -75,11 +75,16 @@
     inherit (nixpkgs) lib;
     theme = import ./lib/theme.nix {inherit lib;};
 
-    lock = lib.importJSON ./flake.lock;
-    fileInputs =
-      lib.mapAttrsToList (name: _: inputs.${name})
-      (lib.filterAttrs (_: node: lock.nodes.${node}.locked.type == "file")
-        lock.nodes.${lock.root}.inputs);
+    inputSources = let
+      node = i: {
+        key = i.outPath;
+        children = lib.attrValues (i.inputs or {});
+      };
+    in
+      map (n: n.key) (builtins.genericClosure {
+        startSet = map node (lib.attrValues (builtins.removeAttrs inputs ["self"]));
+        operator = n: map node n.children;
+      });
 
     overlays = import ./overlays/overlays.nix inputs;
 
@@ -96,7 +101,7 @@
           {
             nixpkgs.hostPlatform = lib.mkDefault system;
             nixpkgs.overlays = overlays;
-            system.extraDependencies = fileInputs;
+            system.extraDependencies = inputSources;
           }
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
