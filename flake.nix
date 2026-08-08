@@ -38,13 +38,18 @@
       flake = false;
     };
 
-    firefox-nightly = {
-      url = "file+https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US";
+    firefox-index = {
+      url = "file+https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt";
       flake = false;
     };
 
-    firefox-versions = {
-      url = "file+https://product-details.mozilla.org/1.0/firefox_versions.json";
+    firefox-checksums = {
+      url = "file+https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/target.checksums";
+      flake = false;
+    };
+
+    firefox-buildhub = {
+      url = "file+https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/buildhub.json";
       flake = false;
     };
 

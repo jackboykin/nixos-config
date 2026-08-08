@@ -68,28 +68,40 @@
         "url": "https://ffmpeg.org/releases/"
       }
     },
-    "firefox-nightly": {
+    "firefox-buildhub": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-LP4v48fINAaU3M8cFPdPYzqln0VERb+p9VNj4RqWXDE=",
+        "narHash": "sha256-lnddBs6a+7wVw/dqMqRhdU8NNjx+GVA3kk42RyvryQU=",
         "type": "file",
-        "url": "https://download.mozilla.org/?lang=en-US&os=linux64&product=firefox-nightly-latest-ssl"
+        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/buildhub.json"
       },
       "original": {
         "type": "file",
-        "url": "https://download.mozilla.org/?lang=en-US&os=linux64&product=firefox-nightly-latest-ssl"
+        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/buildhub.json"
       }
     },
-    "firefox-versions": {
+    "firefox-checksums": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-n7m166iKXLul1WwpyeL++Y9dcik+VwFJpLNB8G7AR18=",
+        "narHash": "sha256-b7hJxwi6hnkT3g7rbl1iqo3bBk9TPuIc4nZ3QSkIsrI=",
         "type": "file",
-        "url": "https://product-details.mozilla.org/1.0/firefox_versions.json"
+        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/target.checksums"
       },
       "original": {
         "type": "file",
-        "url": "https://product-details.mozilla.org/1.0/firefox_versions.json"
+        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/target.checksums"
+      }
+    },
+    "firefox-index": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-zfvBa20SVJsqidUDI7ES9Xhm0XqwkOmFyri/F6+S4rg=",
+        "type": "file",
+        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt"
       }
     },
     "lanzaboote": {
@@ -139,8 +151,9 @@
         "claude-code": "claude-code",
         "ffmpeg": "ffmpeg",
         "ffmpeg-index": "ffmpeg-index",
-        "firefox-nightly": "firefox-nightly",
-        "firefox-versions": "firefox-versions",
+        "firefox-buildhub": "firefox-buildhub",
+        "firefox-checksums": "firefox-checksums",
+        "firefox-index": "firefox-index",
         "lanzaboote": "lanzaboote",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
