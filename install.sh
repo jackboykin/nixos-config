@@ -165,7 +165,7 @@ mount_partitions() {
     success "Mounted root at /mnt"
 
     mkdir -p /mnt/boot
-    mount "$EFI_PART" /mnt/boot
+    mount -o fmask=0177,dmask=0077 "$EFI_PART" /mnt/boot
     success "Mounted boot at /mnt/boot"
 }
 
