@@ -46,10 +46,10 @@
         children = lib.attrValues (i.inputs or {});
       };
     in
-      map (n: n.key) (builtins.genericClosure {
-        startSet = map node (lib.attrValues (builtins.removeAttrs inputs ["self"]));
+      lib.remove self.outPath (map (n: n.key) (builtins.genericClosure {
+        startSet = map node (lib.attrValues inputs);
         operator = n: map node n.children;
-      });
+      }));
 
     overlays = import ./overlays/overlays.nix inputs;
 
