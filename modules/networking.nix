@@ -23,6 +23,7 @@ _: {
     tailscale = {
       enable = true;
       openFirewall = true;
+      extraSetFlags = ["--accept-dns=false"];
     };
 
     resolved = {
