@@ -1,19 +1,7 @@
-inputs: final: prev: let
+src: final: prev: let
   inherit (prev) lib;
 
-  src = inputs.ffmpeg;
-
   release = lib.removeSuffix ".git" (lib.trim (builtins.readFile "${src}/RELEASE"));
-
-  newest = let
-    matches = builtins.split "ffmpeg-([0-9]+\\.[0-9]+)" (builtins.readFile "${inputs.ffmpeg-index}");
-    versions = lib.concatMap (m: lib.optional (lib.isList m) (lib.head m)) matches;
-  in
-    lib.foldl' (a: b:
-      if lib.versionOlder a b
-      then b
-      else a) "0"
-    versions;
 
   lavcSupported = "63";
   lavc = let
@@ -23,7 +11,6 @@ inputs: final: prev: let
     lib.last (lib.splitString " " line);
 in {
   ffmpeg-release = assert lib.assertMsg (lavc == lavcSupported) "libavcodec ${lavcSupported} -> ${lavc}";
-    lib.warnIf (lib.versionOlder release newest) "ffmpeg ${release} superseded: point flake.nix at release/${newest}"
     prev.stdenv.mkDerivation {
       pname = "ffmpeg";
       version = release;

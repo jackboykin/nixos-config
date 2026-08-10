@@ -1,16 +1,11 @@
-claude-code: final: prev: let
+pin: final: prev: let
   inherit (prev) lib;
-
-  npm = builtins.fromJSON (builtins.readFile "${claude-code}");
 in {
   claude-code = prev.stdenv.mkDerivation {
     pname = "claude-code";
-    inherit (npm) version;
+    inherit (pin) version;
 
-    src = prev.fetchurl {
-      url = npm.dist.tarball;
-      hash = npm.dist.integrity;
-    };
+    src = prev.fetchurl {inherit (pin) url hash;};
 
     nativeBuildInputs = [prev.autoPatchelfHook prev.makeBinaryWrapper];
 

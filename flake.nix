@@ -9,16 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zig-index = {
-      url = "file+https://ziglang.org/download/index.json";
-      flake = false;
-    };
-
-    bun-bin = {
-      url = "file+https://github.com/oven-sh/bun/releases/download/canary/bun-linux-x64.zip";
-      flake = false;
-    };
-
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs = {
@@ -33,33 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    claude-code = {
-      url = "file+https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/latest";
-      flake = false;
-    };
-
-    firefox-index = {
-      url = "file+https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt";
-      flake = false;
-    };
-
-    firefox-checksums = {
-      url = "file+https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/target.checksums";
-      flake = false;
-    };
-
-    firefox-buildhub = {
-      url = "file+https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/buildhub.json";
-      flake = false;
-    };
-
     ffmpeg = {
       url = "github:FFmpeg/FFmpeg/release/9.0";
-      flake = false;
-    };
-
-    ffmpeg-index = {
-      url = "file+https://ffmpeg.org/releases/";
       flake = false;
     };
   };

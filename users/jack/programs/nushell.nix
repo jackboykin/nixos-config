@@ -59,9 +59,7 @@
   aliases = {
     q = "exit";
     nr = "nh os switch";
-    nru = "nh os switch -u";
     nb = "nh os boot";
-    nbu = "nh os boot -u";
     cf = ''claude --dangerously-skip-permissions --system-prompt=""'';
     cfw = ''claude --dangerously-skip-permissions --system-prompt="" --settings '{"disableWorkflows": false}' '';
     eza = "eza --icons auto --git";
@@ -105,6 +103,8 @@ in {
       }
 
       ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: ''alias "${k}" = ${lib.removeSuffix " " v}'') aliases)}
+      def nru [] { nu ($env.NH_FLAKE | path join overlays up.nu); nh os switch -u }
+      def nbu [] { nu ($env.NH_FLAKE | path join overlays up.nu); nh os boot -u }
     '';
   };
 }

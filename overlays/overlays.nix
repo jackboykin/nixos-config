@@ -1,10 +1,12 @@
-inputs: [
+inputs: let
+  pins = builtins.mapAttrs (_: builtins.head) (builtins.fromJSON (builtins.readFile ./pins.json));
+in [
   inputs.rust-overlay.overlays.default
-  (import ./bun.nix inputs.bun-bin)
-  (import ./claude-code.nix inputs.claude-code)
-  (import ./ffmpeg.nix inputs)
-  (import ./firefox-nightly.nix inputs)
+  (import ./bun.nix pins.bun)
+  (import ./claude-code.nix pins."claude-code")
+  (import ./ffmpeg.nix inputs.ffmpeg)
+  (import ./firefox-nightly.nix pins.firefox)
   (import ./qtweb.nix)
   (import ./plasma-flatten.nix)
-  (import ./zig.nix inputs.zig-index)
+  (import ./zig.nix pins.zig)
 ]

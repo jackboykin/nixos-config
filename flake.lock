@@ -1,29 +1,5 @@
 {
   "nodes": {
-    "bun-bin": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-XZxUz8ecfOdShcPZaFWjF79uD2PUJsmvzBFGI6lUysY=",
-        "type": "file",
-        "url": "https://github.com/oven-sh/bun/releases/download/canary/bun-linux-x64.zip"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/oven-sh/bun/releases/download/canary/bun-linux-x64.zip"
-      }
-    },
-    "claude-code": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-huG4z7Mz6cLpvPiNfqE3k9fLd/zgt3JdgThe0p8jUNo=",
-        "type": "file",
-        "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/latest"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/latest"
-      }
-    },
     "crane": {
       "locked": {
         "lastModified": 1784564969,
@@ -42,11 +18,11 @@
     "ffmpeg": {
       "flake": false,
       "locked": {
-        "lastModified": 1785786727,
-        "narHash": "sha256-LbHwxvylAPh5lb/H+o+9eMVTB9X+tphrxYYX0cqAL0k=",
+        "lastModified": 1786225610,
+        "narHash": "sha256-Mg7qOapoCsfdoC8IL4EGPyLlmOc5PAI/M94Ofk/Y6cQ=",
         "owner": "FFmpeg",
         "repo": "FFmpeg",
-        "rev": "d32b387f2b0a484599d4587d651891f0c63c4238",
+        "rev": "03d9533176e98bb9fbf569c1f34968e73e948dd9",
         "type": "github"
       },
       "original": {
@@ -54,54 +30,6 @@
         "ref": "release/9.0",
         "repo": "FFmpeg",
         "type": "github"
-      }
-    },
-    "ffmpeg-index": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-rY89b4QUP/sAsd8E++2+li/lpHt1bvD+CUHMaMUQwzQ=",
-        "type": "file",
-        "url": "https://ffmpeg.org/releases/"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://ffmpeg.org/releases/"
-      }
-    },
-    "firefox-buildhub": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-lnddBs6a+7wVw/dqMqRhdU8NNjx+GVA3kk42RyvryQU=",
-        "type": "file",
-        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/buildhub.json"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/buildhub.json"
-      }
-    },
-    "firefox-checksums": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-b7hJxwi6hnkT3g7rbl1iqo3bBk9TPuIc4nZ3QSkIsrI=",
-        "type": "file",
-        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/target.checksums"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/target.checksums"
-      }
-    },
-    "firefox-index": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-zfvBa20SVJsqidUDI7ES9Xhm0XqwkOmFyri/F6+S4rg=",
-        "type": "file",
-        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt"
       }
     },
     "lanzaboote": {
@@ -131,11 +59,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1786074909,
-        "narHash": "sha256-RXBE0mNKb5O4g5PR6iV43/A0qkibe2MSZ+DDvRS4ELs=",
+        "lastModified": 1786301960,
+        "narHash": "sha256-EC1Vjo2Htw0urpDTWryYwQvxd+1AlnuXZ4opRK27o1Y=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5738b3c785613e0f8e0d94662dd5542188bb4dc2",
+        "rev": "1d383cbb23927d10d1b67d1cef2b653024ebc171",
         "type": "github"
       },
       "original": {
@@ -147,18 +75,11 @@
     },
     "root": {
       "inputs": {
-        "bun-bin": "bun-bin",
-        "claude-code": "claude-code",
         "ffmpeg": "ffmpeg",
-        "ffmpeg-index": "ffmpeg-index",
-        "firefox-buildhub": "firefox-buildhub",
-        "firefox-checksums": "firefox-checksums",
-        "firefox-index": "firefox-index",
         "lanzaboote": "lanzaboote",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
-        "sops-nix": "sops-nix",
-        "zig-index": "zig-index"
+        "sops-nix": "sops-nix"
       }
     },
     "rust-overlay": {
@@ -168,11 +89,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786076960,
-        "narHash": "sha256-jfR6OhwurCKn1tREyfOcK/Omxf1Q/DzDDFbnEr1mBLs=",
+        "lastModified": 1786334499,
+        "narHash": "sha256-g63bW8kYMVhJSncbPuqc1ugbd5ZL3YU3ieEVeaBq/0k=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "57a23bfaf4f7017267294b161175db1e32eb1c85",
+        "rev": "2cb7cad89f0326df860ca399e209352ba6a19ef9",
         "type": "github"
       },
       "original": {
@@ -199,18 +120,6 @@
         "owner": "Mic92",
         "repo": "sops-nix",
         "type": "github"
-      }
-    },
-    "zig-index": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-EzqK7bdCElDCosoznfTafG+GdRjkD8P7aEuzs0NFk5g=",
-        "type": "file",
-        "url": "https://ziglang.org/download/index.json"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://ziglang.org/download/index.json"
       }
     }
   },
