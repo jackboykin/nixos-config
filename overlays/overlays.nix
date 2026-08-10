@@ -1,5 +1,5 @@
 inputs: let
-  pins = builtins.mapAttrs (_: builtins.head) (builtins.fromJSON (builtins.readFile ./pins.json));
+  pins = builtins.fromJSON (builtins.readFile ./pins.json);
 in [
   inputs.rust-overlay.overlays.default
   (import ./bun.nix pins.bun)

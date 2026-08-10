@@ -36,17 +36,8 @@ def claude-code [] {
   {version: $m.version, url: $m.dist.tarball, hash: $m.dist.integrity}
 }
 
-def refresh [hist: list, new: record] {
-  if $new in $hist { $hist } else { [$new] ++ $hist | first 3 }
-}
-
 def main [] {
-  let path = ($env.FILE_PWD | path join pins.json)
-  let old = if ($path | path exists) { open $path } else { {} }
-  {
-    firefox: (refresh ($old | get -o firefox | default []) (firefox))
-    zig: (refresh ($old | get -o zig | default []) (zig))
-    bun: (refresh ($old | get -o bun | default []) (bun))
-    claude-code: (refresh ($old | get -o claude-code | default []) (claude-code))
-  } | save -f $path
+  {firefox: (firefox), zig: (zig), bun: (bun), claude-code: (claude-code)}
+  | to json | $"($in)\n"
+  | save -f ($env.FILE_PWD | path join pins.json)
 }
