@@ -33,6 +33,7 @@
     fd
     ffmpeg-release
     gh
+    htmlq
     hyperfine
     jq
     poppler-utils
@@ -42,7 +43,7 @@
 
     bun
     clang
-    python3
+    (python3.withPackages (ps: [ps.markdownify]))
     rust-bin.stable.latest.default
     typescript
     zigpkgs.master
