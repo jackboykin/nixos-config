@@ -18,7 +18,7 @@ in {
     power-profiles-daemon.enable = false;
     fwupd.enable = false;
     orca.enable = false;
-    speechd.enable = false;
+    speechd.package = pkgs.speechd.override {espeak = pkgs.espeak.override {mbrolaSupport = false;};};
 
     pipewire = {
       enable = true;
