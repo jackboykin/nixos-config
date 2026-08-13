@@ -1,13 +1,16 @@
 #!/usr/bin/env nu
 
 def firefox [] {
-  let hub = http get https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/gecko.v2.mozilla-central.shippable.latest.firefox.linux64-opt/artifacts/public/build/buildhub.json
-  let t = ($hub.build.id | parse --regex '(?<y>\d{4})(?<mo>\d{2})(?<d>\d{2})(?<h>\d{2})(?<mi>\d{2})(?<s>\d{2})' | first)
-  let base = $"https://archive.mozilla.org/pub/firefox/nightly/($t.y)/($t.mo)/($t.y)-($t.mo)-($t.d)-($t.h)-($t.mi)-($t.s)-mozilla-central"
-  let file = $"firefox-($hub.target.version).en-US.linux-x86_64.tar.xz"
-  let sums = http get $"($base)/firefox-($hub.target.version).en-US.linux-x86_64.checksums"
+  let root = "https://archive.mozilla.org/pub/firefox/nightly"
+  let latest = $"($root)/latest-mozilla-central"
+  let version = (http get $"($latest)/" | parse --regex 'firefox-(?<v>[0-9][^"]*?)\.en-US\.linux-x86_64\.tar\.xz' | first | get v)
+  let stem = $"firefox-($version).en-US.linux-x86_64"
+  let id = ((http get $"($latest)/($stem).json").buildid | parse --regex '(?<y>\d{4})(?<mo>\d{2})(?<d>\d{2})(?<h>\d{2})(?<mi>\d{2})(?<s>\d{2})' | first)
+  let base = $"($root)/($id.y)/($id.mo)/($id.y)-($id.mo)-($id.d)-($id.h)-($id.mi)-($id.s)-mozilla-central"
+  let sums = http get $"($base)/($stem).checksums"
+  let file = $"($stem).tar.xz"
   {
-    version: $hub.target.version
+    version: $version
     url: $"($base)/($file)"
     sha512: ($sums | lines | parse "{sha512} sha512 {size} {file}" | where file == $file | first | get sha512)
   }

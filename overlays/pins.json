@@ -1,21 +1,21 @@
 {
   "firefox": {
     "version": "155.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-11-08-53-40-mozilla-central/firefox-155.0a1.en-US.linux-x86_64.tar.xz",
-    "sha512": "01f7125ac53128485fefaf6d5fcd93fba711ba3a303157f497c9d18c1142fd2baa435275a138fbed154a006aaf2a051235d064537d470bc7ba0050953c82fafd"
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-12-20-20-37-mozilla-central/firefox-155.0a1.en-US.linux-x86_64.tar.xz",
+    "sha512": "0feedda8d208edf76d119068a69cce4898bbc57dbeba20227f331cceea20c1789f5a74e622295e13b512cee4b9b0f069c3add50f7a995d5931098a2d4934180b"
   },
   "zig": {
-    "version": "0.17.0-dev.1676+c9dc9b798",
-    "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1676+c9dc9b798.tar.xz",
-    "shasum": "3b4059dd830aafd2978c47f92adf14094ff2e5cfe2ab79b47b8e52ccc76e2135"
+    "version": "0.17.0-dev.1737+de207594e",
+    "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1737+de207594e.tar.xz",
+    "shasum": "a68df95449e152d78ad3940643fb16b925d273411164295cfa12a4621e85b1da"
   },
   "bun": {
-    "version": "canary-20260811",
-    "layer": "sha256:04a0f4aaff6dc32ba7b3facee4a7a3ae6f2c3da0f98e8c91eff033db03a1e2dc"
+    "version": "canary-20260812",
+    "layer": "sha256:ca39cf663417d4202edaae646d62c8651908c8407eb67427e1f766a4f669a65a"
   },
   "claude-code": {
-    "version": "2.1.228",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.228.tgz",
-    "hash": "sha512-LMrLUYW5FY3r8wsQk/U5HWacHmxlEWKxaOgNzmDn1f5FhgKsSAPpioqf2JE5AusRRKXyWvhYM1crOE/CKIqoNQ=="
+    "version": "2.1.229",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.229.tgz",
+    "hash": "sha512-YaENNcgyLJ8xjH1cdNTCAC7jLUzDTRISMQikArsvpBcEM32no6jmGgpVj61YQAOZedyUTLYxbKyq4TYGj7o2Vw=="
   }
 }
