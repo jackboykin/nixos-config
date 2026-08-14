@@ -27,11 +27,13 @@
     vesktop
     zed-editor
 
+    bc
     bubblewrap
     claude-code
     fastfetch
     fd
     ffmpeg-release
+    file
     gh
     htmlq
     hyperfine
@@ -39,6 +41,7 @@
     poppler-utils
     ripgrep
     socat
+    unzip
     yazi
 
     bun
@@ -54,6 +57,7 @@
     zig-zlint
 
     bandwhich
+    dnsutils
     nmap
     tcpdump
 
