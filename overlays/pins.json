@@ -5,17 +5,17 @@
     "sha512": "2622e7f1263ccdafc02039643cf538f409b80526fe2bf06d0fe8657073bce84d19d4eaa84e724ef94d928c54c9134d6e770973cd441ecf91ab87e4c86b145774"
   },
   "zig": {
-    "version": "0.17.0-dev.1745+ac8a8d0c5",
-    "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1745+ac8a8d0c5.tar.xz",
-    "shasum": "f707a6c9d3211ae017cb076cd99212a87d44f902d617516555625f1b789e9be9"
+    "version": "0.17.0-dev.1756+613c03321",
+    "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1756+613c03321.tar.xz",
+    "shasum": "81af6b0a174949f1a7c197e5f1ea1a4ef5f867d3c3ce3580b4d684631a5169a7"
   },
   "bun": {
-    "version": "canary-20260813",
-    "layer": "sha256:02b5e3764c24cb0ae1a39e774b6db442a9c10c70f0490e4157a4ad75272593b8"
+    "version": "canary-20260814",
+    "layer": "sha256:5c144a874115548c2f78292b51323bd96c5751975ad201508cded4c024e8e02c"
   },
   "claude-code": {
-    "version": "2.1.232",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.232.tgz",
-    "hash": "sha512-nEd0W44UKPPgFeXLjWl9Qikyieowi8BFABdbYtyL1Cq05pw62h312M9ErCLjRj1cvWeMOYY+tg8RL5npjSQNSg=="
+    "version": "2.1.233",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.233.tgz",
+    "hash": "sha512-ubMVvBBlsks5NE0EmucELB2h/XZ64L86JgmMBUWShLgDAkrrzCh1zIf5qX1+SPskXAnMfKBFTMNeaT6UruxRkQ=="
   }
 }

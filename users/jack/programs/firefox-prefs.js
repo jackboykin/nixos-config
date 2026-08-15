@@ -27,6 +27,9 @@ user_pref("permissions.default.desktop-notification", 2);
 user_pref("permissions.default.geo", 2);
 user_pref("permissions.default.microphone", 2);
 
+user_pref("identity.fxaccounts.account.device.name", "orion");
+user_pref("identity.fxaccounts.enabled", false);
+
 user_pref("signon.autofillForms", false);
 user_pref("signon.formlessCapture.enabled", false);
 user_pref("signon.management.page.enabled", false);
