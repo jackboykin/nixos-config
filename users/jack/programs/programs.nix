@@ -13,6 +13,7 @@
     ./ghostty.nix
     ./git.nix
     ./helix.nix
+    ./jj.nix
     ./konsole.nix
     ./mpv.nix
     ./nushell.nix

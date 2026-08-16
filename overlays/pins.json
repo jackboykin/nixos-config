@@ -5,13 +5,13 @@
     "sha512": "2622e7f1263ccdafc02039643cf538f409b80526fe2bf06d0fe8657073bce84d19d4eaa84e724ef94d928c54c9134d6e770973cd441ecf91ab87e4c86b145774"
   },
   "zig": {
-    "version": "0.17.0-dev.1756+613c03321",
-    "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1756+613c03321.tar.xz",
-    "shasum": "81af6b0a174949f1a7c197e5f1ea1a4ef5f867d3c3ce3580b4d684631a5169a7"
+    "version": "0.17.0-dev.1767+63cfe88f0",
+    "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1767+63cfe88f0.tar.xz",
+    "shasum": "1c58dd1d03b07410bb865240dc44799cdb7d8ebfecd3a9df942794404b656fc1"
   },
   "bun": {
-    "version": "canary-20260814",
-    "layer": "sha256:5c144a874115548c2f78292b51323bd96c5751975ad201508cded4c024e8e02c"
+    "version": "canary-20260815",
+    "layer": "sha256:63b007407dd15a7f9d3434d62ddbda66493aa2c38c17c29f443cf27950540c2d"
   },
   "claude-code": {
     "version": "2.1.233",
