@@ -28,6 +28,8 @@
     vesktop
     zed-editor
 
+    aspell
+    aspellDicts.en
     bc
     bubblewrap
     claude-code
