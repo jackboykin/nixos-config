@@ -37,6 +37,7 @@
     ffmpeg-release
     file
     gh
+    herdr
     htmlq
     hyperfine
     jq

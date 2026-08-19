@@ -10,12 +10,12 @@
     "shasum": "d95fbbfc6c1cd2409c2c48f6f9ac54d249c4239f2202bc33d5001c660a80776f"
   },
   "bun": {
-    "version": "canary-20260818",
-    "layer": "sha256:efbfe4095cf3c4eb9a2be42a25903c30416872f29a310c9159222d660a1dc667"
+    "version": "canary-20260819",
+    "layer": "sha256:b42ed89b0dfe2f9d7c9bd25a942d5df6380cfa0565b1cfb1e348c1d4c5a1a0e0"
   },
   "claude-code": {
-    "version": "2.1.235",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.235.tgz",
-    "hash": "sha512-C/GxUesluZxiGGU+p3VwTQ8/fhJXdCb/mqvjhDq5TTNv9ZiONgXxy7NkhZh17VFivvv0x2X2SOMRarJQtT/Krw=="
+    "version": "2.1.236",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.236.tgz",
+    "hash": "sha512-96GVEfl+2t2HWbKBlW4oIEubH6pkL27R5j9feWS+tQH6MWiGnr8jNsL5Fv2405ZiO3+SiX2eV/3sUkUWRV5h6w=="
   }
 }
