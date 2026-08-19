@@ -43,7 +43,7 @@
   ];
 in {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_testing;
     kernelParams = [
       "slab_nomerge"
       "randomize_kstack_offset=on"
