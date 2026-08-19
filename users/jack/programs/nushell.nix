@@ -60,6 +60,7 @@
     q = "exit";
     nr = "nh os switch";
     nb = "nh os boot";
+    np = "sudo systemctl start nix-prune";
     cf = ''claude --dangerously-skip-permissions --system-prompt=""'';
     cfw = ''claude --dangerously-skip-permissions --system-prompt="" --settings '{"disableWorkflows": false}' '';
     eza = "eza --icons auto --git";
