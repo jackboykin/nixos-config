@@ -1,13 +1,13 @@
 {
   "firefox": {
-    "version": "155.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-13-09-53-18-mozilla-central/firefox-155.0a1.en-US.linux-x86_64.tar.xz",
-    "sha512": "2622e7f1263ccdafc02039643cf538f409b80526fe2bf06d0fe8657073bce84d19d4eaa84e724ef94d928c54c9134d6e770973cd441ecf91ab87e4c86b145774"
+    "version": "156.0a1",
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-19-09-26-00-mozilla-central/firefox-156.0a1.en-US.linux-x86_64.tar.xz",
+    "sha512": "dd548a11738b7dc9eb3effbbdc3a5ac95776cc0ad775775713dc07627d7ccdcb5d75ce42ff5fc30d29fdd880e5965dc4d0b8775c969cd0b05e04791efd6034c6"
   },
   "zig": {
-    "version": "0.17.0-dev.1786+75044cb04",
-    "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1786+75044cb04.tar.xz",
-    "shasum": "842bfc37b6415941fa31a5344fed8d8209411e87c8643cd5edf15862c2593690"
+    "version": "0.17.0-dev.1811+6716bf52e",
+    "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1811+6716bf52e.tar.xz",
+    "shasum": "d95fbbfc6c1cd2409c2c48f6f9ac54d249c4239f2202bc33d5001c660a80776f"
   },
   "bun": {
     "version": "canary-20260818",

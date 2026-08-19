@@ -3,7 +3,7 @@
 def firefox [] {
   let root = "https://archive.mozilla.org/pub/firefox/nightly"
   let latest = $"($root)/latest-mozilla-central"
-  let version = (http get $"($latest)/" | parse --regex 'firefox-(?<v>[0-9][^"]*?)\.en-US\.linux-x86_64\.tar\.xz' | first | get v)
+  let version = (http get https://product-details.mozilla.org/1.0/firefox_versions.json).FIREFOX_NIGHTLY
   let stem = $"firefox-($version).en-US.linux-x86_64"
   let id = ((http get $"($latest)/($stem).json").buildid | parse --regex '(?<y>\d{4})(?<mo>\d{2})(?<d>\d{2})(?<h>\d{2})(?<mi>\d{2})(?<s>\d{2})' | first)
   let base = $"($root)/($id.y)/($id.mo)/($id.y)-($id.mo)-($id.d)-($id.h)-($id.mi)-($id.s)-mozilla-central"
