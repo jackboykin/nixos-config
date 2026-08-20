@@ -35,7 +35,7 @@ def bun [] {
 }
 
 def claude-code [] {
-  let m = http get https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/latest
+  let m = http get https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/next
   {version: $m.version, url: $m.dist.tarball, hash: $m.dist.integrity}
 }
 
