@@ -54,8 +54,6 @@ in {
         "--datadir=${placeholder "out"}/share/ffmpeg"
         "--cc=${prev.stdenv.cc.targetPrefix}cc"
 
-        "--cpu=native"
-        "--disable-runtime-cpudetect"
         "--disable-debug"
         "--disable-doc"
 
