@@ -1,14 +1,12 @@
-pin: final: prev: {
+pin: final: prev: let
+  inherit (prev) lib;
+in {
   bun = prev.stdenvNoCC.mkDerivation {
     pname = "bun";
     inherit (pin) version;
 
-    src = prev.fetchurl {
-      url = "https://github.com/oven-sh/bun/releases/download/bun-v${pin.version}/bun-linux-x64.zip";
-      sha256 = pin.shasum;
-    };
+    src = prev.fetchurl {inherit (pin) url hash;};
 
-    strictDeps = true;
     nativeBuildInputs = [prev.unzip prev.autoPatchelfHook];
 
     dontConfigure = true;
@@ -24,7 +22,8 @@ pin: final: prev: {
     meta = {
       homepage = "https://bun.sh";
       description = "Incredibly fast JavaScript runtime, bundler, test runner and package manager";
-      license = prev.lib.licenses.mit;
+      license = lib.licenses.mit;
+      sourceProvenance = [lib.sourceTypes.binaryNativeCode];
       platforms = ["x86_64-linux"];
       mainProgram = "bun";
     };

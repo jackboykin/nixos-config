@@ -1,7 +1,7 @@
 pin: final: prev: let
   inherit (prev) lib;
 in {
-  claude-code = prev.stdenv.mkDerivation {
+  claude-code = prev.stdenvNoCC.mkDerivation {
     pname = "claude-code";
     inherit (pin) version;
 

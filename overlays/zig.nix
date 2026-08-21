@@ -7,13 +7,13 @@ in {
       inherit (pins.zig) version;
       src = prev.fetchurl {
         urls = let
-          file = baseNameOf pins.zig.tarball;
+          file = baseNameOf pins.zig.url;
         in [
           "https://pkg.hexops.org/zig/${file}"
           "https://zigmirror.hryx.net/zig/${file}"
-          pins.zig.tarball
+          pins.zig.url
         ];
-        sha256 = pins.zig.shasum;
+        inherit (pins.zig) hash;
       };
       dontConfigure = true;
       dontBuild = true;
@@ -29,6 +29,7 @@ in {
         homepage = "https://ziglang.org";
         description = "General-purpose programming language and toolchain";
         license = lib.licenses.mit;
+        sourceProvenance = [lib.sourceTypes.binaryNativeCode];
         platforms = ["x86_64-linux"];
         mainProgram = "zig";
       };
@@ -37,10 +38,7 @@ in {
     zls = prev.stdenvNoCC.mkDerivation {
       pname = "zls";
       inherit (pins.zls) version;
-      src = prev.fetchurl {
-        url = pins.zls.tarball;
-        sha256 = pins.zls.shasum;
-      };
+      src = prev.fetchurl {inherit (pins.zls) url hash;};
       sourceRoot = ".";
       dontConfigure = true;
       dontBuild = true;
@@ -54,6 +52,7 @@ in {
         homepage = "https://zigtools.org";
         description = "Language server for Zig";
         license = lib.licenses.mit;
+        sourceProvenance = [lib.sourceTypes.binaryNativeCode];
         platforms = ["x86_64-linux"];
         mainProgram = "zls";
       };

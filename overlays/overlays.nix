@@ -3,7 +3,7 @@ inputs: let
 in [
   inputs.rust-overlay.overlays.default
   (import ./bun.nix pins.bun)
-  (import ./claude-code.nix pins."claude-code")
+  (import ./claude-code.nix pins.claude-code)
   (import ./ffmpeg.nix inputs.ffmpeg)
   (import ./firefox-nightly.nix pins.firefox)
   (import ./plasma-flatten.nix)

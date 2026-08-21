@@ -11,7 +11,7 @@ pin: final: prev: let
     })
     .overrideAttrs {
       pname = "firefox-nightly-bin-unwrapped";
-      src = prev.fetchurl {inherit (pin) url sha512;};
+      src = prev.fetchurl {inherit (pin) url hash;};
     };
 in {
   firefox-nightly = assert lib.assertMsg (lib.versionAtLeast pin.version "146") "firefox ${pin.version} takes the ffmpeg_7 branch";

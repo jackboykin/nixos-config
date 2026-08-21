@@ -1,26 +1,27 @@
 {
-  "firefox": {
-    "version": "156.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-20-21-48-44-mozilla-central/firefox-156.0a1.en-US.linux-x86_64.tar.xz",
-    "sha512": "986f1ba28ea3cae73d1e69229a6321b781b2829c9134dc3f90bbf5910f8d20ba7e6c3b53ad2b69370e7a84e997d19ff62fefec375275a6def5571566f696af1b"
-  },
-  "zig": {
-    "version": "0.17.0-dev.1818+7051f8e73",
-    "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1818+7051f8e73.tar.xz",
-    "shasum": "5e4c8acea6b9eea329480b500ad3ce28aff546e89cd37276b6306142cf7ee7d2"
-  },
-  "zls": {
-    "version": "0.17.0-dev.44+8da87d4f",
-    "tarball": "https://builds.zigtools.org/zls-x86_64-linux-0.17.0-dev.44+8da87d4f.tar.xz",
-    "shasum": "9ea223fa88424671555911beba5d689191ae080a4e827ef5c76c8f64e39ff296"
-  },
   "bun": {
     "version": "1.4.0",
-    "shasum": "2d03fb5fb83ac8b567aca0a281b2ce1a1a19d488f56c2968d88c3f25e92fe452"
+    "url": "https://github.com/oven-sh/bun/releases/download/bun-v1.4.0/bun-linux-x64.zip",
+    "hash": "sha256-LQP7X7g6yLVnrKCigbLOGhoZ1Ij1bClo2Iw/Jekv5FI="
   },
   "claude-code": {
     "version": "2.1.238",
     "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.238.tgz",
     "hash": "sha512-luyUGir57QrSdGaeBhP4J3K28DJsYDF1WkqfRFwr+dH1+zI6RRUltWCJe/23Jx7QMTd3c0QIPQ0wzE4Qw/rWjg=="
+  },
+  "firefox": {
+    "version": "156.0a1",
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-20-21-48-44-mozilla-central/firefox-156.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-mG8boo6jyuc9HmkimmMht4GygpyRNNw/kLv1kQ+NILp+bDtTrStpNw56hOmX0Z/2L+/sN1J1pt71VxVm9pavGw=="
+  },
+  "zig": {
+    "version": "0.17.0-dev.1818+7051f8e73",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1818+7051f8e73.tar.xz",
+    "hash": "sha256-XkyKzqa57qMpSAtQCtPOKK/1Ruic03J2tjBhQs9+59I="
+  },
+  "zls": {
+    "version": "0.17.0-dev.44+8da87d4f",
+    "url": "https://builds.zigtools.org/zls-x86_64-linux-0.17.0-dev.44+8da87d4f.tar.xz",
+    "hash": "sha256-nqIj+ohCRnFVWRG+ul1okZGuCApOgn71x2yPZOOf8pY="
   }
 }
