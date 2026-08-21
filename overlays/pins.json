@@ -15,8 +15,8 @@
     "shasum": "9ea223fa88424671555911beba5d689191ae080a4e827ef5c76c8f64e39ff296"
   },
   "bun": {
-    "version": "canary-20260820",
-    "layer": "sha256:5337ed59c96392d94452d2b61a9c911a87c55adb74d689bfcb7009fc5259e9e2"
+    "version": "1.4.0",
+    "shasum": "2d03fb5fb83ac8b567aca0a281b2ce1a1a19d488f56c2968d88c3f25e92fe452"
   },
   "claude-code": {
     "version": "2.1.238",

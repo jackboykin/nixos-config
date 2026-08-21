@@ -3,30 +3,20 @@ pin: final: prev: {
     pname = "bun";
     inherit (pin) version;
 
-    src =
-      prev.runCommand "bun-layer.tar.gz" {
-        nativeBuildInputs = [prev.curl];
-        outputHash = prev.lib.removePrefix "sha256:" pin.layer;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-        SSL_CERT_FILE = "${prev.cacert}/etc/ssl/certs/ca-bundle.crt";
-      } ''
-        token=$(curl -s 'https://auth.docker.io/token?service=registry.docker.io&scope=repository:oven/bun:pull' | sed -E 's/.*"token":"([^"]+)".*/\1/')
-        curl -sSfL -H "Authorization: Bearer $token" -o $out \
-          "https://registry-1.docker.io/v2/oven/bun/blobs/${pin.layer}"
-      '';
+    src = prev.fetchurl {
+      url = "https://github.com/oven-sh/bun/releases/download/bun-v${pin.version}/bun-linux-x64.zip";
+      sha256 = pin.shasum;
+    };
 
-    dontUnpack = true;
+    strictDeps = true;
+    nativeBuildInputs = [prev.unzip prev.autoPatchelfHook];
+
     dontConfigure = true;
     dontBuild = true;
 
-    nativeBuildInputs = [prev.autoPatchelfHook];
-    buildInputs = [prev.openssl];
-
     installPhase = ''
       runHook preInstall
-      tar -xzf $src usr/local/bin/bun
-      install -Dm755 usr/local/bin/bun $out/bin/bun
+      install -Dm755 bun $out/bin/bun
       ln -s $out/bin/bun $out/bin/bunx
       runHook postInstall
     '';

@@ -36,14 +36,11 @@ def zls [zig_version: string, old: record] {
 }
 
 def bun [] {
-  let img = ((http get https://hub.docker.com/v2/repositories/oven/bun/tags/canary-distroless).images | where architecture == amd64 | first)
-  let token = (http get "https://auth.docker.io/token?service=registry.docker.io&scope=repository:oven/bun:pull").token
-  let hdr = [Authorization $"Bearer ($token)" Accept "application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json"]
-  let man = (http get -H $hdr $"https://registry-1.docker.io/v2/oven/bun/manifests/($img.digest)" | decode | from json)
-  let cfg = (http get -H $hdr $"https://registry-1.docker.io/v2/oven/bun/blobs/($man.config.digest)" | decode | from json)
+  let r = (http get https://api.github.com/repos/oven-sh/bun/releases/latest)
+  let a = ($r.assets | where name == "bun-linux-x64.zip" | first)
   {
-    version: ($cfg.created | into datetime | format date canary-%Y%m%d)
-    layer: ($man.layers | sort-by size | last | get digest)
+    version: ($r.tag_name | str replace "bun-v" "")
+    shasum: ($a.digest | str replace "sha256:" "")
   }
 }
 
