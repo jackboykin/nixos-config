@@ -1,21 +1,26 @@
 {
   "firefox": {
     "version": "156.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-19-21-08-08-mozilla-central/firefox-156.0a1.en-US.linux-x86_64.tar.xz",
-    "sha512": "4fcb3b53b7315fc3623f2c967c4e6fce31abbaf956bbc106714d75b5f34d630c92ae11581ec8f9d7d8c82496e2dd17b08d565af27a20d31f3ec9b65301fd5a3e"
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-20-21-48-44-mozilla-central/firefox-156.0a1.en-US.linux-x86_64.tar.xz",
+    "sha512": "986f1ba28ea3cae73d1e69229a6321b781b2829c9134dc3f90bbf5910f8d20ba7e6c3b53ad2b69370e7a84e997d19ff62fefec375275a6def5571566f696af1b"
   },
   "zig": {
     "version": "0.17.0-dev.1818+7051f8e73",
     "tarball": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1818+7051f8e73.tar.xz",
     "shasum": "5e4c8acea6b9eea329480b500ad3ce28aff546e89cd37276b6306142cf7ee7d2"
   },
+  "zls": {
+    "version": "0.17.0-dev.44+8da87d4f",
+    "tarball": "https://builds.zigtools.org/zls-x86_64-linux-0.17.0-dev.44+8da87d4f.tar.xz",
+    "shasum": "9ea223fa88424671555911beba5d689191ae080a4e827ef5c76c8f64e39ff296"
+  },
   "bun": {
-    "version": "canary-20260819",
-    "layer": "sha256:b42ed89b0dfe2f9d7c9bd25a942d5df6380cfa0565b1cfb1e348c1d4c5a1a0e0"
+    "version": "canary-20260820",
+    "layer": "sha256:5337ed59c96392d94452d2b61a9c911a87c55adb74d689bfcb7009fc5259e9e2"
   },
   "claude-code": {
-    "version": "2.1.237",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.237.tgz",
-    "hash": "sha512-WTE+S0KGiE0v18jT5xPtUARiOOZuYG4xInHGOBS/vbHhL2h3WDHoRL7UpV21z4W12XybIzXeh6o1dsvBuONXog=="
+    "version": "2.1.238",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.238.tgz",
+    "hash": "sha512-luyUGir57QrSdGaeBhP4J3K28DJsYDF1WkqfRFwr+dH1+zI6RRUltWCJe/23Jx7QMTd3c0QIPQ0wzE4Qw/rWjg=="
   }
 }

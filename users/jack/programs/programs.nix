@@ -53,6 +53,7 @@
     rust-bin.stable.latest.default
     typescript
     zigpkgs.master
+    zigpkgs.zls
 
     clang-tools
     nixd

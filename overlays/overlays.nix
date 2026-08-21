@@ -7,5 +7,5 @@ in [
   (import ./ffmpeg.nix inputs.ffmpeg)
   (import ./firefox-nightly.nix pins.firefox)
   (import ./plasma-flatten.nix)
-  (import ./zig.nix pins.zig)
+  (import ./zig.nix {inherit (pins) zig zls;})
 ]

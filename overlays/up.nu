@@ -16,10 +16,23 @@ def firefox [] {
   }
 }
 
-def zig [] {
-  let m = (http get https://ziglang.org/download/index.json).master
+def pin [m: record] {
   let bin = ($m | get x86_64-linux)
   {version: $m.version, tarball: $bin.tarball, shasum: $bin.shasum}
+}
+
+def zig [] {
+  pin (http get https://ziglang.org/download/index.json).master
+}
+
+def zls [zig_version: string, old: record] {
+  let v = ($zig_version | url encode)
+  let m = (http get $"https://releases.zigtools.org/v1/zls/select-version?zig_version=($v)&compatibility=full")
+  if "message" in $m {
+    print -e $"zls: ($m.message) - keeping ($old.version)"
+    return $old
+  }
+  pin $m
 }
 
 def bun [] {
@@ -40,7 +53,10 @@ def claude-code [] {
 }
 
 def main [] {
-  {firefox: (firefox), zig: (zig), bun: (bun), claude-code: (claude-code)}
+  let path = ($env.FILE_PWD | path join pins.json)
+  let old = (open $path)
+  let z = (zig)
+  {firefox: (firefox), zig: $z, zls: (zls $z.version $old.zls), bun: (bun), claude-code: (claude-code)}
   | to json | $"($in)\n"
-  | save -f ($env.FILE_PWD | path join pins.json)
+  | save -f $path
 }
