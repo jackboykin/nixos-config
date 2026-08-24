@@ -31,8 +31,8 @@
       ssh.program = lib.getExe' pkgs.openssh "ssh-keygen";
     };
 
+    core.pager = delta;
     interactive.diffFilter = "${delta} --color-only";
-    pager = lib.genAttrs ["blame" "diff" "log" "show"] (_: delta);
 
     delta = {
       line-numbers = true;

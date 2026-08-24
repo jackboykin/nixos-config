@@ -64,7 +64,6 @@
           ./modules/modules.nix
           ./users/${username}/user.nix
           {
-            nixpkgs.hostPlatform = lib.mkDefault system;
             nixpkgs.overlays = overlays;
             system.extraDependencies = inputSources;
           }

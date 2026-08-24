@@ -3,11 +3,7 @@ _: {
 
   services.fstrim.enable = true;
 
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 50;
-  };
+  zramSwap.enable = true;
 
   boot.kernel.sysctl = {
     "vm.swappiness" = 180;
@@ -67,9 +63,5 @@ _: {
     };
   };
 
-  hardware = {
-    graphics.enable = true;
-    amdgpu.initrd.enable = true;
-    enableRedistributableFirmware = true;
-  };
+  hardware.amdgpu.initrd.enable = true;
 }
