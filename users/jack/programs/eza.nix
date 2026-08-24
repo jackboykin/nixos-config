@@ -5,11 +5,7 @@
   ...
 }: let
   inherit (theme) colors;
-  toRGB = hex: let
-    rgb = theme.hexToRgb hex;
-  in "${toString rgb.r};${toString rgb.g};${toString rgb.b}";
-
-  fg = color: "38;2;${toRGB color}";
+  fg = color: "38;2;${builtins.concatStringsSep ";" (theme.rgb color)}";
   ezaColorsStr = builtins.concatStringsSep ":" [
     "di=${fg colors.blue}"
     "ln=${fg colors.cyan}"

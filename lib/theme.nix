@@ -118,6 +118,7 @@ with lib; let
   };
 in {
   inherit colors mixColors hexToRgb;
+  rgb = hex: let c = hexToRgb hex; in map toString [c.r c.g c.b];
 
   diff = {
     hunkHeader = mixColors colors.base colors.cyan 0.8;
