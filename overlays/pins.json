@@ -5,19 +5,19 @@
     "hash": "sha256-LQP7X7g6yLVnrKCigbLOGhoZ1Ij1bClo2Iw/Jekv5FI="
   },
   "claude-code": {
-    "version": "2.1.238",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.238.tgz",
-    "hash": "sha512-luyUGir57QrSdGaeBhP4J3K28DJsYDF1WkqfRFwr+dH1+zI6RRUltWCJe/23Jx7QMTd3c0QIPQ0wzE4Qw/rWjg=="
+    "version": "2.1.241",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.241.tgz",
+    "hash": "sha512-yHcPvq6iSblC7Mj05yjWBJOfSC3scyyEYazdX/QRUmXmqYXc1hh8LGZaaZPGv+UFXOJZhpPnNCbyVLdMLFCr4Q=="
   },
   "firefox": {
     "version": "156.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-20-21-48-44-mozilla-central/firefox-156.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-mG8boo6jyuc9HmkimmMht4GygpyRNNw/kLv1kQ+NILp+bDtTrStpNw56hOmX0Z/2L+/sN1J1pt71VxVm9pavGw=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-24-09-34-07-mozilla-central/firefox-156.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-9W7BCCvhx0F6bKn9JXrIQQ/WwEVn8JmIv1z/XL9KHfxUFZq//ct5jvSYAe4epWfmYp2OT3A59mmIQRGvA2oG6g=="
   },
   "zig": {
-    "version": "0.17.0-dev.1818+7051f8e73",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1818+7051f8e73.tar.xz",
-    "hash": "sha256-XkyKzqa57qMpSAtQCtPOKK/1Ruic03J2tjBhQs9+59I="
+    "version": "0.17.0-dev.1857+3c46da14d",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1857+3c46da14d.tar.xz",
+    "hash": "sha256-CCXkpVuvSmZHw84wd6cjbJ/+xbF+HKAQKpMP4z1jG8Y="
   },
   "zls": {
     "version": "0.17.0-dev.44+8da87d4f",
