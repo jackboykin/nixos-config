@@ -2,27 +2,16 @@ _: {
   services.ntpd-rs = {
     enable = true;
     useNetworkingTimeServers = false;
-    settings.source = [
-      {
+    settings.source =
+      map (address: {
         mode = "nts";
-        address = "time.cloudflare.com";
-      }
-      {
-        mode = "nts";
-        address = "ohio.time.system76.com";
-      }
-      {
-        mode = "nts";
-        address = "ntp2.wiktel.com";
-      }
-      {
-        mode = "nts";
-        address = "time1.mbix.ca";
-      }
-      {
-        mode = "nts";
-        address = "time.xargs.org";
-      }
-    ];
+        inherit address;
+      }) [
+        "time.cloudflare.com"
+        "ohio.time.system76.com"
+        "ntp2.wiktel.com"
+        "time1.mbix.ca"
+        "time.xargs.org"
+      ];
   };
 }
