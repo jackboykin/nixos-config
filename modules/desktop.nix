@@ -39,8 +39,6 @@ in {
 
   security.rtkit.enable = true;
 
-  programs.gpu-screen-recorder.enable = true;
-
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     julia-mono
