@@ -21,7 +21,6 @@
 
   environment.shells = [pkgs.nushell];
 
-  security.sudo = {
-    execWheelOnly = true;
-  };
+  security.sudo.enable = false;
+  security.doas.enable = true;
 }
