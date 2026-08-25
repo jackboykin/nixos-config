@@ -71,9 +71,12 @@ in {
   security.protectKernelImage = true;
 
   systemd.tpm2.enable = false;
-  services.lvm.enable = false;
 
   system.nixos-init.enable = true;
   system.etc.overlay.enable = true;
-  services.userborn.enable = true;
+  services = {
+    lvm.enable = false;
+    journald.extraConfig = "SystemMaxUse=256M";
+    userborn.enable = true;
+  };
 }
