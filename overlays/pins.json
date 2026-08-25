@@ -5,9 +5,9 @@
     "hash": "sha256-LQP7X7g6yLVnrKCigbLOGhoZ1Ij1bClo2Iw/Jekv5FI="
   },
   "claude-code": {
-    "version": "2.1.245",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.245.tgz",
-    "hash": "sha512-SRO5w2f9iHKZmREp389kPKxWAr6qEODxggdhhS7zF16OMwaUHjV5Yu7Oq8jSMD57gQiBjOfvFp/SJg3CdfHCtA=="
+    "version": "2.1.246",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.246.tgz",
+    "hash": "sha512-1BNvhwngvo8AAoWcQb+9TWgQ3Gdvwfriz4bBEbsI59rKqdm0//O0/6xuplWePUuFNWK7Z6nWbwT8pEZd/9jY9Q=="
   },
   "firefox": {
     "version": "156.0a1",
@@ -15,9 +15,9 @@
     "hash": "sha512-arEyNWY0GJWoEQY5/wG5hVoCaw8mqynHPV1757eeXsYmVSV6SomjpK/2hSbBOGclBFarlIli/l8rGVgGXO5BAQ=="
   },
   "zig": {
-    "version": "0.17.0-dev.1859+dcceb318e",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1859+dcceb318e.tar.xz",
-    "hash": "sha256-FNZRLOwKr6ZY1W81NNMM5IJehwsvKqwoAEBWVkX9yB4="
+    "version": "0.17.0-dev.1862+40ebd8162",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.1862+40ebd8162.tar.xz",
+    "hash": "sha256-jna8V1hfycJXxsMFOlIlAfam57qugBSQ0mnsA2x1tY0="
   },
   "zls": {
     "version": "0.17.0-dev.44+8da87d4f",
