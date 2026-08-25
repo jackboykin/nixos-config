@@ -34,6 +34,7 @@
     "firewire_net"
     "thunderbolt"
     "thunderbolt_net"
+    "ahci"
     "vivid"
     "af_alg"
     "algif_aead"
@@ -49,10 +50,11 @@ in {
       "randomize_kstack_offset=on"
       "vsyscall=none"
       "page_alloc.shuffle=1"
+      "SYSTEMD_DEFAULT_MOUNT_RATE_LIMIT_BURST=50"
     ];
     tmp.cleanOnBoot = true;
 
-    loader.timeout = 1;
+    loader.timeout = 0;
     loader.efi.canTouchEfiVariables = true;
 
     lanzaboote = {
@@ -63,9 +65,13 @@ in {
     extraModprobeConfig = lib.concatMapStringsSep "\n" (m: "install ${m} ${pkgs.pkgsStatic.uutils-coreutils-noprefix}/bin/false") disabledModules;
 
     initrd.systemd.enable = true;
+    initrd.systemd.tpm2.enable = false;
   };
 
   security.protectKernelImage = true;
+
+  systemd.tpm2.enable = false;
+  services.lvm.enable = false;
 
   system.nixos-init.enable = true;
   system.etc.overlay.enable = true;

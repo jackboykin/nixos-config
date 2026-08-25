@@ -62,6 +62,4 @@ _: {
       OOMScoreAdjust = 1000;
     };
   };
-
-  hardware.amdgpu.initrd.enable = true;
 }
