@@ -35,6 +35,7 @@
     "thunderbolt"
     "thunderbolt_net"
     "ahci"
+    "libata"
     "vivid"
     "af_alg"
     "algif_aead"
@@ -64,8 +65,13 @@ in {
 
     extraModprobeConfig = lib.concatMapStringsSep "\n" (m: "install ${m} ${pkgs.pkgsStatic.uutils-coreutils-noprefix}/bin/false") disabledModules;
 
-    initrd.systemd.enable = true;
-    initrd.systemd.tpm2.enable = false;
+    initrd = {
+      includeDefaultModules = false;
+      systemd = {
+        enable = true;
+        tpm2.enable = false;
+      };
+    };
   };
 
   security.protectKernelImage = true;
