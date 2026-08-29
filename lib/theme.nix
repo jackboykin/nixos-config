@@ -1,5 +1,6 @@
-{lib}:
-with lib; let
+{lib}: let
+  inherit (lib) ceil concatStrings floor fromTOML removePrefix stringLength substring toHexString toLower;
+
   hexToRgb = hex: let
     hex' = removePrefix "#" (toLower hex);
     r = substring 0 2 hex';
