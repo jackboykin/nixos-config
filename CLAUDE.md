@@ -25,7 +25,7 @@ statix fix .          # Auto-fix lint issues
 
 ## Key Patterns
 
-**Adding packages**: Standalone packages go in `users.users.${username}.packages` in `users/jack/programs/programs.nix`. Configured programs get their own file in `users/jack/programs/` and an import in `programs.nix`.
+**Adding packages**: Standalone packages go in `users.users.${username}.packages` in `users/jack/programs/default.nix`. Configured programs get their own file in `users/jack/programs/` and an import in `default.nix`.
 
 **User config files**: Dotfiles are declared with the `home.links` (path → store source, deployed as systemd-tmpfiles `L+` symlinks) and `home.dirs` options defined in `users/jack/home.nix`.
 

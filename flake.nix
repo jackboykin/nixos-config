@@ -51,7 +51,7 @@
         operator = n: map node n.children;
       }));
 
-    overlays = import ./overlays/overlays.nix inputs;
+    overlays = import ./overlays inputs;
 
     mkHost = {
       hostname,
@@ -61,7 +61,7 @@
         specialArgs = {inherit username hostname theme;};
         modules = [
           ./hosts/${hostname}/host.nix
-          ./modules/modules.nix
+          ./modules
           ./users/${username}/user.nix
           {
             nixpkgs.overlays = overlays;

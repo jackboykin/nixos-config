@@ -18,7 +18,7 @@
 in {
   imports = [
     ./home.nix
-    ./programs/programs.nix
+    ./programs
   ];
 
   home.dirs = builtins.attrValues userDirs;
