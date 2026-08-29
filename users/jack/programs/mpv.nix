@@ -27,7 +27,7 @@
 in {
   users.users.${username}.packages = [mpv];
 
-  home.links.".config/mpv" = pkgs.linkFarm "mpv-config" {
+  castle.links.".config/mpv" = pkgs.linkFarm "mpv-config" {
     "mpv.conf" = pkgs.writeText "mpv.conf" (toConf {
       profile = "high-quality";
       geometry = "60%";

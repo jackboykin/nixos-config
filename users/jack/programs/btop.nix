@@ -80,7 +80,7 @@
 in {
   users.users.${username}.packages = [btop];
 
-  home.links.".config/btop/btop.conf" =
+  castle.links.".config/btop/btop.conf" =
     pkgs.writeText "btop.conf"
     (lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k} = ${v}") settings) + "\n");
 }

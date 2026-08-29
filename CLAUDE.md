@@ -27,7 +27,7 @@ statix fix .          # Auto-fix lint issues
 
 **Adding packages**: Standalone packages go in `users.users.${username}.packages` in `users/jack/programs/default.nix`. Configured programs get their own file in `users/jack/programs/` and an import in `default.nix`.
 
-**User config files**: Dotfiles are declared with the `home.links` (path → store source, deployed as systemd-tmpfiles `L+` symlinks) and `home.dirs` options defined in `users/jack/home.nix`.
+**User config files**: Dotfiles are declared with the `castle.links` (path → store source, deployed as systemd-tmpfiles `L+` symlinks) and `castle.dirs` options defined in `users/jack/castle.nix`.
 
 **Secrets**: Managed via sops-nix. Edit with `sops secrets/secrets.yaml`.
 

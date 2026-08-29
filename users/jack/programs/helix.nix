@@ -25,7 +25,7 @@ in {
     VISUAL = "hx";
   };
 
-  home.links.".config/helix" = pkgs.linkFarm "helix-config" {
+  castle.links.".config/helix" = pkgs.linkFarm "helix-config" {
     "config.toml" = ./helix-config.toml;
 
     "languages.toml" = toml.generate "languages.toml" {

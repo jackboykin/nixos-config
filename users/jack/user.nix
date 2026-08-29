@@ -17,13 +17,13 @@
   };
 in {
   imports = [
-    ./home.nix
+    ./castle.nix
     ./programs
   ];
 
-  home.dirs = builtins.attrValues userDirs;
+  castle.dirs = builtins.attrValues userDirs;
 
-  home.links = {
+  castle.links = {
     ".config/user-dirs.conf" = pkgs.writeText "user-dirs.conf" "enabled=False\n";
 
     ".config/user-dirs.dirs" =

@@ -71,7 +71,7 @@
 in {
   programs.nushell.enable = true;
 
-  home.links = {
+  castle.links = {
     ".config/nushell/env.nu" = pkgs.writeText "env.nu" ''
       $env.PATH = ($env.PATH | append [
           $"($env.HOME)/.cargo/bin"

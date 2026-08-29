@@ -16,7 +16,7 @@
 in {
   users.users.${username}.packages = [pkgs.firefox-nightly];
 
-  home.links = {
+  castle.links = {
     ".config/mozilla/firefox/profiles.ini" = pkgs.writeText "profiles.ini" ''
       [General]
       StartWithLastProfile=1

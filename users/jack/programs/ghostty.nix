@@ -17,7 +17,7 @@ in {
 
   systemd.packages = [pkgs.ghostty];
 
-  home.links.".config/ghostty" = pkgs.linkFarm "ghostty-config" {
+  castle.links.".config/ghostty" = pkgs.linkFarm "ghostty-config" {
     "config" = pkgs.writeText "ghostty-config-file" (toGhostty {
       theme = "bellatrix";
       font-family = [fonts.mono.name fonts.mono.fallback];

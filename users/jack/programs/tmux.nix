@@ -8,7 +8,7 @@
 in {
   users.users.${username}.packages = [pkgs.tmux];
 
-  home.links.".config/tmux" = pkgs.writeTextDir "tmux.conf" ''
+  castle.links.".config/tmux" = pkgs.writeTextDir "tmux.conf" ''
     set -g default-terminal "tmux-256color"
     set -ga terminal-features ",*:RGB"
     set -g mouse on

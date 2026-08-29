@@ -58,7 +58,7 @@
     RememberWindowSize=false
   '';
 in {
-  home.links = {
+  castle.links = {
     ".local/share/konsole/Bellatrix.colorscheme" =
       pkgs.writeText "Bellatrix.colorscheme" colorscheme;
     ".local/share/konsole/Bellatrix.profile" =

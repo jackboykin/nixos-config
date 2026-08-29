@@ -6,7 +6,7 @@
 }: let
   inherit (config.users.users.${username}) home;
 in {
-  options.home = {
+  options.castle = {
     links = lib.mkOption {
       type = lib.types.attrsOf lib.types.path;
       default = {};
@@ -19,6 +19,6 @@ in {
   };
 
   config.systemd.user.tmpfiles.users.${username}.rules =
-    lib.mapAttrsToList (path: src: "L+ ${home}/${path} - - - - ${src}") config.home.links
-    ++ map (path: "d ${home}/${path} 0755 - - -") config.home.dirs;
+    lib.mapAttrsToList (path: src: "L+ ${home}/${path} - - - - ${src}") config.castle.links
+    ++ map (path: "d ${home}/${path} 0755 - - -") config.castle.dirs;
 }
