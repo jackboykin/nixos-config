@@ -63,6 +63,7 @@ in {
       pkiBundle = "/var/lib/sbctl";
     };
 
+    blacklistedKernelModules = disabledModules;
     extraModprobeConfig = lib.concatMapStringsSep "\n" (m: "install ${m} ${pkgs.pkgsStatic.uutils-coreutils-noprefix}/bin/false") disabledModules;
 
     initrd = {
