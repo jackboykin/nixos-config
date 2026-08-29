@@ -3,6 +3,8 @@
 
   programs.kde-pim.enable = false;
 
+  systemd.user.services.drkonqi-coredump-pickup.enable = false;
+
   gtk.iconCache.enable = true;
 
   services = {
