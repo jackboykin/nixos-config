@@ -74,9 +74,5 @@ in {
 
   system.nixos-init.enable = true;
   system.etc.overlay.enable = true;
-  services = {
-    lvm.enable = false;
-    journald.extraConfig = "SystemMaxUse=256M";
-    userborn.enable = true;
-  };
+  services.lvm.enable = false;
 }

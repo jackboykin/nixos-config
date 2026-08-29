@@ -1,10 +1,4 @@
 _: {
-  fileSystems."/".options = ["noatime"];
-
-  services.fstrim.enable = true;
-
-  zramSwap.enable = true;
-
   boot.kernel.sysctl = {
     "vm.swappiness" = 180;
     "vm.watermark_boost_factor" = 0;
@@ -39,27 +33,5 @@ _: {
     "net.ipv4.conf.default.accept_source_route" = 0;
     "net.ipv6.conf.all.accept_source_route" = 0;
     "net.ipv6.conf.default.accept_source_route" = 0;
-  };
-
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
-  '';
-
-  systemd = {
-    oomd = {
-      enableSystemSlice = true;
-      enableUserSlices = true;
-    };
-
-    slices."user".sliceConfig.ManagedOOMMemoryPressureLimit = "60%";
-
-    slices."nix-daemon".sliceConfig = {
-      ManagedOOMMemoryPressure = "kill";
-      ManagedOOMMemoryPressureLimit = "50%";
-    };
-    services.nix-daemon.serviceConfig = {
-      Slice = "nix-daemon.slice";
-      OOMScoreAdjust = 1000;
-    };
   };
 }

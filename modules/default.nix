@@ -1,13 +1,18 @@
 _: {
   imports = [
     ./nix.nix
-    ./system-packages.nix
+    ./system-path.nix
+    ./documentation.nix
     ./users.nix
     ./boot.nix
     ./desktop.nix
+    ./locale.nix
+    ./fonts.nix
+    ./audio.nix
     ./networking.nix
     ./ntp.nix
-    ./hardware.nix
+    ./sysctl.nix
+    ./systemd.nix
     ./musl.nix
     ./secrets.nix
   ];

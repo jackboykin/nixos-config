@@ -11,11 +11,5 @@
   environment.defaultPackages = [];
 
   programs.nano.enable = false;
-  documentation = {
-    info.enable = false;
-    man.man-db.enable = false;
-    man.mandoc.enable = true;
-    nixos.enable = false;
-  };
   system.tools.nixos-option.enable = false;
 }

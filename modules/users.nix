@@ -4,6 +4,8 @@
   username,
   ...
 }: {
+  services.userborn.enable = true;
+
   users = {
     mutableUsers = false;
 
