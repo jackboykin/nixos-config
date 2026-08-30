@@ -187,14 +187,14 @@ clone_config() {
     sed -i -E \
         -e "s|by-uuid/[0-9a-f-]{36}|by-uuid/$ROOT_UUID|" \
         -e "s|by-uuid/[0-9A-F]{4}-[0-9A-F]{4}|by-uuid/$EFI_UUID|" \
-        "$CONFIG_DIR/hosts/$FLAKE_HOST/hardware-configuration.nix"
+        "$CONFIG_DIR/system/hardware.nix"
     success "Hardware configuration UUIDs updated"
 
     info "Updating stateVersion to current release..."
     CURRENT_VERSION=$(nixos-version | cut -d. -f1,2)
 
     sed -i "s/stateVersion = \"[0-9.]*\"/stateVersion = \"$CURRENT_VERSION\"/" \
-        "$CONFIG_DIR/hosts/$FLAKE_HOST/host.nix"
+        "$CONFIG_DIR/system/default.nix"
     success "Updated stateVersion to $CURRENT_VERSION"
 }
 

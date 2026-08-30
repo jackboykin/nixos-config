@@ -24,15 +24,4 @@ in {
       message = "musl contract: DynamicUser services present: ${toString dynamicUsers}";
     }
   ];
-
-  systemd.services.ntpd-rs.serviceConfig = {
-    DynamicUser = lib.mkForce false;
-    User = lib.mkForce "ntpd-rs";
-    Group = lib.mkForce "ntpd-rs";
-  };
-  users.users.ntpd-rs = {
-    isSystemUser = true;
-    group = "ntpd-rs";
-  };
-  users.groups.ntpd-rs = {};
 }

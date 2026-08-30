@@ -2,7 +2,6 @@
   pkgs,
   theme,
   lib,
-  username,
   ...
 }: let
   inherit (theme) colors;
@@ -84,5 +83,5 @@ in {
     config = settings;
   };
 
-  users.users.${username}.packages = [pkgs.delta];
+  users.users.jack.packages = [pkgs.delta];
 }

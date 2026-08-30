@@ -1,6 +1,19 @@
-{hostname, ...}: {
-  imports = [./hardware-configuration.nix];
-  networking.hostName = hostname;
+_: {
+  imports = [
+    ./hardware.nix
+    ./base.nix
+    ./nix.nix
+    ./boot.nix
+    ./desktop.nix
+    ./fonts.nix
+    ./audio.nix
+    ./networking.nix
+    ./ntp.nix
+    ./sysctl.nix
+    ./musl.nix
+  ];
+
+  networking.hostName = "nixos-orion";
   system.stateVersion = "26.05";
 
   fileSystems."/".options = ["noatime"];

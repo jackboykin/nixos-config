@@ -11,8 +11,8 @@
   },
   "firefox": {
     "version": "157.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-29-09-32-00-mozilla-central/firefox-157.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-owrVq8V/9XU9d8g75c5XdmBx90TfRBDjW7Yq5apVtffMtePBZVm3TtpmzS3dGCVAe8N9CPuqHJQPJrAwBIw9EQ=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/08/2026-08-29-21-10-45-mozilla-central/firefox-157.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-eMBxpfVrB6Ur3Sk1bQvN5oVggYZlmSXCR62br6lLCmFewu05qWrrVM/wKRi9U1Bn11k/ixhG9gkYBqlO+OnbKw=="
   },
   "zig": {
     "version": "0.17.0-dev.1933+e19a73c2d",

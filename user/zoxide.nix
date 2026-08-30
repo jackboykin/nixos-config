@@ -1,10 +1,9 @@
 {
   pkgs,
   lib,
-  username,
   ...
 }: {
-  users.users.${username}.packages = [pkgs.zoxide];
+  users.users.jack.packages = [pkgs.zoxide];
 
   programs.nushell.autoloads = [
     (pkgs.runCommand "zoxide-nushell" {} ''

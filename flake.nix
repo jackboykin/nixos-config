@@ -38,7 +38,7 @@
   }: let
     system = "x86_64-linux";
     inherit (nixpkgs) lib;
-    theme = import ./lib/theme.nix {inherit lib;};
+    theme = import ./theme.nix {inherit lib;};
 
     inputSources = let
       node = i: {
@@ -52,29 +52,19 @@
       }));
 
     overlays = import ./overlays inputs;
-
-    mkHost = {
-      hostname,
-      username,
-    }:
-      nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit username hostname theme;};
-        modules = [
-          ./hosts/${hostname}/host.nix
-          ./modules
-          ./users/${username}/user.nix
-          {
-            nixpkgs.overlays = overlays;
-            system.extraDependencies = inputSources;
-          }
-          lanzaboote.nixosModules.lanzaboote
-          sops-nix.nixosModules.sops
-        ];
-      };
   in {
-    nixosConfigurations.nixos-orion = mkHost {
-      hostname = "nixos-orion";
-      username = "jack";
+    nixosConfigurations.nixos-orion = lib.nixosSystem {
+      specialArgs = {inherit theme;};
+      modules = [
+        ./system
+        ./user
+        {
+          nixpkgs.overlays = overlays;
+          system.extraDependencies = inputSources;
+        }
+        lanzaboote.nixosModules.lanzaboote
+        sops-nix.nixosModules.sops
+      ];
     };
 
     formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;

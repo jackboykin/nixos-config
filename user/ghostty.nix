@@ -2,7 +2,6 @@
   pkgs,
   lib,
   theme,
-  username,
   ...
 }: let
   inherit (theme) colors fonts ui;
@@ -13,7 +12,7 @@
       settings))
     + "\n";
 in {
-  users.users.${username}.packages = [pkgs.ghostty];
+  users.users.jack.packages = [pkgs.ghostty];
 
   systemd.packages = [pkgs.ghostty];
 

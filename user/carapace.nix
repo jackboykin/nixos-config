@@ -1,10 +1,9 @@
 {
   pkgs,
   lib,
-  username,
   ...
 }: {
-  users.users.${username}.packages = [pkgs.carapace];
+  users.users.jack.packages = [pkgs.carapace];
 
   programs.nushell.autoloads = [
     (pkgs.runCommand "carapace-nushell" {} ''

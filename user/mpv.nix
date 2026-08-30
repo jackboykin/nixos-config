@@ -2,7 +2,6 @@
   pkgs,
   lib,
   theme,
-  username,
   ...
 }: let
   inherit (theme) fonts;
@@ -25,7 +24,7 @@
       settings)
     + "\n";
 in {
-  users.users.${username}.packages = [mpv];
+  users.users.jack.packages = [mpv];
 
   castle.links.".config/mpv" = pkgs.linkFarm "mpv-config" {
     "mpv.conf" = pkgs.writeText "mpv.conf" (toConf {

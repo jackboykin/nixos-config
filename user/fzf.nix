@@ -2,7 +2,6 @@
   pkgs,
   lib,
   theme,
-  username,
   ...
 }: let
   inherit (theme) colors;
@@ -29,7 +28,7 @@
     $env.FZF_DEFAULT_OPTS = "${defaultOpts}"
   '';
 in {
-  users.users.${username}.packages = [pkgs.fzf];
+  users.users.jack.packages = [pkgs.fzf];
 
   programs.nushell.autoloads = [
     (pkgs.runCommand "fzf-nushell" {} ''

@@ -2,10 +2,9 @@
   pkgs,
   lib,
   theme,
-  username,
   ...
 }: let
-  profile = username;
+  profile = "jack";
 
   fontPrefs = {
     "font.default.x-western" = "sans-serif";
@@ -14,7 +13,7 @@
     "font.name.monospace.x-western" = theme.fonts.mono.name;
   };
 in {
-  users.users.${username}.packages = [pkgs.firefox-nightly];
+  users.users.jack.packages = [pkgs.firefox-nightly];
 
   castle.links = {
     ".config/mozilla/firefox/profiles.ini" = pkgs.writeText "profiles.ini" ''

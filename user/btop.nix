@@ -2,7 +2,6 @@
   pkgs,
   lib,
   theme,
-  username,
   ...
 }: let
   inherit (theme) colors;
@@ -78,7 +77,7 @@
       '';
   });
 in {
-  users.users.${username}.packages = [btop];
+  users.users.jack.packages = [btop];
 
   castle.links.".config/btop/btop.conf" =
     pkgs.writeText "btop.conf"

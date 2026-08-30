@@ -1,12 +1,11 @@
 {
   pkgs,
   theme,
-  username,
   ...
 }: let
   inherit (theme) colors;
 in {
-  users.users.${username}.packages = [pkgs.tmux];
+  users.users.jack.packages = [pkgs.tmux];
 
   castle.links.".config/tmux" = pkgs.writeTextDir "tmux.conf" ''
     set -g default-terminal "tmux-256color"

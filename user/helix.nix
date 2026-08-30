@@ -2,7 +2,6 @@
   pkgs,
   lib,
   theme,
-  username,
   ...
 }: let
   inherit (theme) colors ui;
@@ -18,7 +17,7 @@
     };
   };
 in {
-  users.users.${username}.packages = [pkgs.helix];
+  users.users.jack.packages = [pkgs.helix];
 
   environment.sessionVariables = {
     EDITOR = "hx";

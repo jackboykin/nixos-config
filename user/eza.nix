@@ -1,7 +1,6 @@
 {
   pkgs,
   theme,
-  username,
   ...
 }: let
   inherit (theme) colors;
@@ -49,7 +48,7 @@
     "hd=4;${fg colors.text}"
   ];
 in {
-  users.users.${username}.packages = [pkgs.eza];
+  users.users.jack.packages = [pkgs.eza];
 
   programs.nushell.autoloads = [
     (pkgs.writeTextDir "share/nushell/vendor/autoload/10-eza.nu" ''

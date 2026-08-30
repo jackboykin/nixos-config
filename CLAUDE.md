@@ -25,18 +25,17 @@ statix fix .          # Auto-fix lint issues
 
 ## Key Patterns
 
-**Adding packages**: Standalone packages go in `users.users.${username}.packages` in `users/jack/programs/default.nix`. Configured programs get their own file in `users/jack/programs/` and an import in `default.nix`.
+**Adding packages**: Standalone packages go in `users.users.jack.packages` in `user/default.nix`. Configured programs get their own file in `user/` and an import in `user/default.nix`.
 
-**User config files**: Dotfiles are declared with the `castle.links` (path → store source, deployed as systemd-tmpfiles `L+` symlinks) and `castle.dirs` options defined in `users/jack/castle.nix`.
+**User config files**: Dotfiles are declared with the `castle.links` (path → store source, deployed as systemd-tmpfiles `L+` symlinks) and `castle.dirs` options defined in `user/castle.nix`.
 
 **Secrets**: Managed via sops-nix. Edit with `sops secrets/secrets.yaml`.
 
 ## Structure
 
-- `flake.nix` — single entry point, `mkHost` helper
-- `hosts/nixos-orion/` — the one machine this manages
-- `modules/` — system-level NixOS config (boot, desktop, networking, etc.)
-- `users/jack/` — user account, shell, and per-program modules
+- `flake.nix` — single entry point, one `nixosSystem`
+- `system/` — the machine: hardware, boot, desktop, networking, etc. `default.nix` holds host identity and the import list
+- `user/` — the user: account, dotfile options, packages in `default.nix`; one file per configured program
 - `overlays/` — custom package sourcing and other bespoke configuration
-- `lib/theme.nix` — color theme used across all program configs
+- `theme.nix` — color theme used across all program configs
 - `secrets/` — sops-nix encrypted secrets
