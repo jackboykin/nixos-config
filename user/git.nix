@@ -1,11 +1,10 @@
 {
+  lib,
   pkgs,
   theme,
-  lib,
   ...
 }: let
-  inherit (theme) colors;
-  d = theme.diff;
+  inherit (theme) colors diff;
 
   delta = lib.getExe pkgs.delta;
 
@@ -55,33 +54,33 @@
       light = false;
       file-decoration-style = "'${colors.text}'";
       file-style = "'${colors.text}'";
-      hunk-header-decoration-style = "'${d.hunkHeader}'";
-      hunk-header-file-style = "'${d.hunkHeader}'";
-      hunk-header-line-number-style = "'${d.hunkHeader}'";
-      hunk-header-style = "'${d.hunkHeader}'";
+      hunk-header-decoration-style = "'${diff.hunkHeader}'";
+      hunk-header-file-style = "'${diff.hunkHeader}'";
+      hunk-header-line-number-style = "'${diff.hunkHeader}'";
+      hunk-header-style = "'${diff.hunkHeader}'";
       line-numbers-left-style = "'${colors.overlay0}'";
       line-numbers-minus-style = "bold '${colors.red}'";
       line-numbers-plus-style = "bold '${colors.green}'";
       line-numbers-right-style = "'${colors.overlay0}'";
       line-numbers-zero-style = "'${colors.overlay0}'";
-      minus-emph-style = "bold syntax ${d.minusEmph}";
-      minus-style = "syntax ${d.minus}";
-      plus-emph-style = "bold syntax ${d.plusEmph}";
-      plus-style = "syntax ${d.plus}";
+      minus-emph-style = "bold syntax ${diff.minusEmph}";
+      minus-style = "syntax ${diff.minus}";
+      plus-emph-style = "bold syntax ${diff.plusEmph}";
+      plus-style = "syntax ${diff.plus}";
       map-styles = lib.concatStringsSep "," [
-        "bold purple => bold syntax ${d.maroon}"
-        "bold blue => bold syntax ${d.blue}"
-        "bold cyan => bold syntax ${d.cyan}"
-        "bold yellow => bold syntax ${d.yellow}"
+        "bold purple => bold syntax ${diff.maroon}"
+        "bold blue => bold syntax ${diff.blue}"
+        "bold cyan => bold syntax ${diff.cyan}"
+        "bold yellow => bold syntax ${diff.yellow}"
       ];
     };
   };
 in {
+  users.users.jack.packages = [pkgs.delta];
+
   programs.git = {
     enable = true;
     lfs.enable = true;
     config = settings;
   };
-
-  users.users.jack.packages = [pkgs.delta];
 }

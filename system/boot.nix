@@ -1,6 +1,6 @@
 {
-  pkgs,
   lib,
+  pkgs,
   ...
 }: let
   disabledModules = [
@@ -53,18 +53,17 @@ in {
       "page_alloc.shuffle=1"
       "SYSTEMD_DEFAULT_MOUNT_RATE_LIMIT_BURST=50"
     ];
-    tmp.cleanOnBoot = true;
+    blacklistedKernelModules = disabledModules;
+    extraModprobeConfig = lib.concatMapStringsSep "\n" (m: "install ${m} ${pkgs.pkgsStatic.uutils-coreutils-noprefix}/bin/false") disabledModules;
 
-    loader.timeout = 0;
-    loader.efi.canTouchEfiVariables = true;
-
+    loader = {
+      timeout = 0;
+      efi.canTouchEfiVariables = true;
+    };
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };
-
-    blacklistedKernelModules = disabledModules;
-    extraModprobeConfig = lib.concatMapStringsSep "\n" (m: "install ${m} ${pkgs.pkgsStatic.uutils-coreutils-noprefix}/bin/false") disabledModules;
 
     initrd = {
       includeDefaultModules = false;
@@ -73,13 +72,15 @@ in {
         tpm2.enable = false;
       };
     };
+    tmp.cleanOnBoot = true;
+  };
+
+  system = {
+    nixos-init.enable = true;
+    etc.overlay.enable = true;
   };
 
   security.protectKernelImage = true;
-
   systemd.tpm2.enable = false;
-
-  system.nixos-init.enable = true;
-  system.etc.overlay.enable = true;
   services.lvm.enable = false;
 }

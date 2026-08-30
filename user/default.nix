@@ -35,12 +35,8 @@ in {
     ./zoxide.nix
   ];
 
-  services.userborn.enable = true;
-  sops.secrets.user-password.neededForUsers = true;
-
   users = {
     mutableUsers = false;
-
     users.jack = {
       isNormalUser = true;
       description = "jack";
@@ -50,24 +46,75 @@ in {
         "wheel"
         "video"
       ];
+      packages = with pkgs; [
+        kdePackages.kate
+        obsidian
+        spotify
+        vesktop
+        zed-editor
+
+        aspell
+        aspellDicts.en
+        bc
+        bubblewrap
+        claude-code
+        fastfetch
+        fd
+        ffmpeg-release
+        file
+        gh
+        herdr
+        htmlq
+        hyperfine
+        jq
+        poppler-utils
+        ripgrep
+        socat
+        unzip
+        yazi
+
+        bun
+        clang
+        (python3.withPackages (ps: [ps.markdownify]))
+        rust-bin.stable.latest.default
+        typescript
+        zigpkgs.master
+        zigpkgs.zls
+
+        clang-tools
+        nixd
+        pyright
+        zig-zlint
+
+        bandwhich
+        dnsutils
+        nmap
+        tcpdump
+
+        alejandra
+        statix
+      ];
     };
   };
 
+  services.userborn.enable = true;
+  sops.secrets.user-password.neededForUsers = true;
   environment.shells = [pkgs.nushell];
 
-  security.sudo.enable = false;
-  security.doas = {
-    enable = true;
-    extraRules = [
-      {
-        groups = ["wheel"];
-        persist = true;
-      }
-    ];
+  security = {
+    sudo.enable = false;
+    doas = {
+      enable = true;
+      extraRules = [
+        {
+          groups = ["wheel"];
+          persist = true;
+        }
+      ];
+    };
   };
 
   castle.dirs = builtins.attrValues userDirs;
-
   castle.links = {
     ".config/user-dirs.conf" = pkgs.writeText "user-dirs.conf" "enabled=False\n";
 
@@ -82,53 +129,4 @@ in {
       Indexing-Enabled=false
     '';
   };
-
-  users.users.jack.packages = with pkgs; [
-    kdePackages.kate
-    obsidian
-    spotify
-    vesktop
-    zed-editor
-
-    aspell
-    aspellDicts.en
-    bc
-    bubblewrap
-    claude-code
-    fastfetch
-    fd
-    ffmpeg-release
-    file
-    gh
-    herdr
-    htmlq
-    hyperfine
-    jq
-    poppler-utils
-    ripgrep
-    socat
-    unzip
-    yazi
-
-    bun
-    clang
-    (python3.withPackages (ps: [ps.markdownify]))
-    rust-bin.stable.latest.default
-    typescript
-    zigpkgs.master
-    zigpkgs.zls
-
-    clang-tools
-    nixd
-    pyright
-    zig-zlint
-
-    bandwhich
-    dnsutils
-    nmap
-    tcpdump
-
-    alejandra
-    statix
-  ];
 }

@@ -2,20 +2,20 @@
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  environment.systemPackages = with pkgs; [
-    nix-output-monitor
-    sbctl
-    sops
-    age
+  environment = {
+    systemPackages = with pkgs; [
+      nix-output-monitor
+      sbctl
+      sops
+      age
 
-    pkgsStatic.uutils-coreutils-noprefix
-  ];
-
-  environment.defaultPackages = [];
+      pkgsStatic.uutils-coreutils-noprefix
+    ];
+    defaultPackages = [];
+  };
 
   programs.nano.enable = false;
   system.tools.nixos-option.enable = false;
-
   documentation = {
     info.enable = false;
     man.man-db.enable = false;
@@ -35,7 +35,6 @@
       enableSystemSlice = true;
       enableUserSlices = true;
     };
-
     slices."user".sliceConfig.ManagedOOMMemoryPressureLimit = "60%";
   };
 }

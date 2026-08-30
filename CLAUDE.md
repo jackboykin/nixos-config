@@ -4,6 +4,23 @@
 
 **Code style**: Concise and flat inside files, well-organized across the module structure. Prefer `let`/`inherit` over deep nesting. Keep files focused and short.
 
+**Module shape**: every `.nix` file follows the same order.
+
+Args: `config, lib, pkgs, theme, modulesPath`. Use `_:` when none are needed.
+
+Body, top to bottom:
+1. imports
+2. the package itself
+3. system-level toggles
+4. dotfiles
+5. shell integration
+
+Group by key: one block per top-level attribute, not repeated dotted paths.
+
+Group by concern, not by prefix: settings that exist for the same reason sit together, whatever namespace they're under.
+
+One host, one user: names are literals, not parameters.
+
 **When making changes**:
 - Don't cargo-cult patterns from other NixOS configs. Understand the why before suggesting anything.
 - Don't set options to their default values. If the default is already what we want, leave it out.

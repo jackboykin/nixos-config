@@ -1,4 +1,29 @@
 {config, ...}: {
+  nix = {
+    channel.enable = false;
+
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "cgroups"
+        "auto-allocate-uids"
+      ];
+      use-cgroups = true;
+      auto-allocate-uids = true;
+      allowed-users = [
+        "root"
+        "@wheel"
+      ];
+      flake-registry = "";
+      use-xdg-base-directories = true;
+      max-jobs = 2;
+      cores = 16;
+    };
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
   programs.nh = {
     enable = true;
     flake = "/home/jack/nixos-config";
@@ -39,32 +64,5 @@
       Slice = "nix-daemon.slice";
       OOMScoreAdjust = 1000;
     };
-  };
-
-  nix = {
-    channel.enable = false;
-
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-        "cgroups"
-        "auto-allocate-uids"
-      ];
-      use-cgroups = true;
-      auto-allocate-uids = true;
-      allowed-users = [
-        "root"
-        "@wheel"
-      ];
-      flake-registry = "";
-      use-xdg-base-directories = true;
-      max-jobs = 2;
-      cores = 16;
-    };
-  };
-
-  nixpkgs.config = {
-    allowUnfree = true;
   };
 }

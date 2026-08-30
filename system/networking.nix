@@ -1,6 +1,4 @@
 _: {
-  boot.kernelModules = ["tun"];
-
   networking = {
     useDHCP = false;
     nftables.enable = true;
@@ -21,23 +19,6 @@ _: {
     };
   };
 
-  systemd.services.tailscaled.serviceConfig = {
-    CapabilityBoundingSet = ["CAP_NET_ADMIN" "CAP_NET_RAW"];
-    NoNewPrivileges = true;
-    LockPersonality = true;
-    MemoryDenyWriteExecute = true;
-    DeviceAllow = ["/dev/net/tun rw"];
-    ProtectControlGroups = true;
-    ProtectHome = true;
-    ProtectKernelTunables = true;
-    ProtectSystem = "strict";
-    RestrictAddressFamilies = ["AF_INET" "AF_INET6" "AF_NETLINK" "AF_UNIX"];
-    RestrictNamespaces = true;
-    RestrictRealtime = true;
-    RestrictSUIDSGID = true;
-    SystemCallArchitectures = "native";
-  };
-
   services = {
     tailscale = {
       enable = true;
@@ -55,5 +36,23 @@ _: {
         FallbackDNS = "";
       };
     };
+  };
+
+  boot.kernelModules = ["tun"];
+  systemd.services.tailscaled.serviceConfig = {
+    CapabilityBoundingSet = ["CAP_NET_ADMIN" "CAP_NET_RAW"];
+    NoNewPrivileges = true;
+    LockPersonality = true;
+    MemoryDenyWriteExecute = true;
+    DeviceAllow = ["/dev/net/tun rw"];
+    ProtectControlGroups = true;
+    ProtectHome = true;
+    ProtectKernelTunables = true;
+    ProtectSystem = "strict";
+    RestrictAddressFamilies = ["AF_INET" "AF_INET6" "AF_NETLINK" "AF_UNIX"];
+    RestrictNamespaces = true;
+    RestrictRealtime = true;
+    RestrictSUIDSGID = true;
+    SystemCallArchitectures = "native";
   };
 }
