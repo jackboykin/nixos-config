@@ -135,7 +135,6 @@ in {
 
   ui = {
     selection = mixColors colors.surface2 colors.base00 0.6;
-    cursor = colors.magenta;
   };
 
   fonts = {
