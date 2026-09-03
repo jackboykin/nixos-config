@@ -28,7 +28,7 @@
     age.keyFile = "/var/lib/sops-nix/key.txt";
   };
 
-  services.journald.extraConfig = "SystemMaxUse=256M";
+  services.journald.settings.Journal.SystemMaxUse = "256M";
 
   systemd = {
     oomd = {

@@ -7,6 +7,7 @@
   inherit (theme) colors diff;
 
   delta = lib.getExe pkgs.delta;
+  msmtp = lib.getExe pkgs.msmtp;
 
   settings = {
     user = {
@@ -29,6 +30,12 @@
     in {
       "https://github.com".helper = helper;
       "https://gist.github.com".helper = helper;
+    };
+
+    sendemail = {
+      sendmailCmd = msmtp;
+      confirm = "always";
+      annotate = true;
     };
 
     gpg = {
@@ -76,11 +83,21 @@
     };
   };
 in {
-  users.users.jack.packages = [pkgs.delta];
+  users.users.jack.packages = [pkgs.delta pkgs.msmtp];
 
   programs.git = {
     enable = true;
     lfs.enable = true;
     config = settings;
   };
+
+  castle.links.".config/msmtp/config" = pkgs.writeText "msmtp-config" ''
+    account default
+    host smtp.gmail.com
+    tls on
+    tls_starttls off
+    auth on
+    from ${settings.user.email}
+    user ${settings.user.email}
+  '';
 }
