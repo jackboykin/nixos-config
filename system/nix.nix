@@ -56,10 +56,7 @@
     };
     timers.nix-prune.timerConfig.Persistent = true;
 
-    slices."nix-daemon".sliceConfig = {
-      ManagedOOMMemoryPressure = "kill";
-      ManagedOOMMemoryPressureLimit = "50%";
-    };
+    slices."nix-daemon".sliceConfig.MemoryMax = "23G";
     services.nix-daemon.serviceConfig = {
       Slice = "nix-daemon.slice";
       OOMScoreAdjust = 1000;
