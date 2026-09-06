@@ -27,6 +27,12 @@
     };
   };
 
-  zramSwap.enable = true;
-  services.fstrim.enable = true;
+  zramSwap = {
+    enable = true;
+    memoryPercent = 70;
+  };
+  services = {
+    zram-generator.settings.zram0.zram-resident-limit = "ram / 6";
+    fstrim.enable = true;
+  };
 }
