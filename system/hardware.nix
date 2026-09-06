@@ -29,8 +29,4 @@
 
   zramSwap.enable = true;
   services.fstrim.enable = true;
-
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
-  '';
 }
