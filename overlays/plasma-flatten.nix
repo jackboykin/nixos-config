@@ -67,14 +67,14 @@ in {
           [[ $(realpath "$root") == "$out"/* ]] || continue
           src=$(readlink "$m")
           src=''${src%/*}
-          if find "$root" -type l -exec readlink {} + | grep -qv "^$src/"; then
+          if find "$root" -type l -exec readlink {} + | grep -v "^$src/" >&2; then
             echo "forest: KPackage $root is assembled from more than one store path" >&2
             exit 1
           fi
           rm -r "$root"
           ln -s "$src" "$root"
         done < <(find "$out/XDG_DATA_DIRS" -name metadata.json -o -name metadata.desktop)
-        if find "$out/XDG_DATA_DIRS" -name metadata.json -o -name metadata.desktop | grep .; then
+        if find "$out/XDG_DATA_DIRS" -name metadata.json -o -name metadata.desktop | grep . >&2; then
           echo "forest: KPackage roots left as link trees" >&2
           exit 1
         fi
