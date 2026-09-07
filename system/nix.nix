@@ -29,6 +29,8 @@
     flake = "/home/jack/nixos-config";
   };
 
+  environment.sessionVariables.NH_FLAKE = config.programs.nh.flake;
+
   systemd = {
     services.nix-prune = {
       startAt = "daily";
