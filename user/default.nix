@@ -76,7 +76,7 @@ in {
         bun
         clang
         (python3.withPackages (ps: [ps.markdownify]))
-        rust-bin.stable.latest.default
+        (rust-bin.stable.latest.default.override {extensions = ["rust-analyzer" "rust-src"];})
         typescript
         zigpkgs.master
         zigpkgs.zls
