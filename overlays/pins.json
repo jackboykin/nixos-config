@@ -11,8 +11,13 @@
   },
   "firefox": {
     "version": "157.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/09/2026-09-06-09-30-52-mozilla-central/firefox-157.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-lEeKAl4fwBXnL09OPE/o0tzacu3wqpeemTNSzR9/PFueH0CPryMTLR4NZn/Ee0VBXolm6AAQ3vM82JQnSbKEYw=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/09/2026-09-06-20-37-23-mozilla-central/firefox-157.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-IETSbFiyxHo8NcfifHfkVzcDv9In7lDtTVbT5f++5RFMMq5Hn18+rKRjb5Oxv/JeD4snCrgqGEMiLsyuAqtCcA=="
+  },
+  "zed": {
+    "version": "1.19.1-pre",
+    "url": "https://github.com/zed-industries/zed/releases/download/v1.19.1-pre/zed-linux-x86_64.tar.gz",
+    "hash": "sha256-lWTKyMZDdg+U+MIg9Qy66VyHeFJCie2W50SvLH0J4EM="
   },
   "zig": {
     "version": "0.17.0-dev.2018+ab30a0b9a",

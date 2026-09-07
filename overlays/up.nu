@@ -4,15 +4,19 @@ def sri [algo: string]: string -> string {
   $"($algo)-($in | decode hex | encode base64)"
 }
 
-def bun [] {
-  let r = http get https://api.github.com/repos/oven-sh/bun/releases/latest
-  let a = ($r.assets | where name == "bun-linux-x64.zip" | first)
+def gh-release [repo: string, asset: string, --pre] {
+  let r = (http get $"https://api.github.com/repos/($repo)/releases" | where prerelease == $pre | first)
+  let a = ($r.assets | where name == $asset | first)
   {
-    version: ($r.tag_name | str replace "bun-v" "")
+    version: ($r.tag_name | str replace -r '^\D+' "")
     url: $a.browser_download_url
     hash: ($a.digest | str replace "sha256:" "" | sri sha256)
   }
 }
+
+def bun [] { gh-release oven-sh/bun bun-linux-x64.zip }
+
+def zed [] { gh-release --pre zed-industries/zed zed-linux-x86_64.tar.gz }
 
 def claude-code [] {
   let m = http get https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/next
@@ -57,7 +61,7 @@ def main [] {
   let path = ($env.FILE_PWD | path join pins.json)
   let old = open $path
   let z = zig
-  {bun: (bun), claude-code: (claude-code), firefox: (firefox), zig: $z, zls: (zls $z.version $old.zls)}
+  {bun: (bun), claude-code: (claude-code), firefox: (firefox), zed: (zed), zig: $z, zls: (zls $z.version $old.zls)}
   | to json | $"($in)\n"
   | save -f $path
 }
