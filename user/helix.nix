@@ -10,7 +10,6 @@
 
   prettierLang = name: parser: {
     inherit name;
-    auto-format = true;
     formatter = {
       command = lib.getExe pkgs.prettier;
       args = ["--parser" parser];
@@ -41,18 +40,11 @@ in {
       language = [
         {
           name = "nix";
-          auto-format = true;
           formatter.command = lib.getExe pkgs.alejandra;
           language-servers = ["nixd"];
         }
         {
-          name = "rust";
-          auto-format = true;
-          language-servers = ["rust-analyzer"];
-        }
-        {
           name = "python";
-          auto-format = true;
           language-servers = ["pyright"];
         }
         (prettierLang "typescript" "typescript")
@@ -63,16 +55,7 @@ in {
         (prettierLang "html" "html")
         {
           name = "markdown";
-          auto-format = true;
           soft-wrap.enable = true;
-        }
-        {
-          name = "toml";
-          auto-format = true;
-        }
-        {
-          name = "yaml";
-          auto-format = true;
         }
       ];
     };

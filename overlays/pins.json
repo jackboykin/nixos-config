@@ -5,24 +5,24 @@
     "hash": "sha256-NjaPrvdSeHXV/6UuU81IAhdB8qg+tiCKjdZAaNQiqRM="
   },
   "claude-code": {
-    "version": "2.1.263",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.263.tgz",
-    "hash": "sha512-0IrvpLd/0FP0acQw59T4Cvx/r4nwAXKBrW0WyhIXymzYWurPCLztB+Icu9MkeewAUI+p3PTXsSfmilv/n6XlAQ=="
+    "version": "2.1.270",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.270.tgz",
+    "hash": "sha512-DFwGNa5eSZ40UtoJ6TlyDQym1jdUkr+/YB7B0CN0maCPwzxJHvIG6gHMomdQRwj/Bd8XQyemCMIJVAscKjlhzQ=="
   },
   "firefox": {
-    "version": "157.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/09/2026-09-07-09-26-17-mozilla-central/firefox-157.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-GvluLTZK2wyhW4li8s7qKCbnyqzTnT/LR2+D7eoXWPPwVw/W5Hg2ZPNtcjh6IhOL9qQjVJOZCLM09mxFMRjAoA=="
+    "version": "158.0a1",
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/09/2026-09-12-21-18-59-mozilla-central/firefox-158.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-T2rK0UZpmNT6xnBliL3KKNXmD1mf0b927Xq2KGzq1zv67Qs13g9sKQ54TKgT9MsQXpJlFZEAOZyx91vOE+hXYg=="
   },
   "zed": {
-    "version": "1.19.1-pre",
-    "url": "https://github.com/zed-industries/zed/releases/download/v1.19.1-pre/zed-linux-x86_64.tar.gz",
-    "hash": "sha256-lWTKyMZDdg+U+MIg9Qy66VyHeFJCie2W50SvLH0J4EM="
+    "version": "1.20.0-pre",
+    "url": "https://github.com/zed-industries/zed/releases/download/v1.20.0-pre/zed-linux-x86_64.tar.gz",
+    "hash": "sha256-iJVtNWKRGlHxPxqR03D/iZYiVBzehSFrqHRrTZrPQ6w="
   },
   "zig": {
-    "version": "0.17.0-dev.2033+af24fd11a",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.2033+af24fd11a.tar.xz",
-    "hash": "sha256-wTCqwaXXznur1qdO5QhjhyG/lpjWQHfACM6iEYvJE6k="
+    "version": "0.17.0-dev.2125+0d600e488",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.2125+0d600e488.tar.xz",
+    "hash": "sha256-oYoaLnrldDCoZM3j+n1IsxlF++wWAEmIFeGZjnAqPpU="
   },
   "zls": {
     "version": "0.17.0-dev.44+8da87d4f",
