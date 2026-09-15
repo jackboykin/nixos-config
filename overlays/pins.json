@@ -5,24 +5,24 @@
     "hash": "sha256-NjaPrvdSeHXV/6UuU81IAhdB8qg+tiCKjdZAaNQiqRM="
   },
   "claude-code": {
-    "version": "2.1.270",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.270.tgz",
-    "hash": "sha512-DFwGNa5eSZ40UtoJ6TlyDQym1jdUkr+/YB7B0CN0maCPwzxJHvIG6gHMomdQRwj/Bd8XQyemCMIJVAscKjlhzQ=="
+    "version": "2.1.271",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.271.tgz",
+    "hash": "sha512-CEOkbTcKVl6A7m4JcJPxUP/bKUPEZJX7e2FRZHeNPAtV8IJkk7kO7xQzCCKUF2FwMZIzfQcYkvL12q5+cgPfSA=="
   },
   "firefox": {
     "version": "158.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/09/2026-09-12-21-18-59-mozilla-central/firefox-158.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-T2rK0UZpmNT6xnBliL3KKNXmD1mf0b927Xq2KGzq1zv67Qs13g9sKQ54TKgT9MsQXpJlFZEAOZyx91vOE+hXYg=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/09/2026-09-14-10-26-27-mozilla-central/firefox-158.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-7OuRB8rfpmK3mRYBdG40Y+xQLYWfFdHBESyGU6ZAho+jRKia+Lx9ChAgcwGZ8+q4OhGwC89clW9isJcDNtByGA=="
   },
   "zed": {
-    "version": "1.20.0-pre",
-    "url": "https://github.com/zed-industries/zed/releases/download/v1.20.0-pre/zed-linux-x86_64.tar.gz",
-    "hash": "sha256-iJVtNWKRGlHxPxqR03D/iZYiVBzehSFrqHRrTZrPQ6w="
+    "version": "1.20.1-pre",
+    "url": "https://github.com/zed-industries/zed/releases/download/v1.20.1-pre/zed-linux-x86_64.tar.gz",
+    "hash": "sha256-JWksRXeYvdweIwuR7I94V5ZPudfNJ9bB+g1G0LDHu7M="
   },
   "zig": {
-    "version": "0.17.0-dev.2125+0d600e488",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.2125+0d600e488.tar.xz",
-    "hash": "sha256-oYoaLnrldDCoZM3j+n1IsxlF++wWAEmIFeGZjnAqPpU="
+    "version": "0.17.0-dev.2131+d08989840",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.2131+d08989840.tar.xz",
+    "hash": "sha256-5gP3slbXjR84meg2JLYJtcsEZSw2QQlIkjE3aVUVh7A="
   },
   "zls": {
     "version": "0.17.0-dev.44+8da87d4f",

@@ -31,8 +31,8 @@ def firefox [] {
   let root = "https://archive.mozilla.org/pub/firefox/nightly"
   let version = (fetch https://product-details.mozilla.org/1.0/firefox_versions.json | from json).FIREFOX_NIGHTLY
   let stem = $"firefox-($version).en-US.linux-x86_64"
-  let id = ((fetch $"($root)/latest-mozilla-central/($stem).json" | from json).buildid | parse --regex '(?<y>\d{4})(?<mo>\d{2})(?<d>\d{2})(?<h>\d{2})(?<mi>\d{2})(?<s>\d{2})' | first)
-  let base = $"($root)/($id.y)/($id.mo)/($id.y)-($id.mo)-($id.d)-($id.h)-($id.mi)-($id.s)-mozilla-central"
+  let stamp = ((fetch $"($root)/latest-mozilla-central/($stem).json" | from json).buildid | into datetime -f "%Y%m%d%H%M%S" | format date "%Y/%m/%Y-%m-%d-%H-%M-%S")
+  let base = $"($root)/($stamp)-mozilla-central"
   let file = $"($stem).tar.xz"
   let sums = fetch $"($base)/($stem).checksums"
   {
@@ -61,11 +61,26 @@ def zls [zig_version: string, old: record] {
   zigpin $m
 }
 
+def parallel [pins: record]: nothing -> record {
+  $pins | transpose name fetch | par-each --keep-order {|p| {$p.name: (do $p.fetch)}} | into record
+}
+
+def report [old: record, new: record] {
+  $new | items {|k, v| if $v.url != ($old | get $k).url { print $"($k): (($old | get $k).version) -> ($v.version)" }}
+}
+
 def main [] {
   let path = ($env.FILE_PWD | path join pins.json)
   let old = open $path
   let z = zig
-  {bun: (bun), claude-code: (claude-code), firefox: (firefox), zed: (zed), zig: $z, zls: (zls $z.version $old.zls)}
-  | to json | $"($in)\n"
-  | save -f $path
+  let new = parallel {
+    bun: {|| bun}
+    claude-code: {|| claude-code}
+    firefox: {|| firefox}
+    zed: {|| zed}
+    zig: {|| $z}
+    zls: {|| zls $z.version $old.zls}
+  }
+  report $old $new
+  $new | to json | $"($in)\n" | save -f $path
 }
