@@ -2,6 +2,7 @@ _: {
   networking = {
     useDHCP = false;
     nftables.enable = true;
+    resolvconf.enable = false;
   };
 
   systemd.network = {
@@ -26,17 +27,13 @@ _: {
       extraSetFlags = ["--accept-dns=false"];
     };
 
-    resolved = {
-      enable = true;
-      settings.Resolve = {
-        DNS = "192.168.1.161";
-        Domains = "~.";
-        LLMNR = "no";
-        MulticastDNS = "no";
-        FallbackDNS = "";
-      };
-    };
+    resolved.enable = false;
   };
+
+  environment.etc."resolv.conf".text = ''
+    nameserver 192.168.1.161
+    options edns0 trust-ad
+  '';
 
   boot.kernelModules = ["tun"];
   systemd.services.tailscaled.serviceConfig = {
