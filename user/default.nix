@@ -64,7 +64,6 @@ in {
         file
         gh
         herdr
-        htmlq
         hyperfine
         jq
         poppler-utils
@@ -75,7 +74,7 @@ in {
 
         bun
         clang
-        (python3.withPackages (ps: [ps.markdownify]))
+        python3
         (rust-bin.stable.latest.default.override {extensions = ["rust-analyzer" "rust-src"];})
         typescript
         zigpkgs.master
