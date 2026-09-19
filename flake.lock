@@ -73,11 +73,32 @@
         "type": "github"
       }
     },
+    "quarry": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789853246,
+        "narHash": "sha256-halPaytvAB4Qh/qJ6Ayy3rvEgdoUGkM95wHhkOdPSpw=",
+        "owner": "jackboykin",
+        "repo": "quarry",
+        "rev": "971048bdbfc02eac10c91a3c7b5d0b2ef1e9db5a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jackboykin",
+        "repo": "quarry",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ffmpeg": "ffmpeg",
         "lanzaboote": "lanzaboote",
         "nixpkgs": "nixpkgs",
+        "quarry": "quarry",
         "rust-overlay": "rust-overlay",
         "sops-nix": "sops-nix"
       }

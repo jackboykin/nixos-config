@@ -27,6 +27,11 @@
       url = "github:FFmpeg/FFmpeg/release/9.0";
       flake = false;
     };
+
+    quarry = {
+      url = "github:jackboykin/quarry";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {

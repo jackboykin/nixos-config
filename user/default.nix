@@ -58,6 +58,7 @@ in {
         aspellDicts.en
         bc
         bubblewrap
+        bun
         claude-code
         fastfetch
         fd
@@ -68,13 +69,14 @@ in {
         hyperfine
         jq
         poppler-utils
+        quarry
         ripgrep
         socat
         unzip
         yazi
 
-        bun
         clang
+        go
         python3
         (rust-bin.stable.latest.default.override {extensions = ["rust-analyzer" "rust-src"];})
         typescript
