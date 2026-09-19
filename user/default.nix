@@ -98,7 +98,17 @@ in {
   };
 
   services.userborn.enable = true;
-  sops.secrets.user-password.neededForUsers = true;
+  sops.secrets = {
+    user-password.neededForUsers = true;
+    exa-api-key = {
+      owner = "jack";
+      path = "/home/jack/.config/quarry/exa-api-key";
+    };
+    typesafe-api-key = {
+      owner = "jack";
+      path = "/home/jack/.config/quarry/typesafe-api-key";
+    };
+  };
   environment.shells = [pkgs.nushell];
 
   security = {
