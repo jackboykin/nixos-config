@@ -31,6 +31,7 @@ in {
     ./konsole.nix
     ./mpv.nix
     ./nushell.nix
+    ./perf.nix
     ./tmux.nix
     ./zoxide.nix
   ];

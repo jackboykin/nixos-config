@@ -8,7 +8,7 @@ _: {
     "vm.dirty_background_bytes" = 67108864;
     "vm.vfs_cache_pressure" = 50;
 
-    "kernel.kptr_restrict" = 2;
+    "kernel.kptr_restrict" = 1;
     "kernel.dmesg_restrict" = 1;
     "kernel.unprivileged_bpf_disabled" = 1;
     "net.core.bpf_jit_harden" = 2;
