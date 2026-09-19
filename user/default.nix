@@ -83,18 +83,18 @@ in {
         zigpkgs.master
         zigpkgs.zls
 
+        alejandra
         clang-tools
         nixd
         pyright
+        statix
         zig-zlint
 
-        bandwhich
+        cloudflared
         dnsutils
         nmap
+        rustnet
         tcpdump
-
-        alejandra
-        statix
       ];
     };
   };
