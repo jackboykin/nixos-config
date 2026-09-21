@@ -72,6 +72,7 @@ in {
         quarry
         ripgrep
         socat
+        strace
         unzip
         yazi
 
