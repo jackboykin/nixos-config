@@ -32,9 +32,9 @@ One host, one user: names are literals, not parameters.
 
 ```bash
 nh os switch          # Rebuild system (aliased to `nr`)
-nh os switch -u       # Rebuild with flake update (aliased to `nru`)
+nru                   # Bump overlays/pins.json via up.nu, then nh os switch -u
 nh os boot            # Rebuild for next boot (aliased to `nb`)
-nh os boot -u         # Rebuild for next boot with flake update (aliased to `nbu`)
+nbu                   # Bump overlays/pins.json via up.nu, then nh os boot -u
 nix fmt .             # Format with Alejandra
 statix check .        # Lint
 statix fix .          # Auto-fix lint issues
