@@ -14,6 +14,16 @@
 
   gtk.iconCache.enable = true;
 
+  # Until KDE bug 501406 is fixed upstream. ABI unchanged, so swap it in rather than rebuild Plasma.
+  system.replaceDependencies.replacements = let
+    inherit (pkgs.kdePackages) ksvg;
+  in [
+    {
+      oldDependency = ksvg;
+      newDependency = ksvg.overrideAttrs (o: {patches = (o.patches or []) ++ [./ksvg-cache-lookup-misses.patch];});
+    }
+  ];
+
   environment.laminix = {
     enable = true;
     pruneProfiles = true;

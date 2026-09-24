@@ -1,0 +1,102 @@
+From b062420cfad1fd18c37c245453b1003dabcba411 Mon Sep 17 00:00:00 2001
+From: Jack Boykin <jtboykin.jb@gmail.com>
+Date: Thu, 24 Sep 2026 07:08:42 -0500
+Subject: [PATCH] ImageSet: cache lookup misses too
+
+SvgItem and FrameSvgItem look up "colors" on every item and color
+change. The default style ships none, so each lookup searched every data
+dir again. Key by style too, so a cached miss can't hide a fallback hit.
+
+BUG: 501406
+---
+ .../plasma/desktoptheme/default/fallbackonly  |  0
+ autotests/imagesettest.cpp                    | 21 +++++++++++++++++++
+ src/ksvg/private/imageset_p.cpp               |  7 ++++---
+ src/ksvg/private/imageset_p.h                 |  2 +-
+ 4 files changed, 26 insertions(+), 4 deletions(-)
+ create mode 100644 autotests/data/plasma/desktoptheme/default/fallbackonly
+
+diff --git a/autotests/data/plasma/desktoptheme/default/fallbackonly b/autotests/data/plasma/desktoptheme/default/fallbackonly
+new file mode 100644
+index 00000000..e69de29b
+diff --git a/autotests/imagesettest.cpp b/autotests/imagesettest.cpp
+index f15558e1..749cfee5 100644
+--- a/autotests/imagesettest.cpp
++++ b/autotests/imagesettest.cpp
+@@ -26,6 +26,8 @@ private Q_SLOTS:
+     void testSelectors();
+     void testHasImage();
+     void testFilePath();
++    void testFilePathMissInvalidated();
++    void testFilePathFallback();
+ 
+ private:
+     QDir m_themeDir;
+@@ -110,6 +112,25 @@ void ImageSetTest::testFilePath()
+     QVERIFY(set.filePath(u"does_not_exist"_s).isEmpty());
+ }
+ 
++void ImageSetTest::testFilePathMissInvalidated()
++{
++    KSvg::ImageSet set("testtheme", "plasma/desktoptheme");
++
++    set.setBasePath(u"nowhere"_s);
++    QVERIFY(set.filePath(u"plasmarc"_s).isEmpty());
++
++    set.setBasePath(u"plasma/desktoptheme"_s);
++    QVERIFY(set.filePath(u"plasmarc"_s).endsWith(u"plasma/desktoptheme/testtheme/plasmarc"));
++}
++
++void ImageSetTest::testFilePathFallback()
++{
++    KSvg::ImageSet set("testtheme", "plasma/desktoptheme");
++
++    QVERIFY(set.filePath(u"fallbackonly"_s).endsWith(u"plasma/desktoptheme/default/fallbackonly"));
++    QVERIFY(set.filePath(u"fallbackonly"_s).endsWith(u"plasma/desktoptheme/default/fallbackonly"));
++}
++
+ QTEST_MAIN(ImageSetTest)
+ 
+ #include "imagesettest.moc"
+diff --git a/src/ksvg/private/imageset_p.cpp b/src/ksvg/private/imageset_p.cpp
+index b16ce7dd..56d5869f 100644
+--- a/src/ksvg/private/imageset_p.cpp
++++ b/src/ksvg/private/imageset_p.cpp
+@@ -237,8 +237,9 @@ QString ImageSetPrivate::imagePath(const QString &theme, const QString &type, co
+ 
+ QString ImageSetPrivate::findInImageSet(const QString &image, const QString &theme, bool cache)
+ {
++    const std::pair key{theme, image};
+     if (cache) {
+-        auto it = discoveries.constFind(image);
++        auto it = discoveries.constFind(key);
+         if (it != discoveries.constEnd()) {
+             return it.value();
+         }
+@@ -260,8 +261,8 @@ QString ImageSetPrivate::findInImageSet(const QString &image, const QString &the
+         search = imagePath(theme, QStringLiteral("/"), image);
+     }
+ 
+-    if (cache && !search.isEmpty()) {
+-        discoveries.insert(image, search);
++    if (cache) {
++        discoveries.insert(key, search);
+     }
+ 
+     return search;
+diff --git a/src/ksvg/private/imageset_p.h b/src/ksvg/private/imageset_p.h
+index a8e2c1bb..9a533d43 100644
+--- a/src/ksvg/private/imageset_p.h
++++ b/src/ksvg/private/imageset_p.h
+@@ -147,7 +147,7 @@ public:
+     QHash<qint64, QString> cachedSvgStyleSheets;
+     QHash<qint64, QString> cachedSelectedSvgStyleSheets;
+     QHash<qint64, QString> cachedInactiveSvgStyleSheets;
+-    QHash<QString, QString> discoveries;
++    QHash<std::pair<QString, QString>, QString> discoveries;
+     QTimer *pixmapSaveTimer;
+     QTimer *updateNotificationTimer;
+     unsigned cacheSize;
+-- 
+2.55.0
+
