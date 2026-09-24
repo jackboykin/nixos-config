@@ -45,7 +45,7 @@ in {
         }
         {
           name = "python";
-          language-servers = ["pyright"];
+          language-servers = ["basedpyright"];
         }
         (prettierLang "typescript" "typescript")
         (prettierLang "javascript" "babel")

@@ -87,7 +87,7 @@ in {
         alejandra
         clang-tools
         nixd
-        pyright
+        basedpyright
         statix
         zig-zlint
 
