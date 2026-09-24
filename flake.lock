@@ -32,6 +32,26 @@
         "type": "github"
       }
     },
+    "laminix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790249096,
+        "narHash": "sha256-EHEn52DjyortL0szf8P1DQDhw+HRs12la1cg+XfWYcM=",
+        "owner": "jackboykin",
+        "repo": "laminix",
+        "rev": "54b94b75e9227924a06d3bd651cddeb27dc08fd8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jackboykin",
+        "repo": "laminix",
+        "type": "github"
+      }
+    },
     "lanzaboote": {
       "inputs": {
         "crane": "crane",
@@ -96,6 +116,7 @@
     "root": {
       "inputs": {
         "ffmpeg": "ffmpeg",
+        "laminix": "laminix",
         "lanzaboote": "lanzaboote",
         "nixpkgs": "nixpkgs",
         "quarry": "quarry",

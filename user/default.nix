@@ -48,7 +48,6 @@ in {
         "video"
       ];
       packages = with pkgs; [
-        kdePackages.kate
         obsidian
         spotify
         vesktop

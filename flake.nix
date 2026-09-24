@@ -32,6 +32,11 @@
       url = "github:jackboykin/quarry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    laminix = {
+      url = "github:jackboykin/laminix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -39,6 +44,7 @@
     nixpkgs,
     lanzaboote,
     sops-nix,
+    laminix,
     ...
   }: let
     system = "x86_64-linux";
@@ -69,6 +75,7 @@
         }
         lanzaboote.nixosModules.lanzaboote
         sops-nix.nixosModules.sops
+        laminix.nixosModules.default
       ];
     };
 

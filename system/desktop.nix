@@ -13,4 +13,9 @@
   systemd.user.services.drkonqi-coredump-pickup.enable = false;
 
   gtk.iconCache.enable = true;
+
+  environment.laminix = {
+    enable = true;
+    pruneProfiles = true;
+  };
 }
