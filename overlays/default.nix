@@ -6,6 +6,7 @@ in [
   (import ./bun.nix pins.bun)
   (import ./claude-code.nix pins.claude-code)
   (import ./ffmpeg.nix inputs.ffmpeg)
+  (import ./ghostscript.nix)
   (import ./firefox-nightly.nix pins.firefox)
   (import ./zed.nix pins.zed)
   (import ./zig.nix {inherit (pins) zig zls;})
