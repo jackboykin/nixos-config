@@ -8,6 +8,7 @@
         "flakes"
         "cgroups"
         "auto-allocate-uids"
+        "git-hashing"
       ];
       use-cgroups = true;
       auto-allocate-uids = true;
