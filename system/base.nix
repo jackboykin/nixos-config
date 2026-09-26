@@ -30,6 +30,7 @@
   services.journald.settings.Journal.SystemMaxUse = "256M";
 
   systemd = {
+    settings.Manager.DefaultIPAccounting = false;
     oomd = {
       enableSystemSlice = true;
       enableUserSlices = true;
