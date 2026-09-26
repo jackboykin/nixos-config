@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   theme,
@@ -99,5 +100,6 @@ in {
     auth on
     from ${settings.user.email}
     user ${settings.user.email}
+    passwordeval cat ${config.sops.secrets.msmtp.path}
   '';
 }

@@ -110,6 +110,7 @@ in {
       owner = "jack";
       path = "/home/jack/.config/quarry/typesafe-api-key";
     };
+    msmtp.owner = "jack";
   };
   environment.shells = [pkgs.nushell];
 
