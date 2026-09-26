@@ -8,6 +8,7 @@ in [
   (import ./ffmpeg.nix inputs.ffmpeg)
   (import ./ghostscript.nix)
   (import ./firefox-nightly.nix pins.firefox)
+  (import ./linux.nix pins.linux)
   (import ./zed.nix pins.zed)
   (import ./zig.nix {inherit (pins) zig zls;})
 ]

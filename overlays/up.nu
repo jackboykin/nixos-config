@@ -42,6 +42,17 @@ def firefox [] {
   }
 }
 
+def linux [] {
+  let repo = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
+  let version = ^git -c versionsort.suffix=-rc ls-remote --tags --refs --sort=-v:refname $repo "v*" | lines | first | str replace -r '.*refs/tags/v' ""
+  let tree = fetch $"($repo)/commit/?id=v($version)" | parse -r "<th>tree</th><td[^>]*><a[^>]*>(?<sha>[0-9a-f]{40})" | first | get sha
+  {
+    version: $version
+    url: $"https://git.kernel.org/torvalds/t/linux-($version).tar.gz"
+    hash: ($tree | sri sha1)
+  }
+}
+
 def zigpin [m: record] {
   let bin = ($m | get x86_64-linux)
   {version: $m.version, url: $bin.tarball, hash: ($bin.shasum | sri sha256)}
@@ -77,6 +88,7 @@ def main [] {
     bun: {|| bun}
     claude-code: {|| claude-code}
     firefox: {|| firefox}
+    linux: {|| linux}
     zed: {|| zed}
     zig: {|| $z}
     zls: {|| zls $z.version $old.zls}
