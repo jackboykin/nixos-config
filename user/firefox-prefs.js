@@ -12,7 +12,6 @@ user_pref("dom.security.https_only_mode", true);
 user_pref("security.csp.reporting.enabled", false);
 user_pref("security.mixed_content.block_display_content", true);
 user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
-user_pref("security.tls.enable_0rtt_data", false);
 
 user_pref("network.auth.subresource-http-auth-allow", 1);
 user_pref("network.dns.disablePrefetch", true);
