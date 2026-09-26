@@ -9,7 +9,6 @@ _: {
     "vm.vfs_cache_pressure" = 50;
 
     "kernel.kptr_restrict" = 1;
-    "kernel.dmesg_restrict" = 1;
     "kernel.unprivileged_bpf_disabled" = 1;
     "dev.tty.ldisc_autoload" = 0;
     "kernel.sysrq" = 240;

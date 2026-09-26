@@ -47,7 +47,6 @@ in {
   boot = {
     kernelParams = [
       "slab_nomerge"
-      "randomize_kstack_offset=on"
       "vsyscall=none"
       "SYSTEMD_DEFAULT_MOUNT_RATE_LIMIT_BURST=50"
     ];
