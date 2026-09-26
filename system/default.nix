@@ -4,6 +4,7 @@ _: {
     ./base.nix
     ./nix.nix
     ./boot.nix
+    ./kernel.nix
     ./sysctl.nix
     ./musl.nix
     ./networking.nix
