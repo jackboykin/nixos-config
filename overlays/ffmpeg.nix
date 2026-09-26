@@ -1,5 +1,7 @@
 src: final: prev: let
   inherit (prev) lib;
+  llvm = prev.llvmPackages_latest;
+  stdenv = prev.overrideCC llvm.stdenv (llvm.clang.override {inherit (llvm) bintools;});
 
   release = lib.removeSuffix ".git" (lib.trim (builtins.readFile "${src}/RELEASE"));
 
@@ -11,7 +13,7 @@ src: final: prev: let
     lib.last (lib.splitString " " line);
 in {
   ffmpeg-release = assert lib.assertMsg (lavc == lavcSupported) "libavcodec ${lavcSupported} -> ${lavc}";
-    prev.stdenv.mkDerivation {
+    stdenv.mkDerivation {
       pname = "ffmpeg";
       version = release;
       inherit src;
@@ -52,7 +54,8 @@ in {
         "--shlibdir=${placeholder "lib"}/lib"
         "--incdir=${placeholder "out"}/include"
         "--datadir=${placeholder "out"}/share/ffmpeg"
-        "--cc=${prev.stdenv.cc.targetPrefix}cc"
+        "--cc=clang"
+        "--enable-lto=thin"
 
         "--disable-debug"
         "--disable-doc"
