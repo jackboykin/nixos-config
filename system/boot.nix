@@ -49,7 +49,6 @@ in {
       "slab_nomerge"
       "randomize_kstack_offset=on"
       "vsyscall=none"
-      "page_alloc.shuffle=1"
       "SYSTEMD_DEFAULT_MOUNT_RATE_LIMIT_BURST=50"
     ];
     blacklistedKernelModules = disabledModules;
