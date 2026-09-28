@@ -5,7 +5,20 @@
 }: let
   llvm = pkgs.llvmPackages_latest;
 
-  rust = ["RUST" "DRM_PANIC_SCREEN_QR_CODE" "NOVA_CORE" "DRM_NOVA"];
+  wanted = [
+    "LTO_CLANG_THIN"
+    "X86_NATIVE_CPU"
+    "MODULE_COMPRESS_ZSTD"
+  ];
+
+  unwanted = [
+    "MEM_ALLOC_PROFILING"
+    "MODULE_COMPRESS_XZ"
+    "RUST"
+    "DRM_PANIC_SCREEN_QR_CODE"
+    "NOVA_CORE"
+    "DRM_NOVA"
+  ];
 
   blacklisted = [
     "IP_SCTP"
@@ -64,8 +77,8 @@
     ignoreConfigErrors = true;
     stdenv = pkgs.overrideCC llvm.stdenv (llvm.clang.override {inherit (llvm) bintools;});
     structuredExtraConfig =
-      {LTO_CLANG_THIN = lib.kernel.yes;}
-      // lib.genAttrs (rust ++ blacklisted ++ absent) (_: lib.mkForce (lib.kernel.option lib.kernel.no));
+      lib.genAttrs wanted (_: lib.kernel.yes)
+      // lib.genAttrs (unwanted ++ blacklisted ++ absent) (_: lib.mkForce (lib.kernel.option lib.kernel.no));
   };
 in {
   boot.kernelPackages = pkgs.linuxPackagesFor kernel;
