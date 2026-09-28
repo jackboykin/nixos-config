@@ -2,6 +2,7 @@ _: {
   networking = {
     useDHCP = false;
     nftables.enable = true;
+    firewall.checkReversePath = false;
     resolvconf.enable = false;
   };
 
