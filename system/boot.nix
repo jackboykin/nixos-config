@@ -1,51 +1,10 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
-  disabledModules = [
-    "sctp"
-    "rds"
-    "tipc"
-    "n_hdlc"
-    "rxrpc"
-    "esp4"
-    "esp6"
-    "x25"
-    "atm"
-    "can"
-    "ieee802154"
-    "cramfs"
-    "jffs2"
-    "hfs"
-    "hfsplus"
-    "hpfs"
-    "udf"
-    "ksmbd"
-    "firewire_core"
-    "firewire_ohci"
-    "firewire_sbp2"
-    "firewire_net"
-    "thunderbolt"
-    "thunderbolt_net"
-    "ahci"
-    "libata"
-    "vivid"
-    "af_alg"
-    "algif_aead"
-    "algif_hash"
-    "algif_rng"
-    "algif_skcipher"
-  ];
-in {
+_: {
   boot = {
     kernelParams = [
       "slab_nomerge"
       "vsyscall=none"
       "SYSTEMD_DEFAULT_MOUNT_RATE_LIMIT_BURST=50"
     ];
-    blacklistedKernelModules = disabledModules;
-    extraModprobeConfig = lib.concatMapStringsSep "\n" (m: "install ${m} ${pkgs.pkgsStatic.uutils-coreutils-noprefix}/bin/false") disabledModules;
 
     loader = {
       timeout = 0;
