@@ -7,6 +7,7 @@
   inherit (theme) fonts;
 
   mpv = pkgs.mpv.override {
+    mpv-unwrapped = pkgs.mpv-unwrapped.override {ffmpeg = pkgs.ffmpeg-release;};
     youtubeSupport = false;
     scripts = with pkgs.mpvScripts; [uosc mpris];
   };
