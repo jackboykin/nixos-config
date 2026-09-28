@@ -4,7 +4,6 @@
   ...
 }: let
   disabledModules = [
-    "dccp"
     "sctp"
     "rds"
     "tipc"
@@ -12,16 +11,11 @@
     "rxrpc"
     "esp4"
     "esp6"
-    "ax25"
-    "netrom"
-    "rose"
     "x25"
     "atm"
     "can"
-    "appletalk"
     "ieee802154"
     "cramfs"
-    "freevxfs"
     "jffs2"
     "hfs"
     "hfsplus"
