@@ -3,8 +3,6 @@
   pkgs,
   ...
 }: let
-  llvm = pkgs.llvmPackages_latest;
-
   wanted = [
     "LTO_CLANG_THIN"
     "X86_NATIVE_CPU"
@@ -75,7 +73,7 @@
 
   kernel = pkgs.linux_testing.override {
     ignoreConfigErrors = true;
-    stdenv = pkgs.overrideCC llvm.stdenv (llvm.clang.override {inherit (llvm) bintools;});
+    stdenv = pkgs.llvmStdenv;
     structuredExtraConfig =
       lib.genAttrs wanted (_: lib.kernel.yes)
       // lib.genAttrs (unwanted ++ blacklisted ++ absent) (_: lib.mkForce (lib.kernel.option lib.kernel.no));

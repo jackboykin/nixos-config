@@ -11,8 +11,8 @@
   },
   "firefox": {
     "version": "159.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/09/2026-09-28-09-23-19-mozilla-central/firefox-159.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-gB7i9mDPSL6ujwAnOE1gtVJDVPcsMu+jyXr0EPBTJFf4nP9dlRiKfIRLDVhibLPf60KgM7uK5PymQ2XK6kHAIg=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/09/2026-09-29-09-51-07-mozilla-central/firefox-159.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-eWab61IkKJi78SgFuCvShqXlALym+smg5hkCUrihjWAWFP/IfDLuB8LWP89CvsV3GqxbZiz8/1waJUH1s5cAkQ=="
   },
   "linux": {
     "version": "7.3-rc5",
@@ -25,9 +25,9 @@
     "hash": "sha256-IPH7UZzogQBRG7CcpMPT3X0ImLTOoK3QP7VZZtsU8zI="
   },
   "zig": {
-    "version": "0.17.0-dev.2320+1e770dbef",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.2320+1e770dbef.tar.xz",
-    "hash": "sha256-RmhzgILx8IWtBy6zMGt79I1jUMlbma4grOJMHxZ0dJA="
+    "version": "0.17.0-dev.2329+1b7a78122",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.17.0-dev.2329+1b7a78122.tar.xz",
+    "hash": "sha256-BmNdwznseqZSCHudluW6k8i+a0+Ki8i6yhZwkC0gBxg="
   },
   "zls": {
     "version": "0.17.0-dev.44+8da87d4f",
