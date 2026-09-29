@@ -32,6 +32,7 @@ in {
     ./mpv.nix
     ./nushell.nix
     ./perf.nix
+    ./ssh.nix
     ./tmux.nix
     ./zoxide.nix
   ];
