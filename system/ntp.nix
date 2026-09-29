@@ -8,10 +8,12 @@
         inherit address;
       }) [
         "time.cloudflare.com"
-        "ohio.time.system76.com"
+        "time.web-clock.ca"
         "ntp2.wiktel.com"
         "time1.mbix.ca"
-        "time.xargs.org"
+        "virginia.time.system76.com"
+        "time.txryan.com"
+        "ntp1.glypnod.com"
       ];
   };
 
