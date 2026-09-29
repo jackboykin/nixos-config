@@ -7,8 +7,6 @@
       sbctl
       sops
       age
-
-      pkgsStatic.uutils-coreutils-noprefix
     ];
     defaultPackages = [];
   };
