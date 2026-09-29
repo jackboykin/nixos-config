@@ -75,7 +75,7 @@ in {
         unzip
         yazi
 
-        clang
+        llvmPackages_latest.clang
         go
         python3
         (rust-bin.stable.latest.default.override {extensions = ["rust-analyzer" "rust-src"];})
@@ -84,7 +84,7 @@ in {
         zigpkgs.zls
 
         alejandra
-        clang-tools
+        llvmPackages_latest.clang-tools
         nixd
         basedpyright
         statix
