@@ -6,7 +6,7 @@ _: {
     ./boot.nix
     ./kernel.nix
     ./sysctl.nix
-    ./musl.nix
+    ./nss.nix
     ./networking.nix
     ./ntp.nix
     ./desktop.nix

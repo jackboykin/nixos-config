@@ -21,7 +21,7 @@ in {
   assertions = [
     {
       assertion = dynamicUsers == [];
-      message = "musl contract: DynamicUser services present: ${toString dynamicUsers}";
+      message = "nss: DynamicUser needs nss-systemd, which this config omits: ${toString dynamicUsers}";
     }
   ];
 }
