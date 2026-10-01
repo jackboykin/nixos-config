@@ -6,7 +6,6 @@ in [
   (import ./bun.nix pins.bun)
   (import ./claude-code.nix pins.claude-code)
   (import ./ffmpeg.nix inputs.ffmpeg)
-  (import ./ghostscript.nix)
   (import ./firefox-nightly.nix pins.firefox)
   (import ./linux.nix pins.linux)
   (import ./llvm.nix)
