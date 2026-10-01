@@ -21,7 +21,10 @@
       max-jobs = 2;
       cores = 16;
     };
+    extraOptions = "!include ${config.sops.secrets.octocat.path}";
   };
+
+  sops.secrets.octocat.owner = "jack";
 
   nixpkgs.config.allowUnfree = true;
 
