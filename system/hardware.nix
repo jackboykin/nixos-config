@@ -12,6 +12,7 @@
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "usbhid" "hid_generic" "usb_storage" "sd_mod"];
     kernelModules = ["kvm-amd"];
+    kernelParams = ["zswap.enabled=1" "zswap.shrinker_enabled=1"];
   };
 
   fileSystems = {
@@ -27,12 +28,11 @@
     };
   };
 
-  zramSwap = {
-    enable = true;
-    memoryPercent = 70;
-  };
-  services = {
-    zram-generator.settings.zram0.zram-resident-limit = "ram / 6";
-    fstrim.enable = true;
-  };
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+    }
+  ];
+  services.fstrim.enable = true;
 }
