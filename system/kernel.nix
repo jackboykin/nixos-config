@@ -7,9 +7,12 @@
     "LTO_CLANG_THIN"
     "X86_NATIVE_CPU"
     "MODULE_COMPRESS_ZSTD"
+    "BPF_JIT_ALWAYS_ON"
+    "CPU_IDLE_GOV_TEO"
   ];
 
   unwanted = [
+    "DEBUG_ENTRY"
     "MEM_ALLOC_PROFILING"
     "MODULE_COMPRESS_XZ"
     "RUST"
@@ -74,9 +77,10 @@
   kernel = pkgs.linux_testing.override {
     ignoreConfigErrors = true;
     stdenv = pkgs.llvmStdenv;
-    structuredExtraConfig =
+    structuredExtraConfig = lib.mapAttrs (_: lib.mkForce) (
       lib.genAttrs wanted (_: lib.kernel.yes)
-      // lib.genAttrs (unwanted ++ blacklisted ++ absent) (_: lib.mkForce (lib.kernel.option lib.kernel.no));
+      // lib.genAttrs (unwanted ++ blacklisted ++ absent) (_: lib.kernel.option lib.kernel.no)
+    );
   };
 in {
   boot.kernelPackages = pkgs.linuxPackagesFor kernel;
