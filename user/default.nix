@@ -60,8 +60,8 @@ in {
         bubblewrap
         bun
         claude-code
-        fastfetch
         fd
+        fetch
         ffmpeg-release
         file
         gh
