@@ -62,7 +62,7 @@
     };
     timers.nix-prune.timerConfig.Persistent = true;
 
-    slices."nix-daemon".sliceConfig.MemoryMax = "23G";
+    slices."nix-daemon".sliceConfig.MemoryMax = "28G";
     services.nix-daemon.serviceConfig = {
       Slice = "nix-daemon.slice";
       OOMScoreAdjust = 1000;
