@@ -10,5 +10,5 @@ in [
   (import ./linux.nix pins.linux)
   (import ./llvm.nix)
   (import ./zed.nix pins.zed)
-  (import ./zig.nix {inherit (pins) zig zls;})
+  (import ./zig.nix {inherit (pins) zig zig-nightly zls;})
 ]

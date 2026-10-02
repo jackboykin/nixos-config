@@ -1,19 +1,20 @@
 pins: final: prev: let
   inherit (prev) lib;
-in {
-  zigpkgs = {
-    master = prev.stdenvNoCC.mkDerivation {
-      pname = "zig";
-      inherit (pins.zig) version;
+  zig = pname: let
+    pin = pins.${pname};
+  in
+    prev.stdenvNoCC.mkDerivation {
+      inherit pname;
+      inherit (pin) version;
       src = prev.fetchurl {
         urls = let
-          file = baseNameOf pins.zig.url;
+          file = baseNameOf pin.url;
         in [
           "https://pkg.hexops.org/zig/${file}"
           "https://zigmirror.hryx.net/zig/${file}"
-          pins.zig.url
+          pin.url
         ];
-        inherit (pins.zig) hash;
+        inherit (pin) hash;
       };
       dontConfigure = true;
       dontBuild = true;
@@ -22,7 +23,7 @@ in {
         runHook preInstall
         mkdir -p $out/bin
         cp -r lib $out/lib
-        install -m755 zig $out/bin/zig
+        install -m755 zig $out/bin/${pname}
         runHook postInstall
       '';
       meta = {
@@ -31,9 +32,13 @@ in {
         license = lib.licenses.mit;
         sourceProvenance = [lib.sourceTypes.binaryNativeCode];
         platforms = ["x86_64-linux"];
-        mainProgram = "zig";
+        mainProgram = pname;
       };
     };
+in {
+  zigpkgs = {
+    stable = zig "zig";
+    nightly = zig "zig-nightly";
 
     zls = prev.stdenvNoCC.mkDerivation {
       pname = "zls";

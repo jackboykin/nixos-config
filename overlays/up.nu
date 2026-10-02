@@ -59,7 +59,9 @@ def zigpin [m: record] {
 }
 
 def zig [] {
-  zigpin (fetch https://ziglang.org/download/index.json | from json).master
+  let index = fetch https://ziglang.org/download/index.json | from json
+  let stable = $index | reject master | columns | sort -n | last
+  {stable: (zigpin ($index | get $stable)), nightly: (zigpin $index.master)}
 }
 
 def zls [zig_version: string, old: record] {
@@ -77,7 +79,10 @@ def parallel [pins: record]: nothing -> record {
 }
 
 def report [old: record, new: record] {
-  $new | items {|k, v| if $v.url != ($old | get $k).url { print $"($k): (($old | get $k).version) -> ($v.version)" }}
+  $new | items {|k, v|
+    let was = $old | get -o $k
+    if $v.url != $was.url? { print $"($k): ($was.version? | default new) -> ($v.version)" }
+  }
 }
 
 def main [] {
@@ -90,8 +95,9 @@ def main [] {
     firefox: {|| firefox}
     linux: {|| linux}
     zed: {|| zed}
-    zig: {|| $z}
-    zls: {|| zls $z.version $old.zls}
+    zig: {|| $z.stable}
+    zig-nightly: {|| $z.nightly}
+    zls: {|| zls $z.stable.version $old.zls}
   }
   report $old $new
   $new | to json | $"($in)\n" | save -f $path

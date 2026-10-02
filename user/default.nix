@@ -81,7 +81,8 @@ in {
         python3
         (rust-bin.stable.latest.default.override {extensions = ["rust-analyzer" "rust-src"];})
         typescript
-        zigpkgs.master
+        zigpkgs.stable
+        zigpkgs.nightly
         zigpkgs.zls
 
         alejandra
