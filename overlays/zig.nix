@@ -21,9 +21,9 @@ pins: final: prev: let
       dontFixup = true;
       installPhase = ''
         runHook preInstall
-        mkdir -p $out/bin
-        cp -r lib $out/lib
-        install -m755 zig $out/bin/${pname}
+        mkdir -p $out/bin $out/libexec/${pname}
+        cp -r lib zig $out/libexec/${pname}
+        ln -s ../libexec/${pname}/zig $out/bin/${pname}
         runHook postInstall
       '';
       meta = {
