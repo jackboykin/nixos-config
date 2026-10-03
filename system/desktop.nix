@@ -8,7 +8,14 @@
     speechd.package = pkgs.speechd.override {espeak = pkgs.espeak.override {mbrolaSupport = false;};};
   };
 
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [kwin-x11 khelpcenter];
+  environment = {
+    plasma6.excludePackages = with pkgs.kdePackages; [kwin-x11 khelpcenter];
+    laminix = {
+      enable = true;
+      pruneProfiles = true;
+    };
+  };
+
   programs.kde-pim.enable = false;
   systemd.user.services.drkonqi-coredump-pickup.enable = false;
 
@@ -23,9 +30,4 @@
       newDependency = ksvg.overrideAttrs (o: {patches = (o.patches or []) ++ [./ksvg-cache-lookup-misses.patch];});
     }
   ];
-
-  environment.laminix = {
-    enable = true;
-    pruneProfiles = true;
-  };
 }
