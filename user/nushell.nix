@@ -61,8 +61,8 @@
     nr = "nh os switch";
     nb = "nh os boot";
     np = "doas systemctl start nix-prune";
-    cf = ''claude --dangerously-skip-permissions --system-prompt=""'';
-    cfw = ''claude --dangerously-skip-permissions --system-prompt="" --settings '{"disableWorkflows": false}' '';
+    cf = ''claude --system-prompt=""'';
+    cfw = ''claude --system-prompt="" --settings '{"disableWorkflows": false}' '';
     eza = "eza --icons auto --git";
     l = "eza --icons -la --no-user --no-time --no-permissions --git --group-directories-first";
     lr = "eza --icons -laR --git-ignore --git --no-user --no-time --no-permissions --group-directories-first";
