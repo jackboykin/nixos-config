@@ -74,13 +74,18 @@
     "DRM_RADEON"
   ];
 
-  kernel = pkgs.linux_testing.override {
-    ignoreConfigErrors = true;
+  resolved = pkgs.linux_testing.override {
     stdenv = pkgs.llvmStdenv;
     structuredExtraConfig = lib.mapAttrs (_: lib.mkForce) (
       lib.genAttrs wanted (_: lib.kernel.yes)
       // lib.genAttrs (unwanted ++ blacklisted ++ absent) (_: lib.kernel.option lib.kernel.no)
     );
+  };
+
+  kernel = resolved.override {
+    structuredExtraConfig =
+      lib.mapAttrs (name: v: lib.mkForce (v // {optional = !lib.elem name wanted;}))
+      resolved.configfile.structuredConfig;
   };
 in {
   boot.kernelPackages = pkgs.linuxPackagesFor kernel;

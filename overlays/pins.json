@@ -15,9 +15,9 @@
     "hash": "sha512-dX+BjAPTNAaZKGFTdtbFWg//1iO3L2YTTB0I5twr67r+e1utCFGel5WumoJl7G+JADBjI98E7PJNA5Hf46wbRw=="
   },
   "linux": {
-    "version": "7.3-rc5",
-    "url": "https://git.kernel.org/torvalds/t/linux-7.3-rc5.tar.gz",
-    "hash": "sha1-uenyLO5G159k7h2IioDKDQTdjfY="
+    "version": "7.3-rc6",
+    "url": "https://git.kernel.org/torvalds/t/linux-7.3-rc6.tar.gz",
+    "hash": "sha1-GM3/h5Z1lIECGEJLUsaVKXV6ang="
   },
   "zed": {
     "version": "1.23.1-pre",
