@@ -23,6 +23,7 @@ in {
     ./carapace.nix
     ./direnv.nix
     ./eza.nix
+    ./fetch.nix
     ./firefox.nix
     ./fzf.nix
     ./ghostty.nix
@@ -61,7 +62,6 @@ in {
         bun
         claude-code
         fd
-        fetch
         ffmpeg-release
         file
         gh
