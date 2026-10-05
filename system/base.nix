@@ -36,6 +36,9 @@
       enableSystemSlice = true;
       enableUserSlices = true;
     };
-    slices."user".sliceConfig.ManagedOOMMemoryPressureLimit = "60%";
+    slices."user".sliceConfig = {
+      ManagedOOMMemoryPressureLimit = "60%";
+      ManagedOOMSwap = "kill";
+    };
   };
 }
