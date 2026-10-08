@@ -1,10 +1,9 @@
 {
   lib,
   pkgs,
-  theme,
   ...
 }: let
-  inherit (theme) colors fonts ui;
+  inherit (import ../theme.nix) colors fonts ui;
 
   toGhostty = settings:
     lib.concatStringsSep "\n" (lib.flatten (lib.mapAttrsToList

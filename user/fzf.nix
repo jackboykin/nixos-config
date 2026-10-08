@@ -1,10 +1,9 @@
 {
   lib,
   pkgs,
-  theme,
   ...
 }: let
-  inherit (theme) colors;
+  inherit (import ../theme.nix) colors;
 
   palette = {
     "bg+" = colors.base;

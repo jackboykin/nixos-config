@@ -1,49 +1,17 @@
-{lib}: let
-  inherit (lib) ceil concatStrings floor fromTOML removePrefix stringLength substring toHexString toLower;
+let
+  inherit (builtins) concatStringsSep elemAt floor fromTOML genList substring;
 
-  hexToRgb = hex: let
-    hex' = removePrefix "#" (toLower hex);
-    r = substring 0 2 hex';
-    g = substring 2 2 hex';
-    b = substring 4 2 hex';
-    parseHex = s: (fromTOML "a = 0x${s}").a;
-  in {
-    r = parseHex r;
-    g = parseHex g;
-    b = parseHex b;
-  };
+  hexToRgb = hex: map (i: (fromTOML "a = 0x${substring i 2 hex}").a) [1 3 5];
 
-  rgbToHex = rgb:
-    "#"
-    + concatStrings (
-      map (
-        x: let
-          s = toLower (toHexString x);
-        in
-          if stringLength s == 1
-          then "0" + s
-          else s
-      ) [rgb.r rgb.g rgb.b]
-    );
-
-  round = x: let
-    floorVal = floor x;
-    ceilVal = ceil x;
-  in
-    if (x - floorVal) < 0.5
-    then floorVal
-    else ceilVal;
+  digit = n: substring n 1 "0123456789abcdef";
+  byte = n: digit (n / 16) + digit (n - n / 16 * 16);
 
   mixColors = color1: color2: factor: let
     c1 = hexToRgb color1;
     c2 = hexToRgb color2;
-    mix = {
-      r = round ((c1.r * factor) + (c2.r * (1.0 - factor)));
-      g = round ((c1.g * factor) + (c2.g * (1.0 - factor)));
-      b = round ((c1.b * factor) + (c2.b * (1.0 - factor)));
-    };
+    mix = i: floor (elemAt c1 i * factor + elemAt c2 i * (1.0 - factor) + 0.5);
   in
-    rgbToHex mix;
+    "#" + concatStringsSep "" (genList (i: byte (mix i)) 3);
 
   colors = rec {
     color0 = "#262320";
@@ -118,8 +86,8 @@
     gitDeleted = red;
   };
 in {
-  inherit colors mixColors hexToRgb;
-  rgb = hex: let c = hexToRgb hex; in map toString [c.r c.g c.b];
+  inherit colors;
+  rgb = hex: map toString (hexToRgb hex);
 
   diff = {
     hunkHeader = mixColors colors.base colors.cyan 0.8;

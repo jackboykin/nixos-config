@@ -1,8 +1,5 @@
-{
-  pkgs,
-  theme,
-  ...
-}: let
+{pkgs, ...}: let
+  theme = import ../theme.nix;
   inherit (theme) colors;
   fg = color: "38;2;${builtins.concatStringsSep ";" (theme.rgb color)}";
   ezaColorsStr = builtins.concatStringsSep ":" [

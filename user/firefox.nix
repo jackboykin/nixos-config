@@ -1,9 +1,9 @@
 {
   lib,
   pkgs,
-  theme,
   ...
 }: let
+  theme = import ../theme.nix;
   profile = "jack";
 
   fontPrefs = {

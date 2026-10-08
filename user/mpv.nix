@@ -1,10 +1,9 @@
 {
   lib,
   pkgs,
-  theme,
   ...
 }: let
-  inherit (theme) fonts;
+  inherit (import ../theme.nix) fonts;
 
   mpv = pkgs.mpv.override {
     mpv-unwrapped = pkgs.mpv-unwrapped.override {ffmpeg = pkgs.ffmpeg-release;};

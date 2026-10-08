@@ -1,10 +1,9 @@
 {
   lib,
   pkgs,
-  theme,
   ...
 }: let
-  inherit (theme) colors;
+  inherit (import ../theme.nix) colors;
 
   settings = {
     color_theme = ''"bellatrix"'';

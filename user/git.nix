@@ -2,10 +2,9 @@
   config,
   lib,
   pkgs,
-  theme,
   ...
 }: let
-  inherit (theme) colors diff;
+  inherit (import ../theme.nix) colors diff;
 
   delta = lib.getExe pkgs.delta;
   msmtp = lib.getExe pkgs.msmtp;

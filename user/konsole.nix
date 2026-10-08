@@ -1,9 +1,9 @@
 {
   lib,
   pkgs,
-  theme,
   ...
 }: let
+  theme = import ../theme.nix;
   inherit (theme) colors;
   toRGB = hex: lib.concatStringsSep "," (theme.rgb hex);
 

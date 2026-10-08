@@ -1,10 +1,9 @@
 {
   lib,
   pkgs,
-  theme,
   ...
 }: let
-  inherit (theme) colors ui;
+  inherit (import ../theme.nix) colors ui;
 
   toml = pkgs.formats.toml {};
 

@@ -49,7 +49,6 @@
   }: let
     system = "x86_64-linux";
     inherit (nixpkgs) lib;
-    theme = import ./theme.nix {inherit lib;};
 
     inputSources = let
       node = i: {
@@ -65,7 +64,6 @@
     overlays = import ./overlays inputs;
   in {
     nixosConfigurations.nixos-orion = lib.nixosSystem {
-      specialArgs = {inherit theme;};
       modules = [
         ./system
         ./user

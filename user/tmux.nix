@@ -1,9 +1,5 @@
-{
-  pkgs,
-  theme,
-  ...
-}: let
-  inherit (theme) colors;
+{pkgs, ...}: let
+  inherit (import ../theme.nix) colors;
 in {
   users.users.jack.packages = [pkgs.tmux];
 
