@@ -32,8 +32,8 @@ _: {
   };
 
   environment.etc."resolv.conf".text = ''
-    nameserver 192.168.1.161
     nameserver fd2c:523a:fee1::1
+    nameserver 192.168.1.161
     options edns0 trust-ad
   '';
 
