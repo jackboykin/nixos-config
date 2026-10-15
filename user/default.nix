@@ -35,6 +35,7 @@ in {
     ./perf.nix
     ./ssh.nix
     ./tmux.nix
+    ./vesktop.nix
     ./zoxide.nix
   ];
 
@@ -52,7 +53,6 @@ in {
       packages = with pkgs; [
         obsidian
         spotify
-        vesktop
         zed-editor
 
         aspell

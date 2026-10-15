@@ -5,24 +5,24 @@
     "hash": "sha256-PnMFKNiXdfA/h/BcBnh8TfQJnQo38/JS57gpyyOBbhg="
   },
   "claude-code": {
-    "version": "2.1.296",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.296.tgz",
-    "hash": "sha512-+m01urgelnI+VJxPaKPEK0wixgq42uZ8PeCaUk5tX/8YoDBvSmC/REVQG2jQfJAr8dxunpjJ600FvLrcj1WWTw=="
+    "version": "2.1.299",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.299.tgz",
+    "hash": "sha512-FnUWMvkaML+gSH7tK7KuWjCQfgbXX0kzEIzZabb3b73jeQESlNXEgmEgR1mvZRsyCb5O6hYUUTVqVQFY24wzhA=="
   },
   "firefox": {
     "version": "160.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-10-08-45-43-mozilla-central/firefox-160.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-sv/2DCeGprwicZcBC4XuFhHXES9Gy3S9izX5tkKZ2rjNN2oyBsEr4bDnDhOadDKD+1WT5ye4mRXcJ1SKJ70mHQ=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-14-08-01-35-mozilla-central/firefox-160.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-rTmn0sWKli43GpSxf3czA0/HBwaazxLaw4OhHuo54uv/vBG3OaChbV0FU7mVX5afOZ7TcluPLQXnQl8lSE44BA=="
   },
   "linux": {
-    "version": "7.3-rc6",
-    "url": "https://git.kernel.org/torvalds/t/linux-7.3-rc6.tar.gz",
-    "hash": "sha1-GM3/h5Z1lIECGEJLUsaVKXV6ang="
+    "version": "7.3-rc7",
+    "url": "https://git.kernel.org/torvalds/t/linux-7.3-rc7.tar.gz",
+    "hash": "sha1-NeQkghMAa4w39UEYeQqZtnPIT9k="
   },
   "zed": {
-    "version": "1.24.1-pre",
-    "url": "https://github.com/zed-industries/zed/releases/download/v1.24.1-pre/zed-linux-x86_64.tar.gz",
-    "hash": "sha256-9VEjHoEKtV3Myf0X8uW8zLlmmRC2iJQWBRxAWDlJcno="
+    "version": "1.24.2-pre",
+    "url": "https://github.com/zed-industries/zed/releases/download/v1.24.2-pre/zed-linux-x86_64.tar.gz",
+    "hash": "sha256-t1mqSo6LXzUrmjormQ/eykD6ESQmBC/qYpNU8U24NQ4="
   },
   "zig": {
     "version": "0.17.0",
@@ -30,9 +30,9 @@
     "hash": "sha256-HL6d+fJ+a3jRTMvKQ7ZwOkBO957xxGPekB1/CI1OICY="
   },
   "zig-nightly": {
-    "version": "0.18.0-dev.146+35accc06e",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.146+35accc06e.tar.xz",
-    "hash": "sha256-EGHbuSH2K2d2WBBgmoDBf6ae7O2fIemn4NBrTg16NxU="
+    "version": "0.18.0-dev.252+86dc5ce25",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.252+86dc5ce25.tar.xz",
+    "hash": "sha256-RZeGcjlAopwZZY19NFct/oe9Grkz2ShtO1H7Vlbj6xc="
   },
   "zls": {
     "version": "0.17.0-dev.44+8da87d4f",
