@@ -24,7 +24,7 @@
     };
 
     ffmpeg = {
-      url = "github:FFmpeg/FFmpeg/release/9.0";
+      url = "github:FFmpeg/FFmpeg";
       flake = false;
     };
 
