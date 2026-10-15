@@ -1,5 +1,14 @@
 {pkgs, ...}: let
-  perf = pkgs.perf.override {makeWrapper = pkgs.makeBinaryWrapper;};
+  binutils = pkgs.binutils-unwrapped;
+  perf = pkgs.perf.overrideAttrs (old: {
+    postPatch =
+      old.postPatch
+      + ''
+        substituteInPlace util/disasm.c --replace-fail '?: "objdump"' '?: "${binutils}/bin/objdump"'
+        substituteInPlace util/addr2line.c --replace-fail '?: "addr2line"' '?: "${binutils}/bin/addr2line"'
+      '';
+    preFixup = "";
+  });
 in {
   security.wrappers.perf = {
     owner = "root";
