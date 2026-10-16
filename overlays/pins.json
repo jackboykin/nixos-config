@@ -5,14 +5,14 @@
     "hash": "sha256-PnMFKNiXdfA/h/BcBnh8TfQJnQo38/JS57gpyyOBbhg="
   },
   "claude-code": {
-    "version": "2.1.300",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.300.tgz",
-    "hash": "sha512-oW4/i4gBd0Y7vqKToK+RaO/fZm4oZWAA81CJ1s0afg+bP+OH9QJdOXKDDwQ9eizcV78a44mQAbce5WYsN18CAw=="
+    "version": "2.1.301",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.301.tgz",
+    "hash": "sha512-JNe0VzIuXdaBrtlh+fY2SX5AQLDf8BDfIKrylOWK528AZ/aAq2bJt4SBkPikZ0CvecUbL0YN22Xe7eltAWCJGg=="
   },
   "firefox": {
     "version": "160.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-14-21-55-50-mozilla-central/firefox-160.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-G5HTFTISfcBsyawJB3NxVavfP6hX5i6QD7HOJu7eZlPhJnOrMcmE7sola3jG51+hCGsYCqWBDqw2/+VnNFzIWg=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-15-09-36-24-mozilla-central/firefox-160.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-mISZmJo9vokgjSvt0Tm0/8gj7rfNtIUW5IHCBhwS4NGQrLnWNYvyzBYvXOY90X1QORf+Fqf0j8kXMhUPprRKhQ=="
   },
   "linux": {
     "version": "7.3-rc7",
