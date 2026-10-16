@@ -72,7 +72,7 @@ user_pref("browser.urlbar.trending.featureGate", false);
 user_pref("browser.urlbar.trimURLs", false);
 
 user_pref("media.eme.enabled", true);
-user_pref("media.ffmpeg.disable-software-fallback", true);
+user_pref("media.hardware-video-decoding-vulkan.direct-export.enabled", true);
 user_pref("media.hardware-video-decoding-vulkan.force-enabled", true);
 user_pref("media.hardware-video-decoding-vulkan.prefer-system-ffmpeg", true);
 user_pref("media.peerconnection.ice.default_address_only", true);
