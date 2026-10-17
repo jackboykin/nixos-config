@@ -16,9 +16,6 @@ in {
       version = release;
       inherit src;
 
-      # Until FFmpeg/FFmpeg!25099 lands. radv rejects DRM modifiers on DPB-only images.
-      patches = [./ffmpeg-vulkan-dpb-modifier.patch];
-
       outputs = ["out" "lib"];
 
       strictDeps = true;
