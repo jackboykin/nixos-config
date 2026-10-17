@@ -55,7 +55,7 @@ in {
 
     "script-opts/uosc.conf" = pkgs.writeText "uosc.conf" (toConf {
       progress = "never";
-      controls = "menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,speed,";
+      controls = "menu,gap,subtitles,audio,video,playlist,chapters,editions,stream-quality,loop-file,speed";
     });
   };
 }
