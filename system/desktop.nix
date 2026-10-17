@@ -9,7 +9,7 @@
   };
 
   environment = {
-    plasma6.excludePackages = with pkgs.kdePackages; [kwin-x11 khelpcenter];
+    plasma6.excludePackages = with pkgs.kdePackages; [khelpcenter];
     laminix = {
       enable = true;
       pruneProfiles = true;
