@@ -71,6 +71,8 @@ user_pref("browser.urlbar.suggest.quicksuggest.all", false);
 user_pref("browser.urlbar.trending.featureGate", false);
 user_pref("browser.urlbar.trimURLs", false);
 
+// workaround: seek stream reuse judders 60fps after a paused seek, drop once bug 2083549 lands
+user_pref("media.audio.reuse-stream-on-seek", false);
 user_pref("media.eme.enabled", true);
 user_pref("media.hardware-video-decoding-vulkan.direct-export.enabled", true);
 user_pref("media.hardware-video-decoding-vulkan.force-enabled", true);
