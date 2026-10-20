@@ -9,6 +9,7 @@ in [
   (import ./firefox-nightly.nix pins.firefox)
   (import ./linux.nix pins.linux)
   (import ./llvm.nix)
+  (import ./mesa.nix inputs.mesa)
   (import ./zed.nix pins.zed)
   (import ./zig.nix {inherit (pins) zig zig-nightly zls;})
 ]

@@ -11,7 +11,7 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Until radv stops mixing decode tier2 and tier3 in one session, which corrupts Vulkan Video references.
-  hardware.graphics.package = pkgs.mesa.overrideAttrs (o: {patches = (o.patches or []) ++ [./radv-video-disable-tier3.patch];});
+  hardware.graphics.package = pkgs.mesa-main.overrideAttrs (o: {patches = (o.patches or []) ++ [./radv-video-remove-tier3.patch];});
 
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "usbhid" "hid_generic" "usb_storage" "sd_mod"];

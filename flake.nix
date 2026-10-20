@@ -28,6 +28,11 @@
       flake = false;
     };
 
+    mesa = {
+      url = "gitlab:mesa/mesa?host=gitlab.freedesktop.org";
+      flake = false;
+    };
+
     quarry = {
       url = "github:jackboykin/quarry";
       inputs.nixpkgs.follows = "nixpkgs";
