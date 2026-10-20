@@ -97,6 +97,10 @@ in {
         }
       '';
 
+      postFixup = ''
+        patchelf ${placeholder "lib"}/lib/libavutil.so --add-rpath ${lib.makeLibraryPath [prev.vulkan-loader]}
+      '';
+
       meta = {
         homepage = "https://www.ffmpeg.org/";
         description = "Complete, cross-platform solution to record, convert and stream audio and video";
