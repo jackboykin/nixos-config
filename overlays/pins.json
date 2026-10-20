@@ -19,6 +19,11 @@
     "url": "https://git.kernel.org/torvalds/t/linux-7.3.tar.gz",
     "hash": "sha1-MP0u+CkSwmzzpYrQumr8N1+oUaw="
   },
+  "linux-firmware": {
+    "version": "20261019",
+    "url": "https://gitlab.com/kernel-firmware/linux-firmware/-/archive/20261019/linux-firmware-20261019.tar.gz",
+    "hash": "sha1-6iKf3Q/V9Pj9rNlTMKC6aY1U3k0="
+  },
   "zed": {
     "version": "1.25.0-pre",
     "url": "https://github.com/zed-industries/zed/releases/download/v1.25.0-pre/zed-linux-x86_64.tar.gz",

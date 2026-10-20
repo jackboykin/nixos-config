@@ -8,6 +8,7 @@ in [
   (import ./ffmpeg.nix inputs.ffmpeg)
   (import ./firefox-nightly.nix pins.firefox)
   (import ./linux.nix pins.linux)
+  (import ./linux-firmware.nix pins.linux-firmware)
   (import ./llvm.nix)
   (import ./mesa.nix inputs.mesa)
   (import ./zed.nix pins.zed)

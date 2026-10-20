@@ -42,14 +42,28 @@ def firefox [] {
   }
 }
 
+def korg [repo: string, prefix: string] {
+  let url = $"https://git.kernel.org/pub/scm/linux/kernel/git/($repo).git"
+  let tag = ^git -c versionsort.suffix=-rc ls-remote --tags --refs --sort=-v:refname $url $"($prefix)*" | lines | first | str replace -r '.*refs/tags/' ""
+  let tree = fetch $"($url)/commit/?id=($tag)" | parse -r "<th>tree</th><td[^>]*><a[^>]*>(?<sha>[0-9a-f]{40})" | first | get sha
+  {version: ($tag | str replace -r $"^($prefix)" ""), hash: ($tree | sri sha1)}
+}
+
 def linux [] {
-  let repo = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
-  let version = ^git -c versionsort.suffix=-rc ls-remote --tags --refs --sort=-v:refname $repo "v*" | lines | first | str replace -r '.*refs/tags/v' ""
-  let tree = fetch $"($repo)/commit/?id=v($version)" | parse -r "<th>tree</th><td[^>]*><a[^>]*>(?<sha>[0-9a-f]{40})" | first | get sha
+  let k = korg torvalds/linux v
   {
-    version: $version
-    url: $"https://git.kernel.org/torvalds/t/linux-($version).tar.gz"
-    hash: ($tree | sri sha1)
+    version: $k.version
+    url: $"https://git.kernel.org/torvalds/t/linux-($k.version).tar.gz"
+    hash: $k.hash
+  }
+}
+
+def linux-firmware [] {
+  let k = korg firmware/linux-firmware ""
+  {
+    version: $k.version
+    url: $"https://gitlab.com/kernel-firmware/linux-firmware/-/archive/($k.version)/linux-firmware-($k.version).tar.gz"
+    hash: $k.hash
   }
 }
 
@@ -94,6 +108,7 @@ def main [] {
     claude-code: {|| claude-code}
     firefox: {|| firefox}
     linux: {|| linux}
+    linux-firmware: {|| linux-firmware}
     zed: {|| zed}
     zig: {|| $z.stable}
     zig-nightly: {|| $z.nightly}
