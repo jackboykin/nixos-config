@@ -9,8 +9,8 @@ def fetch [url: string] {
 }
 
 def gh-release [repo: string, asset: string, --pre] {
-  let r = (fetch $"https://api.github.com/repos/($repo)/releases" | from json | where prerelease == $pre | first)
-  let a = ($r.assets | where name == $asset | first)
+  let r = fetch $"https://api.github.com/repos/($repo)/releases" | from json | where prerelease == $pre | first
+  let a = $r.assets | where name == $asset | first
   {
     version: ($r.tag_name | str replace -r '^\D+' "")
     url: $a.browser_download_url
@@ -29,9 +29,9 @@ def claude-code [] {
 
 def firefox [] {
   let root = "https://archive.mozilla.org/pub/firefox/nightly"
-  let version = (fetch https://product-details.mozilla.org/1.0/firefox_versions.json | from json).FIREFOX_NIGHTLY
+  let version = fetch https://product-details.mozilla.org/1.0/firefox_versions.json | from json | get FIREFOX_NIGHTLY
   let stem = $"firefox-($version).en-US.linux-x86_64"
-  let stamp = ((fetch $"($root)/latest-mozilla-central/($stem).json" | from json).buildid | into datetime -f "%Y%m%d%H%M%S" | format date "%Y/%m/%Y-%m-%d-%H-%M-%S")
+  let stamp = fetch $"($root)/latest-mozilla-central/($stem).json" | from json | get buildid | into datetime -f "%Y%m%d%H%M%S" | format date "%Y/%m/%Y-%m-%d-%H-%M-%S"
   let base = $"($root)/($stamp)-mozilla-central"
   let file = $"($stem).tar.xz"
   let sums = fetch $"($base)/($stem).checksums"
@@ -42,7 +42,7 @@ def firefox [] {
   }
 }
 
-def korg [repo: string, prefix: string] {
+def korg [repo: string, --prefix: string = ""] {
   let url = $"https://git.kernel.org/pub/scm/linux/kernel/git/($repo).git"
   let tag = ^git -c versionsort.suffix=-rc ls-remote --tags --refs --sort=-v:refname $url $"($prefix)*" | lines | first | str replace -r '.*refs/tags/' ""
   let tree = fetch $"($url)/commit/?id=($tag)" | parse -r "<th>tree</th><td[^>]*><a[^>]*>(?<sha>[0-9a-f]{40})" | first | get sha
@@ -50,7 +50,7 @@ def korg [repo: string, prefix: string] {
 }
 
 def linux [] {
-  let k = korg torvalds/linux v
+  let k = korg torvalds/linux --prefix v
   {
     version: $k.version
     url: $"https://git.kernel.org/torvalds/t/linux-($k.version).tar.gz"
@@ -59,7 +59,7 @@ def linux [] {
 }
 
 def linux-firmware [] {
-  let k = korg firmware/linux-firmware ""
+  let k = korg firmware/linux-firmware
   {
     version: $k.version
     url: $"https://gitlab.com/kernel-firmware/linux-firmware/-/archive/($k.version)/linux-firmware-($k.version).tar.gz"
@@ -68,7 +68,7 @@ def linux-firmware [] {
 }
 
 def zigpin [m: record] {
-  let bin = ($m | get x86_64-linux)
+  let bin = $m | get x86_64-linux
   {version: $m.version, url: $bin.tarball, hash: ($bin.shasum | sri sha256)}
 }
 
@@ -79,7 +79,7 @@ def zig [] {
 }
 
 def zls [zig_version: string, old: record] {
-  let v = ($zig_version | url encode)
+  let v = $zig_version | url encode
   let m = fetch $"https://releases.zigtools.org/v1/zls/select-version?zig_version=($v)&compatibility=full" | from json
   if "message" in $m {
     print -e $"zls: ($m.message) - keeping ($old.version)"
@@ -100,7 +100,7 @@ def report [old: record, new: record] {
 }
 
 def main [] {
-  let path = ($env.FILE_PWD | path join pins.json)
+  let path = $env.FILE_PWD | path join pins.json
   let old = open $path
   let z = zig
   let new = parallel {
