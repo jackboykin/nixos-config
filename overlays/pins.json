@@ -1,18 +1,18 @@
 {
   "bun": {
-    "version": "1.4.3",
-    "url": "https://github.com/oven-sh/bun/releases/download/bun-v1.4.3/bun-linux-x64.zip",
-    "hash": "sha256-PnMFKNiXdfA/h/BcBnh8TfQJnQo38/JS57gpyyOBbhg="
+    "version": "1.4.4",
+    "url": "https://github.com/oven-sh/bun/releases/download/bun-v1.4.4/bun-linux-x64.zip",
+    "hash": "sha256-v4zL+ysLgBWeD5ptFcVTF63YB3U028YTCj7bUvzLOVw="
   },
   "claude-code": {
-    "version": "2.1.306",
-    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.306.tgz",
-    "hash": "sha512-4gsb0IQhxzi1NhoUETXkNZb1t6wJ9tnfAYBKmb0+NmsAwOG37Dacq7bLqsooEkusaT0PyQRFUMt0SgWxx9LEEA=="
+    "version": "2.1.308",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-2.1.308.tgz",
+    "hash": "sha512-ffUryevpH7POStPJ/xpUI5R1ozYbH9o/Dbh/xPSmyVJehELnRMZmRnejdQmq0TejOW/SbNnJFhCGMgwIsOqFTQ=="
   },
   "firefox": {
     "version": "160.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-20-19-50-26-mozilla-central/firefox-160.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-DkAfBA+O0Y2yGMJR5xEJoDAyXF1rY7pUwRKY938DdVlo3S3CnHMa/oAg1bnLBArE0HNU5brSp9gHfgusHRY+gQ=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-22-08-45-08-mozilla-central/firefox-160.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-Lhc9JfEBT//P5gTnh3/OjNObUyQvtzQdBQXX426WghEjvYzvgBAbp3iRDTrwR0/eZKu/N4JQ11+29tIyzzVdPQ=="
   },
   "linux": {
     "version": "7.3",
@@ -25,9 +25,9 @@
     "hash": "sha1-6iKf3Q/V9Pj9rNlTMKC6aY1U3k0="
   },
   "zed": {
-    "version": "1.25.1-pre",
-    "url": "https://github.com/zed-industries/zed/releases/download/v1.25.1-pre/zed-linux-x86_64.tar.gz",
-    "hash": "sha256-CqNeU2YL+nv/toD0M7D3jlf5GIF8YV+mws4ympAoN7c="
+    "version": "1.26.1-pre",
+    "url": "https://github.com/zed-industries/zed/releases/download/v1.26.1-pre/zed-linux-x86_64.tar.gz",
+    "hash": "sha256-wO0//7N8UtpPa+FaYoP/m4py0GF1KNMFn4333YzJgo0="
   },
   "zig": {
     "version": "0.17.0",

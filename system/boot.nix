@@ -17,10 +17,7 @@ _: {
 
     initrd = {
       includeDefaultModules = false;
-      systemd = {
-        enable = true;
-        tpm2.enable = false;
-      };
+      systemd.tpm2.enable = false;
     };
     tmp.cleanOnBoot = true;
   };
