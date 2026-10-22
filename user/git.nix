@@ -83,7 +83,7 @@
     };
   };
 in {
-  users.users.jack.packages = [pkgs.delta pkgs.msmtp];
+  users.users.jack.packages = [pkgs.b4 pkgs.delta pkgs.msmtp];
 
   programs.git = {
     enable = true;
