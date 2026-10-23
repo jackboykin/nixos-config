@@ -44,6 +44,7 @@ _: {
     LockPersonality = true;
     MemoryDenyWriteExecute = true;
     DeviceAllow = ["/dev/net/tun rw"];
+    InaccessiblePaths = ["/var/lib/sops-nix" "/nix/var/nix/daemon-socket"];
     ProtectControlGroups = true;
     ProtectHome = true;
     ProtectKernelTunables = true;
