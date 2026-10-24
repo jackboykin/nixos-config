@@ -66,7 +66,6 @@ in {
         ffmpeg-release
         file
         gh
-        herdr
         hyperfine
         jq
         poppler-utils
@@ -93,7 +92,6 @@ in {
         statix
         zig-zlint
 
-        cloudflared
         dnsutils
         nmap
         rustnet
