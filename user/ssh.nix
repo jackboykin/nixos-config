@@ -1,11 +1,16 @@
-{config, ...}: {
-  sops.secrets.opnsense-ssh.owner = "jack";
-
+_: {
   programs.ssh.extraConfig = ''
     Host opnsense
       HostName 192.168.1.1
       User root
-      IdentityFile ${config.sops.secrets.opnsense-ssh.path}
-      IdentitiesOnly yes
+
+    Host greta
+      HostName 192.168.1.161
+      User greta
+
+    Host opnsense greta
+      ControlMaster auto
+      ControlPath /run/user/%i/ssh-%C
+      ControlPersist 2h
   '';
 }

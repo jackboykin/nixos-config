@@ -11,8 +11,8 @@
   },
   "firefox": {
     "version": "161.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-23-09-50-57-mozilla-central/firefox-161.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-woQ+Z4EKsQi2ZLem/sDIzcM7LdzmLe9tGFuk1z7B6e+60FN2KrpOy1Oh8l1CLIy21kg9MtoFgioRWw6sl+B2EA=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-24-21-50-18-mozilla-central/firefox-161.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-q6g3WylYkaTqg32F6kfJQL+Sg/JW5o+D0M2euAr7dAzctDqKIOYWlgAQ57Qwn+dVJpjaYz6wAboOWEx8k/8h0Q=="
   },
   "linux": {
     "version": "7.3",
@@ -35,9 +35,9 @@
     "hash": "sha256-HL6d+fJ+a3jRTMvKQ7ZwOkBO957xxGPekB1/CI1OICY="
   },
   "zig-nightly": {
-    "version": "0.18.0-dev.470+6817928c3",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.470+6817928c3.tar.xz",
-    "hash": "sha256-cV+QYCLQDO3vxIvXS+fyW/O9HBeFtaOCwWUSMH+Qm0M="
+    "version": "0.18.0-dev.567+7f0281900",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.567+7f0281900.tar.xz",
+    "hash": "sha256-hotDFDiMTL1cVLd9E6hguHVSIraFJP24X8j+TjzVRqg="
   },
   "zls": {
     "version": "0.17.0",
