@@ -35,7 +35,7 @@ in {
         libxml2
         openssl
         soxr
-        svt-av1
+        svt-av1-hdr
         spirv-headers
         vulkan-headers
         vulkan-loader
