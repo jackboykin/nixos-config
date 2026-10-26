@@ -29,6 +29,7 @@ in {
         libdrm
         libjxl
         libopus
+        libplacebo
         libva
         libvorbis
         libwebp
@@ -71,6 +72,7 @@ in {
 
         "--enable-vulkan"
         "--glslc=${lib.getExe' prev.buildPackages.shaderc "glslc"}"
+        "--enable-libplacebo"
         "--enable-vaapi"
         "--enable-libdrm"
         "--enable-libdav1d"
