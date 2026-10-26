@@ -27,6 +27,7 @@ in {
         dav1d
         lame
         libdrm
+        libjxl
         libopus
         libva
         libvorbis
@@ -82,6 +83,7 @@ in {
         "--enable-openssl"
         "--enable-libmp3lame"
         "--enable-libvorbis"
+        "--enable-libjxl"
         "--enable-libwebp"
 
         "--enable-libxml2"
