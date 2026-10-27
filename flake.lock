@@ -117,11 +117,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792464975,
-        "narHash": "sha256-IyPp37DxePFxrpKWvQ+XFM5eCi19xHSuYd5VhN8Sg0A=",
+        "lastModified": 1793068742,
+        "narHash": "sha256-jASrFfr2t4gbiVXOAvKCuPfk4sQR8IuxIHD5M0cgt+U=",
         "owner": "jackboykin",
         "repo": "quarry",
-        "rev": "9e56fcb36b97ceeee9b29b5440312f7f9e5f2e7b",
+        "rev": "ff36df267297572bdcbde266293d29eff1e25c8a",
         "type": "github"
       },
       "original": {

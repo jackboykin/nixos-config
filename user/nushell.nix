@@ -72,10 +72,7 @@ in {
 
   castle.links = {
     ".config/nushell/env.nu" = pkgs.writeText "env.nu" ''
-      $env.PATH = ($env.PATH | append [
-          $"($env.HOME)/.cargo/bin"
-          $"($env.HOME)/.local/bin"
-      ] | uniq)
+      $env.PATH = ($env.PATH | append $"($env.HOME)/.local/bin" | uniq)
     '';
 
     ".config/nushell/config.nu" = pkgs.writeText "config.nu" ''
