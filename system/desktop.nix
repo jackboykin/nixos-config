@@ -9,7 +9,10 @@
   };
 
   environment = {
-    plasma6.excludePackages = with pkgs.kdePackages; [khelpcenter];
+    plasma6.excludePackages = with pkgs.kdePackages; [
+      khelpcenter
+      plasma-browser-integration
+    ];
     laminix = {
       enable = true;
       pruneProfiles = true;
