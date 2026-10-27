@@ -130,6 +130,19 @@
         "type": "github"
       }
     },
+    "rex": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793217377,
+        "narHash": "sha256-hx3Ayt0+W66q3HvnmINYFBV98wzIUlOtQC0k+++S0h0=",
+        "type": "tarball",
+        "url": "https://pkgs.superlogical.com/rex/nix/snapshot/0.0.1793217377-g0e681a.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz"
+      }
+    },
     "root": {
       "inputs": {
         "ffmpeg": "ffmpeg",
@@ -138,6 +151,7 @@
         "mesa": "mesa",
         "nixpkgs": "nixpkgs",
         "quarry": "quarry",
+        "rex": "rex",
         "rust-overlay": "rust-overlay",
         "sops-nix": "sops-nix"
       }

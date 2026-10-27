@@ -11,6 +11,7 @@ in [
   (import ./linux-firmware.nix pins.linux-firmware)
   (import ./llvm.nix)
   (import ./mesa.nix inputs.mesa)
+  (import ./rex.nix inputs.rex)
   (import ./zed.nix pins.zed)
   (import ./zig.nix {inherit (pins) zig zig-nightly zls;})
 ]

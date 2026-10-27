@@ -34,6 +34,7 @@ in {
     ./mpv.nix
     ./nushell.nix
     ./perf.nix
+    ./rex.nix
     ./ssh.nix
     ./tmux.nix
     ./vesktop.nix

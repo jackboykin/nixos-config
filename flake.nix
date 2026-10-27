@@ -42,6 +42,11 @@
       url = "github:jackboykin/laminix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    rex = {
+      url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz";
+      flake = false;
+    };
   };
 
   outputs = inputs @ {
