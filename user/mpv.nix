@@ -11,6 +11,11 @@
     scripts = with pkgs.mpvScripts; [uosc mpris];
   };
 
+  pixelClipper = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/Artoriuz/glsl-pixel-clipper/92aa62129d0fd2ce482de52b7aa0fe91e99af1b5/PixelClipper.glsl";
+    hash = "sha256-yBzDvsp7MPev6Iaulkc3gB8tgh3CgkYCwAvKgeRTO/w=";
+  };
+
   toConf = settings:
     lib.concatStringsSep "\n" (lib.mapAttrsToList
       (k: v: "${k}=${
@@ -41,6 +46,9 @@ in {
       vo = "gpu-next";
       gpu-api = "vulkan";
       hwdec = "vulkan";
+      cscale = "lanczos";
+      dscale = "catmull_rom";
+      glsl-shader = pixelClipper;
       video-sync = "display-resample";
       interpolation = "yes";
       cache = true;
