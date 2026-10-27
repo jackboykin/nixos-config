@@ -46,7 +46,6 @@ in {
       interpolation = "yes";
       cache = true;
       screenshot-format = "png";
-      screenshot-high-bit-depth = true;
       screenshot-png-compression = 3;
 
       osd-font = fonts.sans.name;
