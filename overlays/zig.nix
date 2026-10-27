@@ -10,8 +10,10 @@ pins: final: prev: let
         urls = let
           file = baseNameOf pin.url;
         in [
-          "https://pkg.hexops.org/zig/${file}"
-          "https://zigmirror.hryx.net/zig/${file}"
+          "https://ziglang.freetls.fastly.net/${file}"
+          "https://zig.chainsafe.dev/${file}"
+          "https://zig.squirl.dev/${file}"
+          "https://zig.bcr.ist/${file}"
           pin.url
         ];
         inherit (pin) hash;
