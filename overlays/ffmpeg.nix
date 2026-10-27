@@ -21,9 +21,9 @@ in {
       strictDeps = true;
       enableParallelBuilding = true;
 
-      nativeBuildInputs = with prev; [nasm pkg-config removeReferencesTo];
+      nativeBuildInputs = with final; [nasm pkg-config removeReferencesTo];
 
-      buildInputs = with prev; [
+      buildInputs = with final; [
         dav1d
         lame
         libdrm
