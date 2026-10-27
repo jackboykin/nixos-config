@@ -8,6 +8,9 @@ in {
     version = lib.trim (builtins.readFile "${src}/VERSION");
     inherit src;
 
+    # Until mesa MR 45678 lands: wayland EGL falls back to llvmpipe under dmabuf v6.
+    patches = o.patches ++ [./mesa-dmabuf-feedback-done.patch];
+
     outputs = lib.remove "spirv2dxil" o.outputs;
     depsBuildBuild = lib.remove prev.buildPackages.stdenv.cc o.depsBuildBuild;
 

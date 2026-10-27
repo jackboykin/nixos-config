@@ -1,0 +1,32 @@
+From b781be0d3ed781b1b8471e10d674e30e11685369 Mon Sep 17 00:00:00 2001
+From: Xaver Hugl <xaver.hugl@kde.org>
+Date: Tue, 27 Oct 2026 18:09:10 +0100
+Subject: [PATCH] egl/wsi/wayland: ignore default_dmabuf_feedback_done
+
+The dmabuf feedback needs to be kept around to select a device properly. This
+was fixed at some point during review of the commit that introduced it, but
+must've been lost in a rebase.
+
+fixes: 342e7e40 (egl/wsi/wayland: keep the full `dmabuf_feedback` around)
+closes #16711
+---
+ src/egl/drivers/dri2/platform_wayland.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/egl/drivers/dri2/platform_wayland.c b/src/egl/drivers/dri2/platform_wayland.c
+index 5f8ebf40686d..1aea90c75775 100644
+--- a/src/egl/drivers/dri2/platform_wayland.c
++++ b/src/egl/drivers/dri2/platform_wayland.c
+@@ -2270,8 +2270,7 @@ static void
+ default_dmabuf_feedback_done(
+    void *data, struct zwp_linux_dmabuf_feedback_v1 *dmabuf_feedback)
+ {
+-   struct dri2_egl_display *dri2_dpy = data;
+-   dmabuf_feedback_fini(&dri2_dpy->dmabuf_feedback);
++   /* Intentionally empty */
+ }
+ 
+ static const struct zwp_linux_dmabuf_feedback_v1_listener
+-- 
+GitLab
+
