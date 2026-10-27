@@ -40,7 +40,6 @@ in {
         spirv-headers
         vulkan-headers
         vulkan-loader
-        vvenc
         x264
         x265
         zimg
@@ -79,7 +78,6 @@ in {
         "--enable-libdav1d"
         "--enable-libopus"
         "--enable-libsvtav1"
-        "--enable-libvvenc"
         "--enable-libx264"
         "--enable-libx265"
         "--enable-zlib"
