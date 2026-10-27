@@ -36,7 +36,6 @@ in {
       osd-bar = false;
       osc = false;
       border = false;
-      deband = true;
       demuxer-lavf-o = "live_start_index=0";
       force-seekable = true;
       vo = "gpu-next";
