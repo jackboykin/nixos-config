@@ -10,6 +10,7 @@
 
   environment = {
     plasma6.excludePackages = with pkgs.kdePackages; [
+      elisa
       khelpcenter
       plasma-browser-integration
     ];
@@ -18,6 +19,12 @@
       pruneProfiles = true;
     };
   };
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      kdePackages = prev.kdePackages.overrideScope (_: _: {phonon-vlc = final.emptyDirectory;});
+    })
+  ];
 
   programs.kde-pim.enable = false;
   systemd.user.services.drkonqi-coredump-pickup.enable = false;
