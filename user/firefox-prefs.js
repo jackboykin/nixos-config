@@ -6,7 +6,7 @@ user_pref("privacy.clearOnShutdown_v2.cache", true);
 user_pref("privacy.clearOnShutdown_v2.cookiesAndStorage", true);
 user_pref("privacy.clearOnShutdown_v2.formdata", true);
 user_pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", false);
-user_pref("privacy.clearOnShutdown_v2.siteSettings", false);
+user_pref("privacy.clearOnShutdown_v2.siteSettings", true);
 
 user_pref("dom.security.https_only_mode", true);
 user_pref("security.csp.reporting.enabled", false);
