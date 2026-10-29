@@ -28,7 +28,6 @@ user_pref("permissions.default.geo", 2);
 user_pref("permissions.default.microphone", 2);
 user_pref("dom.webserial.enabled", false);
 
-user_pref("identity.fxaccounts.account.device.name", "orion");
 user_pref("identity.fxaccounts.enabled", false);
 
 user_pref("signon.autofillForms", false);
@@ -60,7 +59,6 @@ user_pref("browser.newtabpage.activity-stream.default.sites", "");
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
 user_pref("browser.newtabpage.activity-stream.showSponsored", false);
-user_pref("browser.newtabpage.activity-stream.showSponsoredCheckboxes", false);
 user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
 
 user_pref("browser.urlbar.shortcuts.bookmarks", false);
