@@ -1,0 +1,504 @@
+From 3d564960669b39f6380106c4f810dcfcafcef827 Mon Sep 17 00:00:00 2001
+From: Jack Boykin <jtboykin.jb@gmail.com>
+Date: Thu, 29 Oct 2026 14:29:29 -0500
+Subject: [PATCH 1/2] avfilter/vf_crop: respect the incoming crop of hardware
+ frames
+
+A hardware frame that arrived already cropped came out with negative
+margins. The filter sized its rectangle against the whole frame, then
+placed it inside the visible part.
+
+Crop within the visible part instead. iw and ih are its size, and
+x and y are relative to its top-left corner. Commands use the same
+size.
+
+Fixes: f1b359aaf5 ("vf_crop: Add support for cropping hardware frames")
+Signed-off-by: Jack Boykin <jtboykin.jb@gmail.com>
+---
+ doc/filters.texi                              |  4 +-
+ libavfilter/vf_crop.c                         | 61 +++++++++++--------
+ tests/fate/filter-video.mak                   |  4 +-
+ .../filter-scale_cuda-crop-chain-nv12-bgra    | 10 +++
+ 4 files changed, 53 insertions(+), 26 deletions(-)
+ create mode 100644 tests/ref/fate/filter-scale_cuda-crop-chain-nv12-bgra
+
+diff --git a/doc/filters.texi b/doc/filters.texi
+index 37f9123df4..8e07d0f2e6 100644
+--- a/doc/filters.texi
++++ b/doc/filters.texi
+@@ -10881,7 +10881,9 @@ each new frame.
+ 
+ @item in_w
+ @item in_h
+-The input width and height.
++The input width and height. For a hardware frame that is already cropped,
++they are the size of the visible part, and @var{x} and @var{y} are
++relative to it.
+ 
+ @item iw
+ @item ih
+diff --git a/libavfilter/vf_crop.c b/libavfilter/vf_crop.c
+index f25e0564aa..ba52ba780d 100644
+--- a/libavfilter/vf_crop.c
++++ b/libavfilter/vf_crop.c
+@@ -125,7 +125,7 @@ static inline int normalize_double(int *n, double d)
+     return ret;
+ }
+ 
+-static int config_crop_area(AVFilterLink *link)
++static int config_crop_area(AVFilterLink *link, int in_w, int in_h)
+ {
+     AVFilterContext *ctx = link->dst;
+     CropContext *s = ctx->priv;
+@@ -134,9 +134,9 @@ static int config_crop_area(AVFilterLink *link)
+     const char *expr;
+     double res;
+ 
+-    s->var_values[VAR_IN_W]  = s->var_values[VAR_IW] = ctx->inputs[0]->w;
+-    s->var_values[VAR_IN_H]  = s->var_values[VAR_IH] = ctx->inputs[0]->h;
+-    s->var_values[VAR_A]     = (float) link->w / link->h;
++    s->var_values[VAR_IN_W]  = s->var_values[VAR_IW] = in_w;
++    s->var_values[VAR_IN_H]  = s->var_values[VAR_IH] = in_h;
++    s->var_values[VAR_A]     = (float) in_w / in_h;
+     s->var_values[VAR_SAR]   = link->sample_aspect_ratio.num ? av_q2d(link->sample_aspect_ratio) : 1;
+     s->var_values[VAR_DAR]   = s->var_values[VAR_A] * s->var_values[VAR_SAR];
+     s->var_values[VAR_HSUB]  = 1<<pix_desc->log2_chroma_w;
+@@ -188,18 +188,18 @@ static int config_crop_area(AVFilterLink *link)
+ 
+     if (s->keep_aspect) {
+         AVRational dar = av_mul_q(link->sample_aspect_ratio,
+-                                  (AVRational){ link->w, link->h });
++                                  (AVRational){ in_w, in_h });
+         av_reduce(&s->out_sar.num, &s->out_sar.den,
+                   (int64_t)dar.num * s->h, (int64_t)dar.den * s->w, INT_MAX);
+     } else
+         s->out_sar = link->sample_aspect_ratio;
+ 
+     av_log(ctx, AV_LOG_VERBOSE, "w:%d h:%d sar:%d/%d -> w:%d h:%d sar:%d/%d\n",
+-           link->w, link->h, link->sample_aspect_ratio.num, link->sample_aspect_ratio.den,
++           in_w, in_h, link->sample_aspect_ratio.num, link->sample_aspect_ratio.den,
+            s->w, s->h, s->out_sar.num, s->out_sar.den);
+ 
+     if (s->w <= 0 || s->h <= 0 ||
+-        s->w > link->w || s->h > link->h) {
++        s->w > in_w || s->h > in_h) {
+         av_log(ctx, AV_LOG_ERROR,
+                "Invalid too big or non positive size for width '%d' or height '%d'\n",
+                s->w, s->h);
+@@ -207,14 +207,14 @@ static int config_crop_area(AVFilterLink *link)
+     }
+ 
+     /* set default, required in the case the first computed value for x/y is NAN */
+-    s->x = (link->w - s->w) / 2;
+-    s->y = (link->h - s->h) / 2;
++    s->x = (in_w - s->w) / 2;
++    s->y = (in_h - s->h) / 2;
+     if (!s->exact) {
+         s->x &= ~((1 << s->hsub) - 1);
+         s->y &= ~((1 << s->vsub) - 1);
+     }
+-    s->in_w = link->w;
+-    s->in_h = link->h;
++    s->in_w = in_w;
++    s->in_h = in_h;
+     return 0;
+ 
+ fail_expr:
+@@ -222,7 +222,7 @@ fail_expr:
+     return ret;
+ }
+ 
+-static int config_input(AVFilterLink *link)
++static int config_exprs(AVFilterLink *link, int in_w, int in_h)
+ {
+     CropContext *s = link->dst->priv;
+     AVExpr *x_pexpr = NULL, *y_pexpr = NULL;
+@@ -241,7 +241,12 @@ static int config_input(AVFilterLink *link)
+     s->x_pexpr = x_pexpr;
+     s->y_pexpr = y_pexpr;
+ 
+-    return config_crop_area(link);
++    return config_crop_area(link, in_w, in_h);
++}
++
++static int config_input(AVFilterLink *link)
++{
++    return config_exprs(link, link->w, link->h);
+ }
+ 
+ static int config_output(AVFilterLink *link)
+@@ -267,12 +272,18 @@ static int filter_frame(AVFilterLink *link, AVFrame *frame)
+     AVFilterContext *ctx = link->dst;
+     CropContext *s = ctx->priv;
+     const AVPixFmtDescriptor *desc = av_pix_fmt_desc_get(link->format);
++    int in_w = frame->width, in_h = frame->height;
+     int i, ret;
+ 
+-    if (frame->width != s->in_w || frame->height != s->in_h) {
++    if (desc->flags & AV_PIX_FMT_FLAG_HWACCEL) {
++        in_w -= frame->crop_left + frame->crop_right;
++        in_h -= frame->crop_top  + frame->crop_bottom;
++    }
++
++    if (in_w != s->in_w || in_h != s->in_h) {
+         link->w = frame->width;
+         link->h = frame->height;
+-        if ((ret = config_crop_area(link)) < 0 ||
++        if ((ret = config_crop_area(link, in_w, in_h)) < 0 ||
+             (ret = config_output(ctx->outputs[0])) < 0) {
+             s->in_w = -1;
+             av_frame_free(&frame);
+@@ -295,10 +306,10 @@ static int filter_frame(AVFilterLink *link, AVFrame *frame)
+         s->x = 0;
+     if (s->y < 0)
+         s->y = 0;
+-    if ((unsigned)s->x + (unsigned)s->w > link->w)
+-        s->x = link->w - s->w;
+-    if ((unsigned)s->y + (unsigned)s->h > link->h)
+-        s->y = link->h - s->h;
++    if ((unsigned)s->x + (unsigned)s->w > s->in_w)
++        s->x = s->in_w - s->w;
++    if ((unsigned)s->y + (unsigned)s->h > s->in_h)
++        s->y = s->in_h - s->h;
+     if (!s->exact) {
+         s->x &= ~((1 << s->hsub) - 1);
+         s->y &= ~((1 << s->vsub) - 1);
+@@ -309,10 +320,10 @@ static int filter_frame(AVFilterLink *link, AVFrame *frame)
+             s->x, s->y, s->x+s->w, s->y+s->h);
+ 
+     if (desc->flags & AV_PIX_FMT_FLAG_HWACCEL) {
+-        frame->crop_top   += s->y;
+-        frame->crop_left  += s->x;
+-        frame->crop_bottom = frame->height - frame->crop_top - frame->crop_bottom - s->h;
+-        frame->crop_right  = frame->width  - frame->crop_left - frame->crop_right - s->w;
++        frame->crop_top    += s->y;
++        frame->crop_left   += s->x;
++        frame->crop_bottom += s->in_h - s->y - s->h;
++        frame->crop_right  += s->in_w - s->x - s->w;
+     } else {
+         frame->width  = s->w;
+         frame->height = s->h;
+@@ -356,10 +367,12 @@ static int process_command(AVFilterContext *ctx, const char *cmd, const char *ar
+ 
+         AVFilterLink *outlink = ctx->outputs[0];
+         AVFilterLink *inlink  = ctx->inputs[0];
++        int in_w = s->var_values[VAR_IN_W];
++        int in_h = s->var_values[VAR_IN_H];
+ 
+         av_opt_set(s, cmd, args, 0);
+ 
+-        if ((ret = config_input(inlink)) < 0) {
++        if ((ret = config_exprs(inlink, in_w, in_h)) < 0) {
+             s->x = old_x;
+             s->y = old_y;
+             s->w = old_w;
+diff --git a/tests/fate/filter-video.mak b/tests/fate/filter-video.mak
+index 4a065ec032..7769d04959 100644
+--- a/tests/fate/filter-video.mak
++++ b/tests/fate/filter-video.mak
+@@ -1029,7 +1029,7 @@ FATE_SCALE_CUDA_YUV_RGB := $(addprefix fate-filter-scale_cuda-, nv12-bgra yuv420
+ FATE_SCALE_CUDA_RGB_YUV := $(addprefix fate-filter-scale_cuda-, bgra-nv12 bgra-yuv420p bgra-p010 rgba-nv12)
+ FATE_SCALE_CUDA_SPECIAL := $(addprefix fate-filter-scale_cuda-, nv12-bgra-bt709 nv12-bgra-full roundtrip-nv12 roundtrip-yuv444p nv12-nv12-scale \
+                                                                auto-bgra-nv12 roundtrip-nv12-auto roundtrip-nv12-center \
+-                                                               crop-nv12-bgra crop-bgra-nv12 nv12-bgra-full-gbr roundtrip-nv12-bt709)
++                                                               crop-nv12-bgra crop-bgra-nv12 crop-chain-nv12-bgra nv12-bgra-full-gbr roundtrip-nv12-bt709)
+ FATE_SCALE_CUDA_ODD_RGB := $(addprefix fate-filter-scale_cuda-, odd-bgra-nv12 odd-bgra-yuv420p)
+ FATE_SCALE_CUDA_ODD_YUV := $(addprefix fate-filter-scale_cuda-, odd-nv12-bgra odd-yuv420p-bgra)
+ FATE_SCALE_CUDA_RESIZE  := $(addprefix fate-filter-scale_cuda-resize-, nv12-bgra-up p010-bgra-down yuv420p-rgba-w \
+@@ -1078,6 +1078,8 @@ fate-filter-scale_cuda-roundtrip-nv12-bt709: LAVFI = format=nv12,setparams=color
+ # Hardware crop keeps the link size, so the visible size is passed explicitly.
+ fate-filter-scale_cuda-crop-nv12-bgra: LAVFI = format=nv12,hwupload_cuda,crop=96:64:16:8,scale_cuda=96:64:format=bgra,hwdownload,format=bgra
+ fate-filter-scale_cuda-crop-bgra-nv12: LAVFI = format=bgra,hwupload_cuda,crop=96:64:16:8,scale_cuda=96:64:format=nv12:out_range=limited,hwdownload,format=nv12
++# The second crop is relative to the first, so the output matches crop-nv12-bgra.
++fate-filter-scale_cuda-crop-chain-nv12-bgra: LAVFI = format=nv12,hwupload_cuda,crop=128:96:8:4,crop=96:64:8:4,scale_cuda=96:64:format=bgra,hwdownload,format=bgra
+ 
+ # Resizing during conversion, in one or both directions.
+ fate-filter-scale_cuda-resize-nv12-bgra-up:    LAVFI = format=nv12,hwupload_cuda,scale_cuda=240:180:format=bgra,hwdownload,format=bgra
+diff --git a/tests/ref/fate/filter-scale_cuda-crop-chain-nv12-bgra b/tests/ref/fate/filter-scale_cuda-crop-chain-nv12-bgra
+new file mode 100644
+index 0000000000..8e9d326be3
+--- /dev/null
++++ b/tests/ref/fate/filter-scale_cuda-crop-chain-nv12-bgra
+@@ -0,0 +1,10 @@
++#tb 0: 1/25
++#media_type 0: video
++#codec_id 0: rawvideo
++#dimensions 0: 96x64
++#sar 0: 1/1
++0,          0,          0,        1,    24576, 0x7071c113
++0,          1,          1,        1,    24576, 0xc378a7e8
++0,          2,          2,        1,    24576, 0xd6d9b0cb
++0,          3,          3,        1,    24576, 0xbbfc8d15
++0,          4,          4,        1,    24576, 0x196888ce
+-- 
+2.56.0
+
+
+From 079d54adfac79f691a96f09d7e267ef7595edae5 Mon Sep 17 00:00:00 2001
+From: Jack Boykin <jtboykin.jb@gmail.com>
+Date: Thu, 29 Oct 2026 14:29:29 -0500
+Subject: [PATCH 2/2] avfilter/vf_crop: keep the configuration when a command
+ fails
+
+A rejected command left its expression and part of what it computed
+behind. The filter then cropped later frames from the wrong spot, and
+every later command failed on the stale expression.
+
+Evaluate into locals and keep the old expression unless the whole
+configuration is valid. A failed frame then leaves nothing stale, so
+stop forcing a reconfiguration after it.
+
+Fixes: d2b78fe6b7 ("libavfilter/vf_crop: implement process_command")
+Signed-off-by: Jack Boykin <jtboykin.jb@gmail.com>
+---
+ libavfilter/vf_crop.c          | 100 ++++++++++++++++++---------------
+ tests/fate/filter-video.mak    |   5 ++
+ tests/filtergraphs/crop-cmd    |   3 +
+ tests/ref/fate/filter-crop-cmd |  10 ++++
+ 4 files changed, 72 insertions(+), 46 deletions(-)
+ create mode 100644 tests/filtergraphs/crop-cmd
+ create mode 100644 tests/ref/fate/filter-crop-cmd
+
+diff --git a/libavfilter/vf_crop.c b/libavfilter/vf_crop.c
+index ba52ba780d..6f2da51603 100644
+--- a/libavfilter/vf_crop.c
++++ b/libavfilter/vf_crop.c
+@@ -35,6 +35,7 @@
+ #include "libavutil/internal.h"
+ #include "libavutil/imgutils.h"
+ #include "libavutil/mathematics.h"
++#include "libavutil/mem.h"
+ #include "libavutil/opt.h"
+ 
+ static const char *const var_names[] = {
+@@ -130,21 +131,24 @@ static int config_crop_area(AVFilterLink *link, int in_w, int in_h)
+     AVFilterContext *ctx = link->dst;
+     CropContext *s = ctx->priv;
+     const AVPixFmtDescriptor *pix_desc = av_pix_fmt_desc_get(link->format);
+-    int ret;
++    double var[VAR_VARS_NB];
++    AVRational sar;
++    int ret, w, h;
+     const char *expr;
+     double res;
+ 
+-    s->var_values[VAR_IN_W]  = s->var_values[VAR_IW] = in_w;
+-    s->var_values[VAR_IN_H]  = s->var_values[VAR_IH] = in_h;
+-    s->var_values[VAR_A]     = (float) in_w / in_h;
+-    s->var_values[VAR_SAR]   = link->sample_aspect_ratio.num ? av_q2d(link->sample_aspect_ratio) : 1;
+-    s->var_values[VAR_DAR]   = s->var_values[VAR_A] * s->var_values[VAR_SAR];
+-    s->var_values[VAR_HSUB]  = 1<<pix_desc->log2_chroma_w;
+-    s->var_values[VAR_VSUB]  = 1<<pix_desc->log2_chroma_h;
+-    s->var_values[VAR_OUT_W] = s->var_values[VAR_OW] = NAN;
+-    s->var_values[VAR_OUT_H] = s->var_values[VAR_OH] = NAN;
+-    s->var_values[VAR_N]     = 0;
+-    s->var_values[VAR_T]     = NAN;
++    memcpy(var, s->var_values, sizeof(var));
++    var[VAR_IN_W]  = var[VAR_IW] = in_w;
++    var[VAR_IN_H]  = var[VAR_IH] = in_h;
++    var[VAR_A]     = (float) in_w / in_h;
++    var[VAR_SAR]   = link->sample_aspect_ratio.num ? av_q2d(link->sample_aspect_ratio) : 1;
++    var[VAR_DAR]   = var[VAR_A] * var[VAR_SAR];
++    var[VAR_HSUB]  = 1<<pix_desc->log2_chroma_w;
++    var[VAR_VSUB]  = 1<<pix_desc->log2_chroma_h;
++    var[VAR_OUT_W] = var[VAR_OW] = NAN;
++    var[VAR_OUT_H] = var[VAR_OH] = NAN;
++    var[VAR_N]     = 0;
++    var[VAR_T]     = NAN;
+ 
+     av_image_fill_max_pixsteps(s->max_step, NULL, pix_desc);
+ 
+@@ -157,23 +161,23 @@ static int config_crop_area(AVFilterLink *link, int in_w, int in_h)
+     }
+ 
+     av_expr_parse_and_eval(&res, (expr = s->w_expr),
+-                           var_names, s->var_values,
++                           var_names, var,
+                            NULL, NULL, NULL, NULL, NULL, 0, ctx);
+-    s->var_values[VAR_OUT_W] = s->var_values[VAR_OW] = res;
++    var[VAR_OUT_W] = var[VAR_OW] = res;
+     if ((ret = av_expr_parse_and_eval(&res, (expr = s->h_expr),
+-                                      var_names, s->var_values,
++                                      var_names, var,
+                                       NULL, NULL, NULL, NULL, NULL, 0, ctx)) < 0)
+         goto fail_expr;
+-    s->var_values[VAR_OUT_H] = s->var_values[VAR_OH] = res;
++    var[VAR_OUT_H] = var[VAR_OH] = res;
+     /* evaluate again ow as it may depend on oh */
+     if ((ret = av_expr_parse_and_eval(&res, (expr = s->w_expr),
+-                                      var_names, s->var_values,
++                                      var_names, var,
+                                       NULL, NULL, NULL, NULL, NULL, 0, ctx)) < 0)
+         goto fail_expr;
+ 
+-    s->var_values[VAR_OUT_W] = s->var_values[VAR_OW] = res;
+-    if (normalize_double(&s->w, s->var_values[VAR_OUT_W]) < 0 ||
+-        normalize_double(&s->h, s->var_values[VAR_OUT_H]) < 0) {
++    var[VAR_OUT_W] = var[VAR_OW] = res;
++    if (normalize_double(&w, var[VAR_OUT_W]) < 0 ||
++        normalize_double(&h, var[VAR_OUT_H]) < 0) {
+         av_log(ctx, AV_LOG_ERROR,
+                "Too big value or invalid expression for out_w/ow or out_h/oh. "
+                "Maybe the expression for out_w:'%s' or for out_h:'%s' is self-referencing.\n",
+@@ -182,30 +186,35 @@ static int config_crop_area(AVFilterLink *link, int in_w, int in_h)
+     }
+ 
+     if (!s->exact) {
+-        s->w &= ~((1 << s->hsub) - 1);
+-        s->h &= ~((1 << s->vsub) - 1);
++        w &= ~((1 << s->hsub) - 1);
++        h &= ~((1 << s->vsub) - 1);
+     }
+ 
+     if (s->keep_aspect) {
+         AVRational dar = av_mul_q(link->sample_aspect_ratio,
+                                   (AVRational){ in_w, in_h });
+-        av_reduce(&s->out_sar.num, &s->out_sar.den,
+-                  (int64_t)dar.num * s->h, (int64_t)dar.den * s->w, INT_MAX);
++        av_reduce(&sar.num, &sar.den,
++                  (int64_t)dar.num * h, (int64_t)dar.den * w, INT_MAX);
+     } else
+-        s->out_sar = link->sample_aspect_ratio;
++        sar = link->sample_aspect_ratio;
+ 
+     av_log(ctx, AV_LOG_VERBOSE, "w:%d h:%d sar:%d/%d -> w:%d h:%d sar:%d/%d\n",
+            in_w, in_h, link->sample_aspect_ratio.num, link->sample_aspect_ratio.den,
+-           s->w, s->h, s->out_sar.num, s->out_sar.den);
++           w, h, sar.num, sar.den);
+ 
+-    if (s->w <= 0 || s->h <= 0 ||
+-        s->w > in_w || s->h > in_h) {
++    if (w <= 0 || h <= 0 ||
++        w > in_w || h > in_h) {
+         av_log(ctx, AV_LOG_ERROR,
+                "Invalid too big or non positive size for width '%d' or height '%d'\n",
+-               s->w, s->h);
++               w, h);
+         return AVERROR(EINVAL);
+     }
+ 
++    memcpy(s->var_values, var, sizeof(var));
++    s->w = w;
++    s->h = h;
++    s->out_sar = sar;
++
+     /* set default, required in the case the first computed value for x/y is NAN */
+     s->x = (in_w - s->w) / 2;
+     s->y = (in_h - s->h) / 2;
+@@ -226,9 +235,8 @@ static int config_exprs(AVFilterLink *link, int in_w, int in_h)
+ {
+     CropContext *s = link->dst->priv;
+     AVExpr *x_pexpr = NULL, *y_pexpr = NULL;
++    int ret;
+ 
+-    s->var_values[VAR_X] = NAN;
+-    s->var_values[VAR_Y] = NAN;
+     if (av_expr_parse(&x_pexpr, s->x_expr, var_names,
+                       NULL, NULL, NULL, NULL, 0, link->dst) < 0 ||
+         av_expr_parse(&y_pexpr, s->y_expr, var_names,
+@@ -236,12 +244,19 @@ static int config_exprs(AVFilterLink *link, int in_w, int in_h)
+         av_expr_free(x_pexpr);
+         return AVERROR(EINVAL);
+     }
++    if ((ret = config_crop_area(link, in_w, in_h)) < 0) {
++        av_expr_free(x_pexpr);
++        av_expr_free(y_pexpr);
++        return ret;
++    }
+     av_expr_free(s->x_pexpr);
+     av_expr_free(s->y_pexpr);
+     s->x_pexpr = x_pexpr;
+     s->y_pexpr = y_pexpr;
++    s->var_values[VAR_X] = NAN;
++    s->var_values[VAR_Y] = NAN;
+ 
+-    return config_crop_area(link, in_w, in_h);
++    return 0;
+ }
+ 
+ static int config_input(AVFilterLink *link)
+@@ -285,7 +300,6 @@ static int filter_frame(AVFilterLink *link, AVFrame *frame)
+         link->h = frame->height;
+         if ((ret = config_crop_area(link, in_w, in_h)) < 0 ||
+             (ret = config_output(ctx->outputs[0])) < 0) {
+-            s->in_w = -1;
+             av_frame_free(&frame);
+             return ret;
+         }
+@@ -360,25 +374,19 @@ static int process_command(AVFilterContext *ctx, const char *cmd, const char *ar
+         || !strcmp(cmd, "out_h")  || !strcmp(cmd, "h")
+         || !strcmp(cmd, "x")      || !strcmp(cmd, "y")) {
+ 
+-        int old_x = s->x;
+-        int old_y = s->y;
+-        int old_w = s->w;
+-        int old_h = s->h;
+-
+         AVFilterLink *outlink = ctx->outputs[0];
+         AVFilterLink *inlink  = ctx->inputs[0];
+-        int in_w = s->var_values[VAR_IN_W];
+-        int in_h = s->var_values[VAR_IN_H];
++        uint8_t *old;
+ 
++        if ((ret = av_opt_get(s, cmd, 0, &old)) < 0)
++            return ret;
+         av_opt_set(s, cmd, args, 0);
+ 
+-        if ((ret = config_exprs(inlink, in_w, in_h)) < 0) {
+-            s->x = old_x;
+-            s->y = old_y;
+-            s->w = old_w;
+-            s->h = old_h;
++        if ((ret = config_exprs(inlink, s->in_w, s->in_h)) < 0)
++            av_opt_set(s, cmd, old, 0);
++        av_free(old);
++        if (ret < 0)
+             return ret;
+-        }
+ 
+         ret = config_output(outlink);
+ 
+diff --git a/tests/fate/filter-video.mak b/tests/fate/filter-video.mak
+index 7769d04959..28421e5d55 100644
+--- a/tests/fate/filter-video.mak
++++ b/tests/fate/filter-video.mak
+@@ -566,6 +566,11 @@ fate-filter-crop_scale_vflip: CMD = video_filter "null,null,crop=iw-200:ih-200:2
+ FATE_FILTER_VSYNTH_VIDEO_FILTER-$(call ALLYES, CROP_FILTER VFLIP_FILTER) += fate-filter-crop_vflip
+ fate-filter-crop_vflip: CMD = video_filter "crop=iw-100:ih-100:100:100,vflip"
+ 
++# A rejected command leaves the crop as it was.
++FATE_FILTER-$(call FILTERFRAMECRC, TESTSRC2 SENDCMD CROP) += fate-filter-crop-cmd
++fate-filter-crop-cmd: tests/data/filtergraphs/crop-cmd
++fate-filter-crop-cmd: CMD = framecrc -/filter_complex $(TARGET_PATH)/tests/data/filtergraphs/crop-cmd -frames:v 5
++
+ FATE_FILTER_VSYNTH_VIDEO_FILTER-$(CONFIG_NULL_FILTER) += fate-filter-null
+ fate-filter-null: CMD = video_filter "null"
+ 
+diff --git a/tests/filtergraphs/crop-cmd b/tests/filtergraphs/crop-cmd
+new file mode 100644
+index 0000000000..89da8f11bf
+--- /dev/null
++++ b/tests/filtergraphs/crop-cmd
+@@ -0,0 +1,3 @@
++testsrc2=s=160x120,
++sendcmd=c='0.03 crop w iw*2; 0.07 crop x ((; 0.11 crop y 0',
++crop=80:60
+diff --git a/tests/ref/fate/filter-crop-cmd b/tests/ref/fate/filter-crop-cmd
+new file mode 100644
+index 0000000000..c60bfd37db
+--- /dev/null
++++ b/tests/ref/fate/filter-crop-cmd
+@@ -0,0 +1,10 @@
++#tb 0: 1/25
++#media_type 0: video
++#codec_id 0: rawvideo
++#dimensions 0: 80x60
++#sar 0: 1/1
++0,          0,          0,        1,     7200, 0x95221bd8
++0,          1,          1,        1,     7200, 0xe21b1932
++0,          2,          2,        1,     7200, 0x26f91680
++0,          3,          3,        1,     7200, 0x488f561d
++0,          4,          4,        1,     7200, 0x66f854e5
+-- 
+2.56.0
+

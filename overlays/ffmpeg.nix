@@ -16,6 +16,9 @@ in {
       version = release;
       inherit src;
 
+      # code.ffmpeg.org/FFmpeg/FFmpeg/pulls/25448; drop once merged
+      patches = [./ffmpeg-vf-crop-hw.patch];
+
       outputs = ["out" "lib"];
 
       strictDeps = true;
