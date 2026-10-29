@@ -20,7 +20,7 @@ in {
       theme = "bellatrix";
       font-family = [fonts.mono.name fonts.mono.fallback];
       font-size = fonts.size.normal;
-      font-style = "Medium";
+      freetype-load-flags = "no-light";
       window-decoration = "none";
       window-width = 143;
       window-height = 41;
