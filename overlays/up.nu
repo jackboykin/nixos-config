@@ -82,28 +82,35 @@ def zls [zig_version: string, old: record] {
   let v = $zig_version | url encode
   let m = fetch $"https://releases.zigtools.org/v1/zls/select-version?zig_version=($v)&compatibility=full" | from json
   if "message" in $m {
-    print -e $"zls: ($m.message) - keeping ($old.version)"
+    print -e $"(ansi yellow)  zls: ($m.message)(ansi reset)"
     return $old
   }
   zigpin $m
 }
 
-def parallel [pins: record]: nothing -> record {
-  $pins | transpose name fetch | par-each --keep-order {|p| {$p.name: (do $p.fetch)}} | into record
+def line [name: string, width: int, was, now: record]: nothing -> string {
+  let n = $name | fill -w $width
+  if $now.url == $was.url? {
+    $"(ansi dark_gray)  ($n)  ($now.version)(ansi reset)"
+  } else {
+    $"  (ansi cyan)($n)(ansi reset)  ($was.version? | default new) (ansi green)→ ($now.version)(ansi reset)"
+  }
 }
 
-def report [old: record, new: record] {
-  $new | items {|k, v|
-    let was = $old | get -o $k
-    if $v.url != $was.url? { print $"($k): ($was.version? | default new) -> ($v.version)" }
-  }
+def parallel [old: record, pins: record]: nothing -> record {
+  let width = $pins | columns | each { str length } | math max
+  $pins | transpose name fetch | par-each --keep-order {|p|
+    let v = do $p.fetch
+    print (line $p.name $width ($old | get -o $p.name) $v)
+    {$p.name: $v}
+  } | into record
 }
 
 def main [] {
   let path = $env.FILE_PWD | path join pins.json
   let old = open $path
   let z = zig
-  let new = parallel {
+  let new = parallel $old {
     bun: {|| bun}
     claude-code: {|| claude-code}
     firefox: {|| firefox}
@@ -114,6 +121,5 @@ def main [] {
     zig-nightly: {|| $z.nightly}
     zls: {|| zls $z.stable.version $old.zls}
   }
-  report $old $new
   $new | to json | $"($in)\n" | save -f $path
 }
