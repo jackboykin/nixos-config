@@ -9,13 +9,14 @@ in {
 
     nativeBuildInputs = [prev.autoPatchelfHook prev.makeBinaryWrapper];
 
+    dontUnpack = true;
     dontConfigure = true;
     dontBuild = true;
     dontStrip = true;
 
     installPhase = ''
       runHook preInstall
-      install -Dm755 claude $out/bin/claude
+      install -Dm755 $src $out/bin/claude
       runHook postInstall
     '';
 

@@ -24,7 +24,7 @@
     };
 
     ffmpeg = {
-      url = "github:FFmpeg/FFmpeg";
+      url = "git+https://git.ffmpeg.org/ffmpeg.git?shallow=1";
       flake = false;
     };
 

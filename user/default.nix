@@ -69,9 +69,11 @@ in {
         gh
         hyperfine
         jq
+        minisign
         poppler-utils
         quarry
         ripgrep
+        sequoia-sop
         socat
         strace
         unzip
