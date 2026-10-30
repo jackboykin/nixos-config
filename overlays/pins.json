@@ -5,9 +5,9 @@
     "hash": "sha256-v4zL+ysLgBWeD5ptFcVTF63YB3U028YTCj7bUvzLOVw="
   },
   "claude-code": {
-    "version": "2.1.314",
-    "url": "https://downloads.claude.ai/claude-code-releases/2.1.314/linux-x64/claude",
-    "hash": "sha256-RIcEK0xPXYjUVo9orpiq4LH/rliGTPV/uGhkG8X4RZQ="
+    "version": "2.1.315",
+    "url": "https://downloads.claude.ai/claude-code-releases/2.1.315/linux-x64/claude",
+    "hash": "sha256-o7nWbK9htA1qrZntTegPSPF+DgJN3xtuQonvreBhBd8="
   },
   "firefox": {
     "version": "161.0a1",

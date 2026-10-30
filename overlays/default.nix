@@ -4,7 +4,7 @@ in [
   inputs.rust-overlay.overlays.default
   inputs.quarry.overlays.default
   (import ./bun.nix pins.bun)
-  (import ./claude-code.nix pins.claude-code)
+  (import ./claude-code pins.claude-code)
   (import ./ffmpeg.nix inputs.ffmpeg)
   (import ./firefox-nightly.nix pins.firefox)
   (import ./linux.nix pins.linux)
