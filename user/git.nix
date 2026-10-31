@@ -25,13 +25,6 @@
     diff.algorithm = "histogram";
     diff.colorMoved = "default";
 
-    credential = let
-      helper = "!gh auth git-credential";
-    in {
-      "https://github.com".helper = helper;
-      "https://gist.github.com".helper = helper;
-    };
-
     sendemail = {
       sendmailCmd = msmtp;
       confirm = "always";
