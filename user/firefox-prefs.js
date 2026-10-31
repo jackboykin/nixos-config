@@ -2,7 +2,7 @@ user_pref("privacy.globalprivacycontrol.enabled", true);
 
 user_pref("privacy.sanitize.sanitizeOnShutdown", true);
 user_pref("privacy.sanitize.clearOnShutdown.hasMigratedToNewPrefs3", true);
-user_pref("privacy.clearOnShutdown_v2.cache", true);
+user_pref("privacy.clearOnShutdown_v2.cache", false);
 user_pref("privacy.clearOnShutdown_v2.cookiesAndStorage", true);
 user_pref("privacy.clearOnShutdown_v2.formdata", true);
 user_pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", false);
