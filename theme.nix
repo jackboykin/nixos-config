@@ -111,9 +111,6 @@ in {
       big = 14;
     };
     sans.name = "Inter";
-    mono = {
-      name = "JetBrainsMono Nerd Font Mono";
-      fallback = "JuliaMono";
-    };
+    mono.name = "JetBrainsMono Nerd Font Mono";
   };
 }

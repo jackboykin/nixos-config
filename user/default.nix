@@ -26,7 +26,6 @@ in {
     ./fetch.nix
     ./firefox.nix
     ./fzf.nix
-    ./ghostty.nix
     ./git.nix
     ./helix.nix
     ./himalaya.nix
