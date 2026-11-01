@@ -13,7 +13,7 @@
     user = {
       name = "Jack Boykin";
       email = "jtboykin.jb@gmail.com";
-      signingKey = "~/.ssh/id_ed25519.pub";
+      signingKey = "~/.ssh/id_ed25519_sk_sign.pub";
     };
     init.defaultBranch = "master";
     pull.rebase = true;
