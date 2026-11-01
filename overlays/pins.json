@@ -11,8 +11,8 @@
   },
   "firefox": {
     "version": "161.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-30-21-41-48-mozilla-central/firefox-161.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-tz2IXajJvmLfIiyww7+ZGmQhb1cCosJave8SG1G/wuBvEQz0MVQ4gHw+nIAR2tz/kfnkwiNdD9UnW1dq+1y+Ww=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/10/2026-10-31-09-50-59-mozilla-central/firefox-161.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-2YbXIAsHq4JRgtt131dk3em78tMFqITb3a/J++8NNnk9qrK5OfJrjOnic07IW6q7Z48uxa9R7WWQZ+9c/x8ZoA=="
   },
   "linux": {
     "version": "7.3",

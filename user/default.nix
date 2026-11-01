@@ -78,6 +78,7 @@ in {
         strace
         unzip
         yazi
+        libfido2
 
         llvmPackages_latest.clang
         go
