@@ -1,16 +1,20 @@
 {
-  config,
   lib,
   pkgs,
-  modulesPath,
   ...
 }: {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  hardware.graphics.package = pkgs.mesa-main;
+  hardware = {
+    cpu.amd.updateMicrocode = true;
+    graphics.package = pkgs.mesa-main;
+    firmware = [
+      (pkgs.runCommand "linux-firmware-orion" {} ''
+        mkdir -p $out/lib/firmware
+        cp -r ${pkgs.linux-firmware}/lib/firmware/{amdgpu,rtl_nic} $out/lib/firmware
+      '')
+    ];
+  };
 
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "usbhid" "hid_generic" "usb_storage" "sd_mod"];
