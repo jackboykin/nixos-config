@@ -1,9 +1,5 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+{pkgs, ...}: {
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   hardware = {
     cpu.amd.updateMicrocode = true;
@@ -18,7 +14,6 @@
 
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "usbhid" "hid_generic" "usb_storage" "sd_mod"];
-    kernelModules = ["kvm-amd"];
     kernelParams = [
       "processor.bm_check_disable=1"
     ];
@@ -43,5 +38,4 @@
       size = 16 * 1024;
     }
   ];
-  services.fstrim.enable = true;
 }
