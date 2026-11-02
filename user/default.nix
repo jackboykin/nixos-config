@@ -21,11 +21,9 @@ in {
     ./castle.nix
     ./btop.nix
     ./carapace.nix
-    ./direnv.nix
     ./eza.nix
     ./fetch.nix
     ./firefox.nix
-    ./fzf.nix
     ./git.nix
     ./helix.nix
     ./himalaya.nix
@@ -35,7 +33,6 @@ in {
     ./perf.nix
     ./rex.nix
     ./ssh.nix
-    ./tmux.nix
     ./vesktop.nix
     ./zoxide.nix
   ];
