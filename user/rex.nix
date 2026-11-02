@@ -17,6 +17,7 @@
     serviceConfig = {
       ExecStart = "${lib.getExe pkgs.rex} server run --extra-listen tailnet://:7297";
       Restart = "on-failure";
+      RestartSec = 5;
     };
   };
 
