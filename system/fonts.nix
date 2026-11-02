@@ -4,6 +4,7 @@
   '';
 in {
   fonts = {
+    enableDefaultPackages = false;
     packages = with pkgs; [
       nerd-fonts.jetbrains-mono
       julia-mono
@@ -37,19 +38,6 @@ in {
         ];
       };
       subpixel.rgba = "rgb";
-      localConf = ''
-        <?xml version="1.0"?>
-        <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-        <fontconfig>
-          <selectfont>
-            <rejectfont>
-              <pattern>
-                <patelt name="family"><string>FreeMono</string></patelt>
-              </pattern>
-            </rejectfont>
-          </selectfont>
-        </fontconfig>
-      '';
     };
   };
 }
