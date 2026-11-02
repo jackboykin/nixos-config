@@ -21,7 +21,6 @@ in {
     ./castle.nix
     ./btop.nix
     ./carapace.nix
-    ./eza.nix
     ./fetch.nix
     ./firefox.nix
     ./git.nix
@@ -59,6 +58,7 @@ in {
         bubblewrap
         bun
         claude-code
+        eza
         fd
         ffmpeg-release
         file
