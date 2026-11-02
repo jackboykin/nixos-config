@@ -56,7 +56,6 @@
     else ''"${v}"'';
 
   aliases = {
-    q = "exit";
     nr = "nh os switch";
     nb = "nh os boot";
     np = "doas systemctl start nix-prune";
