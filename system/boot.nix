@@ -18,6 +18,7 @@ _: {
       systemd.tpm2.enable = false;
     };
     tmp.cleanOnBoot = true;
+    kexec.enable = false;
   };
 
   system = {
@@ -25,7 +26,6 @@ _: {
     etc.overlay.enable = true;
   };
 
-  security.protectKernelImage = true;
   systemd.tpm2.enable = false;
   services.lvm.enable = false;
 }
