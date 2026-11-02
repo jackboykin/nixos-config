@@ -1,8 +1,6 @@
 _: {
   boot = {
     kernelParams = [
-      "slab_nomerge"
-      "vsyscall=none"
       "SYSTEMD_DEFAULT_MOUNT_RATE_LIMIT_BURST=50"
     ];
 
