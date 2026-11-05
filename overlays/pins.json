@@ -5,14 +5,14 @@
     "hash": "sha256-v4zL+ysLgBWeD5ptFcVTF63YB3U028YTCj7bUvzLOVw="
   },
   "claude-code": {
-    "version": "2.1.316",
-    "url": "https://downloads.claude.ai/claude-code-releases/2.1.316/linux-x64/claude",
-    "hash": "sha256-/RPHAAD+w/IRbfvLthISELSikyi/DkYhClndWUpn2CQ="
+    "version": "2.1.318",
+    "url": "https://downloads.claude.ai/claude-code-releases/2.1.318/linux-x64/claude",
+    "hash": "sha256-cIx3sgTbMAhv9vHtNFd72gPhvnTO2AVXy/e1Qknr8L0="
   },
   "firefox": {
     "version": "161.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-01-21-32-37-mozilla-central/firefox-161.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-lvcndvxClppmAeCDx9rUlEbZvrQc0ZpRxSL5ryAkWep/vRZJvd2O9TQ3gG1gwGhlA0FlxFdDn2skBy9NubmLPw=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-04-09-40-08-mozilla-central/firefox-161.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-VKHh2Nre36tepI0+gIAuVVqNe1DB6WhOzngjkPS/u/dYX/QHVTyNxBxd/1xDzkg2W8BjqQ2DCEF8ZgEafm8J8g=="
   },
   "linux": {
     "version": "7.4-rc1",
@@ -25,19 +25,19 @@
     "hash": "sha1-6iKf3Q/V9Pj9rNlTMKC6aY1U3k0="
   },
   "zed": {
-    "version": "1.27.0-pre",
-    "url": "https://github.com/zed-industries/zed/releases/download/v1.27.0-pre/zed-linux-x86_64.tar.gz",
-    "hash": "sha256-y9XdhnNLKszRTRLYqMTS6UhRxdzxnBb7J7FPzzc4u2M="
+    "version": "1.28.0-pre",
+    "url": "https://github.com/zed-industries/zed/releases/download/v1.28.0-pre/zed-linux-x86_64.tar.gz",
+    "hash": "sha256-cJHX5Fwb0cqSCr0040Rs76/ea8W/eAwSoybM4YBQpOs="
   },
   "zig": {
-    "version": "0.17.0",
-    "url": "https://ziglang.org/download/0.17.0/zig-x86_64-linux-0.17.0.tar.xz",
-    "hash": "sha256-HL6d+fJ+a3jRTMvKQ7ZwOkBO957xxGPekB1/CI1OICY="
+    "version": "0.17.1",
+    "url": "https://ziglang.org/download/0.17.1/zig-x86_64-linux-0.17.1.tar.xz",
+    "hash": "sha256-NYGGPjy8/Q/ODvxoLOfp6T2pZmipd3kdNWom0qfpsXo="
   },
   "zig-nightly": {
-    "version": "0.18.0-dev.828+9da287565",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.828+9da287565.tar.xz",
-    "hash": "sha256-w3Oyi/H7VuGw9ecGtamEw1UD6k8P02Y4vdgeqMTEcJU="
+    "version": "0.18.0-dev.855+aa2d45d91",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.855+aa2d45d91.tar.xz",
+    "hash": "sha256-ZM1H/5Z1SMuJQEP4AeuhxPxfTWllnAsKd0T/mfNOgTI="
   },
   "zls": {
     "version": "0.17.0",

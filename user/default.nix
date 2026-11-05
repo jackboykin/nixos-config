@@ -26,6 +26,7 @@ in {
     ./git.nix
     ./helix.nix
     ./himalaya.nix
+    ./hunk.nix
     ./konsole.nix
     ./mpv.nix
     ./nushell.nix

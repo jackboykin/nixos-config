@@ -4,9 +4,8 @@
   pkgs,
   ...
 }: let
-  inherit (import ../theme.nix) colors diff;
+  inherit (import ../theme.nix) colors;
 
-  delta = lib.getExe pkgs.delta;
   msmtp = lib.getExe pkgs.msmtp;
 
   settings = {
@@ -36,47 +35,14 @@
       ssh.program = lib.getExe' pkgs.openssh "ssh-keygen";
     };
 
-    core.pager = delta;
-    interactive.diffFilter = "${delta} --color-only";
-
-    delta = {
-      line-numbers = true;
-      syntax-theme = "ansi";
-      blame-palette = lib.concatStringsSep " " (
-        map (c: "'${c}'") [
-          colors.base
-          colors.mantle
-          colors.crust
-          colors.surface0
-          colors.surface1
-        ]
-      );
-      light = false;
-      file-decoration-style = "'${colors.text}'";
-      file-style = "'${colors.text}'";
-      hunk-header-decoration-style = "'${diff.hunkHeader}'";
-      hunk-header-file-style = "'${diff.hunkHeader}'";
-      hunk-header-line-number-style = "'${diff.hunkHeader}'";
-      hunk-header-style = "'${diff.hunkHeader}'";
-      line-numbers-left-style = "'${colors.overlay0}'";
-      line-numbers-minus-style = "bold '${colors.red}'";
-      line-numbers-plus-style = "bold '${colors.green}'";
-      line-numbers-right-style = "'${colors.overlay0}'";
-      line-numbers-zero-style = "'${colors.overlay0}'";
-      minus-emph-style = "bold syntax ${diff.minusEmph}";
-      minus-style = "syntax ${diff.minus}";
-      plus-emph-style = "bold syntax ${diff.plusEmph}";
-      plus-style = "syntax ${diff.plus}";
-      map-styles = lib.concatStringsSep "," [
-        "bold purple => bold syntax ${diff.maroon}"
-        "bold blue => bold syntax ${diff.blue}"
-        "bold cyan => bold syntax ${diff.cyan}"
-        "bold yellow => bold syntax ${diff.yellow}"
-      ];
+    pager.diff = "${lib.getExe pkgs.hunk} pager";
+    color.diff = {
+      new = colors.gitAdded;
+      old = colors.gitDeleted;
     };
   };
 in {
-  users.users.jack.packages = [pkgs.b4 pkgs.delta pkgs.msmtp];
+  users.users.jack.packages = [pkgs.b4 pkgs.msmtp];
 
   programs.git = {
     enable = true;

@@ -1,5 +1,5 @@
 let
-  inherit (builtins) concatStringsSep elemAt floor fromTOML genList substring;
+  inherit (builtins) concatStringsSep elemAt floor genList substring;
 
   hexToRgb = hex: map (i: (fromTOML "a = 0x${substring i 2 hex}").a) [1 3 5];
 
@@ -83,22 +83,22 @@ let
 
     gitAdded = magenta;
     gitModified = yellow;
-    gitDeleted = red;
+    gitDeleted = orange;
   };
 in {
   inherit colors;
   rgb = hex: map toString (hexToRgb hex);
 
-  diff = {
-    hunkHeader = mixColors colors.base colors.cyan 0.8;
-    minusEmph = mixColors colors.base colors.red 0.6;
-    minus = mixColors colors.base colors.red 0.8;
-    plusEmph = mixColors colors.base colors.magenta 0.6;
-    plus = mixColors colors.base colors.magenta 0.8;
-    maroon = mixColors colors.base colors.maroon 0.6;
-    blue = mixColors colors.base colors.blue 0.6;
-    cyan = mixColors colors.base colors.cyan 0.6;
-    yellow = mixColors colors.base colors.yellow 0.6;
+  diff = let
+    tint = mixColors colors.base;
+    line = 0.9;
+    word = 0.7;
+  in {
+    added = tint colors.gitAdded line;
+    addedEmph = tint colors.gitAdded word;
+    removed = tint colors.gitDeleted line;
+    removedEmph = tint colors.gitDeleted word;
+    moved = tint colors.cyan 0.85;
   };
 
   ui = {
