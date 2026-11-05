@@ -7,13 +7,12 @@
         mode = "nts";
         inherit address;
       }) [
+        "nts.meta.com"
         "time.cloudflare.com"
         "time.web-clock.ca"
+        "ntp.quantum5.ca"
         "ntp2.wiktel.com"
-        "time1.mbix.ca"
-        "virginia.time.system76.com"
-        "time.txryan.com"
-        "ntp1.glypnod.com"
+        "ptbtime1.ptb.de"
       ];
   };
 
