@@ -69,6 +69,17 @@ def unband []: binary -> binary {
   $pack
 }
 
+def signed-tag [git: string, sha: string, name: string, signer: string]: nothing -> string {
+  let marker = "-----BEGIN PGP SIGNATURE-----"
+  let parts = hush git -C $git cat-file tag $sha | split row $marker
+  if ($parts | length) != 2 { error make -u {msg: $"($name) is not signed"} }
+  $"($marker)($parts.1)" | save -f $"($git)/sig"
+  $parts.0 | pgp $signer $"($git)/sig"
+  let head = $parts.0 | lines | take until { is-empty } | parse "{k} {v}" | transpose -rd
+  if $head.tag != $name or $head.type != commit { error make -u {msg: $"($name): signed tag names ($head.type) ($head.tag)"} }
+  $head.object
+}
+
 def korg [repo: string, signer: string, --prefix: string = ""]: nothing -> record {
   let url = $"https://git.kernel.org/pub/scm/linux/kernel/git/($repo).git"
   let refs = ^git -c versionsort.suffix=-rc ls-remote --tags --sort=-v:refname $url $"($prefix)*" | lines | parse "{sha}\trefs/tags/{name}"
@@ -83,20 +94,25 @@ def korg [repo: string, signer: string, --prefix: string = ""]: nothing -> recor
   let git = mktemp -d
   hush git init -q $git
   $pack | hush git -C $git index-pack --stdin
-  let marker = "-----BEGIN PGP SIGNATURE-----"
-  let parts = hush git -C $git cat-file tag $tag.sha | split row $marker
-  if ($parts | length) != 2 { error make -u {msg: $"($tag.name) is not signed"} }
-  $"($marker)($parts.1)" | save -f $"($git)/sig"
-  $parts.0 | pgp $signer $"($git)/sig"
-  let head = $parts.0 | lines | take until { is-empty } | parse "{k} {v}" | transpose -rd
-  if $head.tag != $tag.name or $head.type != commit { error make -u {msg: $"($tag.name): signed tag names ($head.type) ($head.tag)"} }
-  let tree = hush git -C $git cat-file commit $head.object | lines | first | parse "tree {sha}" | get 0.sha
+  let commit = signed-tag $git $tag.sha $tag.name $signer
+  let tree = hush git -C $git cat-file commit $commit | lines | first | parse "tree {sha}" | get 0.sha
   rm -r $git
   {version: ($tag.name | str replace -r $"^($prefix)" ""), hash: ($tree | sri sha1)}
 }
 
 def gh-release [repo: string, --pre]: nothing -> record {
   fetch $"https://api.github.com/repos/($repo)/releases" | from json | where prerelease == $pre | first
+}
+
+def gh-tag [repo: string, signer: string]: nothing -> record {
+  let url = $"https://github.com/($repo)"
+  let tag = ^git ls-remote --tags --refs --sort=-v:refname $url "v*" | lines | parse "{sha}\trefs/tags/{name}" | where name =~ '^v[\d.]+$' | first
+  let git = mktemp -d
+  hush git init -q $git
+  hush git -C $git fetch -q --depth=1 --filter=tree:0 $url $tag.sha
+  let rev = signed-tag $git $tag.sha $tag.name $signer
+  rm -r $git
+  {version: ($tag.name | str substring 1..), url: $url, rev: $rev}
 }
 
 def bun [] {
@@ -196,7 +212,7 @@ def zls [zig_version: string, old: record] {
 
 def line [name: string, width: int, was, now: record]: nothing -> string {
   let n = $name | fill -w $width
-  if $now.url == $was.url? {
+  if $now == $was {
     $"(ansi dark_gray)  ($n)  ($now.version)(ansi reset)"
   } else {
     $"  (ansi cyan)($n)(ansi reset)  ($was.version? | default new) (ansi green)→ ($now.version)(ansi reset)"
@@ -220,8 +236,10 @@ def main [] {
     bun: {|| bun}
     claude-code: {|| claude-code}
     firefox: {|| firefox ($old | get -o firefox)}
+    libplacebo: {|| gh-tag haasn/libplacebo libplacebo}
     linux: {|| linux}
     linux-firmware: {|| linux-firmware}
+    mpv: {|| gh-tag mpv-player/mpv mpv}
     zed: {|| zed}
     zig: {|| zigpin $z.stable zig ($old | get -o zig)}
     zig-nightly: {|| zigpin $z.nightly zig ($old | get -o zig-nightly)}

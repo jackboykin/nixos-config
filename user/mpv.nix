@@ -5,11 +5,17 @@
 }: let
   inherit (import ../theme.nix) fonts;
 
-  mpv = pkgs.mpv.override {
-    mpv-unwrapped = pkgs.mpv-unwrapped.override {ffmpeg = pkgs.ffmpeg-release;};
-    youtubeSupport = false;
-    scripts = with pkgs.mpvScripts; [uosc mpris];
+  mpris = pkgs.mpvScripts.mpris.override {
+    mpv-unwrapped = pkgs.mpv-release;
+    ffmpeg = pkgs.ffmpeg-release;
   };
+
+  uosc = pkgs.mpvScripts.uosc.overrideAttrs (o: {
+    postInstall = ''
+      mkdir $out/share/mpv/scripts/uosc/bin
+      ln -s ${o.tools}/bin/ziggy $out/share/mpv/scripts/uosc/bin/ziggy-linux
+    '';
+  });
 
   pixelClipper = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/Artoriuz/glsl-pixel-clipper/92aa62129d0fd2ce482de52b7aa0fe91e99af1b5/PixelClipper.glsl";
@@ -29,7 +35,7 @@
       settings)
     + "\n";
 in {
-  users.users.jack.packages = [mpv];
+  users.users.jack.packages = [pkgs.mpv-release];
 
   castle.links.".config/mpv" = pkgs.linkFarm "mpv-config" {
     "mpv.conf" = pkgs.writeText "mpv.conf" (toConf {
@@ -58,6 +64,11 @@ in {
       osd-font = fonts.sans.name;
       sub-font = fonts.sans.name;
     });
+
+    "scripts/mpris.so" = "${mpris}/share/mpv/scripts/mpris.so";
+    "scripts/uosc" = "${uosc}/share/mpv/scripts/uosc";
+    "fonts/uosc_icons.otf" = "${uosc}/share/fonts/opentype/uosc_icons.otf";
+    "fonts/uosc_textures.ttf" = "${uosc}/share/fonts/truetype/uosc_textures.ttf";
 
     "script-opts/uosc.conf" = pkgs.writeText "uosc.conf" (toConf {
       progress = "never";

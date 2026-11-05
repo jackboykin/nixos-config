@@ -32,7 +32,7 @@ in {
         libdrm
         libjxl
         libopus
-        libplacebo
+        libplacebo-release
         libva
         libvorbis
         libwebp
