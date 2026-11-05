@@ -49,14 +49,25 @@ in {
     config = settings;
   };
 
-  castle.links.".config/msmtp/config" = pkgs.writeText "msmtp-config" ''
-    account default
-    host smtp.gmail.com
-    tls on
-    tls_starttls off
-    auth on
-    from ${settings.user.email}
-    user ${settings.user.email}
-    passwordeval cat ${config.sops.secrets.msmtp.path}
-  '';
+  castle.links.".config/msmtp/config" = config.sops.templates.msmtp.path;
+
+  sops = {
+    secrets = {
+      fastmail = {};
+      fastmail-smtp = {};
+    };
+    templates.msmtp = {
+      owner = "jack";
+      content = ''
+        account fastmail
+        host smtp.fastmail.com
+        tls on
+        tls_starttls off
+        auth on
+        from ${config.sops.placeholder.fastmail}
+        user ${config.sops.placeholder.fastmail}
+        password ${config.sops.placeholder.fastmail-smtp}
+      '';
+    };
+  };
 }
