@@ -81,9 +81,9 @@ let
     info = blue;
     hint = cyan;
 
-    gitAdded = magenta;
+    gitAdded = orange;
     gitModified = yellow;
-    gitDeleted = orange;
+    gitDeleted = magenta;
   };
 in {
   inherit colors;
