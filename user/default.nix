@@ -89,6 +89,7 @@ in {
         alejandra
         llvmPackages_latest.clang-tools
         nixd
+        nixf
         basedpyright
         statix
         zig-zlint

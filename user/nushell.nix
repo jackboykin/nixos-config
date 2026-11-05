@@ -101,6 +101,15 @@ in {
       ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: ''alias "${k}" = ${lib.removeSuffix " " v}'') aliases)}
       def nru [] { nu ($env.NH_FLAKE | path join overlays up.nu); nh os switch -u }
       def nbu [] { nu ($env.NH_FLAKE | path join overlays up.nu); nh os boot -u }
+      def nf [] {
+        cd $env.NH_FLAKE
+        nix fmt .
+        statix check .
+        git ls-files '*.nix' | lines | each {|f|
+          let found = open --raw $f | nixf-tidy --variable-lookup | from json
+          if ($found | is-not-empty) { print $"($f): ($found.message | str join '; ')" }
+        } | ignore
+      }
     '';
   };
 }
