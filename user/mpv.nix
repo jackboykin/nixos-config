@@ -52,6 +52,7 @@ in {
       vo = "gpu-next";
       gpu-api = "vulkan";
       hwdec = "vulkan";
+      target-contrast = 3000;
       cscale = "lanczos";
       dscale = "catmull_rom";
       glsl-shader = pixelClipper;
