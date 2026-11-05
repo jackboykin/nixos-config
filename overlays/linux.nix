@@ -3,7 +3,7 @@ pin: final: prev: {
     argsOverride = {
       inherit (pin) version;
       modDirVersion = prev.lib.versions.pad 3 pin.version;
-      src = (prev.fetchzip {inherit (pin) url hash;}).overrideAttrs {outputHashMode = "git";};
+      src = (final.fetchzip {inherit (pin) url hash;}).overrideAttrs {outputHashMode = "git";};
     };
   };
 }

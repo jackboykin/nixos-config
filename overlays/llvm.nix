@@ -1,5 +1,5 @@
-_: prev: let
-  llvm = prev.llvmPackages_latest;
+final: _: let
+  llvm = final.llvmPackages_latest;
 in {
-  llvmStdenv = prev.overrideCC llvm.stdenv (llvm.clang.override {inherit (llvm) bintools;});
+  llvmStdenv = final.overrideCC llvm.stdenv (llvm.clang.override {inherit (llvm) bintools;});
 }

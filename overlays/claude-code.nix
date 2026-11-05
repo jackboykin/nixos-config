@@ -1,13 +1,13 @@
 pin: final: prev: let
   inherit (prev) lib;
 in {
-  claude-code = prev.stdenvNoCC.mkDerivation {
+  claude-code = final.stdenvNoCC.mkDerivation {
     pname = "claude-code";
     inherit (pin) version;
 
-    src = prev.fetchurl {inherit (pin) url hash;};
+    src = final.fetchurl {inherit (pin) url hash;};
 
-    nativeBuildInputs = [prev.autoPatchelfHook prev.makeBinaryWrapper];
+    nativeBuildInputs = [final.autoPatchelfHook final.makeBinaryWrapper];
 
     dontUnpack = true;
     dontConfigure = true;
@@ -23,13 +23,13 @@ in {
     postFixup = ''
       wrapProgram $out/bin/claude \
         --argv0 claude \
-        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [prev.alsa-lib]} \
+        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [final.alsa-lib]} \
         --set DISABLE_AUTOUPDATER 1 \
         --set DISABLE_INSTALLATION_CHECKS 1
     '';
 
     doInstallCheck = true;
-    nativeInstallCheckInputs = [prev.versionCheckHook];
+    nativeInstallCheckInputs = [final.versionCheckHook];
 
     meta = {
       homepage = "https://claude.ai/code";

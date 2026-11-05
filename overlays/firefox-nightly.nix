@@ -1,11 +1,11 @@
 pin: final: prev: let
   inherit (prev) lib;
 
-  wrapperArgs = lib.functionArgs (import "${prev.path}/pkgs/applications/networking/browsers/firefox/wrapper.nix");
+  wrapperArgs = lib.functionArgs (import "${final.path}/pkgs/applications/networking/browsers/firefox/wrapper.nix");
   ffmpegs = lib.filter (name: builtins.match "ffmpeg(_[0-9]+)?" name != null) (lib.attrNames wrapperArgs);
 
   unwrapped =
-    (prev.firefox-bin-unwrapped.override {
+    (final.firefox-bin-unwrapped.override {
       generated = {
         inherit (pin) version;
         sources = [];
@@ -14,10 +14,10 @@ pin: final: prev: let
     })
     .overrideAttrs {
       pname = "firefox-nightly-bin-unwrapped";
-      src = prev.fetchurl {inherit (pin) url hash;};
+      src = final.fetchurl {inherit (pin) url hash;};
     };
 in {
   firefox-nightly = assert ffmpegs != [];
-    (prev.wrapFirefox.override (lib.genAttrs ffmpegs (_: final.ffmpeg-release)))
+    (final.wrapFirefox.override (lib.genAttrs ffmpegs (_: final.ffmpeg-release)))
     unwrapped {pname = "firefox-nightly-bin";};
 }

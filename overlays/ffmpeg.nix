@@ -74,7 +74,7 @@ in {
         "--disable-ffplay"
 
         "--enable-vulkan"
-        "--glslc=${lib.getExe' prev.buildPackages.shaderc "glslc"}"
+        "--glslc=${lib.getExe' final.buildPackages.shaderc "glslc"}"
         "--enable-libplacebo"
         "--enable-vaapi"
         "--enable-libdrm"
@@ -97,7 +97,7 @@ in {
       ];
 
       postConfigure = ''
-        remove-references-to -t ${placeholder "out"} -t ${placeholder "lib"} -t ${prev.buildPackages.shaderc.bin} config.h
+        remove-references-to -t ${placeholder "out"} -t ${placeholder "lib"} -t ${final.buildPackages.shaderc.bin} config.h
         grep -q 'define CONFIG_AVGBLUR_VULKAN_FILTER 1' config_components.h || {
           echo "configure disabled spirv_compiler: glslc did not work" >&2
           exit 1
@@ -105,7 +105,7 @@ in {
       '';
 
       postFixup = ''
-        patchelf ${placeholder "lib"}/lib/libavutil.so --add-rpath ${lib.makeLibraryPath [prev.vulkan-loader]}
+        patchelf ${placeholder "lib"}/lib/libavutil.so --add-rpath ${lib.makeLibraryPath [final.vulkan-loader]}
       '';
 
       meta = {

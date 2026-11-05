@@ -1,16 +1,16 @@
 pin: final: prev: let
   inherit (prev) lib;
 in {
-  zed-editor = prev.stdenvNoCC.mkDerivation {
+  zed-editor = final.stdenvNoCC.mkDerivation {
     pname = "zed-editor";
     inherit (pin) version;
 
-    src = prev.fetchurl {inherit (pin) url hash;};
+    src = final.fetchurl {inherit (pin) url hash;};
 
-    nativeBuildInputs = [prev.autoPatchelfHook prev.makeBinaryWrapper];
+    nativeBuildInputs = [final.autoPatchelfHook final.makeBinaryWrapper];
     buildInputs = with final; [stdenv.cc.cc.lib alsa-lib glib libxkbcommon libX11 libxcb];
 
-    runtimeDependencies = [prev.libGL prev.vulkan-loader prev.wayland];
+    runtimeDependencies = [final.libGL final.vulkan-loader final.wayland];
 
     dontConfigure = true;
     dontBuild = true;
@@ -25,7 +25,7 @@ in {
     postFixup = ''
       wrapProgram $out/libexec/zed-editor \
         --set ZED_UPDATE_EXPLANATION "Zed is managed by Nix." \
-        --suffix PATH : ${lib.makeBinPath [prev.nodejs]}
+        --suffix PATH : ${lib.makeBinPath [final.nodejs]}
     '';
 
     meta = {

@@ -3,10 +3,10 @@ pins: final: prev: let
   zig = pname: let
     pin = pins.${pname};
   in
-    prev.stdenvNoCC.mkDerivation {
+    final.stdenvNoCC.mkDerivation {
       inherit pname;
       inherit (pin) version;
-      src = prev.fetchurl {
+      src = final.fetchurl {
         urls = let
           file = baseNameOf pin.url;
         in [
@@ -42,10 +42,10 @@ in {
     stable = zig "zig";
     nightly = zig "zig-nightly";
 
-    zls = prev.stdenvNoCC.mkDerivation {
+    zls = final.stdenvNoCC.mkDerivation {
       pname = "zls";
       inherit (pins.zls) version;
-      src = prev.fetchurl {inherit (pins.zls) url hash;};
+      src = final.fetchurl {inherit (pins.zls) url hash;};
       sourceRoot = ".";
       dontConfigure = true;
       dontBuild = true;

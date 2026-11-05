@@ -1,13 +1,13 @@
 pin: final: prev: let
   inherit (prev) lib;
 in {
-  bun = prev.stdenvNoCC.mkDerivation {
+  bun = final.stdenvNoCC.mkDerivation {
     pname = "bun";
     inherit (pin) version;
 
-    src = prev.fetchurl {inherit (pin) url hash;};
+    src = final.fetchurl {inherit (pin) url hash;};
 
-    nativeBuildInputs = [prev.unzip prev.autoPatchelfHook];
+    nativeBuildInputs = [final.unzip final.autoPatchelfHook];
 
     dontConfigure = true;
     dontBuild = true;
