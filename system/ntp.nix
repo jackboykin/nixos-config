@@ -13,6 +13,8 @@
         "ntp.quantum5.ca"
         "ntp2.wiktel.com"
         "ptbtime1.ptb.de"
+        "nts1.roa.es"
+        "nts.netnod.se"
       ];
   };
 
