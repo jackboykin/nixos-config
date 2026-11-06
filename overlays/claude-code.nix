@@ -16,16 +16,13 @@ in {
 
     installPhase = ''
       runHook preInstall
-      install -Dm755 $src $out/bin/claude
-      runHook postInstall
-    '';
-
-    postFixup = ''
-      wrapProgram $out/bin/claude \
+      install -Dm755 $src $out/libexec/claude
+      makeWrapper $out/libexec/claude $out/bin/claude \
         --argv0 claude \
         --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [final.alsa-lib]} \
         --set DISABLE_AUTOUPDATER 1 \
         --set DISABLE_INSTALLATION_CHECKS 1
+      runHook postInstall
     '';
 
     doInstallCheck = true;
