@@ -43,6 +43,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    run0-tty = {
+      url = "github:jackboykin/run0-tty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     rex = {
       url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz";
       flake = false;

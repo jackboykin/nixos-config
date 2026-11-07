@@ -70,6 +70,7 @@ in {
         poppler-utils
         quarry
         ripgrep
+        run0-tty
         sequoia-sop
         socat
         strace
@@ -118,15 +119,7 @@ in {
 
   security = {
     sudo.enable = false;
-    doas = {
-      enable = true;
-      extraRules = [
-        {
-          groups = ["wheel"];
-          persist = true;
-        }
-      ];
-    };
+    run0.enable = true;
   };
 
   castle.dirs = builtins.attrValues userDirs;

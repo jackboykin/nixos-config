@@ -58,7 +58,7 @@
   aliases = {
     nr = "nh os switch";
     nb = "nh os boot";
-    np = "doas systemctl start nix-prune";
+    np = "run0 systemctl start nix-prune";
     cf = ''claude --system-prompt=""'';
     cfw = ''claude --system-prompt="" --settings '{"disableWorkflows": false}' '';
     eza = "eza --icons auto --git";

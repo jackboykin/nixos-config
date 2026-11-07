@@ -3,6 +3,7 @@ inputs: let
 in [
   inputs.rust-overlay.overlays.default
   inputs.quarry.overlays.default
+  inputs.run0-tty.overlays.default
   (import ./bun.nix pins.bun)
   (import ./claude-code.nix pins.claude-code)
   (import ./ffmpeg.nix inputs.ffmpeg)
