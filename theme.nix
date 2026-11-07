@@ -111,6 +111,6 @@ in {
       big = 14;
     };
     sans.name = "Inter";
-    mono.name = "JetBrainsMono Nerd Font Mono";
+    mono.name = "JetBrainsMonoNL Nerd Font Mono";
   };
 }

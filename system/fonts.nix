@@ -28,7 +28,7 @@ in {
           "Noto Sans"
         ];
         monospace = [
-          "JetBrainsMono Nerd Font"
+          "JetBrainsMonoNL Nerd Font"
           "JuliaMono"
           "Noto Sans Mono"
         ];
