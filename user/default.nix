@@ -115,7 +115,10 @@ in {
       path = "/home/jack/.config/quarry/typesafe-api-key";
     };
   };
-  environment.shells = [pkgs.nushell];
+  environment = {
+    shells = [pkgs.nushell];
+    sessionVariables.SYSTEMD_TINT_BACKGROUND = "0";
+  };
 
   security = {
     sudo.enable = false;
