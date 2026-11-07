@@ -123,6 +123,11 @@ in {
   security = {
     sudo.enable = false;
     run0.enable = true;
+    wrappers = {
+      su.enable = false;
+      sg.enable = false;
+      newgrp.enable = false;
+    };
   };
 
   castle.dirs = builtins.attrValues userDirs;
