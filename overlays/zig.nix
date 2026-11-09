@@ -1,5 +1,4 @@
-pins: final: prev: let
-  inherit (prev) lib;
+pins: final: _: let
   zig = pname: let
     pin = pins.${pname};
   in
@@ -28,14 +27,6 @@ pins: final: prev: let
         ln -s ../libexec/${pname}/zig $out/bin/${pname}
         runHook postInstall
       '';
-      meta = {
-        homepage = "https://ziglang.org";
-        description = "General-purpose programming language and toolchain";
-        license = lib.licenses.mit;
-        sourceProvenance = [lib.sourceTypes.binaryNativeCode];
-        platforms = ["x86_64-linux"];
-        mainProgram = pname;
-      };
     };
 in {
   zigpkgs = {
@@ -55,14 +46,6 @@ in {
         install -Dm755 zls $out/bin/zls
         runHook postInstall
       '';
-      meta = {
-        homepage = "https://zigtools.org";
-        description = "Language server for Zig";
-        license = lib.licenses.mit;
-        sourceProvenance = [lib.sourceTypes.binaryNativeCode];
-        platforms = ["x86_64-linux"];
-        mainProgram = "zls";
-      };
     };
   };
 }

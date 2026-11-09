@@ -28,13 +28,6 @@ in {
     doInstallCheck = true;
     nativeInstallCheckInputs = [final.versionCheckHook];
 
-    meta = {
-      homepage = "https://claude.ai/code";
-      description = "Agentic coding tool that lives in your terminal";
-      license = lib.licenses.unfree;
-      sourceProvenance = [lib.sourceTypes.binaryNativeCode];
-      platforms = ["x86_64-linux"];
-      mainProgram = "claude";
-    };
+    meta.mainProgram = "claude";
   };
 }

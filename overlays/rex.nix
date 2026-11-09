@@ -26,13 +26,6 @@ in {
       runHook postInstall
     '';
 
-    meta = {
-      homepage = "https://superlogical.com";
-      description = "The multiplexer for all work";
-      license = lib.licenses.unfree;
-      sourceProvenance = [lib.sourceTypes.binaryNativeCode];
-      platforms = ["x86_64-linux"];
-      mainProgram = "rex";
-    };
+    meta.mainProgram = "rex";
   };
 }

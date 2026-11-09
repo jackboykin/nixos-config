@@ -1,4 +1,4 @@
-pin: final: prev: {
+pin: final: _: {
   libplacebo-release = final.llvmStdenv.mkDerivation {
     pname = "libplacebo";
     inherit (pin) version;
@@ -41,12 +41,5 @@ pin: final: prev: {
       "-Dvulkan=enabled"
       "-Dxxhash=enabled"
     ];
-
-    meta = {
-      homepage = "https://code.videolan.org/videolan/libplacebo";
-      description = "GPU-accelerated video/image rendering primitives";
-      license = prev.lib.licenses.lgpl21Plus;
-      platforms = ["x86_64-linux"];
-    };
   };
 }

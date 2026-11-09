@@ -1,6 +1,4 @@
-pin: final: prev: let
-  inherit (prev) lib;
-in {
+pin: final: _: {
   bun = final.stdenvNoCC.mkDerivation {
     pname = "bun";
     inherit (pin) version;
@@ -18,14 +16,5 @@ in {
       ln -s $out/bin/bun $out/bin/bunx
       runHook postInstall
     '';
-
-    meta = {
-      homepage = "https://bun.sh";
-      description = "Incredibly fast JavaScript runtime, bundler, test runner and package manager";
-      license = lib.licenses.mit;
-      sourceProvenance = [lib.sourceTypes.binaryNativeCode];
-      platforms = ["x86_64-linux"];
-      mainProgram = "bun";
-    };
   };
 }

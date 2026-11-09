@@ -27,14 +27,5 @@ in {
         --set ZED_UPDATE_EXPLANATION "Zed is managed by Nix." \
         --suffix PATH : ${lib.makeBinPath [final.nodejs]}
     '';
-
-    meta = {
-      homepage = "https://zed.dev";
-      description = "High-performance, multiplayer code editor";
-      license = lib.licenses.gpl3Only;
-      sourceProvenance = [lib.sourceTypes.binaryNativeCode];
-      platforms = ["x86_64-linux"];
-      mainProgram = "zed";
-    };
   };
 }

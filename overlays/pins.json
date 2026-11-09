@@ -5,14 +5,14 @@
     "hash": "sha256-v4zL+ysLgBWeD5ptFcVTF63YB3U028YTCj7bUvzLOVw="
   },
   "claude-code": {
-    "version": "2.1.319",
-    "url": "https://downloads.claude.ai/claude-code-releases/2.1.319/linux-x64/claude",
-    "hash": "sha256-2rr+yCyhMZ+kPYvjahD8YbHRGCHLmK1d8ErZXhmbju0="
+    "version": "2.1.321",
+    "url": "https://downloads.claude.ai/claude-code-releases/2.1.321/linux-x64/claude",
+    "hash": "sha256-QmwzgVymZFp3L3Ivv/ENvyy9sSSorqtzPBNl2/i79h8="
   },
   "firefox": {
     "version": "162.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-06-17-16-55-mozilla-central/firefox-162.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-JLgNczC2xqNIKZKCwKM5MZGwBWJWuWqHYRSyUmuk0U+l3VMG4LMf094biAFP5MUILombw2TyuRJgiZjs1Ps0tA=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-09-09-21-06-mozilla-central/firefox-162.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-HANJ6jUP7b2tfeZmdoITpMPSdPHyDWiR3qgk3wDawnJrlw5BAPi/Ji0fnY+UMLVlFqu+tSsWfgZy+XtjJH/MEg=="
   },
   "libplacebo": {
     "version": "7.387.0",
@@ -20,9 +20,9 @@
     "rev": "275f7dea27924cdd34ab2e6c20e448b6bc4fab65"
   },
   "linux": {
-    "version": "7.4-rc1",
-    "url": "https://git.kernel.org/torvalds/t/linux-7.4-rc1.tar.gz",
-    "hash": "sha1-ft/dDewFL31zNrprZaGpzHjflco="
+    "version": "7.4-rc2",
+    "url": "https://git.kernel.org/torvalds/t/linux-7.4-rc2.tar.gz",
+    "hash": "sha1-zMzl/qX+Q+0aRYMv8o9ddEaDadw="
   },
   "linux-firmware": {
     "version": "20261019",
@@ -45,9 +45,9 @@
     "hash": "sha256-NYGGPjy8/Q/ODvxoLOfp6T2pZmipd3kdNWom0qfpsXo="
   },
   "zig-nightly": {
-    "version": "0.18.0-dev.897+117fd40fb",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.897+117fd40fb.tar.xz",
-    "hash": "sha256-IevmHtHqCQzDsKGvQAgS/k9TA7UiODFNG5Jk81ZZEGU="
+    "version": "0.18.0-dev.954+60635c2bd",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.954+60635c2bd.tar.xz",
+    "hash": "sha256-6uAxzwA1Ude9fGua5eK1lGZ/kTiOxw7z/dKsFg9NPc8="
   },
   "zls": {
     "version": "0.17.0",

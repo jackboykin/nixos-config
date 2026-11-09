@@ -1,4 +1,4 @@
-pin: final: prev: {
+pin: final: _: {
   mpv-release = final.llvmStdenv.mkDerivation {
     pname = "mpv";
     inherit (pin) version;
@@ -65,13 +65,5 @@ pin: final: prev: {
       "-Dzimg=enabled"
       "-Dzlib=enabled"
     ];
-
-    meta = {
-      homepage = "https://mpv.io";
-      description = "General-purpose media player";
-      license = prev.lib.licenses.gpl2Plus;
-      platforms = ["x86_64-linux"];
-      mainProgram = "mpv";
-    };
   };
 }
