@@ -33,6 +33,7 @@ in {
     ./perf.nix
     ./quarry.nix
     ./rex.nix
+    ./run0.nix
     ./ssh.nix
     ./vesktop.nix
     ./zoxide.nix
@@ -70,7 +71,6 @@ in {
         minisign
         poppler-utils
         ripgrep
-        run0-tty
         sequoia-sop
         socat
         strace
@@ -105,20 +105,7 @@ in {
 
   services.userborn.enable = true;
   sops.secrets.user-password.neededForUsers = true;
-  environment = {
-    shells = [pkgs.nushell];
-    sessionVariables.SYSTEMD_TINT_BACKGROUND = "0";
-  };
-
-  security = {
-    sudo.enable = false;
-    run0.enable = true;
-    wrappers = {
-      su.enable = false;
-      sg.enable = false;
-      newgrp.enable = false;
-    };
-  };
+  environment.shells = [pkgs.nushell];
 
   castle.dirs = builtins.attrValues userDirs;
   castle.links = {
