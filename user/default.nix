@@ -31,6 +31,7 @@ in {
     ./mpv.nix
     ./nushell.nix
     ./perf.nix
+    ./quarry.nix
     ./rex.nix
     ./ssh.nix
     ./vesktop.nix
@@ -68,7 +69,6 @@ in {
         jq
         minisign
         poppler-utils
-        quarry
         ripgrep
         run0-tty
         sequoia-sop
@@ -104,17 +104,7 @@ in {
   };
 
   services.userborn.enable = true;
-  sops.secrets = {
-    user-password.neededForUsers = true;
-    exa-api-key = {
-      owner = "jack";
-      path = "/home/jack/.config/quarry/exa-api-key";
-    };
-    typesafe-api-key = {
-      owner = "jack";
-      path = "/home/jack/.config/quarry/typesafe-api-key";
-    };
-  };
+  sops.secrets.user-password.neededForUsers = true;
   environment = {
     shells = [pkgs.nushell];
     sessionVariables.SYSTEMD_TINT_BACKGROUND = "0";
