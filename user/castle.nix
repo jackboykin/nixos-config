@@ -30,7 +30,7 @@ in {
         state=$HOME/.local/state/castle/links
         if [ -f "$state" ]; then
           while IFS= read -r path; do
-            if [[ $(readlink "$HOME/$path") == /nix/store/* ]]; then
+            if [ -L "$HOME/$path" ]; then
               rm "$HOME/$path"
               rmdir -p --ignore-fail-on-non-empty "$(dirname "$HOME/$path")"
             fi
