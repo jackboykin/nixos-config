@@ -9,8 +9,8 @@
   fontPrefs = {
     "font.default.x-western" = "sans-serif";
     "font.name.serif.x-western" = "Source Serif 4";
-    "font.name.sans-serif.x-western" = theme.fonts.sans.name;
-    "font.name.monospace.x-western" = theme.fonts.mono.name;
+    "font.name.sans-serif.x-western" = theme.fonts.sans;
+    "font.name.monospace.x-western" = theme.fonts.mono;
   };
 in {
   users.users.jack.packages = [pkgs.firefox-nightly];

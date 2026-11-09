@@ -60,67 +60,67 @@ in {
     };
 
     "themes/bellatrix.toml" = toml.generate "bellatrix.toml" {
-      "ui.background" = {bg = colors.base;};
+      "ui.background" = {bg = colors.background;};
       "ui.popup" = {
-        fg = colors.text;
+        fg = colors.foreground;
         bg = colors.surface0;
       };
-      "ui.text" = colors.text;
+      "ui.text" = colors.foreground;
       "ui.text.focus" = {
-        fg = colors.text;
+        fg = colors.foreground;
         bg = colors.surface1;
       };
       "ui.virtual.indent-guide" = colors.surface1;
       "ui.virtual.inlay-hint" = {
-        fg = colors.subtext0;
+        fg = colors.surface2;
         modifiers = ["italic"];
       };
       "ui.selection" = {bg = ui.selection;};
       "ui.cursor.primary" = {
-        fg = colors.base;
-        bg = colors.purple;
+        fg = colors.background;
+        bg = colors.magenta;
       };
       "ui.cursor.insert" = {
-        fg = colors.base;
+        fg = colors.background;
         bg = colors.green;
       };
       "ui.linenr" = colors.surface2;
       "ui.linenr.selected" = {
-        fg = colors.purple;
+        fg = colors.magenta;
         modifiers = ["bold"];
       };
       "ui.statusline" = {
-        fg = colors.text;
+        fg = colors.foreground;
         bg = colors.surface0;
       };
       "ui.statusline.normal" = {
-        fg = colors.base;
+        fg = colors.background;
         bg = colors.blue;
         modifiers = ["bold"];
       };
       "ui.statusline.insert" = {
-        fg = colors.base;
+        fg = colors.background;
         bg = colors.green;
         modifiers = ["bold"];
       };
       "ui.statusline.select" = {
-        fg = colors.base;
-        bg = colors.purple;
+        fg = colors.background;
+        bg = colors.magenta;
         modifiers = ["bold"];
       };
       "ui.bufferline.active" = {
-        fg = colors.text;
+        fg = colors.foreground;
         bg = colors.surface1;
         modifiers = ["bold"];
       };
 
-      "error" = colors.error;
-      "warning" = colors.warning;
-      "info" = colors.info;
-      "hint" = colors.hint;
+      "error" = colors.red;
+      "warning" = colors.yellow;
+      "info" = colors.blue;
+      "hint" = colors.cyan;
       "diagnostic.error" = {
         underline = {
-          color = colors.error;
+          color = colors.red;
           style = "curl";
         };
       };
@@ -144,7 +144,7 @@ in {
         modifiers = ["italic"];
       };
       "variable.other.member" = colors.cyan;
-      "keyword" = colors.purple;
+      "keyword" = colors.magenta;
       "function" = {
         fg = colors.blue;
         modifiers = ["italic"];

@@ -20,44 +20,45 @@ in {
       base = "vitesse-black";
       label = "Bellatrix";
 
-      inherit (colors) background text;
-      panel = colors.base;
+      inherit (colors) background;
+      text = colors.foreground;
+      panel = colors.background;
       panelAlt = colors.surface0;
       border = colors.surface1;
-      accent = colors.purple;
+      accent = colors.magenta;
       accentMuted = ui.selection;
-      muted = colors.subtext1;
+      muted = colors.subtext;
 
       addedBg = diff.added;
       removedBg = diff.removed;
       movedAddedBg = diff.moved;
       movedRemovedBg = diff.moved;
-      contextBg = colors.base;
+      contextBg = colors.background;
       addedContentBg = diff.addedEmph;
       removedContentBg = diff.removedEmph;
-      contextContentBg = colors.base;
+      contextContentBg = colors.background;
       addedSignColor = colors.gitAdded;
       removedSignColor = colors.gitDeleted;
-      lineNumberBg = colors.base;
+      lineNumberBg = colors.background;
       lineNumberFg = colors.surface2;
       selectedHunk = colors.surface1;
 
       badgeAdded = colors.gitAdded;
       badgeRemoved = colors.gitDeleted;
-      badgeNeutral = colors.subtext1;
+      badgeNeutral = colors.subtext;
       fileNew = colors.gitAdded;
       fileDeleted = colors.gitDeleted;
       fileRenamed = colors.cyan;
       fileModified = colors.gitModified;
-      fileUntracked = colors.subtext1;
+      fileUntracked = colors.subtext;
 
-      noteBorder = colors.purple;
+      noteBorder = colors.magenta;
       noteBackground = colors.surface0;
       noteTitleBackground = colors.surface1;
-      noteTitleText = colors.text;
+      noteTitleText = colors.foreground;
 
       syntax_scopes = lib.mergeAttrsList [
-        (paint colors.text [
+        (paint colors.foreground [
           "source"
           "variable"
           "identifier"
@@ -80,7 +81,7 @@ in {
           "punctuation.definition.comment"
           "string.comment"
         ])
-        (paint colors.purple [
+        (paint colors.magenta [
           "keyword"
           "storage"
           "storage.type"

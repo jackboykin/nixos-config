@@ -62,8 +62,8 @@ in {
       screenshot-format = "png";
       screenshot-png-compression = 3;
 
-      osd-font = fonts.sans.name;
-      sub-font = fonts.sans.name;
+      osd-font = fonts.sans;
+      sub-font = fonts.sans;
     });
 
     "scripts/mpris.so" = "${mpris}/share/mpv/scripts/mpris.so";

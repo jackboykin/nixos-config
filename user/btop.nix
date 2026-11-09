@@ -14,22 +14,22 @@
     io_mode = "True";
   };
   themeFile = pkgs.writeText "bellatrix.theme" ''
-    theme[main_bg]="${colors.base}"
-    theme[main_fg]="${colors.text}"
-    theme[title]="${colors.text}"
+    theme[main_bg]="${colors.background}"
+    theme[main_fg]="${colors.foreground}"
+    theme[title]="${colors.foreground}"
     theme[hi_fg]="${colors.blue}"
     theme[selected_bg]="${colors.surface2}"
-    theme[selected_fg]="${colors.text}"
+    theme[selected_fg]="${colors.foreground}"
     theme[inactive_fg]="${colors.surface1}"
-    theme[graph_text]="${colors.subtext1}"
+    theme[graph_text]="${colors.subtext}"
     theme[meter_bg]="${colors.surface1}"
     theme[proc_misc]="${colors.surface1}"
 
-    theme[cpu_box]="${colors.teal}"
-    theme[mem_box]="${colors.sky}"
+    theme[cpu_box]="${colors.cyan}"
+    theme[mem_box]="${colors.blue}"
     theme[net_box]="${colors.orange}"
-    theme[proc_box]="${colors.purple}"
-    theme[div_line]="${colors.overlay0}"
+    theme[proc_box]="${colors.magenta}"
+    theme[div_line]="${colors.surface0}"
 
     theme[temp_start]="${colors.green}"
     theme[temp_mid]="${colors.yellow}"
@@ -39,9 +39,9 @@
     theme[cpu_mid]="${colors.orange}"
     theme[cpu_end]="${colors.red}"
 
-    theme[free_start]="${colors.sky}"
+    theme[free_start]="${colors.blue}"
     theme[free_mid]="${colors.blue}"
-    theme[free_end]="${colors.purple}"
+    theme[free_end]="${colors.magenta}"
 
     theme[cached_start]="${colors.cyan}"
     theme[cached_mid]="${colors.blue}"
@@ -65,7 +65,7 @@
 
     theme[process_start]="${colors.cyan}"
     theme[process_mid]="${colors.magenta}"
-    theme[process_end]="${colors.purple}"
+    theme[process_end]="${colors.magenta}"
   '';
 
   btop = pkgs.btop.overrideAttrs (old: {

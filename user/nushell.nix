@@ -42,9 +42,9 @@
   colorConfig =
     unbold
     // {
-      row_index = colors.subtext0;
+      row_index = colors.surface2;
       separator = colors.surface2;
-      search_result = ''{fg: "${colors.base}", bg: "${colors.yellow}"}'';
+      search_result = ''{fg: "${colors.background}", bg: "${colors.yellow}"}'';
       shape_external = colors.red;
       shape_external_resolved = colors.cyan;
       shape_garbage = colors.red;
@@ -89,7 +89,7 @@ in {
               $env.PWD | str replace $nu.home-dir "~"
           } else { $env.PWD }
           let branch = (try { git --no-optional-locks symbolic-ref --quiet --short HEAD err> /dev/null } | default "" | str trim)
-          let git = if $branch == "" { "" } else { $" (ansi --escape {fg: "${colors.subtext0}"})($branch)" }
+          let git = if $branch == "" { "" } else { $" (ansi --escape {fg: "${colors.surface2}"})($branch)" }
           $"(ansi --escape {fg: "${colors.blue}"})($dir)($git)(ansi reset)"
       }
       $env.PROMPT_COMMAND_RIGHT = ""

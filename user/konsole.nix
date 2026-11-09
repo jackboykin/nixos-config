@@ -5,6 +5,7 @@
 }: let
   theme = import ../theme.nix;
   inherit (theme) colors;
+  ansi = builtins.elemAt theme.ansi;
   toRGB = hex: lib.concatStringsSep "," (theme.rgb hex);
 
   colorscheme =
@@ -24,14 +25,14 @@
       Color=${toRGB colors.foreground}
 
       [ForegroundIntense]
-      Color=${toRGB colors.brightWhite}
+      Color=${toRGB (ansi 15)}
     ''
     + lib.concatMapStrings (i: ''
       [Color${toString i}]
-      Color=${toRGB colors."color${toString i}"}
+      Color=${toRGB (ansi i)}
 
       [Color${toString i}Intense]
-      Color=${toRGB colors."color${toString (i + 8)}"}
+      Color=${toRGB (ansi (i + 8))}
 
     '') (lib.range 0 7);
 
@@ -45,7 +46,7 @@
 
     [Appearance]
     ColorScheme=Bellatrix
-    Font=${theme.fonts.mono.name},${toString theme.fonts.size.normal},-1,5,50,0,0,0,0,0
+    Font=${theme.fonts.mono},${toString theme.fonts.size},-1,5,50,0,0,0,0,0
   '';
 
   konsolerc = ''
