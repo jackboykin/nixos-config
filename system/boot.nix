@@ -1,5 +1,6 @@
-_: {
+{pkgs, ...}: {
   boot = {
+    kernelPackages = pkgs.linuxPackagesFor pkgs.linux-orion;
     kernelParams = [
       "SYSTEMD_DEFAULT_MOUNT_RATE_LIMIT_BURST=50"
     ];
