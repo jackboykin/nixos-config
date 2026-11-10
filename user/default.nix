@@ -81,7 +81,7 @@ in {
         llvmPackages_latest.clang
         go
         python3
-        (rust-bin.stable.latest.default.override {extensions = ["rust-analyzer" "rust-src"];})
+        (rust-bin.stable.latest.minimal.override {extensions = ["clippy" "rustfmt" "rust-analyzer" "rust-src"];})
         typescript
         zigpkgs.stable
         zigpkgs.nightly
