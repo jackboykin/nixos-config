@@ -14,6 +14,7 @@
   programs.nano.enable = false;
   system.tools.nixos-option.enable = false;
   documentation = {
+    doc.enable = false;
     info.enable = false;
     man.man-db.enable = false;
     man.mandoc.enable = true;
