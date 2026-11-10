@@ -14,6 +14,7 @@
     description = "Rex server";
     wantedBy = ["default.target"];
     enableDefaultPath = false;
+    unitConfig.ConditionUser = "jack";
     serviceConfig = {
       ExecStart = "${lib.getExe pkgs.rex} server run --extra-listen tailnet://:7297";
       Restart = "on-failure";
