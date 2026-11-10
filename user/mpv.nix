@@ -59,6 +59,7 @@ in {
       video-sync = "display-resample";
       interpolation = "yes";
       cache = true;
+      demuxer-max-back-bytes = "100MiB";
       screenshot-format = "png";
       screenshot-png-compression = 3;
 
