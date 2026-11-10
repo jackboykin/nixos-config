@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   services = {
     displayManager.plasma-login-manager.enable = true;
     desktopManager.plasma6.enable = true;
@@ -22,12 +26,15 @@
 
   nixpkgs.overlays = [
     (final: prev: {
-      kdePackages = prev.kdePackages.overrideScope (_: _: {phonon-vlc = final.emptyDirectory;});
+      kdePackages = prev.kdePackages.overrideScope (_: _: {
+        drkonqi = final.emptyDirectory;
+        phonon-vlc = final.emptyDirectory;
+      });
     })
   ];
 
   programs.kde-pim.enable = false;
-  systemd.user.services.drkonqi-coredump-pickup.enable = false;
+  systemd.services."drkonqi-coredump-processor@".wantedBy = lib.mkForce [];
 
   gtk.iconCache.enable = true;
 
