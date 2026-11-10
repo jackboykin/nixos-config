@@ -5,14 +5,14 @@
     "hash": "sha256-v4zL+ysLgBWeD5ptFcVTF63YB3U028YTCj7bUvzLOVw="
   },
   "claude-code": {
-    "version": "2.1.321",
-    "url": "https://downloads.claude.ai/claude-code-releases/2.1.321/linux-x64/claude",
-    "hash": "sha256-QmwzgVymZFp3L3Ivv/ENvyy9sSSorqtzPBNl2/i79h8="
+    "version": "2.1.322",
+    "url": "https://downloads.claude.ai/claude-code-releases/2.1.322/linux-x64/claude",
+    "hash": "sha256-v7NwOtU4AkIyhFm8Yq2kveiue6V8bh7q25wA4Ih0xHg="
   },
   "firefox": {
     "version": "162.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-09-09-21-06-mozilla-central/firefox-162.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-HANJ6jUP7b2tfeZmdoITpMPSdPHyDWiR3qgk3wDawnJrlw5BAPi/Ji0fnY+UMLVlFqu+tSsWfgZy+XtjJH/MEg=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-09-21-44-46-mozilla-central/firefox-162.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-cWgaxUAz6DjkTOw3LI2svxzG/ozGEdF4yeba/gjOphzE8lvw3iZX/8SK0u4XcPlS0KZQsqyVEACNJfReLitMfQ=="
   },
   "libplacebo": {
     "version": "7.387.0",

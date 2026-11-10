@@ -66,6 +66,8 @@ in {
       sub-font = fonts.sans;
     });
 
+    "input.conf" = pkgs.writeText "input.conf" "MBTN_RIGHT cycle pause\n";
+
     "scripts/mpris.so" = "${mpris}/share/mpv/scripts/mpris.so";
     "scripts/uosc" = "${uosc}/share/mpv/scripts/uosc";
     "fonts/uosc_icons.otf" = "${uosc}/share/fonts/opentype/uosc_icons.otf";
