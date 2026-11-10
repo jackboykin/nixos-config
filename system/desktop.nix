@@ -8,6 +8,7 @@
     desktopManager.plasma6.enable = true;
     power-profiles-daemon.enable = false;
     fwupd.enable = false;
+    geoclue2.enable = false;
     orca.enable = false;
     speechd.package = pkgs.speechd.override {espeak = pkgs.espeak.override {mbrolaSupport = false;};};
   };
