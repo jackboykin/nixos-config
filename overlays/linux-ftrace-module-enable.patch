@@ -1,0 +1,210 @@
+From git@z Thu Jan  1 00:00:00 1970
+Subject: [PATCH v2] ftrace: speed up module enable by binary searching
+ module symbols
+From: Yaxiong Tian <tianyaxiong@kylinos.cn>
+Date: Thu, 05 Nov 2026 11:15:30 +0800
+Message-Id: <20261105031530.280442-1-tianyaxiong@kylinos.cn>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Loading a module with many functions takes seconds, almost all of it in
+ftrace_module_enable().  amdgpu modules stall for about ten seconds, and
+disabling CONFIG_DYNAMIC_FTRACE makes the stall disappear.
+
+Every record is validated by test_for_valid_rec(), which resolves its ip
+through kallsyms_lookup(); for a module address that ends up in
+find_kallsyms_symbol(), which walks the whole module symbol table from
+index 1.  The core kernel instead binary searches its sorted kallsyms
+table in get_symbol_pos().  So only modules pay, and the cost is
+quadratic: both the record count and the symbol count grow with the
+module.  An amdgpu.ko from this tree has 17282 records and 55332 symbol
+table entries.
+
+Fix this by collecting the addresses of a module's symbols once, sorting
+them, and binary searching that array instead of walking the table once
+per record; a loaded module's symbol table cannot change, so the array
+stays valid for the whole pass.  What comes back is what the linear scan
+returned: the same entries are skipped - SHN_UNDEF, unnamed and mapping
+symbols - and the closest address not below the base of the record's
+memory region is taken.  Whenever the array cannot answer, because it
+could not be built or because no such symbol exists, the record is handed
+to test_for_valid_rec(), so the rest of kallsyms_lookup() still has its
+say and no verdict can change.
+
+On the machine that reported the stall, modprobe of that amdgpu.ko takes
+12.242 s before and 2.870 s after, and the time spent inside ftrace_lock
+drops from 9.368 s to 1.585 ms - 15.195 ms if the price of building the
+array is included, that build being 13.6 ms, 0.15% of the 9.37 s saved.
+The array costs O(symbols * log symbols), it does not grow with the
+record count.  Across the 74 modules loaded at boot, total lock time
+drops from 491 ms to 2.33 ms.
+
+Signed-off-by: Yaxiong Tian <tianyaxiong@kylinos.cn>
+Link: https://patch.msgid.link/20261105031530.280442-1-tianyaxiong@kylinos.cn
+---
+v2:
+- Use rcu_dereference_raw() instead of a transient rcu_read_lock() pair.
+- Manage the symbol array with __free(kvfree).
+- Adapt to the v7.4-rc1 rename of is_mapping_symbol() to
+  is_ignored_kernel_symbol().
+- v1 discussion:
+  https://lore.kernel.org/all/20260916082715.320853-1-tianyaxiong@kylinos.cn/
+
+ kernel/trace/ftrace.c | 124 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 123 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index c7d74b33d36d..255e813fe70e 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -26,6 +26,7 @@
+ #include <linux/uaccess.h>
+ #include <linux/bsearch.h>
+ #include <linux/module.h>
++#include <linux/module_symbol.h>
+ #include <linux/ftrace.h>
+ #include <linux/sysctl.h>
+ #include <linux/slab.h>
+@@ -8034,8 +8035,129 @@ void ftrace_release_mod(struct module *mod)
+ 	}
+ }
+ 
++#ifdef FTRACE_MCOUNT_MAX_OFFSET
++/*
++ * ftrace_module_enable() validates every record with test_for_valid_rec(),
++ * which walks the whole symbol table of a module for each address in it, so a
++ * large module loads in quadratic time.  Search a sorted copy of the symbol
++ * addresses instead, the way get_symbol_pos() searches the kallsyms table.
++ * The array is an accelerator only; records it cannot resolve are tested the
++ * old way, so the verdict does not change.
++ */
++struct ftrace_mod_syms {
++	unsigned int	nr;
++	unsigned long	addr[];	/* sorted, @nr entries */
++};
++
++static int ftrace_mod_syms_cmp(const void *a, const void *b)
++{
++	unsigned long va = *(const unsigned long *)a;
++	unsigned long vb = *(const unsigned long *)b;
++
++	return (va > vb) - (va < vb);
++}
++
++static struct ftrace_mod_syms *ftrace_mod_syms_alloc(struct module *mod)
++{
++	struct mod_kallsyms *kallsyms;
++	struct ftrace_mod_syms *syms;
++	unsigned int i, nr = 0;
++
++	/*
++	 * mod->kallsyms stays valid until do_init_module() replaces it later
++	 * in this thread, so no RCU read-side section is needed.
++	 */
++	kallsyms = rcu_dereference_raw(mod->kallsyms);
++
++	if (!kallsyms || kallsyms->num_symtab < 2)
++		return NULL;
++
++	syms = kvmalloc(struct_size(syms, addr, kallsyms->num_symtab),
++			GFP_KERNEL);
++	if (!syms)
++		return NULL;
++
++	/* The symbols find_kallsyms_symbol() would consider. */
++	for (i = 1; i < kallsyms->num_symtab; i++) {
++		const Elf_Sym *sym = &kallsyms->symtab[i];
++		const char *name = kallsyms->strtab + sym->st_name;
++
++		if (sym->st_shndx == SHN_UNDEF || !*name ||
++		    is_ignored_kernel_symbol(name))
++			continue;
++
++		syms->addr[nr++] = kallsyms_symbol_value(sym);
++	}
++	syms->nr = nr;
++
++	if (nr > 1)
++		sort(syms->addr, nr, sizeof(syms->addr[0]), ftrace_mod_syms_cmp,
++		     NULL);
++
++	return syms;
++}
++
++/* The verdict test_for_valid_rec() would give, without walking the table. */
++static bool ftrace_mod_rec_is_valid(struct module *mod,
++				    const struct ftrace_mod_syms *syms,
++				    struct dyn_ftrace *rec)
++{
++	unsigned long base, best;
++	unsigned int lo, hi;
++
++	if (!syms)
++		return test_for_valid_rec(rec) != 0;
++
++	/* A record is in executable memory; anything else kallsyms answers. */
++	if (within_module_mem_type(rec->ip, mod, MOD_TEXT))
++		base = (unsigned long)mod->mem[MOD_TEXT].base;
++	else if (within_module_mem_type(rec->ip, mod, MOD_INIT_TEXT))
++		base = (unsigned long)mod->mem[MOD_INIT_TEXT].base;
++	else
++		return test_for_valid_rec(rec) != 0;
++
++	/* The closest address at or below @rec->ip, if there is one. */
++	best = 0;
++	for (lo = 0, hi = syms->nr; lo < hi; ) {
++		unsigned int mid = lo + (hi - lo) / 2;
++
++		if (syms->addr[mid] <= rec->ip)
++			lo = mid + 1;
++		else
++			hi = mid;
++	}
++	if (lo)
++		best = syms->addr[lo - 1];
++
++	/*
++	 * No symbol, or only ones below @base: let kallsyms_lookup() answer,
++	 * as it also looks in the BPF and ftrace trampoline tables.
++	 */
++	if (best < base)
++		return test_for_valid_rec(rec) != 0;
++
++	return rec->ip - best <= FTRACE_MCOUNT_MAX_OFFSET;
++}
++#else
++struct ftrace_mod_syms;
++
++static inline struct ftrace_mod_syms *ftrace_mod_syms_alloc(struct module *mod)
++{
++	return NULL;
++}
++
++static inline bool ftrace_mod_rec_is_valid(struct module *mod,
++					   const struct ftrace_mod_syms *syms,
++					   struct dyn_ftrace *rec)
++{
++	return test_for_valid_rec(rec) != 0;
++}
++#endif /* FTRACE_MCOUNT_MAX_OFFSET */
++
+ void ftrace_module_enable(struct module *mod)
+ {
++	struct ftrace_mod_syms *syms __free(kvfree) =
++		ftrace_disabled ? NULL : ftrace_mod_syms_alloc(mod);
+ 	struct dyn_ftrace *rec;
+ 	struct ftrace_page *pg;
+ 
+@@ -8074,7 +8196,7 @@ void ftrace_module_enable(struct module *mod)
+ 		cond_resched();
+ 
+ 		/* Weak functions should still be ignored */
+-		if (!test_for_valid_rec(rec)) {
++		if (!ftrace_mod_rec_is_valid(mod, syms, rec)) {
+ 			/* Clear all other flags. Should not be enabled anyway */
+ 			rec->flags = FTRACE_FL_DISABLED;
+ 			continue;
+-- 
+2.43.0
+
