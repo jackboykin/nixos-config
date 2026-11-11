@@ -10,7 +10,9 @@
     fwupd.enable = false;
     geoclue2.enable = false;
     orca.enable = false;
-    speechd.package = pkgs.speechd.override {espeak = pkgs.espeak.override {mbrolaSupport = false;};};
+    speechd.package = pkgs.speechd.override {
+      espeak = pkgs.espeak.override {mbrolaSupport = false;};
+    };
   };
 
   environment = {
@@ -39,13 +41,15 @@
 
   gtk.iconCache.enable = true;
 
-  # Until KDE bug 501406 is fixed upstream. ABI unchanged, so swap it in rather than rebuild Plasma.
+  # bugs.kde.org/501406; drop once fixed upstream. ABI unchanged, so swap it in rather than rebuild Plasma.
   system.replaceDependencies.replacements = let
     inherit (pkgs.kdePackages) ksvg;
   in [
     {
       oldDependency = ksvg;
-      newDependency = ksvg.overrideAttrs (o: {patches = (o.patches or []) ++ [./ksvg-cache-lookup-misses.patch];});
+      newDependency = ksvg.overrideAttrs (
+        o: {patches = (o.patches or []) ++ [./ksvg-cache-lookup-misses.patch];}
+      );
     }
   ];
 }

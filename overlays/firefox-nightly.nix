@@ -1,8 +1,12 @@
 pin: final: prev: let
   inherit (prev) lib;
 
-  wrapperArgs = lib.functionArgs (import "${final.path}/pkgs/applications/networking/browsers/firefox/wrapper.nix");
-  ffmpegs = lib.filter (name: builtins.match "ffmpeg(_[0-9]+)?" name != null) (lib.attrNames wrapperArgs);
+  wrapperArgs = lib.functionArgs (
+    import "${final.path}/pkgs/applications/networking/browsers/firefox/wrapper.nix"
+  );
+  ffmpegs = lib.filter (name: builtins.match "ffmpeg(_[0-9]+)?" name != null) (
+    lib.attrNames wrapperArgs
+  );
 
   unwrapped =
     (final.firefox-bin-unwrapped.override {

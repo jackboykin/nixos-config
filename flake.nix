@@ -62,7 +62,6 @@
     laminix,
     ...
   }: let
-    system = "x86_64-linux";
     inherit (nixpkgs) lib;
 
     inputSources = let
@@ -91,7 +90,5 @@
         laminix.nixosModules.default
       ];
     };
-
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
   };
 }

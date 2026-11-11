@@ -81,20 +81,21 @@ in {
         llvmPackages_latest.clang
         go
         python3
-        (rust-bin.stable.latest.minimal.override {extensions = ["clippy" "rustfmt" "rust-analyzer" "rust-src"];})
+        (rust-bin.stable.latest.minimal.override {
+          extensions = ["clippy" "rustfmt" "rust-analyzer" "rust-src"];
+        })
         typescript
         zigpkgs.stable
         zigpkgs.nightly
         zigpkgs.zls
 
         alejandra
+        ast-grep
         llvmPackages_latest.clang-tools
         nixd
-        nixf
         ruff
         ty
         tombi
-        statix
         zig-zlint
 
         dnsutils

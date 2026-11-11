@@ -13,7 +13,14 @@
   };
 
   boot = {
-    initrd.availableKernelModules = ["nvme" "xhci_pci" "usbhid" "hid_generic" "usb_storage" "sd_mod"];
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "usbhid"
+      "hid_generic"
+      "usb_storage"
+      "sd_mod"
+    ];
     kernelParams = [
       "processor.bm_check_disable=1"
     ];

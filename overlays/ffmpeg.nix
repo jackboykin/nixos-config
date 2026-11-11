@@ -6,7 +6,9 @@ src: final: prev: let
   lavcSupported = "63";
   lavc = let
     header = builtins.readFile "${src}/libavcodec/version_major.h";
-    line = lib.findFirst (lib.hasPrefix "#define LIBAVCODEC_VERSION_MAJOR") null (lib.splitString "\n" header);
+    line = lib.findFirst (lib.hasPrefix "#define LIBAVCODEC_VERSION_MAJOR") null (
+      lib.splitString "\n" header
+    );
   in
     lib.last (lib.splitString " " line);
 in {
