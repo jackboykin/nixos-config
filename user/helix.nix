@@ -1,18 +1,11 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   inherit (import ../theme.nix) colors ui;
 
   toml = pkgs.formats.toml {};
 
-  prettierLang = name: parser: {
+  tsLang = name: {
     inherit name;
-    formatter = {
-      command = lib.getExe pkgs.prettier;
-      args = ["--parser" parser];
-    };
+    language-servers = ["tsgo"];
   };
 in {
   users.users.jack.packages = [pkgs.helix];
@@ -27,6 +20,10 @@ in {
 
     "languages.toml" = toml.generate "languages.toml" {
       language-server = {
+        tsgo = {
+          command = "tsc";
+          args = ["--lsp" "--stdio"];
+        };
         rust-analyzer.config = {
           check.command = "clippy";
           inlayHints = {
@@ -37,21 +34,9 @@ in {
       };
 
       language = [
-        {
-          name = "nix";
-          formatter.command = lib.getExe pkgs.alejandra;
-          language-servers = ["nixd"];
-        }
-        {
-          name = "python";
-          language-servers = ["basedpyright"];
-        }
-        (prettierLang "typescript" "typescript")
-        (prettierLang "javascript" "babel")
-        (prettierLang "tsx" "typescript")
-        (prettierLang "json" "json")
-        (prettierLang "css" "css")
-        (prettierLang "html" "html")
+        (tsLang "typescript")
+        (tsLang "javascript")
+        (tsLang "tsx")
         {
           name = "markdown";
           soft-wrap.enable = true;

@@ -91,7 +91,9 @@ in {
         llvmPackages_latest.clang-tools
         nixd
         nixf
-        basedpyright
+        ruff
+        ty
+        tombi
         statix
         zig-zlint
 
