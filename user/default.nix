@@ -91,11 +91,14 @@ in {
 
         alejandra
         ast-grep
+        bash-language-server
         llvmPackages_latest.clang-tools
         nixd
         ruff
         ty
         tombi
+        vscode-langservers-extracted
+        yaml-language-server
         zig-zlint
 
         dnsutils
