@@ -123,6 +123,8 @@ in {
         (key: dir: ''XDG_${key}_DIR="${home}/${dir}"'')
         userDirs));
 
+    ".npmrc" = pkgs.writeText "npmrc" "ignore-scripts=true\n";
+
     ".config/baloofilerc" = pkgs.writeText "baloofilerc" ''
       [Basic Settings]
       Indexing-Enabled=false
