@@ -16,6 +16,7 @@ user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
 user_pref("network.auth.subresource-http-auth-allow", 1);
 user_pref("network.dns.disablePrefetch", true);
 user_pref("network.dns.disablePrefetchFromHTTPS", true);
+user_pref("network.http.happy_eyeballs_resolution_delay", 50);
 user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
 user_pref("network.http.speculative-parallel-limit", 0);
 user_pref("network.lna.block_trackers", true);
