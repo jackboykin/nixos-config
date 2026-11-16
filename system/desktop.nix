@@ -40,4 +40,5 @@
   systemd.services."drkonqi-coredump-processor@".wantedBy = lib.mkForce [];
 
   gtk.iconCache.enable = true;
+  environment.extraSetup = lib.mkBefore "rm -rf $out/share/icons/oxygen";
 }
