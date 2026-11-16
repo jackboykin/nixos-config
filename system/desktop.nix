@@ -40,16 +40,4 @@
   systemd.services."drkonqi-coredump-processor@".wantedBy = lib.mkForce [];
 
   gtk.iconCache.enable = true;
-
-  # bugs.kde.org/501406; drop once fixed upstream. ABI unchanged, so swap it in rather than rebuild Plasma.
-  system.replaceDependencies.replacements = let
-    inherit (pkgs.kdePackages) ksvg;
-  in [
-    {
-      oldDependency = ksvg;
-      newDependency = ksvg.overrideAttrs (
-        o: {patches = (o.patches or []) ++ [./ksvg-cache-lookup-misses.patch];}
-      );
-    }
-  ];
 }
