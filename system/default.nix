@@ -4,6 +4,7 @@ _: {
     ./base.nix
     ./nix.nix
     ./boot.nix
+    ./convert-root.nix
     ./sysctl.nix
     ./nss.nix
     ./networking.nix

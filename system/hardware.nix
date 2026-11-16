@@ -28,8 +28,8 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/d7dab88b-0bcc-4878-8e42-5c62114864e1";
-      fsType = "ext4";
+      device = "/dev/disk/by-partuuid/bf6c8570-7819-41f5-aa1f-c67e1b9c3bdc";
+      fsType = "bcachefs";
       options = ["noatime"];
     };
     "/boot" = {
@@ -39,10 +39,5 @@
     };
   };
 
-  swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 16 * 1024;
-    }
-  ];
+  zramSwap.enable = true;
 }
