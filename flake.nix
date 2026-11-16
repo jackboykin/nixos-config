@@ -48,18 +48,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    bcachefs = {
-      url = "github:koverstreet/bcachefs-tools";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        rust-overlay.follows = "rust-overlay";
-        crane.follows = "lanzaboote/crane";
-        flake-compat.follows = "";
-        nix-github-actions.follows = "";
-        charon.follows = "";
-      };
-    };
-
     rex = {
       url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz";
       flake = false;
@@ -72,7 +60,6 @@
     lanzaboote,
     sops-nix,
     laminix,
-    bcachefs,
     ...
   }: let
     inherit (nixpkgs) lib;
@@ -101,7 +88,6 @@
         lanzaboote.nixosModules.lanzaboote
         sops-nix.nixosModules.sops
         laminix.nixosModules.default
-        bcachefs.nixosModules.default
       ];
     };
   };
