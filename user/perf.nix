@@ -12,7 +12,8 @@
 in {
   security.wrappers.perf = {
     owner = "root";
-    group = "root";
+    group = "wheel";
+    permissions = "u+rx,g+x";
     source = "${perf}/bin/perf";
     capabilities = "cap_perfmon,cap_syslog+ep";
   };
