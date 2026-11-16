@@ -6,12 +6,16 @@ pin: final: _: let
   configfile = stdenv.mkDerivation {
     pname = "linux-config";
     inherit version src;
+    patches = [./linux-rust-lto-btf.patch];
     nativeBuildInputs = with final; [
       bison
       flex
       openssl
       pahole
+      rustc-unwrapped
+      rust-bindgen-unwrapped
     ];
+    RUST_LIB_SRC = final.rustPlatform.rustLibSrc;
     hardeningDisable = ["all"];
     dontConfigure = true;
     buildPhase = ''
@@ -30,6 +34,7 @@ in {
   linux-orion = final.linuxManualConfig {
     inherit version src stdenv configfile;
     # lore.kernel.org/all/20261105031530.280442-1-tianyaxiong@kylinos.cn; drop once a fix is merged
+    # lore.kernel.org/all/20250108-rust-btf-lto-incompat-v1-1-60243ff6d820@google.com; drop once rust may sit beside lto and btf
     kernelPatches = with final.kernelPatches; [
       bridge_stp_helper
       request_key_helper
@@ -37,11 +42,15 @@ in {
         name = "ftrace-module-enable";
         patch = ./linux-ftrace-module-enable.patch;
       }
+      {
+        name = "rust-lto-btf";
+        patch = ./linux-rust-lto-btf.patch;
+      }
     ];
     config = {
       CONFIG_MODULES = "y";
       CONFIG_FW_LOADER = "y";
-      CONFIG_RUST = "n";
+      CONFIG_RUST = "y";
     };
   };
 }
