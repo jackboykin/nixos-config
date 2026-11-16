@@ -1,0 +1,67 @@
+dwarf_loader: take a merged CU's language from its first kept unit
+
+cus__merge_and_process_cu() gave the merged CU the language of the first
+unit in the file, filtered or not. A module of an LTO kernel is merged
+because of its LTO note, and a Rust module links its Rust object first:
+--lang_exclude=rust skipped that unit, and then the whole merged CU was
+filtered as Rust, its C units with it. Nothing was encoded and no file
+written, which the kernel's gen-btf.sh takes as a failure.
+
+--- a/dwarf_loader.c
++++ b/dwarf_loader.c
+@@ -5098,28 +5098,41 @@
+ 				dcu->processing_alt = false;
+ 			}
+ 
+-			cu->language = attr_numeric(cu_die, DW_AT_language);
+-			cu->producer_clang = attr_producer_clang(cu_die);
+ 			cus__add(cus, cu);
+ 		}
+ 
+-		Dwarf_Die child;
+-		if (dwarf_child(cu_die, &child) == 0) {
+-			bool filtered = false;
++		bool filtered = false;
+ 
+-			if (conf->early_cu_filter) {
+-				struct cu unmerged_cu = {
+-					.name	  = attr_string(cu_die, DW_AT_name, conf),
+-					.language = attr_numeric(cu_die, DW_AT_language),
+-				};
++		if (conf->early_cu_filter) {
++			struct cu unmerged_cu = {
++				.name	  = attr_string(cu_die, DW_AT_name, conf),
++				.language = attr_numeric(cu_die, DW_AT_language),
++			};
+ 
+-				filtered = conf->early_cu_filter(&unmerged_cu) == NULL;
+-			}
++			filtered = conf->early_cu_filter(&unmerged_cu) == NULL;
++		}
+ 
+-			if (!filtered && die__process_unit(&child, cu, conf, 0) != 0)
+-				goto out_abort;
++		if (filtered) {
++			off = noff;
++			continue;
+ 		}
+ 
++		/*
++		 * The merged CU speaks for the units that went into it, so it
++		 * takes its language from the first one that did: a filtered
++		 * unit that happens to come first would have the whole merged
++		 * CU filtered as its language later on.
++		 */
++		if (cu->language == 0) {
++			cu->language = attr_numeric(cu_die, DW_AT_language);
++			cu->producer_clang = attr_producer_clang(cu_die);
++		}
++
++		Dwarf_Die child;
++		if (dwarf_child(cu_die, &child) == 0 &&
++		    die__process_unit(&child, cu, conf, 0) != 0)
++			goto out_abort;
++
+ 		off = noff;
+ 	}
+ 
