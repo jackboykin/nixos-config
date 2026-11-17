@@ -29,7 +29,7 @@ pin: final: _: let
 in {
   linux-orion = final.linuxManualConfig {
     inherit version src stdenv configfile;
-    # lore.kernel.org/all/20261105031530.280442-1-tianyaxiong@kylinos.cn; drop once a fix is merged
+    # lore.kernel.org/all/20261105031530.280442-1-tianyaxiong@kylinos.cn, back to is_mapping_symbol for 7.3; drop once a fix is merged
     kernelPatches = with final.kernelPatches; [
       bridge_stp_helper
       request_key_helper

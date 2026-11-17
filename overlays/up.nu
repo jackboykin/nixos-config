@@ -82,7 +82,7 @@ def signed-tag [git: string, sha: string, name: string, signer: string]: nothing
 
 def korg [repo: string, signer: string, --prefix: string = ""]: nothing -> record {
   let url = $"https://git.kernel.org/pub/scm/linux/kernel/git/($repo).git"
-  let refs = ^git -c versionsort.suffix=-rc ls-remote --tags --sort=-v:refname $url $"($prefix)*" | lines | parse "{sha}\trefs/tags/{name}"
+  let refs = ^git ls-remote --tags --sort=-v:refname $url $"($prefix)*" | lines | parse "{sha}\trefs/tags/{name}" | where name !~ '-rc'
   let tag = $refs | where name !~ '\^\{\}$' | first
   let commit = $refs | where name == $"($tag.name)^{}" | first | get sha
   let hint = fetch $"($url)/commit/?id=($commit)" | parse -r "<th>tree</th><td[^>]*><a[^>]*>(?<sha>[0-9a-f]{40})" | first | get sha
@@ -179,10 +179,10 @@ def mesa [old] {
 }
 
 def linux [] {
-  let t = korg torvalds/linux torvalds --prefix v
+  let t = korg stable/linux linux --prefix v
   {
     version: $t.version
-    url: $"https://git.kernel.org/torvalds/t/linux-($t.version).tar.gz"
+    url: $"https://git.kernel.org/stable/t/linux-($t.version).tar.gz"
     hash: $t.hash
   }
 }

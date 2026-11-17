@@ -118,7 +118,7 @@ index c7d74b33d36d..255e813fe70e 100644
 +		const char *name = kallsyms->strtab + sym->st_name;
 +
 +		if (sym->st_shndx == SHN_UNDEF || !*name ||
-+		    is_ignored_kernel_symbol(name))
++		    is_mapping_symbol(name))
 +			continue;
 +
 +		syms->addr[nr++] = kallsyms_symbol_value(sym);

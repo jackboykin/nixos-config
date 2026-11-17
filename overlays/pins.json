@@ -20,9 +20,9 @@
     "rev": "275f7dea27924cdd34ab2e6c20e448b6bc4fab65"
   },
   "linux": {
-    "version": "7.4-rc3",
-    "url": "https://git.kernel.org/torvalds/t/linux-7.4-rc3.tar.gz",
-    "hash": "sha1-5aZDgveSb19gI+dMYiFvH5EXv4Q="
+    "version": "7.3.4",
+    "url": "https://git.kernel.org/stable/t/linux-7.3.4.tar.gz",
+    "hash": "sha1-0HwzHr9ay96ev5yuqerG4zsHrXc="
   },
   "linux-firmware": {
     "version": "20261019",
