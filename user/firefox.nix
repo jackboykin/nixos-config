@@ -15,6 +15,11 @@
 in {
   users.users.jack.packages = [pkgs.firefox-nightly];
 
+  environment.sessionVariables = {
+    MOZ_LEGACY_PROFILES = "1";
+    MOZ_ALLOW_DOWNGRADE = "1";
+  };
+
   castle.links = {
     ".config/mozilla/firefox/profiles.ini" = pkgs.writeText "profiles.ini" ''
       [General]
