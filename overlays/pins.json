@@ -5,14 +5,14 @@
     "hash": "sha256-v4zL+ysLgBWeD5ptFcVTF63YB3U028YTCj7bUvzLOVw="
   },
   "claude-code": {
-    "version": "2.1.325",
-    "url": "https://downloads.claude.ai/claude-code-releases/2.1.325/linux-x64/claude",
-    "hash": "sha256-DcT0qaFl/GB0bXroSJcS5fw1Lx561Osi5xQb0IEusM8="
+    "version": "2.1.326",
+    "url": "https://downloads.claude.ai/claude-code-releases/2.1.326/linux-x64/claude",
+    "hash": "sha256-trNkfZgRMNxE/GcIRq6Xts3lMf+2Z8+cTRfPyvs4yzc="
   },
   "firefox": {
     "version": "162.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-16-09-45-10-mozilla-central/firefox-162.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-iQwYSS7WLWM2SQHVC1gIx6P//O0LF6bCcOORro5fj0JNJIcyHFxAibTnHKCAAJKoofGsEUCzC6Aek53b+HV1Hg=="
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-16-20-42-39-mozilla-central/firefox-162.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-otkOPt3XdD0DW8tYWUrMWs4YHmsmz51C0wbnJTKz2dV+x3XVBX3Ex7qEjpnHrSOKGdSLpVw1aWEeP4egbGS9EA=="
   },
   "libplacebo": {
     "version": "7.387.0",
@@ -28,6 +28,11 @@
     "version": "20261019",
     "url": "https://gitlab.com/kernel-firmware/linux-firmware/-/archive/20261019/linux-firmware-20261019.tar.gz",
     "hash": "sha1-6iKf3Q/V9Pj9rNlTMKC6aY1U3k0="
+  },
+  "mesa": {
+    "version": "26.3.0",
+    "url": "https://archive.mesa3d.org/mesa-26.3.0.tar.xz",
+    "hash": "sha256-kdcpqmi7ieTshXhBMAu+kivLPlKx+XVmyoOTDTsoNDo="
   },
   "mpv": {
     "version": "0.42.0",
@@ -45,9 +50,9 @@
     "hash": "sha256-NYGGPjy8/Q/ODvxoLOfp6T2pZmipd3kdNWom0qfpsXo="
   },
   "zig-nightly": {
-    "version": "0.18.0-dev.1153+c62948217",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.1153+c62948217.tar.xz",
-    "hash": "sha256-64MlCjl+4IoL7D4D1B+7qU1ve1MH0THyrP0IOYl2ZIk="
+    "version": "0.18.0-dev.1156+0aab22eb3",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.1156+0aab22eb3.tar.xz",
+    "hash": "sha256-a+0u9c8ZsNq3NRnwNhdtwiJuhOEQZpJPI11a4+boc8E="
   },
   "zls": {
     "version": "0.17.0",

@@ -77,24 +77,6 @@
         "type": "github"
       }
     },
-    "mesa": {
-      "flake": false,
-      "locked": {
-        "host": "gitlab.freedesktop.org",
-        "lastModified": 1794823715,
-        "narHash": "sha256-RZfkLUBD7oDGcPdbILsH67YZ0iw22pbh9tD4N5PB7UI=",
-        "owner": "mesa",
-        "repo": "mesa",
-        "rev": "4fac8318e4a533ea8be4782ba3e0ddb8742b14e6",
-        "type": "gitlab"
-      },
-      "original": {
-        "host": "gitlab.freedesktop.org",
-        "owner": "mesa",
-        "repo": "mesa",
-        "type": "gitlab"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1794811116,
@@ -149,7 +131,6 @@
         "ffmpeg": "ffmpeg",
         "laminix": "laminix",
         "lanzaboote": "lanzaboote",
-        "mesa": "mesa",
         "nixpkgs": "nixpkgs",
         "quarry": "quarry",
         "rex": "rex",

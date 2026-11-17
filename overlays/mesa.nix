@@ -1,4 +1,4 @@
-src: final: prev: let
+pin: final: prev: let
   inherit (prev) lib;
 
   retuned = [
@@ -24,9 +24,9 @@ src: final: prev: let
     spirv-llvm-translator = null;
   };
 in {
-  mesa-main = mesa.overrideAttrs (o: {
-    version = lib.trim (builtins.readFile "${src}/VERSION");
-    inherit src;
+  mesa-orion = mesa.overrideAttrs (o: {
+    inherit (pin) version;
+    src = final.fetchurl {inherit (pin) url hash;};
 
     outputs = lib.subtractLists ["spirv2dxil" "opencl" "cross_tools"] o.outputs;
     depsBuildBuild = lib.remove final.buildPackages.stdenv.cc o.depsBuildBuild;

@@ -12,7 +12,7 @@ in [
   (import ./linux.nix pins.linux)
   (import ./linux-firmware.nix pins.linux-firmware)
   (import ./llvm.nix)
-  (import ./mesa.nix inputs.mesa)
+  (import ./mesa.nix pins.mesa)
   (import ./mpv.nix pins.mpv)
   (import ./rex.nix inputs.rex)
   (import ./zed.nix pins.zed)

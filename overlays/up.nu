@@ -167,6 +167,17 @@ def firefox [old] {
   }
 }
 
+def mesa [old] {
+  let root = "https://archive.mesa3d.org"
+  let version = fetch $"($root)/" | parse -r 'href="mesa-(?<v>\d+\.\d+\.\d+)\.tar\.xz"' | get v | sort --natural | last
+  let url = $"($root)/mesa-($version).tar.xz"
+  {
+    version: $version
+    url: $url
+    hash: (signed $url sha256 $old {|f| detached mesa $f $"($url).sig" })
+  }
+}
+
 def linux [] {
   let t = korg torvalds/linux torvalds --prefix v
   {
@@ -239,6 +250,7 @@ def main [] {
     libplacebo: {|| gh-tag haasn/libplacebo libplacebo}
     linux: {|| linux}
     linux-firmware: {|| linux-firmware}
+    mesa: {|| mesa ($old | get -o mesa)}
     mpv: {|| gh-tag mpv-player/mpv mpv}
     zed: {|| zed}
     zig: {|| zigpin $z.stable zig ($old | get -o zig)}

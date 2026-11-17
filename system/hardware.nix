@@ -3,7 +3,7 @@
 
   hardware = {
     cpu.amd.updateMicrocode = true;
-    graphics.package = pkgs.mesa-main;
+    graphics.package = pkgs.mesa-orion;
     firmware = [
       (pkgs.runCommand "linux-firmware-orion" {} ''
         mkdir -p $out/lib/firmware
