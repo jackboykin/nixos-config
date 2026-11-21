@@ -85,7 +85,7 @@
         ''}
         ${lib.optionalString (bus == []) "exec "}${lib.optionalString (net == "own") "pasta --config-net --quiet --no-map-gw -t none -u none -T none -U none -- "}bwrap \
           --unshare-all --unshare-user ${lib.optionalString (net != "none") "--share-net"} ${lib.optionalString (!lib.any (part: part.userns) parts) "--disable-userns"} --die-with-parent \
-          --uid "$(id -u)" --gid "$(id -g)" \
+          --uid "$(id -u)" --gid "$(id -g)" --hostname "$HOSTNAME" \
           --clearenv \
           --setenv HOME "$HOME" --setenv USER "$USER" --setenv LOGNAME "$USER" \
           --setenv PATH "/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin" \
