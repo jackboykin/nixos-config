@@ -8,7 +8,7 @@ _: {
     "vm.dirty_background_bytes" = 67108864;
     "vm.vfs_cache_pressure" = 50;
 
-    "kernel.sysrq" = 240;
+    "kernel.sysrq" = 496;
 
     "fs.protected_fifos" = 2;
     "fs.protected_regular" = 2;

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   boot = {
     kernelPackages = pkgs.linuxPackagesFor pkgs.linux-orion;
     kernelParams = [
@@ -27,6 +31,12 @@
     etc.overlay.enable = true;
   };
 
-  systemd.tpm2.enable = false;
+  systemd = {
+    tpm2.enable = false;
+    services.scx = {
+      wantedBy = ["multi-user.target"];
+      serviceConfig.ExecStart = lib.getExe' pkgs.scx.rustscheds "scx_cosmos";
+    };
+  };
   services.lvm.enable = false;
 }
