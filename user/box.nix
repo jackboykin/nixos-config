@@ -134,7 +134,7 @@ in {
     box = {
       wayland = {
         ro = ["$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY"];
-        env = ["WAYLAND_DISPLAY" "XCURSOR_PATH" "XDG_ACTIVATION_TOKEN"];
+        env = ["WAYLAND_DISPLAY" "XCURSOR_PATH" "XDG_ACTIVATION_TOKEN" "XDG_SESSION_TYPE"];
       };
 
       gtk = {
