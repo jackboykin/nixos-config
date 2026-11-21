@@ -18,9 +18,12 @@ pin: final: prev: let
   ];
   untouched = flag: !lib.any (k: lib.hasPrefix "-D${k}=" flag) retuned;
 
+  llvm = final.llvmPackages_latest;
+
   mesa = final.mesa.override {
     stdenv = final.llvmStdenv;
-    llvmPackages = final.llvmPackages_latest;
+    llvmPackages = llvm;
+    mesa-libclc = null;
     spirv-llvm-translator = null;
   };
 in {
@@ -30,12 +33,15 @@ in {
 
     outputs = lib.subtractLists ["spirv2dxil" "opencl" "cross_tools"] o.outputs;
     depsBuildBuild = lib.remove final.buildPackages.stdenv.cc o.depsBuildBuild;
+    buildInputs = lib.subtractLists [llvm.clang llvm.clang-unwrapped llvm.libllvm] o.buildInputs;
+    preConfigure = "";
 
     mesonFlags =
       lib.filter untouched o.mesonFlags
       ++ [
-        "-Dgallium-drivers=radeonsi,llvmpipe,zink"
-        "-Dvulkan-drivers=amd,swrast"
+        "-Dllvm=disabled"
+        "-Dgallium-drivers=radeonsi,zink"
+        "-Dvulkan-drivers=amd"
         "-Dvulkan-layers=device-select"
       ];
 
