@@ -1,5 +1,7 @@
 _: {
   programs.ssh.extraConfig = ''
+    HostKeyAlgorithms -rsa-sha2-*
+
     Host opnsense
       HostName 192.168.1.1
       User root
