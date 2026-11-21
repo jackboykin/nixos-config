@@ -13,7 +13,21 @@
     "font.name.monospace.x-western" = theme.fonts.mono;
   };
 in {
-  users.users.jack.packages = [pkgs.firefox-nightly];
+  box.firefox-nightly = {
+    package = pkgs.firefox-nightly;
+    use = ["wayland" "gtk" "gpu" "audio" "fido"];
+    rw = [".cache/mozilla" ".config/mozilla" "Downloads"];
+    env = ["MOZ_ALLOW_DOWNGRADE" "MOZ_LEGACY_PROFILES"];
+    bus = [
+      "own=org.mozilla.firefox.*"
+      "own=org.mpris.MediaPlayer2.firefox.*"
+      "talk=org.freedesktop.Notifications"
+      "call=org.freedesktop.portal.Desktop=org.freedesktop.portal.Settings.*"
+      "broadcast=org.freedesktop.portal.Desktop=org.freedesktop.portal.Settings.*"
+    ];
+    net = "own";
+    userns = true;
+  };
 
   environment.sessionVariables = {
     MOZ_LEGACY_PROFILES = "1";
