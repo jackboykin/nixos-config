@@ -1,18 +1,18 @@
 {
   "bun": {
-    "version": "1.4.4",
-    "url": "https://github.com/oven-sh/bun/releases/download/bun-v1.4.4/bun-linux-x64.zip",
-    "hash": "sha256-v4zL+ysLgBWeD5ptFcVTF63YB3U028YTCj7bUvzLOVw="
+    "version": "1.4.5",
+    "url": "https://github.com/oven-sh/bun/releases/download/bun-v1.4.5/bun-linux-x64.zip",
+    "hash": "sha256-lFWbO1KJlaSUUvnyQEzsdPLv19BuCgAKjNIUsCw2Zus="
   },
   "claude-code": {
-    "version": "2.1.327",
-    "url": "https://downloads.claude.ai/claude-code-releases/2.1.327/linux-x64/claude",
-    "hash": "sha256-NDx0S6oUv9OChqfLkIcQUfBDeZVtpsW4A6nmYBmnask="
+    "version": "2.1.330",
+    "url": "https://downloads.claude.ai/claude-code-releases/2.1.330/linux-x64/claude",
+    "hash": "sha256-85DqoIFOahv/dMu0est0y5yJ0wztgJ/gr1rwDHv+jrs="
   },
   "firefox": {
-    "version": "162.0a1",
-    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-17-19-33-37-mozilla-central/firefox-162.0a1.en-US.linux-x86_64.tar.xz",
-    "hash": "sha512-se0ZJRoA599WTPcGOilEr0ayCP0et1gaBF9rHm3ExaNLRWh+0e9DhRbfwTHkuH9yOll4f/nxNG9v+Rju60qCKQ=="
+    "version": "163.0a1",
+    "url": "https://archive.mozilla.org/pub/firefox/nightly/2026/11/2026-11-20-21-34-02-mozilla-central/firefox-163.0a1.en-US.linux-x86_64.tar.xz",
+    "hash": "sha512-h7PIA20JJoYRIc1qiEElextuhT/pgpEMgngh5F9IEW89hQehAJnUTg2PR4uxiJBKSMxwOqfLd3mmNjnXO1z6BA=="
   },
   "libplacebo": {
     "version": "7.387.0",
@@ -29,10 +29,15 @@
     "url": "https://gitlab.com/kernel-firmware/linux-firmware/-/archive/20261019/linux-firmware-20261019.tar.gz",
     "hash": "sha1-6iKf3Q/V9Pj9rNlTMKC6aY1U3k0="
   },
+  "llvm": {
+    "version": "23.1.6",
+    "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.6/LLVM-23.1.6-Linux-X64.tar.zst",
+    "hash": "sha256-WeFCNPFFkn+YK1Bifouvry/KUBUbfZc9agtAeW3c/po="
+  },
   "mesa": {
-    "version": "26.3.0",
-    "url": "https://archive.mesa3d.org/mesa-26.3.0.tar.xz",
-    "hash": "sha256-kdcpqmi7ieTshXhBMAu+kivLPlKx+XVmyoOTDTsoNDo="
+    "version": "26.3.1",
+    "url": "https://archive.mesa3d.org/mesa-26.3.1.tar.xz",
+    "hash": "sha256-Tk5Djqx7hAqTg5iMu3wI2tgEHaVEuTGfwm0xn6c0iWE="
   },
   "mpv": {
     "version": "0.42.0",
@@ -40,9 +45,9 @@
     "rev": "b0841e8c4d156b8403dc1876c4cbd9011eb583f3"
   },
   "zed": {
-    "version": "1.29.1-pre",
-    "url": "https://github.com/zed-industries/zed/releases/download/v1.29.1-pre/zed-linux-x86_64.tar.gz",
-    "hash": "sha256-qAb0Bp6eecaCsBXpHZev1LUCyP+Pxu2NG53zUqJIizU="
+    "version": "1.30.2-pre",
+    "url": "https://github.com/zed-industries/zed/releases/download/v1.30.2-pre/zed-linux-x86_64.tar.gz",
+    "hash": "sha256-FYjhcPu8lF1wYr5+aGPCbCgsgBOdXtF+hFGd/aR9UWA="
   },
   "zig": {
     "version": "0.17.1",
@@ -50,9 +55,9 @@
     "hash": "sha256-NYGGPjy8/Q/ODvxoLOfp6T2pZmipd3kdNWom0qfpsXo="
   },
   "zig-nightly": {
-    "version": "0.18.0-dev.1180+2e9bb03df",
-    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.1180+2e9bb03df.tar.xz",
-    "hash": "sha256-7dluvUoz93EH1eCl0BGSal28X9Yf2kLdzOQ/Z8WdGjs="
+    "version": "0.18.0-dev.1260+833623422",
+    "url": "https://ziglang.org/builds/zig-x86_64-linux-0.18.0-dev.1260+833623422.tar.xz",
+    "hash": "sha256-BTsgw8fcl9jA1Xbr8Z5tt4+L3/GqTZX2YMA3zTuUufc="
   },
   "zls": {
     "version": "0.17.0",

@@ -11,7 +11,7 @@ in [
   (import ./libplacebo.nix pins.libplacebo)
   (import ./linux.nix pins.linux)
   (import ./linux-firmware.nix pins.linux-firmware)
-  (import ./llvm.nix)
+  (import ./llvm.nix pins.llvm)
   (import ./mesa.nix pins.mesa)
   (import ./mpv.nix pins.mpv)
   (import ./rex.nix inputs.rex)

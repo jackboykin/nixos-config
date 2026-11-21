@@ -78,7 +78,7 @@ in {
         yazi
         libfido2
 
-        llvmPackages_latest.clang
+        clang-release
         go
         python3
         (rust-bin.stable.latest.minimal.override {
@@ -92,7 +92,7 @@ in {
         alejandra
         ast-grep
         bash-language-server
-        llvmPackages_latest.clang-tools
+        clang-tools-release
         nixd
         ruff
         ty

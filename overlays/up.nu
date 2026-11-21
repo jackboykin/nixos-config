@@ -196,6 +196,17 @@ def linux-firmware [] {
   }
 }
 
+def llvm [] {
+  let r = gh-release llvm/llvm-project
+  let version = $r.tag_name | str replace "llvmorg-" ""
+  let a = $r.assets | where name == $"LLVM-($version)-Linux-X64.tar.zst" | first
+  {
+    version: $version
+    url: $a.browser_download_url
+    hash: ($a.digest | str replace "sha256:" "" | sri sha256)
+  }
+}
+
 def zigpin [m: record, signer: string, old]: nothing -> record {
   let url = $m | get x86_64-linux.tarball
   {
@@ -250,6 +261,7 @@ def main [] {
     libplacebo: {|| gh-tag haasn/libplacebo libplacebo}
     linux: {|| linux}
     linux-firmware: {|| linux-firmware}
+    llvm: {|| llvm}
     mesa: {|| mesa ($old | get -o mesa)}
     mpv: {|| gh-tag mpv-player/mpv mpv}
     zed: {|| zed}
