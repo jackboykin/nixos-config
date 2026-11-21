@@ -44,9 +44,16 @@
       text = ''
         args=()
         bind() {
-          local flag=$1 path
+          local flag=$1 path root
           shift
           for path; do
+            root=''${path%/}
+            case $HOME/ in
+              "$root"/*)
+                echo "box: $path holds too much to share" >&2
+                exit 1
+                ;;
+            esac
             if [ -e "$path" ]; then
               args+=("$flag" "$path" "$path")
             fi
@@ -138,6 +145,16 @@ in {
       gpu.ro = ["/dev/dri" "/run/opengl-driver" "/sys/dev/char" "/sys/devices"];
       audio.ro = ["$XDG_RUNTIME_DIR/pipewire-0" "$XDG_RUNTIME_DIR/pulse"];
       fido.ro = ["/dev/hidraw*" "/sys/class/hidraw" "/sys/devices"];
+      castle.ro = lib.attrNames config.castle.links;
+
+      jail = {
+        package = pkgs.writeShellScriptBin "jail" ''exec "''${@:-$SHELL}"'';
+        use = ["castle"];
+        ro = ["$PWD/.git" "/nix/var/nix"];
+        rw = ["$PWD"];
+        env = ["COLORTERM" "EDITOR" "PAGER" "SHELL" "VISUAL"];
+        net = "own";
+      };
     };
 
     users.users.jack.packages =
