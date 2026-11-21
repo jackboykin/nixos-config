@@ -35,6 +35,7 @@ in {
     ./quarry.nix
     ./rex.nix
     ./run0.nix
+    ./spotify.nix
     ./ssh.nix
     ./vesktop.nix
     ./zoxide.nix
@@ -53,7 +54,6 @@ in {
       ];
       packages = with pkgs; [
         obsidian
-        spotify
         zed-editor
 
         aspell
