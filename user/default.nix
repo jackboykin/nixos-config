@@ -19,6 +19,7 @@
 in {
   imports = [
     ./castle.nix
+    ./box.nix
     ./btop.nix
     ./carapace.nix
     ./fetch.nix
