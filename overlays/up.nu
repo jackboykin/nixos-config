@@ -230,7 +230,7 @@ def zig-index [] {
   {stable: ($index | get $stable), nightly: $index.master}
 }
 
-def zls [zig_version: string, old: record] {
+def zls [zig_version: string, old] {
   let v = $zig_version | url encode
   let m = fetch $"https://releases.zigtools.org/v1/zls/select-version?zig_version=($v)&compatibility=full" | from json
   if "message" in $m {
@@ -276,7 +276,7 @@ def main [] {
     zed: {|| zed}
     zig: {|| zigpin $z.stable zig ($old | get -o zig)}
     zig-nightly: {|| zigpin $z.nightly zig ($old | get -o zig-nightly)}
-    zls: {|| zls $z.stable.version $old.zls}
+    zls: {|| zls $z.stable.version ($old | get -o zls)}
   }
   $new | to json | $"($in)\n" | save -f $path
 }
