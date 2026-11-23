@@ -127,6 +127,9 @@ in {
 
     ".npmrc" = pkgs.writeText "npmrc" "ignore-scripts=true\n";
 
+    ".claude/CLAUDE.md" = "${home}/.grimoire/rules.md";
+    ".gemini/GEMINI.md" = "${home}/.grimoire/rules.md";
+
     ".config/baloofilerc" = pkgs.writeText "baloofilerc" ''
       [Basic Settings]
       Indexing-Enabled=false
