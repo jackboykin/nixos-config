@@ -104,6 +104,13 @@ in {
         yaml-language-server
         zig-zlint
 
+        cadical
+        drat-trim
+        elan
+        kissat
+        lean-lsp-mcp
+        nauty
+
         dnsutils
         nmap
         rustnet
