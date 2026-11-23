@@ -101,7 +101,7 @@ def korg [repo: string, signer: string, --prefix: string = ""]: nothing -> recor
 }
 
 def gh-release [repo: string, --pre]: nothing -> record {
-  fetch $"https://api.github.com/repos/($repo)/releases" | from json | where prerelease == $pre | first
+  fetch $"https://api.github.com/repos/($repo)/releases?per_page=10" | from json | where prerelease == $pre and draft == false | sort-by --natural tag_name | last
 }
 
 def gh-tag [repo: string, signer: string]: nothing -> record {
