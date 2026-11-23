@@ -129,6 +129,8 @@ in {
 
     ".claude/CLAUDE.md" = "${home}/.grimoire/rules.md";
     ".gemini/GEMINI.md" = "${home}/.grimoire/rules.md";
+    ".claude/skills" = "${home}/.grimoire/skills";
+    ".gemini/config/skills" = "${home}/.grimoire/skills";
 
     ".config/baloofilerc" = pkgs.writeText "baloofilerc" ''
       [Basic Settings]
