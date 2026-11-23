@@ -14,6 +14,7 @@ in [
   (import ./llvm.nix pins.llvm)
   (import ./mesa.nix pins.mesa)
   (import ./mpv.nix pins.mpv)
+  (import ./python.nix pins.python)
   (import ./rex.nix inputs.rex)
   (import ./uv.nix pins.uv)
   (import ./zed.nix pins.zed)

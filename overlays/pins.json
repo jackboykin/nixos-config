@@ -46,6 +46,11 @@
     "rev": "b0841e8c4d156b8403dc1876c4cbd9011eb583f3",
     "hash": "sha256-kOVHFAuwGpV+Zz04FnzvjPq2tmEpvSDkHWUXoinEeSQ="
   },
+  "python": {
+    "version": "3.15.2",
+    "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261123/cpython-3.15.2%2B20261123-x86_64_v4-unknown-linux-gnu-install_only_stripped.tar.gz",
+    "hash": "sha256-KtLWklLCvH05F2frIjpZCn8vV6eBAtdI0/7OKzyb38g="
+  },
   "uv": {
     "version": "0.13.9",
     "url": "https://github.com/astral-sh/uv/releases/download/0.13.9/uv-x86_64-unknown-linux-musl.tar.gz",
