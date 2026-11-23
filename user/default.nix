@@ -37,6 +37,7 @@ in {
     ./run0.nix
     ./spotify.nix
     ./ssh.nix
+    ./uv.nix
     ./vesktop.nix
     ./zoxide.nix
   ];
