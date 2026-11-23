@@ -112,6 +112,16 @@ def gh-release [repo: string, --pre]: nothing -> record {
   fetch $"https://api.github.com/repos/($repo)/releases?per_page=10" | from json | where prerelease == $pre and draft == false | sort-by --natural tag_name | last
 }
 
+def gh-digest [repo: string, asset: string, --pre]: nothing -> record {
+  let r = gh-release $repo --pre=$pre
+  let a = $r.assets | where name =~ $"^($asset)$" | insert v {|a| $a.name | parse -r $asset | get 0?.v? | default ($r.tag_name | str replace -r '^\D+' "") } | sort-by --natural v | last
+  {
+    version: $a.v
+    url: $a.browser_download_url
+    hash: ($a.digest | str replace "sha256:" "" | sri sha256)
+  }
+}
+
 def gh-tag [repo: string, signer: string]: nothing -> record {
   let url = $"https://github.com/($repo)"
   let tag = hush git ls-remote --tags --refs --sort=-v:refname $url "v*" | lines | parse "{sha}\trefs/tags/{name}" | where name =~ '^v[\d.]+$' | first
@@ -132,16 +142,6 @@ def bun [] {
     version: ($r.tag_name | str replace -r '^\D+' "")
     url: $"($base)/($file)"
     hash: ($sums | lines | parse "{sha}  {name}" | where name == $file | first | get sha | sri sha256)
-  }
-}
-
-def zed [] {
-  let r = gh-release --pre zed-industries/zed
-  let a = $r.assets | where name == zed-linux-x86_64.tar.gz | first
-  {
-    version: ($r.tag_name | str replace -r '^\D+' "")
-    url: $a.browser_download_url
-    hash: ($a.digest | str replace "sha256:" "" | sri sha256)
   }
 }
 
@@ -204,17 +204,6 @@ def linux-firmware [] {
   }
 }
 
-def llvm [] {
-  let r = gh-release llvm/llvm-project
-  let version = $r.tag_name | str replace "llvmorg-" ""
-  let a = $r.assets | where name == $"LLVM-($version)-Linux-X64.tar.zst" | first
-  {
-    version: $version
-    url: $a.browser_download_url
-    hash: ($a.digest | str replace "sha256:" "" | sri sha256)
-  }
-}
-
 def zigpin [m: record, signer: string, old]: nothing -> record {
   let url = $m | get x86_64-linux.tarball
   {
@@ -249,7 +238,7 @@ def line [name: string, width: int, was, now: record]: nothing -> string {
   }
 }
 
-def parallel [old: record, pins: record]: nothing -> record {
+def fetch-all [old: record, pins: record]: nothing -> record {
   let width = $pins | columns | each { str length } | math max
   $pins | transpose name fetch | par-each --keep-order {|p|
     let v = try { do $p.fetch } catch {|e| error make -u {msg: $"($p.name): ($e.msg)"} }
@@ -263,17 +252,17 @@ def main [] {
   let old = open $path
   let z = zig-index
   $env.GH_TOKEN = try { hush gh auth token | str trim } catch { "" }
-  let new = parallel $old {
+  let new = fetch-all $old {
     bun: {|| bun}
     claude-code: {|| claude-code}
     firefox: {|| firefox ($old | get -o firefox)}
     libplacebo: {|| gh-tag haasn/libplacebo libplacebo}
     linux: {|| linux}
     linux-firmware: {|| linux-firmware}
-    llvm: {|| llvm}
+    llvm: {|| gh-digest llvm/llvm-project 'LLVM-(?<v>[\d.]+)-Linux-X64\.tar\.zst'}
     mesa: {|| mesa ($old | get -o mesa)}
     mpv: {|| gh-tag mpv-player/mpv mpv}
-    zed: {|| zed}
+    zed: {|| gh-digest --pre zed-industries/zed 'zed-linux-x86_64\.tar\.gz'}
     zig: {|| zigpin $z.stable zig ($old | get -o zig)}
     zig-nightly: {|| zigpin $z.nightly zig ($old | get -o zig-nightly)}
     zls: {|| zls $z.stable.version ($old | get -o zls)}
