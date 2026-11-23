@@ -82,7 +82,7 @@ in {
 
         clang-release
         go
-        python3
+        python-release
         (rust-bin.stable.latest.minimal.override {
           extensions = ["clippy" "rustfmt" "rust-analyzer" "rust-src"];
         })
