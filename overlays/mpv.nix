@@ -2,11 +2,7 @@ pin: final: _: {
   mpv-release = final.llvmStdenv.mkDerivation {
     pname = "mpv";
     inherit (pin) version;
-    src = fetchGit {
-      inherit (pin) url rev;
-      ref = "refs/tags/v${pin.version}";
-      shallow = true;
-    };
+    src = final.fetchgit {inherit (pin) url rev hash;};
 
     strictDeps = true;
     mesonBuildType = "release";

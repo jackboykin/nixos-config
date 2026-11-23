@@ -2,10 +2,9 @@ pin: final: _: {
   libplacebo-release = final.llvmStdenv.mkDerivation {
     pname = "libplacebo";
     inherit (pin) version;
-    src = fetchGit {
-      inherit (pin) url rev;
-      ref = "refs/tags/v${pin.version}";
-      shallow = true;
+    src = final.fetchgit {
+      inherit (pin) url rev hash;
+      fetchSubmodules = false;
     };
 
     strictDeps = true;

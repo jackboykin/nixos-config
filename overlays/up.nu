@@ -122,7 +122,7 @@ def gh-digest [repo: string, asset: string, --pre]: nothing -> record {
   }
 }
 
-def gh-tag [repo: string, signer: string]: nothing -> record {
+def gh-tag [repo: string, signer: string, old]: nothing -> record {
   let url = $"https://github.com/($repo)"
   let tag = hush git ls-remote --tags --refs --sort=-v:refname $url "v*" | lines | parse "{sha}\trefs/tags/{name}" | where name =~ '^v[\d.]+$' | first
   let rev = scratch --dir {|git|
@@ -130,7 +130,10 @@ def gh-tag [repo: string, signer: string]: nothing -> record {
     hush git -C $git fetch -q --depth=1 --filter=tree:0 $url $tag.sha
     signed-tag $git $tag.sha $tag.name $signer
   }
-  {version: ($tag.name | str substring 1..), url: $url, rev: $rev}
+  let hash = if $rev == $old.rev? and ($old.hash? | is-not-empty) { $old.hash } else {
+    hush nix flake prefetch --json $"git+($url)?ref=refs/tags/($tag.name)&rev=($rev)&shallow=1" | from json | get hash
+  }
+  {version: ($tag.name | str substring 1..), url: $url, rev: $rev, hash: $hash}
 }
 
 def bun [] {
@@ -256,12 +259,12 @@ def main [] {
     bun: {|| bun}
     claude-code: {|| claude-code}
     firefox: {|| firefox ($old | get -o firefox)}
-    libplacebo: {|| gh-tag haasn/libplacebo libplacebo}
+    libplacebo: {|| gh-tag haasn/libplacebo libplacebo ($old | get -o libplacebo)}
     linux: {|| linux}
     linux-firmware: {|| linux-firmware}
     llvm: {|| gh-digest llvm/llvm-project 'LLVM-(?<v>[\d.]+)-Linux-X64\.tar\.zst'}
     mesa: {|| mesa ($old | get -o mesa)}
-    mpv: {|| gh-tag mpv-player/mpv mpv}
+    mpv: {|| gh-tag mpv-player/mpv mpv ($old | get -o mpv)}
     zed: {|| gh-digest --pre zed-industries/zed 'zed-linux-x86_64\.tar\.gz'}
     zig: {|| zigpin $z.stable zig ($old | get -o zig)}
     zig-nightly: {|| zigpin $z.nightly zig ($old | get -o zig-nightly)}
