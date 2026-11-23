@@ -46,6 +46,11 @@
     "rev": "b0841e8c4d156b8403dc1876c4cbd9011eb583f3",
     "hash": "sha256-kOVHFAuwGpV+Zz04FnzvjPq2tmEpvSDkHWUXoinEeSQ="
   },
+  "uv": {
+    "version": "0.13.9",
+    "url": "https://github.com/astral-sh/uv/releases/download/0.13.9/uv-x86_64-unknown-linux-musl.tar.gz",
+    "hash": "sha256-WMz18XkrilqI0BvJEOoTGos9tKMZoXrV+tdeCEWj4nE="
+  },
   "zed": {
     "version": "1.30.2-pre",
     "url": "https://github.com/zed-industries/zed/releases/download/v1.30.2-pre/zed-linux-x86_64.tar.gz",

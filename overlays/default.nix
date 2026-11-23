@@ -15,6 +15,7 @@ in [
   (import ./mesa.nix pins.mesa)
   (import ./mpv.nix pins.mpv)
   (import ./rex.nix inputs.rex)
+  (import ./uv.nix pins.uv)
   (import ./zed.nix pins.zed)
   (import ./zig.nix {inherit (pins) zig zig-nightly zls;})
 ]

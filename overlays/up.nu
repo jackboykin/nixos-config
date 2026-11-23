@@ -265,6 +265,7 @@ def main [] {
     llvm: {|| gh-digest llvm/llvm-project 'LLVM-(?<v>[\d.]+)-Linux-X64\.tar\.zst'}
     mesa: {|| mesa ($old | get -o mesa)}
     mpv: {|| gh-tag mpv-player/mpv mpv ($old | get -o mpv)}
+    uv: {|| gh-digest astral-sh/uv 'uv-x86_64-unknown-linux-musl\.tar\.gz'}
     zed: {|| gh-digest --pre zed-industries/zed 'zed-linux-x86_64\.tar\.gz'}
     zig: {|| zigpin $z.stable zig ($old | get -o zig)}
     zig-nightly: {|| zigpin $z.nightly zig ($old | get -o zig-nightly)}
