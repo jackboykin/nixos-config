@@ -11,6 +11,13 @@ def fetch [url: string] {
   curl -sSfL --connect-timeout 10 --speed-time 15 --speed-limit 1 --retry 2 --retry-all-errors ...$auth $url
 }
 
+def scratch [body: closure, --dir] {
+  let p = if $dir { mktemp -d } else { mktemp -t }
+  let r = try { do $body $p } catch {|e| rm -rf $p; error make -u {msg: $e.msg} }
+  rm -rf $p
+  $r
+}
+
 def --wrapped hush [cmd: string, ...args]: any -> string {
   let r = $in | ^$cmd ...$args | complete
   if $r.exit_code != 0 { error make -u {msg: $"($cmd): ($r.stderr | str trim)"} }
@@ -30,17 +37,17 @@ def inline [signer: string]: any -> string {
 }
 
 def detached [signer: string, file: string, sig: string] {
-  let s = mktemp -t
-  fetch $sig | save -f $s
-  open --raw $file | pgp $signer $s
-  rm $s
+  scratch {|s|
+    fetch $sig | save -f $s
+    open --raw $file | pgp $signer $s
+  }
 }
 
 def minisigned [signer: string, url: string, file: string] {
-  let s = mktemp -t
-  fetch $"($url).minisig" | save -f $s
-  let comment = hush minisign -V -Q -p (key $"($signer).pub") -m $file -x $s
-  rm $s
+  let comment = scratch {|s|
+    fetch $"($url).minisig" | save -f $s
+    hush minisign -V -Q -p (key $"($signer).pub") -m $file -x $s
+  }
   let name = $comment | parse -r 'file:(?<name>[^\t\n]+)' | get 0?.name
   if $name != ($url | path basename) { error make -u {msg: $"signature is for ($name)"} }
 }
@@ -83,7 +90,7 @@ def signed-tag [git: string, sha: string, name: string, signer: string]: nothing
 
 def korg [repo: string, signer: string, --prefix: string = ""]: nothing -> record {
   let url = $"https://git.kernel.org/pub/scm/linux/kernel/git/($repo).git"
-  let refs = ^git ls-remote --tags --sort=-v:refname $url $"($prefix)*" | lines | parse "{sha}\trefs/tags/{name}" | where name !~ '-rc'
+  let refs = hush git ls-remote --tags --sort=-v:refname $url $"($prefix)*" | lines | parse "{sha}\trefs/tags/{name}" | where name !~ '-rc'
   let tag = $refs | where name !~ '\^\{\}$' | first
   let commit = $refs | where name == $"($tag.name)^{}" | first | get sha
   let hint = fetch $"($url)/commit/?id=($commit)" | parse -r "<th>tree</th><td[^>]*><a[^>]*>(?<sha>[0-9a-f]{40})" | first | get sha
@@ -92,12 +99,12 @@ def korg [repo: string, signer: string, --prefix: string = ""]: nothing -> recor
     (pkt $"want ($tag.sha)\n") (pkt $"have ($hint)\n") (pkt "done\n") "0000"
   ]
   let pack = $request | str join | ^curl -sSf --max-filesize 1M -H "Content-Type: application/x-git-upload-pack-request" -H "Git-Protocol: version=2" --data-binary @- $"($url)/git-upload-pack" | into binary | unband
-  let git = mktemp -d
-  hush git init -q $git
-  $pack | hush git -C $git index-pack --stdin
-  let commit = signed-tag $git $tag.sha $tag.name $signer
-  let tree = hush git -C $git cat-file commit $commit | lines | first | parse "tree {sha}" | get 0.sha
-  rm -r $git
+  let tree = scratch --dir {|git|
+    hush git init -q $git
+    $pack | hush git -C $git index-pack --stdin
+    let commit = signed-tag $git $tag.sha $tag.name $signer
+    hush git -C $git cat-file commit $commit | lines | first | parse "tree {sha}" | get 0.sha
+  }
   {version: ($tag.name | str replace -r $"^($prefix)" ""), hash: ($tree | sri sha1)}
 }
 
@@ -107,12 +114,12 @@ def gh-release [repo: string, --pre]: nothing -> record {
 
 def gh-tag [repo: string, signer: string]: nothing -> record {
   let url = $"https://github.com/($repo)"
-  let tag = ^git ls-remote --tags --refs --sort=-v:refname $url "v*" | lines | parse "{sha}\trefs/tags/{name}" | where name =~ '^v[\d.]+$' | first
-  let git = mktemp -d
-  hush git init -q $git
-  hush git -C $git fetch -q --depth=1 --filter=tree:0 $url $tag.sha
-  let rev = signed-tag $git $tag.sha $tag.name $signer
-  rm -r $git
+  let tag = hush git ls-remote --tags --refs --sort=-v:refname $url "v*" | lines | parse "{sha}\trefs/tags/{name}" | where name =~ '^v[\d.]+$' | first
+  let rev = scratch --dir {|git|
+    hush git init -q $git
+    hush git -C $git fetch -q --depth=1 --filter=tree:0 $url $tag.sha
+    signed-tag $git $tag.sha $tag.name $signer
+  }
   {version: ($tag.name | str substring 1..), url: $url, rev: $rev}
 }
 
@@ -142,11 +149,11 @@ def claude-code [] {
   let base = "https://downloads.claude.ai/claude-code-releases"
   let next = fetch https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/next | from json | get version
   let version = [$next (fetch $"($base)/latest" | str trim)] | sort --natural | last
-  let m = mktemp -t
-  fetch $"($base)/($version)/manifest.json" | save -f $m
-  detached anthropic $m $"($base)/($version)/manifest.json.sig"
-  let manifest = open --raw $m | from json
-  rm $m
+  let manifest = scratch {|m|
+    fetch $"($base)/($version)/manifest.json" | save -f $m
+    detached anthropic $m $"($base)/($version)/manifest.json.sig"
+    open --raw $m | from json
+  }
   if $manifest.version != $version { error make -u {msg: $"manifest is for ($manifest.version)"} }
   {
     version: $version
