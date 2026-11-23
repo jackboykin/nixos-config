@@ -8,7 +8,7 @@ in {
     src = final.fetchurl {inherit (pin) url hash;};
 
     nativeBuildInputs = [final.autoPatchelfHook final.makeBinaryWrapper];
-    buildInputs = with final; [stdenv.cc.cc.lib alsa-lib glib libxkbcommon libX11 libxcb];
+    buildInputs = with final; [stdenv.cc.cc.lib alsa-lib glib libxkbcommon libx11 libxcb];
 
     runtimeDependencies = [final.libGL final.vulkan-loader final.wayland];
 
