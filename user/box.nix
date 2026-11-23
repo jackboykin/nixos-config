@@ -17,6 +17,7 @@
     all = attr: lib.unique (lib.concatMap (part: part.${attr}) parts);
     net = lib.last (lib.filter (net: lib.any (part: part.net == net) parts) nets);
     bus = all "bus";
+    fhs = lib.any (part: part.fhs) parts;
 
     host = path:
       if lib.hasPrefix "/" path || lib.hasPrefix "$" path
@@ -65,6 +66,9 @@
             args+=(--setenv "$name" "''${!name}")
           fi
         done
+        ${lib.optionalString fhs ''
+          args+=(--symlink ${pkgs.stdenv.cc.bintools.dynamicLinker} /lib64/ld-linux-x86-64.so.2 --setenv LD_LIBRARY_PATH ${lib.makeLibraryPath [pkgs.stdenv.cc.cc.lib pkgs.zlib]})
+        ''}
         ${lib.concatMapStrings (path: ''
           mkdir -p ${quote (host path)}
         '') (lib.filter (path: host path != path) (all "rw"))}
@@ -122,6 +126,11 @@ in {
           };
 
           userns = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+          };
+
+          fhs = lib.mkOption {
             type = lib.types.bool;
             default = false;
           };
