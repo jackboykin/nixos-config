@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -9,6 +13,7 @@
       age
     ];
     defaultPackages = [];
+    etc."ssl/cert.pem".source = config.security.pki.caBundle;
   };
 
   programs.nano.enable = false;
