@@ -7,7 +7,8 @@ def sri [algo: string]: string -> string {
 }
 
 def fetch [url: string] {
-  curl -sSfL --connect-timeout 10 --speed-time 15 --speed-limit 1 --retry 2 --retry-all-errors $url
+  let auth = if ($url | str starts-with "https://api.github.com/") and ($env.GH_TOKEN? | is-not-empty) { [-H $"Authorization: Bearer ($env.GH_TOKEN)"] } else { [] }
+  curl -sSfL --connect-timeout 10 --speed-time 15 --speed-limit 1 --retry 2 --retry-all-errors ...$auth $url
 }
 
 def --wrapped hush [cmd: string, ...args]: any -> string {
@@ -254,6 +255,7 @@ def main [] {
   let path = $here | path join pins.json
   let old = open $path
   let z = zig-index
+  $env.GH_TOKEN = try { hush gh auth token | str trim } catch { "" }
   let new = parallel $old {
     bun: {|| bun}
     claude-code: {|| claude-code}
