@@ -207,19 +207,32 @@ def linux-firmware [] {
   }
 }
 
-def zigpin [m: record, signer: string, old]: nothing -> record {
+def first-ok [body: closure]: list -> any {
+  for x in $in { try { return (do $body $x) } }
+  error make -u {msg: "every source failed"}
+}
+
+def zigpin [m: record, signer: string, old, hosts: list<string> = []]: nothing -> record {
   let url = $m | get x86_64-linux.tarball
+  if $url == $old.url? { return $old }
+  let mirrors = $hosts | each {|h| $"($h)/($url | path basename)" } | par-each {|u|
+    let r = ^curl -sS -r 0-1048575 -m 2 -o /dev/null -w '%{http_code} %{speed_download}' $u | complete
+    let m = $r.stdout | parse '{code} {speed}' | first
+    if $r.exit_code in [0 28] and $m.code starts-with "2" { {u: $u, speed: ($m.speed | into float)} }
+  } | sort-by -r speed | first 3 | get u
   {
     version: $m.version
     url: $url
-    hash: (signed $url sha256 $old {|f| minisigned $signer $url $f })
+    mirrors: $mirrors
+    hash: ($mirrors | append $url | first-ok {|u| signed $u sha256 {} {|f| minisigned $signer $u $f } })
   }
 }
 
 def zig-index [] {
   let index = fetch https://ziglang.org/download/index.json | from json
   let stable = $index | reject master | columns | sort -n | last
-  {stable: ($index | get $stable), nightly: $index.master}
+  let hosts = fetch https://ziglang.org/download/community-mirrors.txt | lines | where $it != ""
+  {stable: ($index | get $stable), nightly: $index.master, hosts: $hosts}
 }
 
 def zls [zig_version: string, old] {
@@ -268,8 +281,8 @@ def main [] {
     python: {|| gh-digest astral-sh/python-build-standalone 'cpython-(?<v>\d+\.\d+\.\d+)\+\d+-x86_64_v4-unknown-linux-gnu-install_only_stripped\.tar\.gz'}
     uv: {|| gh-digest astral-sh/uv 'uv-x86_64-unknown-linux-musl\.tar\.gz'}
     zed: {|| gh-digest --pre zed-industries/zed 'zed-linux-x86_64\.tar\.gz'}
-    zig: {|| zigpin $z.stable zig ($old | get -o zig)}
-    zig-nightly: {|| zigpin $z.nightly zig ($old | get -o zig-nightly)}
+    zig: {|| zigpin $z.stable zig ($old | get -o zig) $z.hosts}
+    zig-nightly: {|| zigpin $z.nightly zig ($old | get -o zig-nightly) $z.hosts}
     zls: {|| zls $z.stable.version ($old | get -o zls)}
   }
   $new | to json | $"($in)\n" | save -f $path

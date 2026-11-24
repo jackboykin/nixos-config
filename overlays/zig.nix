@@ -6,15 +6,7 @@ pins: final: _: let
       inherit pname;
       inherit (pin) version;
       src = final.fetchurl {
-        urls = let
-          file = baseNameOf pin.url;
-        in [
-          "https://ziglang.freetls.fastly.net/${file}"
-          "https://zig.chainsafe.dev/${file}"
-          "https://zig.squirl.dev/${file}"
-          "https://zig.bcr.ist/${file}"
-          pin.url
-        ];
+        urls = pin.mirrors ++ [pin.url];
         inherit (pin) hash;
       };
       dontConfigure = true;
