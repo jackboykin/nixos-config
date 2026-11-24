@@ -136,6 +136,18 @@ def gh-tag [repo: string, signer: string, old]: nothing -> record {
   {version: ($tag.name | str substring 1..), url: $url, rev: $rev, hash: $hash}
 }
 
+def agy [] {
+  let base = "https://storage.googleapis.com/antigravity-public/antigravity-cli"
+  let version = fetch $"($base)/latest" | str trim
+  let m = fetch $"($base)/($version)/manifest.json" | from json
+  if $m.version != $version { error make -u {msg: $"manifest is for ($m.version)"} }
+  {
+    version: $version
+    url: $m.platforms.linux-x64-musl.url
+    hash: ($m.platforms.linux-x64-musl.sha512 | sri sha512)
+  }
+}
+
 def bun [] {
   let r = gh-release oven-sh/bun
   let base = $"https://github.com/oven-sh/bun/releases/download/($r.tag_name)"
@@ -269,6 +281,7 @@ def main [] {
   let z = zig-index
   $env.GH_TOKEN = try { hush gh auth token | str trim } catch { "" }
   let new = fetch-all $old {
+    agy: {|| agy}
     bun: {|| bun}
     claude-code: {|| claude-code}
     firefox: {|| firefox ($old | get -o firefox)}

@@ -57,7 +57,7 @@ in {
         obsidian
         zed-editor
 
-        antigravity-cli
+        agy
         aspell
         aspellDicts.en
         bc
