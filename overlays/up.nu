@@ -54,7 +54,7 @@ def minisigned [signer: string, url: string, file: string] {
 
 def signed [url: string, algo: string, old, check: closure]: nothing -> string {
   if $url == $old.url? { return $old.hash }
-  let f = hush nix store prefetch-file --json --hash-type $algo $url | from json
+  let f = hush nix store prefetch-file --option stalled-download-timeout 15 --option filetransfer-retry-attempts 2 --json --hash-type $algo $url | from json
   do $check $f.storePath
   $f.hash
 }
